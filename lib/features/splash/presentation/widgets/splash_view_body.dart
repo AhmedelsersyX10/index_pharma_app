@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:index_pharma_store/core/theme/theme.dart';
-import 'package:index_pharma_store/core/utils/app_images.dart';
 import 'package:index_pharma_store/core/utils/app_router.dart';
-import 'package:index_pharma_store/core/widgets/widgets.dart';
+import 'package:index_pharma_store/features/splash/presentation/widgets/splash_background.dart';
+import 'package:index_pharma_store/features/splash/presentation/widgets/splash_brand_text.dart';
+import 'package:index_pharma_store/features/splash/presentation/widgets/splash_footer.dart';
+import 'package:index_pharma_store/features/splash/presentation/widgets/splash_logo.dart';
 
 class SplashViewBody extends StatefulWidget {
   const SplashViewBody({super.key});
@@ -101,198 +103,39 @@ class _SplashViewBodyState extends State<SplashViewBody>
         backgroundColor: AppColors.background,
         body: Stack(
           children: [
-            // Ambient clinical background illumination
-            Positioned.fill(
-              child: DecoratedBox(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      AppColors.brandMintSurface,
-                      AppColors.background,
-                      AppColors.surfaceSubtle,
-                    ],
-                    stops: const [0.0, 0.55, 1.0],
-                  ),
-                ),
-              ),
-            ),
-
-            // Soft glowing pulse behind logo
-            Center(
-              child: AnimatedBuilder(
-                animation: _pulseGlow,
-                builder: (context, child) {
-                  return Container(
-                    width: 250 * _pulseGlow.value,
-                    height: 250 * _pulseGlow.value,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      gradient: RadialGradient(
-                        colors: [
-                          AppColors.brandMintBorder.withValues(alpha: 0.5),
-                          AppColors.brandMintSurface.withValues(alpha: 0.15),
-                          Colors.transparent,
-                        ],
-                        stops: const [0.0, 0.55, 1.0],
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
+            // Ambient clinical background illumination & pulse
+            SplashBackground(pulseGlow: _pulseGlow),
 
             // Main center content
             SafeArea(
               child: Center(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: AppSpacing.spaceXl),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: AppSpacing.spaceXl,
+                  ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Spacer(flex: 3),
 
                       // Animated Logo with Ambient Elevation
-                      AnimatedBuilder(
-                        animation: _controller,
-                        builder: (context, child) {
-                          return Opacity(
-                            opacity: _logoFade.value,
-                            child: Transform.scale(
-                              scale: _logoScale.value,
-                              child: child,
-                            ),
-                          );
-                        },
-                        child: Container(
-                          width: 140,
-                          height: 140,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(32),
-                            boxShadow: [
-                              BoxShadow(
-                                color: AppColors.primaryBrand.withValues(alpha: 0.22),
-                                blurRadius: 36,
-                                spreadRadius: 2,
-                                offset: const Offset(0, 14),
-                              ),
-                              BoxShadow(
-                                color: AppColors.secondary.withValues(alpha: 0.05),
-                                blurRadius: 12,
-                                offset: const Offset(0, 4),
-                              ),
-                            ],
-                          ),
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(32),
-                            child: Image.asset(
-                              AppImages.logo,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
+                      SplashLogo(
+                        logoFade: _logoFade,
+                        logoScale: _logoScale,
                       ),
 
                       AppSpacing.vSpaceLg,
 
                       // Animated Brand Typography & Slogan
-                      AnimatedBuilder(
-                        animation: _controller,
-                        builder: (context, child) {
-                          return Opacity(
-                            opacity: _textFade.value,
-                            child: Transform.translate(
-                              offset: Offset(0, _textSlide.value),
-                              child: child,
-                            ),
-                          );
-                        },
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'Index',
-                                  style: AppTypography.displayLgMobile(
-                                    color: AppColors.secondary,
-                                  ),
-                                ),
-                                const SizedBox(width: 6),
-                                Text(
-                                  'Pharma',
-                                  style: AppTypography.displayLgMobile(
-                                    color: AppColors.primaryBrand,
-                                  ),
-                                ),
-                                const SizedBox(width: 4),
-                                Container(
-                                  width: 8,
-                                  height: 8,
-                                  margin: const EdgeInsets.only(top: 14),
-                                  decoration: const BoxDecoration(
-                                    color: AppColors.primaryBrand,
-                                    shape: BoxShape.circle,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            AppSpacing.vSpaceXs,
-                            Text(
-                              'Clinical Clarity & Care',
-                              style: AppTypography.bodyMd(
-                                color: AppColors.slate500,
-                              ),
-                            ),
-                          ],
-                        ),
+                      SplashBrandText(
+                        textFade: _textFade,
+                        textSlide: _textSlide,
                       ),
 
                       const Spacer(flex: 3),
 
                       // Animated Footer (Loading indicator & Trust Badge)
-                      AnimatedBuilder(
-                        animation: _controller,
-                        builder: (context, child) {
-                          return Opacity(
-                            opacity: _footerFade.value,
-                            child: child,
-                          );
-                        },
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            // Sleek clinical loading progress capsule
-                            SizedBox(
-                              width: 90,
-                              height: 4,
-                              child: ClipRRect(
-                                borderRadius: AppRadii.roundedFull,
-                                child: const LinearProgressIndicator(
-                                  backgroundColor: AppColors.slate200,
-                                  valueColor: AlwaysStoppedAnimation<Color>(
-                                    AppColors.primaryBrand,
-                                  ),
-                                ),
-                              ),
-                            ),
-
-                            AppSpacing.vSpaceMd,
-
-                            // Trust Badge
-                            const AppBadge.trust(
-                              label: 'Certified Healthcare Platform',
-                              icon: Icon(
-                                Icons.verified_user_rounded,
-                                size: 14,
-                                color: AppColors.brandEmeraldDark,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                      SplashFooter(footerFade: _footerFade),
 
                       AppSpacing.vSpaceLg,
                     ],

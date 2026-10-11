@@ -1,0 +1,142 @@
+import 'package:flutter/material.dart';
+import 'package:index_pharma_store/core/theme/theme.dart';
+import 'package:index_pharma_store/core/widgets/widgets.dart';
+import 'package:index_pharma_store/features/onbording/presentation/widgets/onboarding_dot_indicator.dart';
+
+class OnboardingBottomSection extends StatelessWidget {
+  final int currentPage;
+  final int totalPages;
+  final VoidCallback onNext;
+  final VoidCallback onPrevious;
+  final VoidCallback onDone;
+  final VoidCallback onSignIn;
+
+  const OnboardingBottomSection({
+    super.key,
+    required this.currentPage,
+    required this.totalPages,
+    required this.onNext,
+    required this.onPrevious,
+    required this.onDone,
+    required this.onSignIn,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final isFirstPage = currentPage == 0;
+    final isLastPage = currentPage == totalPages - 1;
+
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(
+        AppSpacing.spaceLg,
+        AppSpacing.spaceSm,
+        AppSpacing.spaceLg,
+        AppSpacing.spaceLg,
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          // Active Expanding Pill Indicators
+          OnboardingDotIndicator(
+            itemCount: totalPages,
+            currentIndex: currentPage,
+          ),
+
+          AppSpacing.vSpaceLg,
+
+          // Dynamic Navigation Action Controls
+          if (!isLastPage) ...[
+            if (isFirstPage)
+              AppButton.primary(
+                text: 'Get Started',
+                icon: const Icon(
+                  Icons.arrow_forward_rounded,
+                  color: Colors.white,
+                  size: 18,
+                ),
+                height: 54,
+                onPressed: onNext,
+              )
+            else
+              Row(
+                children: [
+                  // Circular Back button
+                  Material(
+                    color: AppColors.slate100,
+                    shape: const CircleBorder(),
+                    child: InkWell(
+                      onTap: onPrevious,
+                      customBorder: const CircleBorder(),
+                      child: Container(
+                        width: 52,
+                        height: 52,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: AppColors.slate200,
+                            width: 1,
+                          ),
+                        ),
+                        child: const Icon(
+                          Icons.arrow_back_rounded,
+                          color: AppColors.slate700,
+                          size: 20,
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  const SizedBox(width: AppSpacing.gutterSm),
+
+                  // Next Action Button
+                  Expanded(
+                    child: AppButton.primary(
+                      text: 'Continue',
+                      icon: const Icon(
+                        Icons.arrow_forward_rounded,
+                        color: Colors.white,
+                        size: 18,
+                      ),
+                      height: 54,
+                      onPressed: onNext,
+                    ),
+                  ),
+                ],
+              ),
+          ] else ...[
+            // Last Page: Hero CTA + Secondary Sign In link
+            AppButton.primary(
+              text: 'Start Exploring',
+              icon: const Icon(
+                Icons.arrow_forward_rounded,
+                color: Colors.white,
+                size: 18,
+              ),
+              height: 54,
+              onPressed: onDone,
+            ),
+
+            const SizedBox(height: AppSpacing.gutterSm),
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Already have an account? ',
+                  style: AppTypography.bodyMd(color: AppColors.slate500),
+                ),
+                GestureDetector(
+                  onTap: onSignIn,
+                  child: Text(
+                    'Sign In',
+                    style: AppTypography.labelLg(color: AppColors.primaryBrand),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+}
