@@ -122,6 +122,70 @@ void main() {
 
         expect(sessionExpiredCalled, isFalse);
       });
+
+      test('handles 401 gracefully without error when onSessionExpired is null', () async {
+        final client = ApiClient(
+          cookieJar: cookieJar,
+          onSessionExpired: null,
+          enableLogging: false,
+        );
+
+        client.dio.httpClientAdapter = FakeHttpClientAdapter((options) async {
+          return ResponseBody.fromString(
+            '{"message": "Unauthorized"}',
+            401,
+            headers: {
+              Headers.contentTypeHeader: [Headers.jsonContentType],
+            },
+          );
+        });
+
+        await expectLater(
+          client.dio.get<dynamic>('/test-no-callback'),
+          throwsA(
+            isA<DioException>().having(
+              (e) => e.response?.statusCode,
+              'statusCode',
+              401,
+            ),
+          ),
+        );
+      });
+
+      test('invokes onSessionExpired callback on POST request with 401', () async {
+        var sessionExpiredCalled = false;
+
+        final client = ApiClient(
+          cookieJar: cookieJar,
+          onSessionExpired: () {
+            sessionExpiredCalled = true;
+          },
+          enableLogging: false,
+        );
+
+        client.dio.httpClientAdapter = FakeHttpClientAdapter((options) async {
+          return ResponseBody.fromString(
+            '{"message": "Session expired"}',
+            401,
+            headers: {
+              Headers.contentTypeHeader: [Headers.jsonContentType],
+            },
+          );
+        });
+
+        await expectLater(
+          client.dio.post<dynamic>('/store/orders', data: {'item': 'sample'}),
+          throwsA(
+            isA<DioException>().having(
+              (e) => e.response?.statusCode,
+              'statusCode',
+              401,
+            ),
+          ),
+        );
+
+        expect(sessionExpiredCalled, isTrue);
+      });
     });
 
     group('Branch Header Interceptor', () {
@@ -146,6 +210,54 @@ void main() {
         expect(
           capturedOptions!.headers[ApiClient.branchHeaderKey],
           'branch-xyz-987',
+        );
+      });
+
+      test('trims whitespace when attaching X-Branch-Id header', () async {
+        RequestOptions? capturedOptions;
+
+        final client = ApiClient(
+          cookieJar: cookieJar,
+          branchIdProvider: () => '  branch-padded-01  ',
+          enableLogging: false,
+        );
+
+        client.dio.httpClientAdapter = FakeHttpClientAdapter((options) async {
+          capturedOptions = options;
+          return ResponseBody.fromString('{"success": true}', 200);
+        });
+
+        await client.dio.get<dynamic>('/store/products');
+
+        expect(capturedOptions, isNotNull);
+        expect(
+          capturedOptions!.headers[ApiClient.branchHeaderKey],
+          'branch-padded-01',
+        );
+      });
+
+      test(
+          'does not attach X-Branch-Id header when branchIdProvider returns empty or whitespace',
+          () async {
+        RequestOptions? capturedOptions;
+
+        final client = ApiClient(
+          cookieJar: cookieJar,
+          branchIdProvider: () => '    ',
+          enableLogging: false,
+        );
+
+        client.dio.httpClientAdapter = FakeHttpClientAdapter((options) async {
+          capturedOptions = options;
+          return ResponseBody.fromString('{"success": true}', 200);
+        });
+
+        await client.dio.get<dynamic>('/store/products');
+
+        expect(capturedOptions, isNotNull);
+        expect(
+          capturedOptions!.headers.containsKey(ApiClient.branchHeaderKey),
+          isFalse,
         );
       });
 
@@ -193,6 +305,32 @@ void main() {
         expect(capturedOptions, isNotNull);
         expect(
           capturedOptions!.headers.containsKey(ApiClient.branchHeaderKey),
+          isFalse,
+        );
+      });
+    });
+
+    group('Interceptors & Logging Configuration', () {
+      test('adds debug log interceptor when enableLogging is true', () {
+        final client = ApiClient(
+          cookieJar: cookieJar,
+          enableLogging: true,
+        );
+
+        expect(
+          client.dio.interceptors.any((i) => i.runtimeType.toString() == '_DebugLogInterceptor'),
+          isTrue,
+        );
+      });
+
+      test('omits debug log interceptor when enableLogging is false', () {
+        final client = ApiClient(
+          cookieJar: cookieJar,
+          enableLogging: false,
+        );
+
+        expect(
+          client.dio.interceptors.any((i) => i.runtimeType.toString() == '_DebugLogInterceptor'),
           isFalse,
         );
       });

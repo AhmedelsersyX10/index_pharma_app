@@ -97,6 +97,31 @@ void main() {
         expect(storageService.locale, equals('ar'));
         expect(storageService.onboardingSeen, isTrue);
       });
+
+      test('clearSelectedBranchId is idempotent when branchId is already null', () async {
+        final prefs = await SharedPreferences.getInstance();
+        await prefs.clear();
+        final emptyStorageService = SharedPreferencesStorageService(prefs);
+
+        expect(emptyStorageService.selectedBranchId, isNull);
+        final clearResult = await emptyStorageService.clearSelectedBranchId();
+        expect(clearResult, isTrue);
+        expect(emptyStorageService.selectedBranchId, isNull);
+      });
+
+      test('sequential updates overwrite previous values correctly', () async {
+        await storageService.setSelectedBranchId('branch-1');
+        expect(storageService.selectedBranchId, equals('branch-1'));
+
+        await storageService.setSelectedBranchId('branch-2');
+        expect(storageService.selectedBranchId, equals('branch-2'));
+
+        await storageService.setLocale('en');
+        expect(storageService.locale, equals('en'));
+
+        await storageService.setLocale('ar');
+        expect(storageService.locale, equals('ar'));
+      });
     });
   });
 }

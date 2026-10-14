@@ -202,6 +202,58 @@ void main() {
       expect(mapDioExceptionToFailure(badCertEx), isA<Unexpected>());
       expect(mapDioExceptionToFailure(unknownEx), isA<Unexpected>());
     });
+
+    test('maps badResponse with null response or null statusCode to Unexpected', () {
+      final badResponseNoResponse = DioException(
+        requestOptions: testRequestOptions,
+        type: DioExceptionType.badResponse,
+      );
+      final badResponseNullStatus = DioException(
+        requestOptions: testRequestOptions,
+        response: Response(
+          requestOptions: testRequestOptions,
+          statusCode: null,
+          data: {'message': 'Malformed response'},
+        ),
+        type: DioExceptionType.badResponse,
+      );
+
+      final f1 = mapDioExceptionToFailure(badResponseNoResponse);
+      final f2 = mapDioExceptionToFailure(badResponseNullStatus);
+
+      expect(f1, isA<Unexpected>());
+      expect(f1.serverMessage, isNull);
+      expect(f2, isA<Unexpected>());
+      expect(f2.serverMessage, 'Malformed response');
+    });
+
+    test('maps 599 upper boundary to Server', () {
+      final dioException599 = createResponseException(
+        statusCode: 599,
+        data: {'message': 'Network connect timeout error'},
+      );
+
+      final failure = mapDioExceptionToFailure(dioException599);
+
+      expect(failure, isA<Server>());
+      expect(failure.serverMessage, 'Network connect timeout error');
+    });
+
+    test('toFailure extension correctly maps timeouts and response errors', () {
+      final timeoutEx = DioException(
+        requestOptions: testRequestOptions,
+        type: DioExceptionType.connectionTimeout,
+      );
+      final unauthEx = createResponseException(
+        statusCode: 401,
+        data: {'message': 'Expired session'},
+      );
+
+      expect(timeoutEx.toFailure(), isA<Timeout>());
+      final failure = unauthEx.toFailure();
+      expect(failure, isA<Unauthorized>());
+      expect(failure.serverMessage, 'Expired session');
+    });
   });
 
   group('mapDioExceptionToFailure - Body edge cases', () {
