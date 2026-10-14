@@ -1,0 +1,43 @@
+{
+  "app_title": "Index Pharma",
+  "brand": {
+    "name_index": "Index",
+    "name_pharma": "Pharma",
+    "slogan": "Clinical Clarity & Care",
+    "certified_platform": "Certified Healthcare Platform"
+  },
+  "common": {
+    "skip": "Skip",
+    "continue": "Continue",
+    "get_started": "Get Started",
+    "start_exploring": "Start Exploring",
+    "sign_in": "Sign In",
+    "already_have_account": "Already have an account? ",
+    "step_counter": "Step {} of {}",
+    "upload_prescription": "Upload Prescription",
+    "search_hint": "Search medicines, vitamins, pharmacy items...",
+    "filter": "Filter"
+  },
+  "onboarding": {
+    "welcome_message": "Welcome to Index Pharma!",
+    "navigating_to_sign_in": "Navigating to Sign In...",
+    "page1": {
+      "badge": "Verified Healthcare",
+      "title": "Your Pharmacy,\nAnytime & Anywhere",
+      "description": "Quickly order authentic medications and healthcare essentials with licensed pharmacist support around the clock.",
+      "perk": "✓ 10,000+ Genuine Products  •  ✓ Licensed Support"
+    },
+    "page2": {
+      "badge": "Smart Rx Scanner",
+      "title": "Upload & Process\nPrescriptions Quickly",
+      "description": "Snap a clear photo of your doctor's prescription. Our clinical team verifies potency, dosage, and fulfills your order.",
+      "perk": "✓ Instant Rx Verification  •  ✓ Clinical Review"
+    },
+    "page3": {
+      "badge": "Express & Safe Delivery",
+      "title": "Fast & Secure Delivery\nRight to Your Door",
+      "description": "Real-time temperature-monitored tracking ensures your medications arrive with clinical integrity and speed.",
+      "perk": "✓ Cold-chain Protection  •  ✓ Real-time Tracking"
+    }
+  }
+}

@@ -1,10 +1,12 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:index_pharma_store/core/theme/theme.dart';
+import 'package:index_pharma/core/localization/app_locale_keys.dart';
+import 'package:index_pharma/core/theme/theme.dart';
 
 /// Clinical Clarity Button System
 /// Adheres strictly to DESIGN.md button specifications.
 class AppButton extends StatelessWidget {
-  final String text;
+  final String? text;
   final VoidCallback? onPressed;
   final Widget? icon;
   final bool isLoading;
@@ -55,7 +57,7 @@ class AppButton extends StatelessWidget {
 
   const AppButton.prescriptionUpload({
     super.key,
-    this.text = 'Upload Prescription',
+    this.text,
     this.onPressed,
     this.icon,
     this.isLoading = false,
@@ -65,6 +67,11 @@ class AppButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final String displayText = text ??
+        (variant == AppButtonStyle.prescriptionUpload
+            ? AppLocaleKeys.commonUploadPrescription.tr()
+            : '');
+
     final Widget buttonChild = isLoading
         ? SizedBox(
             height: 22,
@@ -78,94 +85,78 @@ class AppButton extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              if (icon != null) ...[
-                icon!,
-                const SizedBox(width: AppSpacing.spaceSm),
-              ],
-              Text(
-                text,
-                style: _getTextStyle(),
-              ),
+              if (icon != null) ...[icon!, const SizedBox(width: AppSpacing.spaceSm)],
+              Text(displayText, style: _getTextStyle()),
             ],
           );
 
     final Widget buttonWidget = switch (variant) {
       AppButtonStyle.primary => ElevatedButton(
-          onPressed: isLoading ? null : onPressed,
-          style: ElevatedButton.styleFrom(
-            backgroundColor: AppColors.primaryBrand,
-            foregroundColor: AppColors.onPrimary,
-            disabledBackgroundColor: AppColors.slate200,
-            disabledForegroundColor: AppColors.slate400,
-            minimumSize: Size(isFullWidth ? double.infinity : AppSpacing.minTouchTarget, height),
-            shape: const StadiumBorder(),
-            elevation: 0,
-          ),
-          child: buttonChild,
+        onPressed: isLoading ? null : onPressed,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppColors.primaryBrand,
+          foregroundColor: AppColors.onPrimary,
+          disabledBackgroundColor: AppColors.slate200,
+          disabledForegroundColor: AppColors.slate400,
+          minimumSize: Size(isFullWidth ? double.infinity : AppSpacing.minTouchTarget, height),
+          shape: const StadiumBorder(),
+          elevation: 0,
         ),
+        child: buttonChild,
+      ),
       AppButtonStyle.secondary => ElevatedButton(
-          onPressed: isLoading ? null : onPressed,
-          style: ElevatedButton.styleFrom(
-            backgroundColor: AppColors.secondary,
-            foregroundColor: AppColors.onSecondary,
-            disabledBackgroundColor: AppColors.slate200,
-            disabledForegroundColor: AppColors.slate400,
-            minimumSize: Size(isFullWidth ? double.infinity : AppSpacing.minTouchTarget, height),
-            shape: const StadiumBorder(),
-            elevation: 0,
-          ),
-          child: buttonChild,
+        onPressed: isLoading ? null : onPressed,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppColors.secondary,
+          foregroundColor: AppColors.onSecondary,
+          disabledBackgroundColor: AppColors.slate200,
+          disabledForegroundColor: AppColors.slate400,
+          minimumSize: Size(isFullWidth ? double.infinity : AppSpacing.minTouchTarget, height),
+          shape: const StadiumBorder(),
+          elevation: 0,
         ),
+        child: buttonChild,
+      ),
       AppButtonStyle.outlined => OutlinedButton(
-          onPressed: isLoading ? null : onPressed,
-          style: OutlinedButton.styleFrom(
-            foregroundColor: AppColors.primaryBrand,
-            side: const BorderSide(color: AppColors.primaryBrand, width: 1.5),
-            minimumSize: Size(isFullWidth ? double.infinity : AppSpacing.minTouchTarget, height),
-            shape: const StadiumBorder(),
-          ),
-          child: buttonChild,
+        onPressed: isLoading ? null : onPressed,
+        style: OutlinedButton.styleFrom(
+          foregroundColor: AppColors.primaryBrand,
+          side: const BorderSide(color: AppColors.primaryBrand, width: 1.5),
+          minimumSize: Size(isFullWidth ? double.infinity : AppSpacing.minTouchTarget, height),
+          shape: const StadiumBorder(),
         ),
+        child: buttonChild,
+      ),
       AppButtonStyle.prescriptionUpload => Container(
-          decoration: BoxDecoration(
-            color: AppColors.brandMintSurface,
+        decoration: BoxDecoration(
+          color: AppColors.brandMintSurface,
+          borderRadius: AppRadii.roundedFull,
+          border: Border.all(color: AppColors.primaryBrand, width: 1.5),
+        ),
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
             borderRadius: AppRadii.roundedFull,
-            border: Border.all(
-              color: AppColors.primaryBrand,
-              width: 1.5,
-            ),
-          ),
-          child: Material(
-            color: Colors.transparent,
-            child: InkWell(
-              borderRadius: AppRadii.roundedFull,
-              onTap: isLoading ? null : onPressed,
-              child: Container(
-                constraints: BoxConstraints(
-                  minHeight: height,
-                  minWidth: isFullWidth ? double.infinity : AppSpacing.minTouchTarget,
-                ),
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                alignment: Alignment.center,
-                child: buttonChild,
+            onTap: isLoading ? null : onPressed,
+            child: Container(
+              constraints: BoxConstraints(
+                minHeight: height,
+                minWidth: isFullWidth ? double.infinity : AppSpacing.minTouchTarget,
               ),
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              alignment: Alignment.center,
+              child: buttonChild,
             ),
           ),
         ),
+      ),
     };
 
     if (isFullWidth) {
-      return SizedBox(
-        width: double.infinity,
-        height: height,
-        child: buttonWidget,
-      );
+      return SizedBox(width: double.infinity, height: height, child: buttonWidget);
     }
 
-    return SizedBox(
-      height: height,
-      child: buttonWidget,
-    );
+    return SizedBox(height: height, child: buttonWidget);
   }
 
   Color _getLoadingColor() {
@@ -192,9 +183,4 @@ class AppButton extends StatelessWidget {
   }
 }
 
-enum AppButtonStyle {
-  primary,
-  secondary,
-  outlined,
-  prescriptionUpload,
-}
+enum AppButtonStyle { primary, secondary, outlined, prescriptionUpload }

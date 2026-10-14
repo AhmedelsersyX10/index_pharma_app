@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:index_pharma_store/core/theme/app_colors.dart';
-import 'package:index_pharma_store/core/theme/app_radii.dart';
-import 'package:index_pharma_store/core/theme/app_spacing.dart';
-import 'package:index_pharma_store/core/theme/app_theme_extensions.dart';
-import 'package:index_pharma_store/core/theme/app_typography.dart';
+import 'package:index_pharma/core/theme/app_colors.dart';
+import 'package:index_pharma/core/theme/app_radii.dart';
+import 'package:index_pharma/core/theme/app_spacing.dart';
+import 'package:index_pharma/core/theme/app_theme_extensions.dart';
+import 'package:index_pharma/core/theme/app_typography.dart';
 
 /// Clinical Clarity App Theme Builder
 /// Complete Material 3 Design System implementation
@@ -212,11 +212,7 @@ abstract class AppTheme {
       ),
 
       // Divider Theme
-      dividerTheme: const DividerThemeData(
-        color: AppColors.borderSubtle,
-        thickness: 1,
-        space: 1,
-      ),
+      dividerTheme: const DividerThemeData(color: AppColors.borderSubtle, thickness: 1, space: 1),
 
       // Floating Action Button
       floatingActionButtonTheme: FloatingActionButtonThemeData(
@@ -227,9 +223,7 @@ abstract class AppTheme {
       ),
 
       // Extensions
-      extensions: const [
-        ClinicalThemeExtension.light,
-      ],
+      extensions: const [ClinicalThemeExtension.light],
     );
   }
 
@@ -407,16 +401,10 @@ abstract class AppTheme {
       ),
 
       // Divider Theme
-      dividerTheme: const DividerThemeData(
-        color: AppColors.darkOutline,
-        thickness: 1,
-        space: 1,
-      ),
+      dividerTheme: const DividerThemeData(color: AppColors.darkOutline, thickness: 1, space: 1),
 
       // Extensions
-      extensions: const [
-        ClinicalThemeExtension.dark,
-      ],
+      extensions: const [ClinicalThemeExtension.dark],
     );
   }
 }

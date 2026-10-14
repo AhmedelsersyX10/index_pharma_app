@@ -1,10 +1,22 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:index_pharma_store/core/theme/theme.dart';
-import 'package:index_pharma_store/core/utils/app_router.dart';
+import 'package:index_pharma/core/localization/app_locale_keys.dart';
+import 'package:index_pharma/core/theme/theme.dart';
+import 'package:index_pharma/core/utils/app_router.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const IndexPharmaApp());
+  await EasyLocalization.ensureInitialized();
+
+  runApp(
+    EasyLocalization(
+      supportedLocales: const [Locale('ar'), Locale('en')],
+      path: 'assets/translations',
+      fallbackLocale: const Locale('ar'),
+      startLocale: const Locale('ar'),
+      child: const IndexPharmaApp(),
+    ),
+  );
 }
 
 class IndexPharmaApp extends StatelessWidget {
@@ -13,8 +25,11 @@ class IndexPharmaApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      title: 'Index Pharma Store',
+      title: AppLocaleKeys.appTitle.tr(),
       debugShowCheckedModeBanner: false,
+      localizationsDelegates: context.localizationDelegates,
+      supportedLocales: context.supportedLocales,
+      locale: context.locale,
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       themeMode: ThemeMode.light,
@@ -22,4 +37,3 @@ class IndexPharmaApp extends StatelessWidget {
     );
   }
 }
-

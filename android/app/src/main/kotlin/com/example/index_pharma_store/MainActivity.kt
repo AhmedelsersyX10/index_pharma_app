@@ -1,4 +1,4 @@
-package com.example.index_pharma_store
+package com.example.index_pharma
 
 import io.flutter.embedding.android.FlutterActivity
 

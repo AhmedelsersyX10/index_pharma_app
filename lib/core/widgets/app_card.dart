@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:index_pharma_store/core/theme/theme.dart';
+import 'package:index_pharma/core/theme/theme.dart';
 
 /// Clinical Clarity Card Component
 /// Features Level 1 / Level 2 ambient lighting and clinical tonal layering.
@@ -33,17 +33,17 @@ class AppCard extends StatelessWidget {
     this.onTap,
     this.isInteractive = false,
     this.borderRadius,
-  })  : isMintToned = true,
-        backgroundColor = AppColors.brandMintSurface,
-        border = const Border.fromBorderSide(
-          BorderSide(color: AppColors.brandMintBorder, width: 1),
-        );
+  }) : isMintToned = true,
+       backgroundColor = AppColors.brandMintSurface,
+       border = const Border.fromBorderSide(BorderSide(color: AppColors.brandMintBorder, width: 1));
 
   @override
   Widget build(BuildContext context) {
     final effectiveRadius = borderRadius ?? AppRadii.roundedLg;
-    final effectiveBg = backgroundColor ?? (isMintToned ? AppColors.brandMintSurface : AppColors.canvasPure);
-    final effectiveBorder = border ??
+    final effectiveBg =
+        backgroundColor ?? (isMintToned ? AppColors.brandMintSurface : AppColors.canvasPure);
+    final effectiveBorder =
+        border ??
         Border.all(
           color: isMintToned ? AppColors.brandMintBorder : AppColors.borderSubtle,
           width: 1,
@@ -65,11 +65,7 @@ class AppCard extends StatelessWidget {
     if (onTap != null) {
       return Material(
         color: Colors.transparent,
-        child: InkWell(
-          onTap: onTap,
-          borderRadius: effectiveRadius,
-          child: cardContent,
-        ),
+        child: InkWell(onTap: onTap, borderRadius: effectiveRadius, child: cardContent),
       );
     }
 

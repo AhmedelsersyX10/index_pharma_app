@@ -1,5 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:index_pharma_store/core/theme/theme.dart';
+import 'package:index_pharma/core/localization/app_locale_keys.dart';
+import 'package:index_pharma/core/theme/theme.dart';
 
 /// Clinical Clarity Search Bar
 /// Pill-shaped search bar with emerald icon and subtle focus glow.
@@ -8,7 +10,7 @@ class AppSearchBar extends StatelessWidget {
   final ValueChanged<String>? onChanged;
   final VoidCallback? onFilterTap;
   final VoidCallback? onClear;
-  final String hintText;
+  final String? hintText;
   final bool autoFocus;
 
   const AppSearchBar({
@@ -17,7 +19,7 @@ class AppSearchBar extends StatelessWidget {
     this.onChanged,
     this.onFilterTap,
     this.onClear,
-    this.hintText = 'Search medicines, vitamins, pharmacy items...',
+    this.hintText,
     this.autoFocus = false,
   });
 
@@ -34,25 +36,21 @@ class AppSearchBar extends StatelessWidget {
         onChanged: onChanged,
         style: AppTypography.bodyMd(color: AppColors.onSurface),
         decoration: InputDecoration(
-          hintText: hintText,
+          hintText: hintText ?? AppLocaleKeys.commonSearchHint.tr(),
           hintStyle: AppTypography.bodyMd(color: AppColors.slate400),
           fillColor: AppColors.canvasPure,
           filled: true,
           contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
           prefixIcon: const Padding(
-            padding: EdgeInsets.only(left: 16, right: 12),
-            child: Icon(
-              Icons.search_rounded,
-              color: AppColors.primaryBrand,
-              size: 24,
-            ),
+            padding: EdgeInsetsDirectional.only(start: 16, end: 12),
+            child: Icon(Icons.search_rounded, color: AppColors.primaryBrand, size: 24),
           ),
           prefixIconConstraints: const BoxConstraints(minWidth: 52, minHeight: 44),
           suffixIcon: onFilterTap != null
               ? IconButton(
                   icon: const Icon(Icons.tune_rounded, color: AppColors.slate500),
                   onPressed: onFilterTap,
-                  tooltip: 'Filter',
+                  tooltip: AppLocaleKeys.commonFilter.tr(),
                 )
               : null,
           border: const OutlineInputBorder(
@@ -106,10 +104,7 @@ class AppTextField extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (label != null) ...[
-          Text(
-            label!,
-            style: AppTypography.labelMd(color: AppColors.slate700),
-          ),
+          Text(label!, style: AppTypography.labelMd(color: AppColors.slate700)),
           const SizedBox(height: AppSpacing.spaceXs),
         ],
         TextFormField(

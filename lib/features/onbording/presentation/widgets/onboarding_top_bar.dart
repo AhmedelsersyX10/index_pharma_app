@@ -1,6 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:index_pharma_store/core/theme/theme.dart';
-import 'package:index_pharma_store/core/widgets/widgets.dart';
+import 'package:index_pharma/core/localization/app_locale_keys.dart';
+import 'package:index_pharma/core/theme/theme.dart';
+import 'package:index_pharma/core/widgets/widgets.dart';
 
 class OnboardingTopBar extends StatelessWidget {
   final int currentPage;
@@ -28,7 +30,7 @@ class OnboardingTopBar extends StatelessWidget {
         children: [
           // Step Counter Badge
           AppBadge.neutral(
-            label: 'Step ${currentPage + 1} of $totalPages',
+            label: AppLocaleKeys.commonStepCounter.tr(args: ['${currentPage + 1}', '$totalPages']),
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
           ),
 
@@ -42,15 +44,12 @@ class OnboardingTopBar extends StatelessWidget {
                 onPressed: onSkip,
                 style: TextButton.styleFrom(
                   foregroundColor: AppColors.slate500,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 6,
-                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                   minimumSize: const Size(0, 36),
                   tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                 ),
                 child: Text(
-                  'Skip',
+                  AppLocaleKeys.commonSkip.tr(),
                   style: AppTypography.labelLg(color: AppColors.slate500),
                 ),
               ),

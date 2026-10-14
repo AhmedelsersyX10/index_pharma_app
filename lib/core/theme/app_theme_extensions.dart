@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:index_pharma_store/core/theme/app_colors.dart';
-import 'package:index_pharma_store/core/theme/app_shadows.dart';
+import 'package:index_pharma/core/theme/app_colors.dart';
+import 'package:index_pharma/core/theme/app_shadows.dart';
 
 /// Clinical Clarity Custom Theme Extension
 /// Provides access to specialized medical/clinical tokens.

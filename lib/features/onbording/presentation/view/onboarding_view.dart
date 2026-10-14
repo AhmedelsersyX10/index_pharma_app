@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:index_pharma_store/features/onbording/presentation/widgets/onboarding_view_body.dart';
+import 'package:index_pharma/features/onbording/presentation/widgets/onboarding_view_body.dart';
 
 class OnboardingView extends StatelessWidget {
   const OnboardingView({super.key});

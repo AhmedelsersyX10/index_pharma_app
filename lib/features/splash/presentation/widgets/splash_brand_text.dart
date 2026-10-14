@@ -1,15 +1,13 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:index_pharma_store/core/theme/theme.dart';
+import 'package:index_pharma/core/localization/app_locale_keys.dart';
+import 'package:index_pharma/core/theme/theme.dart';
 
 class SplashBrandText extends StatelessWidget {
   final Animation<double> textFade;
   final Animation<double> textSlide;
 
-  const SplashBrandText({
-    super.key,
-    required this.textFade,
-    required this.textSlide,
-  });
+  const SplashBrandText({super.key, required this.textFade, required this.textSlide});
 
   @override
   Widget build(BuildContext context) {
@@ -18,10 +16,7 @@ class SplashBrandText extends StatelessWidget {
       builder: (context, child) {
         return Opacity(
           opacity: textFade.value,
-          child: Transform.translate(
-            offset: Offset(0, textSlide.value),
-            child: child,
-          ),
+          child: Transform.translate(offset: Offset(0, textSlide.value), child: child),
         );
       },
       child: Column(
@@ -31,17 +26,13 @@ class SplashBrandText extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
-                'Index',
-                style: AppTypography.displayLgMobile(
-                  color: AppColors.secondary,
-                ),
+                AppLocaleKeys.brandNameIndex.tr(),
+                style: AppTypography.displayLgMobile(color: AppColors.secondary),
               ),
               const SizedBox(width: 6),
               Text(
-                'Pharma',
-                style: AppTypography.displayLgMobile(
-                  color: AppColors.primaryBrand,
-                ),
+                AppLocaleKeys.brandNamePharma.tr(),
+                style: AppTypography.displayLgMobile(color: AppColors.primaryBrand),
               ),
               const SizedBox(width: 4),
               Container(
@@ -57,10 +48,8 @@ class SplashBrandText extends StatelessWidget {
           ),
           AppSpacing.vSpaceXs,
           Text(
-            'Clinical Clarity & Care',
-            style: AppTypography.bodyMd(
-              color: AppColors.slate500,
-            ),
+            AppLocaleKeys.brandSlogan.tr(),
+            style: AppTypography.bodyMd(color: AppColors.slate500),
           ),
         ],
       ),

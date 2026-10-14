@@ -1,18 +1,17 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:index_pharma_store/core/theme/theme.dart';
-import 'package:index_pharma_store/features/onbording/data/models/onboarding_model.dart';
-import 'package:index_pharma_store/features/onbording/presentation/widgets/onboarding_bottom_section.dart';
-import 'package:index_pharma_store/features/onbording/presentation/widgets/onboarding_page_item.dart';
-import 'package:index_pharma_store/features/onbording/presentation/widgets/onboarding_top_bar.dart';
+import 'package:index_pharma/core/localization/app_locale_keys.dart';
+import 'package:index_pharma/core/theme/theme.dart';
+import 'package:index_pharma/features/onbording/data/models/onboarding_model.dart';
+import 'package:index_pharma/features/onbording/presentation/widgets/onboarding_bottom_section.dart';
+import 'package:index_pharma/features/onbording/presentation/widgets/onboarding_page_item.dart';
+import 'package:index_pharma/features/onbording/presentation/widgets/onboarding_top_bar.dart';
 
 class OnboardingViewBody extends StatefulWidget {
   final List<OnboardingModel> pages;
 
-  const OnboardingViewBody({
-    super.key,
-    this.pages = OnboardingModel.defaultPages,
-  });
+  const OnboardingViewBody({super.key, this.pages = OnboardingModel.defaultPages});
 
   @override
   State<OnboardingViewBody> createState() => _OnboardingViewBodyState();
@@ -62,15 +61,11 @@ class _OnboardingViewBodyState extends State<OnboardingViewBody> {
         shape: RoundedRectangleBorder(borderRadius: AppRadii.roundedMd),
         content: Row(
           children: [
-            const Icon(
-              Icons.check_circle_rounded,
-              color: AppColors.primaryBrand,
-              size: 20,
-            ),
+            const Icon(Icons.check_circle_rounded, color: AppColors.primaryBrand, size: 20),
             const SizedBox(width: AppSpacing.gutterSm),
             Expanded(
               child: Text(
-                'Welcome to Index Pharma!',
+                AppLocaleKeys.onboardingWelcomeMessage.tr(),
                 style: AppTypography.labelLg(color: Colors.white),
               ),
             ),
@@ -90,15 +85,11 @@ class _OnboardingViewBodyState extends State<OnboardingViewBody> {
         shape: RoundedRectangleBorder(borderRadius: AppRadii.roundedMd),
         content: Row(
           children: [
-            const Icon(
-              Icons.login_rounded,
-              color: AppColors.primaryBrand,
-              size: 20,
-            ),
+            const Icon(Icons.login_rounded, color: AppColors.primaryBrand, size: 20),
             const SizedBox(width: AppSpacing.gutterSm),
             Expanded(
               child: Text(
-                'Navigating to Sign In...',
+                AppLocaleKeys.onboardingNavigatingToSignIn.tr(),
                 style: AppTypography.labelLg(color: Colors.white),
               ),
             ),
@@ -117,9 +108,7 @@ class _OnboardingViewBodyState extends State<OnboardingViewBody> {
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: SystemUiOverlayStyle.dark.copyWith(
-        statusBarColor: Colors.transparent,
-      ),
+      value: SystemUiOverlayStyle.dark.copyWith(statusBarColor: Colors.transparent),
       child: Scaffold(
         backgroundColor: AppColors.background,
         body: SafeArea(

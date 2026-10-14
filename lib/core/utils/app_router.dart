@@ -1,6 +1,6 @@
 import 'package:go_router/go_router.dart';
-import 'package:index_pharma_store/features/onbording/presentation/view/onboarding_view.dart';
-import 'package:index_pharma_store/features/splash/presentation/view/splash_view.dart';
+import 'package:index_pharma/features/onbording/presentation/view/onboarding_view.dart';
+import 'package:index_pharma/features/splash/presentation/view/splash_view.dart';
 
 abstract class AppRouter {
   static const kSplashView = '/';

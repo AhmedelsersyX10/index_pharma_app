@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:index_pharma_store/core/theme/theme.dart';
-import 'package:index_pharma_store/core/utils/app_images.dart';
+import 'package:index_pharma/core/theme/theme.dart';
+import 'package:index_pharma/core/utils/app_images.dart';
 
 class SplashLogo extends StatelessWidget {
   final Animation<double> logoFade;
   final Animation<double> logoScale;
 
-  const SplashLogo({
-    super.key,
-    required this.logoFade,
-    required this.logoScale,
-  });
+  const SplashLogo({super.key, required this.logoFade, required this.logoScale});
 
   @override
   Widget build(BuildContext context) {
@@ -19,10 +15,7 @@ class SplashLogo extends StatelessWidget {
       builder: (context, child) {
         return Opacity(
           opacity: logoFade.value,
-          child: Transform.scale(
-            scale: logoScale.value,
-            child: child,
-          ),
+          child: Transform.scale(scale: logoScale.value, child: child),
         );
       },
       child: Container(
@@ -46,10 +39,7 @@ class SplashLogo extends StatelessWidget {
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(32),
-          child: Image.asset(
-            AppImages.logo,
-            fit: BoxFit.cover,
-          ),
+          child: Image.asset(AppImages.logo, fit: BoxFit.cover),
         ),
       ),
     );

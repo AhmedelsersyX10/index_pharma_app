@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:index_pharma_store/core/theme/theme.dart';
+import 'package:index_pharma/core/theme/theme.dart';
 
 class SplashBackground extends StatelessWidget {
   final Animation<double> pulseGlow;
 
-  const SplashBackground({
-    super.key,
-    required this.pulseGlow,
-  });
+  const SplashBackground({super.key, required this.pulseGlow});
 
   @override
   Widget build(BuildContext context) {
@@ -20,11 +17,7 @@ class SplashBackground extends StatelessWidget {
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
-                colors: [
-                  AppColors.brandMintSurface,
-                  AppColors.background,
-                  AppColors.surfaceSubtle,
-                ],
+                colors: [AppColors.brandMintSurface, AppColors.background, AppColors.surfaceSubtle],
                 stops: const [0.0, 0.55, 1.0],
               ),
             ),
