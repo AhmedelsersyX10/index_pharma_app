@@ -2,6 +2,7 @@ import 'package:get_it/get_it.dart';
 import 'package:index_pharma/core/network/api_client.dart';
 import 'package:index_pharma/core/storage/shared_preferences_storage_service.dart';
 import 'package:index_pharma/core/storage/storage_service.dart';
+import 'package:index_pharma/core/utils/app_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 /// Global service locator instance.
@@ -38,6 +39,12 @@ void _setupCoreServices() {
           return null;
         },
       ),
+    );
+  }
+
+  if (!getIt.isRegistered<AppRouter>()) {
+    getIt.registerLazySingleton<AppRouter>(
+      () => AppRouter(),
     );
   }
 }

@@ -22,10 +22,20 @@ void main() async {
 }
 
 class IndexPharmaApp extends StatelessWidget {
-  const IndexPharmaApp({super.key});
+  const IndexPharmaApp({
+    super.key,
+    this.appRouter,
+  });
+
+  final AppRouter? appRouter;
 
   @override
   Widget build(BuildContext context) {
+    final router = appRouter ??
+        (getIt.isRegistered<AppRouter>()
+            ? getIt<AppRouter>()
+            : AppRouter());
+
     return MaterialApp.router(
       title: AppLocaleKeys.appTitle.tr(),
       debugShowCheckedModeBanner: false,
@@ -35,7 +45,7 @@ class IndexPharmaApp extends StatelessWidget {
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       themeMode: ThemeMode.light,
-      routerConfig: AppRouter.router,
+      routerConfig: router.router,
     );
   }
 }
