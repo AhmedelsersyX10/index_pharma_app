@@ -25,6 +25,15 @@ abstract class AppLocaleKeys {
   static const commonUploadPrescription = 'common.upload_prescription';
   static const commonSearchHint = 'common.search_hint';
   static const commonFilter = 'common.filter';
+  static const commonRetry = 'common.retry';
+
+  // Error
+  static const errorTitle = 'error.title';
+  static const errorDefaultMessage = 'error.default_message';
+
+  // Empty State
+  static const emptyStateTitle = 'empty_state.title';
+  static const emptyStateMessage = 'empty_state.message';
 
   // Onboarding
   static const onboardingStepCounter = 'onboarding.step_counter';

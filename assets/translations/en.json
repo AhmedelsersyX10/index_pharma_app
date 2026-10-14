@@ -22,7 +22,16 @@
     "step_counter": "Step {} of {}",
     "upload_prescription": "Upload Prescription",
     "search_hint": "Search medicines, vitamins, pharmacy items...",
-    "filter": "Filter"
+    "filter": "Filter",
+    "retry": "Retry"
+  },
+  "error": {
+    "title": "Something Went Wrong",
+    "default_message": "An unexpected error occurred. Please try again."
+  },
+  "empty_state": {
+    "title": "No Items Found",
+    "message": "There is nothing to display right now."
   },
   "onboarding": {
     "step_counter": "Step {} of {}",
