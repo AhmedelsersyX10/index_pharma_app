@@ -1,5 +1,8 @@
 import 'package:get_it/get_it.dart';
 import 'package:index_pharma/core/network/api_client.dart';
+import 'package:index_pharma/core/storage/shared_preferences_storage_service.dart';
+import 'package:index_pharma/core/storage/storage_service.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 /// Global service locator instance.
 final GetIt getIt = GetIt.instance;
@@ -15,9 +18,26 @@ Future<void> setupServiceLocator() async {
 
 /// Registers core services (networking, local storage, etc.).
 void _setupCoreServices() {
+  if (!getIt.isRegistered<StorageService>()) {
+    getIt.registerLazySingletonAsync<StorageService>(
+      () async {
+        final preferences = await SharedPreferences.getInstance();
+        return SharedPreferencesStorageService(preferences);
+      },
+    );
+  }
+
   if (!getIt.isRegistered<ApiClient>()) {
     getIt.registerLazySingletonAsync<ApiClient>(
-      () => ApiClient.create(),
+      () => ApiClient.create(
+        branchIdProvider: () {
+          if (getIt.isRegistered<StorageService>() &&
+              getIt.isReadySync<StorageService>()) {
+            return getIt<StorageService>().selectedBranchId;
+          }
+          return null;
+        },
+      ),
     );
   }
 }
