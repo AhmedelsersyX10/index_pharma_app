@@ -1,5 +1,11 @@
 {
   "app_title": "إندكس فارما",
+  "splash": {
+    "brand_index": "Index",
+    "brand_pharma": "Pharma",
+    "slogan": "وضوح ورعاية",
+    "certified_platform": "منصة رعاية صحية معتمدة"
+  },
   "brand": {
     "name_index": "Index",
     "name_pharma": "Pharma",
@@ -19,6 +25,13 @@
     "filter": "تصفية"
   },
   "onboarding": {
+    "step_counter": "الخطوة {} من {}",
+    "skip": "تخطي",
+    "get_started": "ابدأ الآن",
+    "continue": "متابعة",
+    "start_exploring": "ابدأ الاستكشاف",
+    "already_have_account": "لديك حساب بالفعل؟ ",
+    "sign_in": "تسجيل الدخول",
     "welcome_message": "مرحباً بك في إندكس فارما!",
     "navigating_to_sign_in": "جاري الانتقال إلى تسجيل الدخول...",
     "page1": {

@@ -30,7 +30,7 @@ class OnboardingTopBar extends StatelessWidget {
         children: [
           // Step Counter Badge
           AppBadge.neutral(
-            label: AppLocaleKeys.commonStepCounter.tr(args: ['${currentPage + 1}', '$totalPages']),
+            label: AppLocaleKeys.onboardingStepCounter.tr(args: ['${currentPage + 1}', '$totalPages']),
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
           ),
 
@@ -49,7 +49,7 @@ class OnboardingTopBar extends StatelessWidget {
                   tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                 ),
                 child: Text(
-                  AppLocaleKeys.commonSkip.tr(),
+                  AppLocaleKeys.onboardingSkip.tr(),
                   style: AppTypography.labelLg(color: AppColors.slate500),
                 ),
               ),

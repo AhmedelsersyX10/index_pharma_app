@@ -36,7 +36,7 @@ class SplashFooter extends StatelessWidget {
 
           // Trust Badge
           AppBadge.trust(
-            label: AppLocaleKeys.brandCertifiedPlatform.tr(),
+            label: AppLocaleKeys.splashCertifiedPlatform.tr(),
             icon: const Icon(Icons.verified_user_rounded, size: 14, color: AppColors.brandEmeraldDark),
           ),
         ],

@@ -58,7 +58,7 @@ class OnboardingBottomSection extends StatelessWidget {
           if (!isLastPage) ...[
             if (isFirstPage)
               AppButton.primary(
-                text: AppLocaleKeys.commonGetStarted.tr(),
+                text: AppLocaleKeys.onboardingGetStarted.tr(),
                 icon: forwardIcon,
                 height: 54,
                 onPressed: onNext,
@@ -90,7 +90,7 @@ class OnboardingBottomSection extends StatelessWidget {
                   // Next Action Button
                   Expanded(
                     child: AppButton.primary(
-                      text: AppLocaleKeys.commonContinue.tr(),
+                      text: AppLocaleKeys.onboardingContinue.tr(),
                       icon: forwardIcon,
                       height: 54,
                       onPressed: onNext,
@@ -101,7 +101,7 @@ class OnboardingBottomSection extends StatelessWidget {
           ] else ...[
             // Last Page: Hero CTA + Secondary Sign In link
             AppButton.primary(
-              text: AppLocaleKeys.commonStartExploring.tr(),
+              text: AppLocaleKeys.onboardingStartExploring.tr(),
               icon: forwardIcon,
               height: 54,
               onPressed: onDone,
@@ -113,13 +113,13 @@ class OnboardingBottomSection extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  AppLocaleKeys.commonAlreadyHaveAccount.tr(),
+                  AppLocaleKeys.onboardingAlreadyHaveAccount.tr(),
                   style: AppTypography.bodyMd(color: AppColors.slate500),
                 ),
                 GestureDetector(
                   onTap: onSignIn,
                   child: Text(
-                    AppLocaleKeys.commonSignIn.tr(),
+                    AppLocaleKeys.onboardingSignIn.tr(),
                     style: AppTypography.labelLg(color: AppColors.primaryBrand),
                   ),
                 ),

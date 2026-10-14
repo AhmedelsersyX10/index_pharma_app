@@ -2,7 +2,13 @@
 abstract class AppLocaleKeys {
   static const appTitle = 'app_title';
 
-  // Brand
+  // Splash
+  static const splashBrandIndex = 'splash.brand_index';
+  static const splashBrandPharma = 'splash.brand_pharma';
+  static const splashSlogan = 'splash.slogan';
+  static const splashCertifiedPlatform = 'splash.certified_platform';
+
+  // Legacy Brand (backwards compatibility)
   static const brandNameIndex = 'brand.name_index';
   static const brandNamePharma = 'brand.name_pharma';
   static const brandSlogan = 'brand.slogan';
@@ -21,6 +27,13 @@ abstract class AppLocaleKeys {
   static const commonFilter = 'common.filter';
 
   // Onboarding
+  static const onboardingStepCounter = 'onboarding.step_counter';
+  static const onboardingSkip = 'onboarding.skip';
+  static const onboardingGetStarted = 'onboarding.get_started';
+  static const onboardingContinue = 'onboarding.continue';
+  static const onboardingStartExploring = 'onboarding.start_exploring';
+  static const onboardingAlreadyHaveAccount = 'onboarding.already_have_account';
+  static const onboardingSignIn = 'onboarding.sign_in';
   static const onboardingWelcomeMessage = 'onboarding.welcome_message';
   static const onboardingNavigatingToSignIn = 'onboarding.navigating_to_sign_in';
 

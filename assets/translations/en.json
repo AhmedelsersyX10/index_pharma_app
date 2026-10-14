@@ -1,5 +1,11 @@
 {
   "app_title": "Index Pharma",
+  "splash": {
+    "brand_index": "Index",
+    "brand_pharma": "Pharma",
+    "slogan": "Clinical Clarity & Care",
+    "certified_platform": "Certified Healthcare Platform"
+  },
   "brand": {
     "name_index": "Index",
     "name_pharma": "Pharma",
@@ -19,6 +25,13 @@
     "filter": "Filter"
   },
   "onboarding": {
+    "step_counter": "Step {} of {}",
+    "skip": "Skip",
+    "get_started": "Get Started",
+    "continue": "Continue",
+    "start_exploring": "Start Exploring",
+    "already_have_account": "Already have an account? ",
+    "sign_in": "Sign In",
     "welcome_message": "Welcome to Index Pharma!",
     "navigating_to_sign_in": "Navigating to Sign In...",
     "page1": {
