@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:index_pharma/features/splash/presentation/view/splash_view.dart';
 import 'package:index_pharma/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -10,7 +11,8 @@ void main() {
     await EasyLocalization.ensureInitialized();
   });
 
-  testWidgets('IndexPharmaApp smoke test', (WidgetTester tester) async {
+  testWidgets('IndexPharmaApp smoke test - launches to SplashView',
+      (WidgetTester tester) async {
     await tester.pumpWidget(
       EasyLocalization(
         supportedLocales: const [Locale('ar'), Locale('en')],
@@ -23,6 +25,7 @@ void main() {
     );
     await tester.pump();
     expect(find.byType(IndexPharmaApp), findsOneWidget);
+    expect(find.byType(SplashView), findsOneWidget);
     await tester.pump(const Duration(seconds: 4));
   });
 }
