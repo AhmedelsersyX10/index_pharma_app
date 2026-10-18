@@ -30,4 +30,7 @@ abstract interface class AuthRepository {
   ///
   /// Relies on the HttpOnly session cookie managed by the network client.
   Future<ApiResult<UserEntity>> getMe();
+
+  /// Logs out the current user session and clears authentication cookies.
+  Future<ApiResult<void>> logout();
 }

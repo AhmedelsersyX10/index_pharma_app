@@ -22,4 +22,7 @@ abstract interface class AuthRemoteDataSource {
 
   /// Calls `GET /auth/me` to fetch current user profile and role.
   Future<UserModel> getMe();
+
+  /// Calls `POST /auth/logout` to end the session and invalidate cookies.
+  Future<void> logout();
 }

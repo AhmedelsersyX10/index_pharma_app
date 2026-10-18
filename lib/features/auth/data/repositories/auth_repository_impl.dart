@@ -70,4 +70,16 @@ class AuthRepositoryImpl implements AuthRepository {
       return Err(Unexpected(serverMessage: e.toString()));
     }
   }
+
+  @override
+  Future<ApiResult<void>> logout() async {
+    try {
+      await _remoteDataSource.logout();
+      return const Success(null);
+    } on DioException catch (e) {
+      return Err(e.toFailure());
+    } catch (e) {
+      return Err(Unexpected(serverMessage: e.toString()));
+    }
+  }
 }

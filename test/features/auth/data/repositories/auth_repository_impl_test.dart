@@ -43,6 +43,13 @@ class FakeAuthRemoteDataSource implements AuthRemoteDataSource {
     }
     return mockUser!;
   }
+
+  @override
+  Future<void> logout() async {
+    if (errorToThrow != null) {
+      throw errorToThrow!;
+    }
+  }
 }
 
 void main() {
@@ -258,6 +265,37 @@ void main() {
       final err = result as Err<UserEntity>;
       expect(err.failure, isA<Validation>());
       expect(err.failure.serverMessage, 'طلب غير صالح');
+    });
+  });
+
+  group('AuthRepositoryImpl - logout', () {
+    test('returns Success<void> when data source succeeds', () async {
+      final result = await repository.logout();
+
+      expect(result, isA<Success<void>>());
+    });
+
+    test('returns Err<void> with Network on connection error', () async {
+      fakeRemoteDataSource.errorToThrow = DioException(
+        requestOptions: testRequestOptions,
+        type: DioExceptionType.connectionError,
+      );
+
+      final result = await repository.logout();
+
+      expect(result, isA<Err<void>>());
+      final err = result as Err<void>;
+      expect(err.failure, isA<Network>());
+    });
+
+    test('returns Err<void> with Unexpected on generic exception', () async {
+      fakeRemoteDataSource.errorToThrow = Exception('Unknown error');
+
+      final result = await repository.logout();
+
+      expect(result, isA<Err<void>>());
+      final err = result as Err<void>;
+      expect(err.failure, isA<Unexpected>());
     });
   });
 }

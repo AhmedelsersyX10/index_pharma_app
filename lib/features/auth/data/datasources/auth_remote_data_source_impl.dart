@@ -59,6 +59,13 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     return _extractUser(response.data, 'data');
   }
 
+  @override
+  Future<void> logout() async {
+    await _dio.post<dynamic>(
+      '/auth/logout',
+    );
+  }
+
   UserModel _extractUser(dynamic data, String key) {
     if (data is Map) {
       final userJson = data[key];
