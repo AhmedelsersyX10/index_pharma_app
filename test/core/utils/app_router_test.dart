@@ -19,11 +19,12 @@ void main() {
       final appRouter = AppRouter();
       final routes = appRouter.router.configuration.routes;
 
-      expect(routes.length, equals(7));
+      expect(routes.length, equals(8));
       final routePaths = routes.whereType<GoRoute>().map((r) => r.path).toList();
       expect(routePaths, contains('/'));
       expect(routePaths, contains(AppRouter.kOnboardingView));
       expect(routePaths, contains(AppRouter.kStoreView));
+      expect(routePaths, contains(AppRouter.kBranchSelectionView));
       expect(routePaths, contains(AppRouter.kLoginView));
       expect(routePaths, contains(AppRouter.kRegisterView));
       expect(routePaths, contains(AppRouter.kStaffDashboardView));

@@ -115,5 +115,30 @@
       "server": "Server error, please try again later.",
       "unexpected": "An unexpected error occurred, please try again."
     }
+  },
+  "branch_selection": {
+    "title": "Branch Selection",
+    "region_title": "Cairo & Giza Governorates",
+    "active_branches_count": "{} active branches",
+    "single_active_branch": "1 active branch",
+    "auto_locate": "Auto Locate",
+    "headline": "Choose the nearest branch",
+    "subheadline": "Prices, medication availability, compounds, and delivery speed depend accurately on your selected branch",
+    "main_branch_badge": "Main Branch",
+    "active_branch_badge": "Currently Active Branch",
+    "selected_now": "Selected",
+    "open_24_hours": "Open 24/7 • All week",
+    "stock_ready": "Full medication stock • Delivery active",
+    "delivery_time": "Delivery: 30-45 mins",
+    "cold_chain_title": "Guaranteed Cold Chain Delivery",
+    "cold_chain_desc": "All insulin and vaccines are transported in specialized temperature-controlled bags (2-8°C) from the branch to your door.",
+    "approved_branch": "Selected Branch:",
+    "available_now": "Available Now",
+    "confirm_and_continue": "Confirm Branch & Continue Shopping",
+    "select_branch_prompt": "Please select a branch to proceed",
+    "empty_branches_title": "No Branches Available",
+    "empty_branches_desc": "We are currently expanding and activating new branches to serve you soon.",
+    "fetch_error_title": "Failed to load branches",
+    "fetch_error_desc": "An error occurred while loading pharmacy branches. Please try again."
   }
 }

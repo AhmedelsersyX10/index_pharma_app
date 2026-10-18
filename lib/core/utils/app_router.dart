@@ -11,6 +11,7 @@ import 'package:index_pharma/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:index_pharma/features/auth/presentation/cubit/auth_state.dart';
 import 'package:index_pharma/features/auth/presentation/screens/login_screen.dart';
 import 'package:index_pharma/features/auth/presentation/screens/register_screen.dart';
+import 'package:index_pharma/features/choose_branshs/presentation/screens/branch_selection_screen.dart';
 import 'package:index_pharma/features/onbording/presentation/view/onboarding_view.dart';
 import 'package:index_pharma/features/splash/presentation/view/splash_view.dart';
 
@@ -36,6 +37,7 @@ class AppRouter {
   static const kSplashView = '/';
   static const kOnboardingView = '/onboardingView';
   static const kStoreView = '/store';
+  static const kBranchSelectionView = '/choose-branch';
   static const kLoginView = '/login';
   static const kRegisterView = '/register';
   static const kStaffDashboardView = '/staff';
@@ -161,6 +163,10 @@ class AppRouter {
           authCubit: _activeAuthCubit,
           onNavigateToLogin: () => context.go(kLoginView),
         ),
+      ),
+      GoRoute(
+        path: kBranchSelectionView,
+        builder: (context, state) => const BranchSelectionScreen(),
       ),
       GoRoute(
         path: kStoreView,

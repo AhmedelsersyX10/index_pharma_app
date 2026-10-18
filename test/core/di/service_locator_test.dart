@@ -74,9 +74,8 @@ void main() {
           .whereType<GoRoute>()
           .map((r) => r.path)
           .toList();
-      expect(routePaths, contains('/'));
-      expect(routePaths, contains(AppRouter.kOnboardingView));
-      expect(appRouter.router.configuration.routes.length, equals(7));
+      expect(routePaths, contains(AppRouter.kBranchSelectionView));
+      expect(appRouter.router.configuration.routes.length, equals(8));
     });
   });
 }
