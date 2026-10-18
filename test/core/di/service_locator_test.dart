@@ -1,4 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
+import 'package:go_router/go_router.dart';
 import 'package:index_pharma/core/di/service_locator.dart';
 import 'package:index_pharma/core/network/api_client.dart';
 import 'package:index_pharma/core/storage/storage_service.dart';
@@ -69,8 +70,13 @@ void main() {
 
       final appRouter = getIt<AppRouter>();
       expect(appRouter, isA<AppRouter>());
-      expect(appRouter.router, isNotNull);
-      expect(appRouter.router.configuration.routes.length, equals(2));
+      final routePaths = appRouter.router.configuration.routes
+          .whereType<GoRoute>()
+          .map((r) => r.path)
+          .toList();
+      expect(routePaths, contains('/'));
+      expect(routePaths, contains(AppRouter.kOnboardingView));
+      expect(appRouter.router.configuration.routes.length, equals(7));
     });
   });
 }

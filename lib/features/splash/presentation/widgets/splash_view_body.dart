@@ -1,21 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
+import 'package:index_pharma/core/di/service_locator.dart';
+import 'package:index_pharma/core/storage/storage_service.dart';
 import 'package:index_pharma/core/theme/theme.dart';
 import 'package:index_pharma/core/utils/app_router.dart';
+import 'package:index_pharma/features/auth/domain/entities/user.dart';
+import 'package:index_pharma/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:index_pharma/features/auth/presentation/cubit/auth_state.dart';
 import 'package:index_pharma/features/splash/presentation/widgets/splash_background.dart';
 import 'package:index_pharma/features/splash/presentation/widgets/splash_brand_text.dart';
 import 'package:index_pharma/features/splash/presentation/widgets/splash_footer.dart';
 import 'package:index_pharma/features/splash/presentation/widgets/splash_logo.dart';
 
 class SplashViewBody extends StatefulWidget {
-  const SplashViewBody({super.key});
+  const SplashViewBody({
+    super.key,
+    this.authCubit,
+    this.storageService,
+    this.minSplashDuration = const Duration(milliseconds: 2200),
+  });
+
+  final AuthCubit? authCubit;
+  final StorageService? storageService;
+  final Duration minSplashDuration;
 
   @override
   State<SplashViewBody> createState() => _SplashViewBodyState();
 }
 
-class _SplashViewBodyState extends State<SplashViewBody> with SingleTickerProviderStateMixin {
+class _SplashViewBodyState extends State<SplashViewBody>
+    with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
   late final Animation<double> _logoScale;
   late final Animation<double> _logoFade;
@@ -28,7 +43,10 @@ class _SplashViewBodyState extends State<SplashViewBody> with SingleTickerProvid
   void initState() {
     super.initState();
 
-    _controller = AnimationController(vsync: this, duration: const Duration(milliseconds: 2200));
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 2200),
+    );
 
     _logoFade = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(
@@ -73,14 +91,71 @@ class _SplashViewBodyState extends State<SplashViewBody> with SingleTickerProvid
     );
 
     _controller.forward();
-    _scheduleNavigation();
+    _bootstrapAndNavigate();
   }
 
-  void _scheduleNavigation() {
-    Future.delayed(const Duration(milliseconds: 2800), () {
-      if (!mounted) return;
+  Future<void> _bootstrapAndNavigate() async {
+    final timerFuture = Future.delayed(widget.minSplashDuration);
+
+    // 1. Resolve StorageService
+    StorageService? storage = widget.storageService;
+    if (storage == null && getIt.isRegistered<StorageService>()) {
+      try {
+        if (getIt.isReadySync<StorageService>()) {
+          storage = getIt<StorageService>();
+        } else {
+          storage = await getIt.getAsync<StorageService>();
+        }
+      } catch (_) {
+        // Fallback gracefully
+      }
+    }
+
+    // 2. Resolve AuthCubit and restoreSession()
+    AuthCubit? auth = widget.authCubit;
+    if (auth == null && getIt.isRegistered<AuthCubit>()) {
+      try {
+        auth = getIt<AuthCubit>();
+      } catch (_) {
+        // Fallback gracefully
+      }
+    }
+
+    if (auth != null) {
+      try {
+        await auth.restoreSession();
+      } catch (_) {
+        // Handle session restore network or unknown error gracefully
+      }
+    }
+
+    // Wait for minimum splash animation duration
+    await timerFuture;
+
+    if (!mounted) return;
+
+    final bool onboardingSeen = storage?.onboardingSeen ?? false;
+    if (!onboardingSeen) {
       context.go(AppRouter.kOnboardingView);
-    });
+      return;
+    }
+
+    final authState = auth?.state ?? const AuthGuest();
+    switch (authState) {
+      case AuthAuthenticated(:final user):
+        if (user.role == UserRole.pharmacist ||
+            user.role == UserRole.admin ||
+            user.role == UserRole.superadmin) {
+          context.go(AppRouter.kStaffDashboardView);
+        } else {
+          context.go(AppRouter.kStoreView);
+        }
+      case AuthGuest():
+      case AuthInitial():
+      case AuthLoading():
+      case AuthFailure():
+        context.go(AppRouter.kStoreView);
+    }
   }
 
   @override
@@ -92,7 +167,9 @@ class _SplashViewBodyState extends State<SplashViewBody> with SingleTickerProvid
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: SystemUiOverlayStyle.dark.copyWith(statusBarColor: Colors.transparent),
+      value: SystemUiOverlayStyle.dark.copyWith(
+        statusBarColor: Colors.transparent,
+      ),
       child: Scaffold(
         backgroundColor: AppColors.background,
         body: Stack(
@@ -104,19 +181,27 @@ class _SplashViewBodyState extends State<SplashViewBody> with SingleTickerProvid
             SafeArea(
               child: Center(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: AppSpacing.spaceXl),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: AppSpacing.spaceXl,
+                  ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Spacer(flex: 3),
 
                       // Animated Logo with Ambient Elevation
-                      SplashLogo(logoFade: _logoFade, logoScale: _logoScale),
+                      SplashLogo(
+                        logoFade: _logoFade,
+                        logoScale: _logoScale,
+                      ),
 
                       AppSpacing.vSpaceLg,
 
                       // Animated Brand Typography & Slogan
-                      SplashBrandText(textFade: _textFade, textSlide: _textSlide),
+                      SplashBrandText(
+                        textFade: _textFade,
+                        textSlide: _textSlide,
+                      ),
 
                       const Spacer(flex: 3),
 

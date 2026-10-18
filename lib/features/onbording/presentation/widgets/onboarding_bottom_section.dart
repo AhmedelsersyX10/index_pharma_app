@@ -12,6 +12,8 @@ class OnboardingBottomSection extends StatelessWidget {
   final VoidCallback onPrevious;
   final VoidCallback onDone;
   final VoidCallback onSignIn;
+  final VoidCallback? onRegister;
+  final VoidCallback? onExplore;
 
   const OnboardingBottomSection({
     super.key,
@@ -21,6 +23,8 @@ class OnboardingBottomSection extends StatelessWidget {
     required this.onPrevious,
     required this.onDone,
     required this.onSignIn,
+    this.onRegister,
+    this.onExplore,
   });
 
   @override
@@ -99,12 +103,14 @@ class OnboardingBottomSection extends StatelessWidget {
                 ],
               ),
           ] else ...[
-            // Last Page: Hero CTA + Secondary Sign In link
+            // Last Page: Primary CTA (Register / Create Account)
             AppButton.primary(
-              text: AppLocaleKeys.onboardingStartExploring.tr(),
+              text: onRegister != null
+                  ? AppLocaleKeys.authCreateAccountLink.tr()
+                  : AppLocaleKeys.onboardingStartExploring.tr(),
               icon: forwardIcon,
               height: 54,
-              onPressed: onDone,
+              onPressed: onRegister ?? onDone,
             ),
 
             const SizedBox(height: AppSpacing.gutterSm),
@@ -125,6 +131,17 @@ class OnboardingBottomSection extends StatelessWidget {
                 ),
               ],
             ),
+
+            if (onExplore != null) ...[
+              const SizedBox(height: AppSpacing.gutterSm),
+              GestureDetector(
+                onTap: onExplore,
+                child: Text(
+                  AppLocaleKeys.onboardingStartExploring.tr(),
+                  style: AppTypography.labelMd(color: AppColors.slate500),
+                ),
+              ),
+            ],
           ],
         ],
       ),

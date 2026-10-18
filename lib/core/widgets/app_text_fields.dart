@@ -1,4 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
+import 'package:easy_localization/easy_localization.dart' hide TextDirection;
 import 'package:flutter/material.dart';
 import 'package:index_pharma/core/localization/app_locale_keys.dart';
 import 'package:index_pharma/core/theme/theme.dart';
@@ -75,12 +75,20 @@ class AppSearchBar extends StatelessWidget {
 class AppTextField extends StatelessWidget {
   final TextEditingController? controller;
   final String? label;
+  final Widget? trailingLabelWidget;
+  final Widget? helper;
   final String? hintText;
   final String? errorText;
   final Widget? prefix;
   final Widget? suffix;
   final bool obscureText;
   final TextInputType keyboardType;
+  final TextInputAction? textInputAction;
+  final FocusNode? focusNode;
+  final int maxLines;
+  final bool? enabled;
+  final AutovalidateMode? autovalidateMode;
+  final TextDirection? textDirection;
   final ValueChanged<String>? onChanged;
   final FormFieldValidator<String>? validator;
 
@@ -88,12 +96,20 @@ class AppTextField extends StatelessWidget {
     super.key,
     this.controller,
     this.label,
+    this.trailingLabelWidget,
+    this.helper,
     this.hintText,
     this.errorText,
     this.prefix,
     this.suffix,
     this.obscureText = false,
     this.keyboardType = TextInputType.text,
+    this.textInputAction,
+    this.focusNode,
+    this.maxLines = 1,
+    this.enabled,
+    this.autovalidateMode,
+    this.textDirection,
     this.onChanged,
     this.validator,
   });
@@ -103,14 +119,29 @@ class AppTextField extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (label != null) ...[
-          Text(label!, style: AppTypography.labelMd(color: AppColors.slate700)),
+        if (label != null || trailingLabelWidget != null) ...[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              if (label != null)
+                Text(label!, style: AppTypography.labelMd(color: AppColors.slate700))
+              else
+                const SizedBox.shrink(),
+              ?trailingLabelWidget,
+            ],
+          ),
           const SizedBox(height: AppSpacing.spaceXs),
         ],
         TextFormField(
           controller: controller,
           obscureText: obscureText,
           keyboardType: keyboardType,
+          textInputAction: textInputAction,
+          focusNode: focusNode,
+          maxLines: maxLines,
+          enabled: enabled,
+          autovalidateMode: autovalidateMode,
+          textDirection: textDirection,
           onChanged: onChanged,
           validator: validator,
           style: AppTypography.bodyMd(color: AppColors.onSurface),
@@ -121,6 +152,10 @@ class AppTextField extends StatelessWidget {
             suffixIcon: suffix,
           ),
         ),
+        if (helper case final helperWidget?) ...[
+          const SizedBox(height: AppSpacing.space2xs),
+          helperWidget,
+        ],
       ],
     );
   }

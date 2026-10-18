@@ -5,19 +5,29 @@ import 'package:index_pharma/core/utils/app_router.dart';
 
 void main() {
   group('AppRouter', () {
-    test('exposes route constants unchanged', () {
+    test('exposes route constants unchanged and with expected paths', () {
       expect(AppRouter.kSplashView, equals('/'));
       expect(AppRouter.kOnboardingView, equals('/onboardingView'));
+      expect(AppRouter.kStoreView, equals('/store'));
+      expect(AppRouter.kLoginView, equals('/login'));
+      expect(AppRouter.kRegisterView, equals('/register'));
+      expect(AppRouter.kStaffDashboardView, equals('/staff'));
+      expect(AppRouter.kBranchManagementView, equals('/admin/branches'));
     });
 
-    test('creates GoRouter with existing routes (splash and onboarding)', () {
+    test('creates GoRouter with existing routes and required role routes', () {
       final appRouter = AppRouter();
       final routes = appRouter.router.configuration.routes;
 
-      expect(routes.length, equals(2));
+      expect(routes.length, equals(7));
       final routePaths = routes.whereType<GoRoute>().map((r) => r.path).toList();
       expect(routePaths, contains('/'));
       expect(routePaths, contains(AppRouter.kOnboardingView));
+      expect(routePaths, contains(AppRouter.kStoreView));
+      expect(routePaths, contains(AppRouter.kLoginView));
+      expect(routePaths, contains(AppRouter.kRegisterView));
+      expect(routePaths, contains(AppRouter.kStaffDashboardView));
+      expect(routePaths, contains(AppRouter.kBranchManagementView));
     });
 
     test('accepts optional refreshListenable without error and listens to it', () {

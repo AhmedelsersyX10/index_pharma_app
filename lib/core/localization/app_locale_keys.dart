@@ -60,4 +60,60 @@ abstract class AppLocaleKeys {
   static const onboardingPage3Title = 'onboarding.page3.title';
   static const onboardingPage3Description = 'onboarding.page3.description';
   static const onboardingPage3Perk = 'onboarding.page3.perk';
+
+  // Auth - General & Login
+  static const authLoginTitle = 'auth.login_title';
+  static const authLoginSubtitle = 'auth.login_subtitle';
+  static const authClinicalBadge = 'auth.clinical_badge';
+  static const authLoginCardTitle = 'auth.login_card_title';
+  static const authLoginCardSubtitle = 'auth.login_card_subtitle';
+  static const authEmailLabel = 'auth.email_label';
+  static const authEmailHint = 'auth.email_hint';
+  static const authPasswordLabel = 'auth.password_label';
+  static const authPasswordHint = 'auth.password_hint';
+  static const authPasswordSecureHint = 'auth.password_secure_hint';
+  static const authSignInButton = 'auth.sign_in_button';
+  static const authNoAccountPrompt = 'auth.no_account_prompt';
+  static const authCreateAccountLink = 'auth.create_account_link';
+  static const authGuestTitle = 'auth.guest_title';
+  static const authGuestSubtitle = 'auth.guest_subtitle';
+  static const authGuestButton = 'auth.guest_button';
+  static const authDataSecurityNote = 'auth.data_security_note';
+
+  // Auth - Register
+  static const authRegisterBadge = 'auth.register_badge';
+  static const authRegisterTitle = 'auth.register_title';
+  static const authRegisterSubtitle = 'auth.register_subtitle';
+  static const authNameLabel = 'auth.name_label';
+  static const authNameHint = 'auth.name_hint';
+  static const authPhoneLabel = 'auth.phone_label';
+  static const authPhoneHint = 'auth.phone_hint';
+  static const authPhoneNote = 'auth.phone_note';
+  static const authAddressLabel = 'auth.address_label';
+  static const authAddressHint = 'auth.address_hint';
+  static const authOptionalBadge = 'auth.optional_badge';
+  static const authPasswordRequirement = 'auth.password_requirement';
+  static const authRegisterButton = 'auth.register_button';
+  static const authAlreadyHaveAccount = 'auth.already_have_account';
+  static const authSignInLink = 'auth.sign_in_link';
+  static const authMedicalConfidentialityTitle = 'auth.medical_confidentiality_title';
+  static const authMedicalConfidentialityDesc = 'auth.medical_confidentiality_desc';
+
+  // Auth - Validation
+  static const authValidationEmailRequired = 'auth.validation.email_required';
+  static const authValidationEmailInvalid = 'auth.validation.email_invalid';
+  static const authValidationPasswordRequired = 'auth.validation.password_required';
+  static const authValidationPasswordTooShort = 'auth.validation.password_too_short';
+  static const authValidationNameRequired = 'auth.validation.name_required';
+
+  // Auth - Errors & Failures
+  static const authErrorLoginFailedTitle = 'auth.error.login_failed_title';
+  static const authErrorInvalidCredentials = 'auth.error.invalid_credentials';
+  static const authErrorRegisterFailedTitle = 'auth.error.register_failed_title';
+  static const authErrorEmailAlreadyExistsTitle = 'auth.error.email_already_exists_title';
+  static const authErrorEmailAlreadyExistsDesc = 'auth.error.email_already_exists_desc';
+  static const authErrorNetwork = 'auth.error.network';
+  static const authErrorTimeout = 'auth.error.timeout';
+  static const authErrorServer = 'auth.error.server';
+  static const authErrorUnexpected = 'auth.error.unexpected';
 }
