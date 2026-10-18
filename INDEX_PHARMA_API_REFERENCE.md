@@ -1,7 +1,8 @@
 # Index Pharma API Reference
 
 > مرجع عملي لمبرمج Flutter + ملف تجارب للـ API.  
-> مبني على Backend نسخة Web/Customer التي نعمل عليها، وليس Desktop UI.
+> مبني على Backend نسخة Web/Customer التي نعمل عليها، وليس Desktop UI.  
+> **مرجع العينات الحقيقية من كود الـ main:** راجع [REAL_API_SAMPLES_REFERENCE.md](file:///Users/ahmedelsersy/Home/StudioProjects/1-Projects%D9%80google%D9%80play/index_pharma_store/REAL_API_SAMPLES_REFERENCE.md).
 
 ## 1) Base URL
 
