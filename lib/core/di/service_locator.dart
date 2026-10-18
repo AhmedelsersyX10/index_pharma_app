@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:index_pharma/features/auth/di/auth_di.dart';
 import 'package:index_pharma/features/choose_branshs/di/branch_di.dart';
+import 'package:index_pharma/features/settings/di/settings_di.dart';
 
 /// Global service locator instance.
 final GetIt getIt = GetIt.instance;
@@ -63,4 +64,5 @@ void _setupCoreServices() {
 void _setupFeatureDependencies() {
   setupAuthDependencies(getIt);
   setupBranchDependencies(getIt);
+  setupSettingsDependencies(getIt);
 }
