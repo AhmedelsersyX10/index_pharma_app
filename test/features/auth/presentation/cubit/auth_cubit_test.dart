@@ -245,6 +245,28 @@ void main() {
         ],
       );
     });
+
+    test('emits [AuthLoading, AuthFailure] when login fails with Network', () async {
+      const netFailure = Network(serverMessage: 'لا يوجد اتصال بالإنترنت');
+      fakeRepository.loginResult = const Err(netFailure);
+
+      final states = <AuthState>[];
+      cubit.stream.listen(states.add);
+
+      await cubit.login(
+        email: 'ahmed@indexpharma.com',
+        password: 'Password123',
+      );
+      await pumpEventQueue();
+
+      expect(
+        states,
+        [
+          const AuthLoading(),
+          const AuthFailure(netFailure),
+        ],
+      );
+    });
   });
 
   group('AuthCubit - register', () {
@@ -336,6 +358,26 @@ void main() {
         [
           const AuthLoading(),
           const AuthFailure(serverFailure),
+        ],
+      );
+      expect(fakeRepository.logoutCallCount, 1);
+    });
+
+    test('emits [AuthLoading, AuthFailure] when logout encounters Network failure', () async {
+      const netFailure = Network(serverMessage: 'لا يوجد اتصال');
+      fakeRepository.logoutResult = const Err(netFailure);
+
+      final states = <AuthState>[];
+      cubit.stream.listen(states.add);
+
+      await cubit.logout();
+      await pumpEventQueue();
+
+      expect(
+        states,
+        [
+          const AuthLoading(),
+          const AuthFailure(netFailure),
         ],
       );
       expect(fakeRepository.logoutCallCount, 1);

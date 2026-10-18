@@ -225,6 +225,24 @@ void main() {
       expect(err.failure, isA<Unauthorized>());
       expect(err.failure.serverMessage, 'غير مصرح');
     });
+
+    test('returns Err<UserEntity> with Conflict on HTTP 409', () async {
+      fakeRemoteDataSource.errorToThrow = createDioResponseException(
+        statusCode: 409,
+        data: {'success': false, 'message': 'البريد الإلكتروني مسجل بالفعل'},
+      );
+
+      final result = await repository.register(
+        name: 'Ahmed Mostafa',
+        email: 'ahmed@example.com',
+        password: 'Password123',
+      );
+
+      expect(result, isA<Err<UserEntity>>());
+      final err = result as Err<UserEntity>;
+      expect(err.failure, isA<Conflict>());
+      expect(err.failure.serverMessage, 'البريد الإلكتروني مسجل بالفعل');
+    });
   });
 
   group('AuthRepositoryImpl - getMe', () {
@@ -266,7 +284,48 @@ void main() {
       expect(err.failure, isA<Validation>());
       expect(err.failure.serverMessage, 'طلب غير صالح');
     });
+
+    test('returns Err<UserEntity> with Forbidden on HTTP 403', () async {
+      fakeRemoteDataSource.errorToThrow = createDioResponseException(
+        statusCode: 403,
+        data: {'success': false, 'message': 'الحساب معطل'},
+      );
+
+      final result = await repository.getMe();
+
+      expect(result, isA<Err<UserEntity>>());
+      final err = result as Err<UserEntity>;
+      expect(err.failure, isA<Forbidden>());
+      expect(err.failure.serverMessage, 'الحساب معطل');
+    });
+
+    test('returns Err<UserEntity> with Server on HTTP 500', () async {
+      fakeRemoteDataSource.errorToThrow = createDioResponseException(
+        statusCode: 500,
+        data: {'success': false, 'message': 'خطأ داخلي في الخادم'},
+      );
+
+      final result = await repository.getMe();
+
+      expect(result, isA<Err<UserEntity>>());
+      final err = result as Err<UserEntity>;
+      expect(err.failure, isA<Server>());
+    });
+
+    test('returns Err<UserEntity> with Network on connection error', () async {
+      fakeRemoteDataSource.errorToThrow = DioException(
+        requestOptions: testRequestOptions,
+        type: DioExceptionType.connectionError,
+      );
+
+      final result = await repository.getMe();
+
+      expect(result, isA<Err<UserEntity>>());
+      final err = result as Err<UserEntity>;
+      expect(err.failure, isA<Network>());
+    });
   });
+
 
   group('AuthRepositoryImpl - logout', () {
     test('returns Success<void> when data source succeeds', () async {

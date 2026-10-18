@@ -358,6 +358,15 @@ void main() {
         equals(AppRouter.kStaffDashboardView),
       );
 
+      // Admin visits /login -> redirected to /staff
+      expect(
+        AppRouter.redirectGuard(
+          authState: AuthAuthenticated(adminUser),
+          location: AppRouter.kLoginView,
+        ),
+        equals(AppRouter.kStaffDashboardView),
+      );
+
       // Superadmin visits /register -> redirected to /staff
       expect(
         AppRouter.redirectGuard(
@@ -657,5 +666,37 @@ void main() {
         equals(AppRouter.kStaffDashboardView),
       );
     });
+
+    testWidgets(
+        'when onboardingSeen is true and session is unauthenticated (guest), routes to store',
+        (tester) async {
+      tester.view.physicalSize = const Size(1080, 2400);
+      tester.view.devicePixelRatio = 2.0;
+      addTearDown(() {
+        tester.view.resetPhysicalSize();
+        tester.view.resetDevicePixelRatio();
+      });
+
+      authRepo.getMeResult = const Err(Unauthorized());
+      final storage = FakeStorageService(onboardingSeen: true);
+
+      final appRouter = AppRouter(
+        authCubit: authCubit,
+        storageService: storage,
+        initialLocation: AppRouter.kSplashView,
+      );
+
+      await tester.pumpWidget(createTestApp(appRouter.router));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 2500));
+      await tester.pumpAndSettle();
+
+      expect(authRepo.restoreSessionCalls, equals(1));
+      expect(
+        appRouter.router.state.matchedLocation,
+        equals(AppRouter.kStoreView),
+      );
+    });
   });
 }
+

@@ -355,5 +355,61 @@ void main() {
       expect(json['monthlyTarget'], 1000);
       expect(json['createdAt'], '2026-10-10T12:00:00.000Z');
     });
+
+    test('UserPermissionsModel.fromEntity converts entity correctly', () {
+      const entity = UserPermissions(
+        editPrice: true,
+        manageTransfers: false,
+        viewPrescriptions: true,
+        viewReports: false,
+        viewReturns: true,
+      );
+
+      final model = UserPermissionsModel.fromEntity(entity);
+
+      expect(model.editPrice, isTrue);
+      expect(model.manageTransfers, isFalse);
+      expect(model.viewPrescriptions, isTrue);
+      expect(model.viewReports, isFalse);
+      expect(model.viewReturns, isTrue);
+    });
+
+    test('UserModel and UserPermissionsModel equality, hashCode, and toString', () {
+      const perm1 = UserPermissionsModel(editPrice: true);
+      const perm2 = UserPermissionsModel(editPrice: true);
+      const perm3 = UserPermissionsModel(editPrice: false);
+
+      expect(perm1, equals(perm2));
+      expect(perm1.hashCode, equals(perm2.hashCode));
+      expect(perm1 == perm3, isFalse);
+      expect(perm1.toString(), contains('UserPermissionsModel'));
+
+      const user1 = UserModel(
+        id: 'u-1',
+        name: 'User One',
+        email: 'user1@test.com',
+        role: 'customer',
+        permissions: perm1,
+      );
+      const user2 = UserModel(
+        id: 'u-1',
+        name: 'User One',
+        email: 'user1@test.com',
+        role: 'customer',
+        permissions: perm1,
+      );
+      const user3 = UserModel(
+        id: 'u-2',
+        name: 'User Two',
+        email: 'user2@test.com',
+        role: 'admin',
+      );
+
+      expect(user1, equals(user2));
+      expect(user1.hashCode, equals(user2.hashCode));
+      expect(user1 == user3, isFalse);
+      expect(user1.toString(), contains('UserModel(id: u-1'));
+    });
   });
 }
+

@@ -166,6 +166,21 @@ void main() {
       expect((capturedOptions.data as Map).containsKey('phone'), isFalse);
       expect((capturedOptions.data as Map).containsKey('address'), isFalse);
     });
+
+    test('throws FormatException if user key is missing in register response', () async {
+      dio.httpClientAdapter = _FakeHttpClientAdapter((options) async {
+        return jsonResponse({'success': true}, 201);
+      });
+
+      expect(
+        () => dataSource.register(
+          name: 'Customer',
+          email: 'customer@test.com',
+          password: 'Password123',
+        ),
+        throwsA(isA<FormatException>()),
+      );
+    });
   });
 
   group('AuthRemoteDataSourceImpl - getMe', () {
@@ -215,4 +230,33 @@ void main() {
       );
     });
   });
+
+  group('AuthRemoteDataSourceImpl - logout', () {
+    test('sends POST /auth/logout', () async {
+      dio.httpClientAdapter = _FakeHttpClientAdapter((options) async {
+        capturedOptions = options;
+        return jsonResponse({'success': true}, 200);
+      });
+
+      await dataSource.logout();
+
+      expect(capturedOptions.method, 'POST');
+      expect(capturedOptions.path, '/auth/logout');
+    });
+
+    test('rethrows DioException when logout call fails', () async {
+      dio.httpClientAdapter = _FakeHttpClientAdapter((options) async {
+        throw DioException(
+          requestOptions: options,
+          type: DioExceptionType.connectionError,
+        );
+      });
+
+      expect(
+        () => dataSource.logout(),
+        throwsA(isA<DioException>()),
+      );
+    });
+  });
 }
+
