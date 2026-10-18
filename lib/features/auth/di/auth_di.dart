@@ -4,13 +4,15 @@ import '../data/datasources/auth_remote_data_source.dart';
 import '../data/datasources/auth_remote_data_source_impl.dart';
 import '../data/repositories/auth_repository_impl.dart';
 import '../domain/repositories/auth_repository.dart';
+import '../domain/services/permission_service.dart';
 import '../presentation/cubit/auth_cubit.dart';
+import '../presentation/cubit/auth_state.dart';
 
 /// Registers authentication feature dependencies into [GetIt].
 ///
 /// Follows project architectural rules:
 /// - Feature owns its DI setup.
-/// - Registers [AuthRemoteDataSource], [AuthRepository], and [AuthCubit].
+/// - Registers [AuthRemoteDataSource], [AuthRepository], [AuthCubit], and [PermissionService].
 /// - Wires [ApiClient.onSessionExpired] to [AuthCubit.onSessionExpired].
 /// - Safe against duplicate registration attempts.
 void setupAuthDependencies([GetIt? sl]) {
@@ -53,6 +55,20 @@ void setupAuthDependencies([GetIt? sl]) {
           });
         }
         return cubit;
+      },
+    );
+  }
+
+  if (!locator.isRegistered<PermissionService>()) {
+    locator.registerFactory<PermissionService>(
+      () {
+        if (locator.isRegistered<AuthCubit>()) {
+          final authState = locator<AuthCubit>().state;
+          if (authState is AuthAuthenticated) {
+            return PermissionService(authState.user);
+          }
+        }
+        return const PermissionService();
       },
     );
   }

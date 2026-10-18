@@ -7,6 +7,7 @@ import 'package:index_pharma/features/auth/data/datasources/auth_remote_data_sou
 import 'package:index_pharma/features/auth/data/repositories/auth_repository_impl.dart';
 import 'package:index_pharma/features/auth/di/auth_di.dart';
 import 'package:index_pharma/features/auth/domain/repositories/auth_repository.dart';
+import 'package:index_pharma/features/auth/domain/services/permission_service.dart';
 import 'package:index_pharma/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:index_pharma/features/auth/presentation/cubit/auth_state.dart';
 
@@ -26,6 +27,7 @@ void main() {
       expect(testGetIt.isRegistered<AuthRemoteDataSource>(), isFalse);
       expect(testGetIt.isRegistered<AuthRepository>(), isFalse);
       expect(testGetIt.isRegistered<AuthCubit>(), isFalse);
+      expect(testGetIt.isRegistered<PermissionService>(), isFalse);
 
       final fakeApiClient = ApiClient(
         dio: Dio(),
@@ -39,6 +41,11 @@ void main() {
       expect(testGetIt.isRegistered<AuthRemoteDataSource>(), isTrue);
       expect(testGetIt.isRegistered<AuthRepository>(), isTrue);
       expect(testGetIt.isRegistered<AuthCubit>(), isTrue);
+      expect(testGetIt.isRegistered<PermissionService>(), isTrue);
+
+      final permService = testGetIt<PermissionService>();
+      expect(permService, isA<PermissionService>());
+      expect(permService.currentUser, isNull);
 
       final repo = testGetIt<AuthRepository>();
       expect(repo, isA<AuthRepositoryImpl>());
@@ -65,11 +72,13 @@ void main() {
       expect(testGetIt.isRegistered<AuthRemoteDataSource>(), isTrue);
       expect(testGetIt.isRegistered<AuthRepository>(), isTrue);
       expect(testGetIt.isRegistered<AuthCubit>(), isTrue);
+      expect(testGetIt.isRegistered<PermissionService>(), isTrue);
 
       expect(() => setupAuthDependencies(testGetIt), returnsNormally);
       expect(testGetIt.isRegistered<AuthRemoteDataSource>(), isTrue);
       expect(testGetIt.isRegistered<AuthRepository>(), isTrue);
       expect(testGetIt.isRegistered<AuthCubit>(), isTrue);
+      expect(testGetIt.isRegistered<PermissionService>(), isTrue);
     });
   });
 }
