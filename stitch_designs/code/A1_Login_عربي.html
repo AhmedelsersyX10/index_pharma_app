@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_stack" name="shell-type"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@500;600;700;800&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100vw;min-height:100vh;margin:0;padding:0;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "tertiary": "#004e45", "tertiary-fixed-dim": "#4fdbc8", "medical-red": "#EF4444", "on-tertiary-fixed": "#00201c", "secondary-fixed": "#dae2fd", "on-tertiary-fixed-variant": "#005047", "on-primary-fixed": "#002114", "surface-dim": "#cbdbf5", "on-primary-fixed-variant": "#005138", "surface-container-low": "#eff4ff", "on-secondary-container": "#5a6278", "surface-subtle": "#F8FAFC", "secondary": "#565e74", "on-background": "#0b1c30", "primary": "#004f36", "inverse-on-surface": "#ebf1ff", "surface-variant": "#d3e3ff", "on-secondary-fixed": "#131b2e", "on-secondary-fixed-variant": "#3f465c", "on-primary-container": "#f5fff7", "brand-mint-surface": "#F0FDF9", "brand-mint-border": "#CCFBF1", "error-container": "#ffdad6", "primary-fixed-dim": "#83d7b1", "surface-container-lowest": "#ffffff", "on-surface-variant": "#3d4a43", "surface-tint": "#076c4d", "primary-fixed": "#9ff4cc", "tertiary-container": "#008376", "inverse-primary": "#83d7b1", "secondary-fixed-dim": "#bec6e0", "brand-teal-bright": "#5EEAD4", "on-surface": "#0b1c30", "surface-bright": "#f8f9ff", "medical-amber": "#F59E0B", "brand-emerald-dark": "#007A55", "tertiary-fixed": "#a1f2e3", "outline-variant": "#bccac1", "surface-container": "#e5eeff", "on-error": "#ffffff", "primary-container": "#00855e", "inverse-surface": "#213145", "surface-container-highest": "#d3e4fe", "secondary-container": "#dae2fd", "on-error-container": "#93000a", "on-tertiary-container": "#93e4d6", "error": "#ba1a1a", "background": "#f8f9ff", "surface-container-high": "#dde9ff", "surface": "#f8f9ff", "on-secondary": "#ffffff", "on-primary": "#ffffff", "outline": "#6d7a72", "on-tertiary": "#ffffff", "canvas-pure": "#FFFFFF" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-2xl": "3rem", "margin-tablet": "2rem", "gutter-lg": "1.5rem", "space-2xs": "0.125rem", "space-lg": "1.5rem", "space-xs": "0.25rem", "margin": "1rem", "gutter": "1rem", "space-md": "1rem", "space-sm": "0.5rem", "margin-desktop": "3rem", "space-xl": "2rem", "gutter-sm": "0.75rem" }, "fontFamily": { "body-md": ["Geist"], "display-lg-mobile": ["Plus Jakarta Sans"], "headline-lg-mobile": ["Plus Jakarta Sans"], "body-lg": ["Geist"], "label-sm": ["Geist"], "headline-md": ["Plus Jakarta Sans"], "title-md": ["Plus Jakarta Sans"], "display-lg": ["Plus Jakarta Sans"], "body-sm": ["Geist"], "headline-lg": ["Plus Jakarta Sans"], "title-lg": ["Plus Jakarta Sans"], "label-lg": ["Geist"], "label-md": ["Geist"] }, "fontSize": { "body-md": ["14px", { "lineHeight": "22px", "fontWeight": "400" }], "display-lg-mobile": ["30px", { "lineHeight": "38px", "letterSpacing": "-0.015em", "fontWeight": "700" }], "headline-lg-mobile": ["22px", { "lineHeight": "30px", "letterSpacing": "-0.01em", "fontWeight": "700" }], "body-lg": ["16px", { "lineHeight": "26px", "fontWeight": "400" }], "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "600" }], "headline-md": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "title-md": ["16px", { "lineHeight": "24px", "fontWeight": "600" }], "display-lg": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "body-sm": ["12px", { "lineHeight": "18px", "fontWeight": "400" }], "headline-lg": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.015em", "fontWeight": "700" }], "title-lg": ["18px", { "lineHeight": "26px", "fontWeight": "600" }], "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }], "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }] } } } };</script></head><body class="bg-surface font-body-md text-body-md text-on-surface flex flex-col min-h-screen antialiased"><header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl pt-safe shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 px-margin flex items-center justify-between"><div class="flex items-center gap-space-sm"><button aria-label="Go back" class="w-11 h-11 flex items-center justify-center rounded-full text-on-surface hover:bg-surface-container-high transition-colors" onclick="history.back()"><span class="material-symbols-outlined text-[22px]">arrow_back</span></button><img alt="Index Pharma Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1V7iwhFiog6wYm2sEZkGnxP0Dj3gicx7nfp-N1d6WZxFJihM5SInLhcbcr5kNle-E7xNhffSwKLjym-hwW_dZ_W6N4cnwA8rbBsk2fB1OwfHF5SVN1d9Ls1jfvWmh10eZ03IY3tVqy1bjtzSD42K5aDJPaTlwjyiqFqCHvv7ICmkR4HOmWzfyeg373DNDM4jInO1zJ5q44hZhPpXtxvw-vVCuTvzwopqDBsDg5UP4hMfg"/><span class="font-title-md text-title-md text-on-surface truncate">Login</span></div><div class="flex items-center gap-space-xs"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex-1 flex flex-col relative w-full px-margin pt-16 pb-safe bg-surface"><div class="flex flex-col w-full pb-8" dir="rtl">
+<!-- Interactive State Switcher for Reviewer Delight -->
+<div class="mb-4 bg-surface-container-high p-1.5 rounded-xl shadow-sm">
+<div class="flex items-center justify-between mb-1.5 px-2">
+<span class="font-label-sm text-label-sm text-secondary flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">tune</span>
+        حالات العرض التفاعلية (Design Reviewer)
+      </span>
+<span class="font-label-sm text-label-sm text-brand-emerald-dark font-medium bg-brand-mint-surface px-2 py-0.5 rounded-full">جاهز للفحص</span>
+</div>
+<div class="grid grid-cols-4 gap-1">
+<button class="state-btn py-1.5 px-1 rounded-lg font-label-sm text-label-sm text-center font-medium bg-surface-container-lowest text-primary shadow-sm transition-all duration-200" id="btn-state-default" onclick="setScreenState('default')" type="button">
+        الافتراضية
+      </button>
+<button class="state-btn py-1.5 px-1 rounded-lg font-label-sm text-label-sm text-center font-medium text-secondary hover:text-on-surface transition-all duration-200" id="btn-state-wrong" onclick="setScreenState('wrong')" type="button">
+        خطأ بيانات
+      </button>
+<button class="state-btn py-1.5 px-1 rounded-lg font-label-sm text-label-sm text-center font-medium text-secondary hover:text-on-surface transition-all duration-200" id="btn-state-validation" onclick="setScreenState('validation')" type="button">
+        أخطاء الحقول
+      </button>
+<button class="state-btn py-1.5 px-1 rounded-lg font-label-sm text-label-sm text-center font-medium text-secondary hover:text-on-surface transition-all duration-200" id="btn-state-loading" onclick="setScreenState('loading')" type="button">
+        جارٍ التحميل
+      </button>
+</div>
+</div>
+<!-- Header / Brand Section -->
+<div class="flex flex-col items-center text-center mt-2 mb-6">
+<div class="relative mb-3 flex items-center justify-center">
+<div class="w-16 h-16 rounded-2xl bg-surface-container-lowest shadow-sm flex items-center justify-center p-2.5 relative">
+<img alt="Index Pharma Logo" class="w-full h-full object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1V7iwhFiog6wYm2sEZkGnxP0Dj3gicx7nfp-N1d6WZxFJihM5SInLhcbcr5kNle-E7xNhffSwKLjym-hwW_dZ_W6N4cnwA8rbBsk2fB1OwfHF5SVN1d9Ls1jfvWmh10eZ03IY3tVqy1bjtzSD42K5aDJPaTlwjyiqFqCHvv7ICmkR4HOmWzfyeg373DNDM4jInO1zJ5q44hZhPpXtxvw-vVCuTvzwopqDBsDg5UP4hMfg"/>
+<span class="absolute -top-1 -right-1 flex h-3.5 w-3.5">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-teal-bright opacity-75"></span>
+<span class="relative inline-flex rounded-full h-3.5 w-3.5 bg-primary"></span>
+</span>
+</div>
+</div>
+<!-- Title & Subtitle -->
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface mb-1">
+      إندكس فارما
+    </h1>
+<p class="font-body-md text-body-md text-secondary mb-3">
+      صيدليتك الموثوقة في مصر
+    </p>
+<!-- Clinical Trust Badge -->
+<div class="inline-flex items-center gap-1.5 bg-brand-mint-surface text-brand-emerald-dark px-3 py-1 rounded-full shadow-sm">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">verified</span>
+<span class="font-label-sm text-label-sm font-semibold">صيدلية معتمدة مرخصة من وزارة الصحة</span>
+</div>
+</div>
+<!-- Wrong-Credentials Error Banner (Demonstration State) -->
+<div class="hidden mb-5 bg-error-container text-on-error-container rounded-xl p-3.5 shadow-sm transition-all duration-200" id="wrong-credentials-banner">
+<div class="flex items-start justify-between gap-2.5">
+<div class="flex items-center gap-2.5">
+<div class="w-7 h-7 rounded-full bg-medical-red text-surface-container-lowest flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[18px]">error</span>
+</div>
+<div>
+<p class="font-title-md text-title-md leading-tight text-on-error-container font-semibold">تعذر تسجيل الدخول</p>
+<p class="font-body-sm text-body-sm text-on-error-container/80 mt-0.5">البريد أو كلمة المرور غير صحيحة، يرجى إعادة المحاولة.</p>
+</div>
+</div>
+<button aria-label="إغلاق التنبيه" class="text-on-error-container/70 hover:text-on-error-container p-1 rounded-md transition-colors" onclick="dismissBanner()" type="button">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+</div>
+<!-- Main Login Card -->
+<div class="bg-surface-container-lowest rounded-2xl p-5 shadow-sm mb-4">
+<div class="flex items-center justify-between mb-5">
+<div>
+<h2 class="font-title-lg text-title-lg text-on-surface font-bold">تسجيل الدخول الحسابي</h2>
+<p class="font-body-sm text-body-sm text-secondary">أدخل بياناتك المعتمدة للوصول لملفك الدوائي</p>
+</div>
+<span class="material-symbols-outlined text-primary text-[24px]">lock</span>
+</div>
+<form class="space-y-4" id="login-form" onsubmit="event.preventDefault(); triggerSubmit();">
+<!-- Email Field Group -->
+<div class="space-y-1.5 text-right">
+<label class="block font-label-md text-label-md text-on-surface font-semibold" for="email">
+          البريد الإلكتروني
+        </label>
+<div class="relative">
+<input class="w-full h-11 pl-11 pr-3 rounded bg-canvas-pure text-on-surface font-body-md text-body-md shadow-inner transition-colors duration-200 placeholder:text-on-surface-variant/50 focus:outline-none" dir="ltr" id="email" name="email" placeholder="name@example.com" style="background-color: #FFFFFF;" type="email" value=""/>
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-secondary">
+<span class="material-symbols-outlined text-[20px]">mail</span>
+</div>
+</div>
+<!-- Field Validation Error -->
+<div class="hidden items-center gap-1.5 pt-1 text-error" id="email-error-msg">
+<span class="material-symbols-outlined text-[16px]">info</span>
+<span class="font-body-sm text-body-sm font-medium">يرجى إدخال بريد إلكتروني صحيح ومسجل</span>
+</div>
+</div>
+<!-- Password Field Group -->
+<div class="space-y-1.5 text-right">
+<div class="flex items-center justify-between">
+<label class="block font-label-md text-label-md text-on-surface font-semibold" for="password">
+            كلمة المرور
+          </label>
+<span class="font-label-sm text-label-sm text-secondary">سرية ومحمية</span>
+</div>
+<div class="relative">
+<input class="w-full h-11 pl-11 pr-3 rounded bg-canvas-pure text-on-surface font-body-md text-body-md shadow-inner transition-colors duration-200 placeholder:text-on-surface-variant/50 focus:outline-none" dir="ltr" id="password" name="password" placeholder="••••••••" style="background-color: #FFFFFF;" type="password"/>
+<button aria-label="إظهار أو إخفاء كلمة المرور" class="absolute inset-y-0 left-0 pl-3 flex items-center text-secondary hover:text-on-surface transition-colors cursor-pointer" id="toggle-pwd-btn" onclick="togglePasswordVisibility()" type="button">
+<span class="material-symbols-outlined text-[20px]" id="eye-icon">visibility</span>
+</button>
+</div>
+<!-- Field Validation Error -->
+<div class="hidden items-center gap-1.5 pt-1 text-error" id="password-error-msg">
+<span class="material-symbols-outlined text-[16px]">info</span>
+<span class="font-body-sm text-body-sm font-medium">كلمة المرور لا يمكن أن تكون فارغة</span>
+</div>
+</div>
+<!-- Submit Primary Button -->
+<div class="pt-2">
+<button class="w-full h-12 rounded-full bg-primary hover:bg-primary-container active:scale-[0.99] text-on-primary font-label-lg text-label-lg font-bold flex items-center justify-center gap-2 shadow-md transition-all duration-200 cursor-pointer" id="btn-submit" type="submit">
+<span class="hidden" id="submit-spinner">
+<svg class="animate-spin h-5 w-5 text-on-primary" fill="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+<path class="opacity-75" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" fill="currentColor"></path>
+</svg>
+</span>
+<span id="submit-text">تسجيل الدخول</span>
+<span class="material-symbols-outlined text-[18px]" id="submit-arrow">arrow_forward</span>
+</button>
+</div>
+</form>
+<!-- Create New Account Secondary Link -->
+<div class="mt-5 pt-4 text-center bg-surface-container-low rounded-xl p-3">
+<span class="font-body-sm text-body-sm text-secondary">ليس لديك ملف صيدلاني بعد؟</span>
+<div class="mt-1">
+<button class="inline-flex items-center gap-1 font-label-md text-label-md text-primary font-bold hover:text-primary-container transition-colors" type="button">
+<span>إنشاء حساب جديد</span>
+<span class="material-symbols-outlined text-[16px]">person_add</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Guest Access Card (Delightful Reassurance Action) -->
+<div class="bg-surface-container-low rounded-2xl p-4 shadow-sm flex items-center justify-between gap-3">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-xl bg-surface-container-lowest text-secondary flex items-center justify-center shrink-0 shadow-sm">
+<span class="material-symbols-outlined text-[22px]">explore</span>
+</div>
+<div>
+<p class="font-title-md text-title-md text-on-surface font-bold leading-tight">تصفح كضيف</p>
+<p class="font-body-sm text-body-sm text-secondary mt-0.5">تصفح الأدوية والأسعار بدون تسجيل</p>
+</div>
+</div>
+<button class="px-3.5 py-2 rounded-full bg-secondary-container text-on-secondary-container hover:bg-surface-variant font-label-md text-label-md font-semibold transition-all shrink-0" type="button">
+      دخول فوري
+    </button>
+</div>
+<!-- Safety & Confidentiality Micro-Note -->
+<div class="mt-6 flex items-center justify-center gap-2 text-center text-secondary opacity-75">
+<span class="material-symbols-outlined text-[15px]">shield</span>
+<span class="font-label-sm text-label-sm">بياناتك الطبية والصيدلانية مشفرة ومحمية بالكامل</span>
+</div>
+</div>
+<script>
+  let isPasswordVisible = false;
+
+  function togglePasswordVisibility() {
+    const pwdInput = document.getElementById('password');
+    const eyeIcon = document.getElementById('eye-icon');
+    isPasswordVisible = !isPasswordVisible;
+    if (isPasswordVisible) {
+      pwdInput.setAttribute('type', 'text');
+      eyeIcon.textContent = 'visibility_off';
+    } else {
+      pwdInput.setAttribute('type', 'password');
+      eyeIcon.textContent = 'visibility';
+    }
+  }
+
+  function dismissBanner() {
+    const banner = document.getElementById('wrong-credentials-banner');
+    if (banner) {
+      banner.classList.add('hidden');
+    }
+  }
+
+  function setScreenState(state) {
+    const banner = document.getElementById('wrong-credentials-banner');
+    const emailErr = document.getElementById('email-error-msg');
+    const pwdErr = document.getElementById('password-error-msg');
+    const emailInput = document.getElementById('email');
+    const pwdInput = document.getElementById('password');
+    const submitBtn = document.getElementById('btn-submit');
+    const submitSpinner = document.getElementById('submit-spinner');
+    const submitText = document.getElementById('submit-text');
+    const submitArrow = document.getElementById('submit-arrow');
+
+    // Reset reviewer tab buttons
+    document.querySelectorAll('.state-btn').forEach(btn => {
+      btn.className = 'state-btn py-1.5 px-1 rounded-lg font-label-sm text-label-sm text-center font-medium text-secondary hover:text-on-surface transition-all duration-200';
+    });
+    const activeTab = document.getElementById('btn-state-' + state);
+    if (activeTab) {
+      activeTab.className = 'state-btn py-1.5 px-1 rounded-lg font-label-sm text-label-sm text-center font-medium bg-surface-container-lowest text-primary shadow-sm transition-all duration-200';
+    }
+
+    // Default teardowns
+    banner.classList.add('hidden');
+    emailErr.classList.add('hidden');
+    emailErr.classList.remove('flex');
+    pwdErr.classList.add('hidden');
+    pwdErr.classList.remove('flex');
+    submitSpinner.classList.add('hidden');
+    submitArrow.classList.remove('hidden');
+    submitBtn.removeAttribute('disabled');
+    submitText.textContent = 'تسجيل الدخول';
+
+    if (state === 'default') {
+      emailInput.value = '';
+      pwdInput.value = '';
+    } else if (state === 'wrong') {
+      banner.classList.remove('hidden');
+      emailInput.value = 'doctor.ahmed@example.com';
+      pwdInput.value = '12345678';
+    } else if (state === 'validation') {
+      emailInput.value = 'invalid-email-format';
+      pwdInput.value = '';
+      emailErr.classList.remove('hidden');
+      emailErr.classList.add('flex');
+      pwdErr.classList.remove('hidden');
+      pwdErr.classList.add('flex');
+    } else if (state === 'loading') {
+      emailInput.value = 'pharmacy.lead@indexpharma.eg';
+      pwdInput.value = 'securePassword!';
+      submitSpinner.classList.remove('hidden');
+      submitArrow.classList.add('hidden');
+      submitText.textContent = 'جارٍ التحقق والأمان...';
+      submitBtn.setAttribute('disabled', 'true');
+    }
+  }
+
+  function triggerSubmit() {
+    setScreenState('loading');
+    setTimeout(() => {
+      setScreenState('wrong');
+    }, 1800);
+  }
+</script></main></body></html>

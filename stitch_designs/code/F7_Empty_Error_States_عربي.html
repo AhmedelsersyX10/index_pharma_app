@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_blank" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@500;600;700;800&amp;family=Noto+Sans+Arabic:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100vw;margin:0;padding:0;}body{overscroll-behavior:none;font-family:'Geist','Noto Sans Arabic',sans-serif;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "surface-variant": "#d3e3ff", "on-primary-fixed": "#002114", "on-tertiary-fixed-variant": "#005047", "on-primary-fixed-variant": "#005139", "surface-container-low": "#eff4ff", "on-secondary-container": "#5a6278", "brand-mint-surface": "#F0FDF9", "secondary": "#565e74", "on-surface-variant": "#3f4943", "surface-dim": "#cbdbf5", "brand-emerald-dark": "#007A55", "primary-fixed": "#9ff4cc", "secondary-fixed-dim": "#bec6e0", "on-tertiary-fixed": "#00201c", "surface-tint": "#006c4c", "surface-container": "#e5eeff", "tertiary-fixed": "#71f8e4", "inverse-on-surface": "#ebf1ff", "surface-subtle": "#F8FAFC", "surface-container-lowest": "#ffffff", "outline": "#6d7a72", "error-container": "#ffdad6", "on-error": "#ffffff", "on-error-container": "#93000a", "surface-container-high": "#dde9ff", "on-primary-container": "#91e5be", "surface-bright": "#f8f9ff", "surface": "#f8f9ff", "primary-fixed-dim": "#83d7b1", "tertiary-container": "#008376", "secondary-fixed": "#dae2fc", "on-tertiary-container": "#f4fffb", "secondary-container": "#d7dff9", "brand-mint-border": "#CCFBF1", "outline-variant": "#bccac1", "surface-container-highest": "#d3e4fe", "primary": "#004f36", "brand-teal-bright": "#5EEAD4", "background": "#f8f9ff", "on-secondary-fixed": "#131b2e", "canvas-pure": "#FFFFFF", "on-secondary": "#ffffff", "inverse-surface": "#213145", "on-surface": "#0b1c30", "error": "#ba1a1a", "tertiary": "#004e45", "on-tertiary": "#ffffff", "on-secondary-fixed-variant": "#3e465b", "primary-container": "#00855e", "medical-amber": "#F59E0B", "inverse-primary": "#67dbab", "on-background": "#0b1c30", "medical-red": "#EF4444", "on-primary": "#ffffff", "tertiary-fixed-dim": "#4fdbc8" }, borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, spacing: { "space-lg": "1.5rem", "space-md": "1rem", "margin-desktop": "3rem", "gutter-lg": "1.5rem", "space-xs": "0.25rem", "space-2xs": "0.125rem", "space-sm": "0.5rem", "margin-tablet": "2rem", "margin": "1rem", "space-2xl": "3rem", "gutter-sm": "0.75rem", "gutter": "1rem", "space-xl": "2rem" }, fontFamily: { "label-md": ["Geist"], "body-md": ["Geist"], "display-lg-mobile": ["Plus Jakarta Sans"], "display-lg": ["Plus Jakarta Sans"], "title-lg": ["Plus Jakarta Sans"], "label-sm": ["Geist"], "body-sm": ["Geist"], "headline-md": ["Plus Jakarta Sans"], "headline-lg-mobile": ["Plus Jakarta Sans"], "label-lg": ["Geist"], "headline-lg": ["Plus Jakarta Sans"], "title-md": ["Plus Jakarta Sans"], "body-lg": ["Geist"] }, fontSize: { "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }], "body-md": ["14px", { "lineHeight": "22px", "fontWeight": "400" }], "display-lg-mobile": ["30px", { "lineHeight": "38px", "letterSpacing": "-0.015em", "fontWeight": "700" }], "display-lg": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "title-lg": ["18px", { "lineHeight": "26px", "fontWeight": "600" }], "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "600" }], "body-sm": ["12px", { "lineHeight": "18px", "fontWeight": "400" }], "headline-md": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "headline-lg-mobile": ["22px", { "lineHeight": "30px", "letterSpacing": "-0.01em", "fontWeight": "700" }], "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }], "headline-lg": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.015em", "fontWeight": "700" }], "title-md": ["16px", { "lineHeight": "24px", "fontWeight": "600" }], "body-lg": ["16px", { "lineHeight": "26px", "fontWeight": "400" }] } } } }</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface text-on-surface min-h-screen pt-safe pb-safe flex flex-col selection:bg-brand-mint-surface selection:text-brand-emerald-dark"><main class="flex flex-col relative w-full bg-surface min-h-screen"><div class="flex flex-col w-full px-4 pb-12 pt-2 gap-5" dir="rtl">
+<!-- Top Pharmacy Status Bar & Context Switcher -->
+<header class="w-full bg-surface-container-lowest rounded-xl p-3 shadow-sm flex flex-col gap-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded-full bg-brand-mint-surface flex items-center justify-center text-brand-emerald-dark">
+<span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">local_pharmacy</span>
+</div>
+<div class="flex flex-col">
+<span class="font-title-md text-title-md text-on-surface">فرع عباس العقاد - صيدلية النخبة</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-primary-container inline-block animate-pulse"></span>
+            محطة عمل طاقم الصرف والتحضير (POS-04)
+          </span>
+</div>
+</div>
+<div class="bg-surface-container-low px-2.5 py-1 rounded-full text-secondary font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">devices</span>
+<span>النسخة v4.12</span>
+</div>
+</div>
+<!-- State Switcher Tabs -->
+<div class="grid grid-cols-3 gap-1.5 p-1 bg-surface-container rounded-lg">
+<button class="state-tab-btn py-2 px-1 rounded-md text-center transition-all bg-canvas-pure shadow-sm text-primary font-label-md text-label-md flex flex-col items-center justify-center gap-1" id="tab-btn-1" onclick="switchState(1)">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-base">moped</span>
+<span class="truncate">١. طلبات أونلاين</span>
+</div>
+<span class="w-1.5 h-1.5 rounded-full bg-primary tab-indicator"></span>
+</button>
+<button class="state-tab-btn py-2 px-1 rounded-md text-center transition-all text-secondary font-label-md text-label-md flex flex-col items-center justify-center gap-1 hover:text-on-surface" id="tab-btn-2" onclick="switchState(2)">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-base">prescriptions</span>
+<span class="truncate">٢. الروشتات</span>
+</div>
+<span class="w-1.5 h-1.5 rounded-full bg-transparent tab-indicator"></span>
+</button>
+<button class="state-tab-btn py-2 px-1 rounded-md text-center transition-all text-secondary font-label-md text-label-md flex flex-col items-center justify-center gap-1 hover:text-on-surface" id="tab-btn-3" onclick="switchState(3)">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-base">wifi_off</span>
+<span class="truncate">٣. انقطاع الشبكة</span>
+</div>
+<span class="w-1.5 h-1.5 rounded-full bg-transparent tab-indicator"></span>
+</button>
+</div>
+</header>
+<!-- STATE 1: No Online Orders -->
+<section class="state-container flex flex-col w-full gap-4 transition-opacity duration-300" id="state-view-1">
+<div class="bg-surface-container-lowest rounded-xl p-6 shadow-sm flex flex-col items-center text-center relative overflow-hidden">
+<!-- Decorative Mint Glow Backdrop -->
+<div class="absolute -top-12 -right-12 w-48 h-48 bg-brand-mint-surface rounded-full blur-2xl opacity-70 pointer-events-none"></div>
+<div class="absolute -bottom-10 -left-10 w-40 h-40 bg-surface-container-low rounded-full blur-xl opacity-60 pointer-events-none"></div>
+<!-- Antiseptic Mint / Slate Empty State Art -->
+<div class="relative w-36 h-36 mb-4 flex items-center justify-center">
+<!-- SVG Backdrop Geometric Ring -->
+<svg class="absolute inset-0 w-full h-full text-brand-mint-border animate-spin" style="animation-duration: 25s;" viewbox="0 0 100 100">
+<circle cx="50" cy="50" fill="none" r="46" stroke="currentColor" stroke-dasharray="6 6" stroke-width="2"></circle>
+</svg>
+<div class="w-24 h-24 rounded-full bg-brand-mint-surface flex items-center justify-center shadow-inner relative">
+<!-- Slate delivery box with mint accent -->
+<svg class="w-14 h-14" fill="none" viewbox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+<rect fill="#bec6e0" fill-opacity="0.35" height="32" rx="4" width="40" x="12" y="22"></rect>
+<path d="M12 26L32 38L52 26" stroke="#565e74" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+<path d="M12 22L32 10L52 22L32 34L12 22Z" fill="#F0FDF9" stroke="#007A55" stroke-linejoin="round" stroke-width="2.5"></path>
+<path d="M32 38V54" stroke="#565e74" stroke-linecap="round" stroke-width="2.5"></path>
+<!-- Clinically Verified Clean Floating Tag -->
+<circle cx="48" cy="18" fill="#00855e" r="9"></circle>
+<path d="M44.5 18L47 20.5L52 15.5" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+</div>
+<span class="absolute bottom-1 right-3 px-2 py-0.5 rounded-full bg-surface-container font-label-sm text-label-sm text-secondary shadow-sm">
+          0 طلب معلق
+        </span>
+</div>
+<!-- Text Grouping -->
+<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-mint-surface text-brand-emerald-dark font-label-md text-label-md mb-2">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span>طابور التجهيز مكتمل 100%</span>
+</div>
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface mb-2 font-bold">
+        صندوق الطلبات الأونلاين فارغ حالياً
+      </h2>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-xs leading-relaxed mb-6">
+        جميع طلبات التوصيل المنزلي لفرع عباس العقاد تم معالجتها بالكامل ولا توجد طلبات جديدة معلقة في الانتظار.
+      </p>
+<!-- Operational Mini Stats Banner -->
+<div class="w-full bg-surface-container-low rounded-lg p-3 grid grid-cols-2 gap-2 mb-6 text-right">
+<div class="bg-surface-container-lowest p-2.5 rounded-md flex flex-col justify-center">
+<span class="font-label-sm text-label-sm text-secondary">الطلبات المسلمة اليوم</span>
+<div class="flex items-baseline gap-1 mt-0.5">
+<span class="font-headline-md text-headline-md text-on-surface font-bold">47</span>
+<span class="font-label-sm text-label-sm text-brand-emerald-dark font-semibold">طلب توصيل</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-2.5 rounded-md flex flex-col justify-center">
+<span class="font-label-sm text-label-sm text-secondary">متوسط زمن التجهيز</span>
+<div class="flex items-baseline gap-1 mt-0.5">
+<span class="font-headline-md text-headline-md text-on-surface font-bold">8.4</span>
+<span class="font-label-sm text-label-sm text-secondary">دقيقة/طلب</span>
+</div>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="w-full flex flex-col gap-2.5">
+<button class="w-full py-3 px-4 rounded-lg bg-primary hover:bg-primary-container text-on-primary font-label-lg text-label-lg flex items-center justify-center gap-2 shadow-sm transition-colors active:scale-[0.99]" id="refresh-orders-btn" onclick="triggerRefresh(this)">
+<span class="material-symbols-outlined text-lg" id="refresh-icon">refresh</span>
+<span>تحديث القائمة الآن (Refresh)</span>
+</button>
+<button class="w-full py-2.5 px-4 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-md text-label-md flex items-center justify-center gap-2 transition-colors">
+<span class="material-symbols-outlined text-lg text-secondary">receipt_long</span>
+<span>الاطلاع على سجل المبيعات اليومية</span>
+</button>
+</div>
+</div>
+<!-- Operational Micro-card -->
+<div class="bg-surface-container-lowest rounded-xl p-4 shadow-sm flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-brand-mint-surface text-brand-emerald-dark flex items-center justify-center">
+<span class="material-symbols-outlined">two_wheeler</span>
+</div>
+<div class="flex flex-col">
+<span class="font-title-md text-title-md text-on-surface">مندوبو التوصيل المتاحون</span>
+<span class="font-body-sm text-body-sm text-secondary">3 مندوبين على أهبة الاستعداد بالفرع</span>
+</div>
+</div>
+<span class="px-2.5 py-1 rounded-full bg-brand-mint-surface text-brand-emerald-dark font-label-sm text-label-sm font-semibold">
+        جاهز للانطلاق
+      </span>
+</div>
+</section>
+<!-- STATE 2: No Prescriptions -->
+<section class="state-container hidden flex-col w-full gap-4 transition-opacity duration-300" id="state-view-2">
+<div class="bg-surface-container-lowest rounded-xl p-6 shadow-sm flex flex-col items-center text-center relative overflow-hidden">
+<!-- Glow & Ambient circles -->
+<div class="absolute -top-10 left-1/2 -translate-x-1/2 w-52 h-52 bg-brand-mint-surface rounded-full blur-3xl opacity-60 pointer-events-none"></div>
+<!-- Medical Prescription Visual Art with clinical sparkles -->
+<div class="relative w-36 h-36 mb-4 flex items-center justify-center">
+<!-- Orbiting Sparkle Star -->
+<span class="absolute top-2 right-4 text-brand-emerald-dark animate-pulse material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">arrow_back_ios_new</span>
+<span class="absolute bottom-4 left-3 text-brand-teal-bright material-symbols-outlined text-xl" style="font-variation-settings: 'FILL' 1;">stars</span>
+<div class="w-24 h-24 rounded-2xl bg-surface-container-low flex items-center justify-center shadow-inner relative">
+<!-- Rx Sheet SVG -->
+<svg class="w-14 h-14" fill="none" viewbox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+<!-- Paper Base -->
+<rect fill="#ffffff" height="48" rx="4" width="36" x="14" y="8"></rect>
+<path d="M14 14C14 10.6863 16.6863 8 20 8H44C47.3137 8 50 10.6863 50 14V16H14V14Z" fill="#004f36"></path>
+<!-- Rx Symbol in Emerald -->
+<path d="M22 24V36M22 24H27C29.2091 24 31 25.7909 31 28C31 30.2091 29.2091 32 27 32H22M27 32L32 38" stroke="#007A55" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+<!-- Clinical lines -->
+<rect fill="#bec6e0" height="2" rx="1" width="20" x="22" y="42"></rect>
+<rect fill="#bec6e0" height="2" rx="1" width="14" x="22" y="47"></rect>
+<!-- Stethoscope miniature icon badge -->
+<circle cx="44" cy="46" fill="#F0FDF9" r="7"></circle>
+<circle cx="44" cy="46" r="6" stroke="#007A55" stroke-width="1.5"></circle>
+<path d="M42 45C42 46.1046 42.8954 47 44 47C45.1046 47 46 46.1046 46 45V43" stroke="#007A55" stroke-linecap="round" stroke-width="1.2"></path>
+</svg>
+</div>
+<div class="absolute -bottom-1 px-2.5 py-0.5 rounded-full bg-brand-emerald-dark text-on-primary font-label-sm text-label-sm shadow-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">verified</span>
+<span>كل الحالات دُققت</span>
+</div>
+</div>
+<!-- Title & Human warm reassurance -->
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface mb-2 font-bold">
+        لا توجد روشتات بانتظار المراجعة
+      </h2>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-xs leading-relaxed mb-4">
+        أحسنت! تم فحص وتدقيق وتسعير كافة الروشتات الطبية المرفوعة من المرضى حتى اللحظة.
+      </p>
+<!-- System Sync Sub-Badge -->
+<div class="w-full bg-brand-mint-surface rounded-lg p-3 flex items-center gap-2 text-right mb-6">
+<span class="material-symbols-outlined text-brand-emerald-dark text-xl shrink-0" style="font-variation-settings: 'FILL' 1;">cloud_done</span>
+<span class="font-label-md text-label-md text-brand-emerald-dark">
+          النظام متزامن ومستعد لاستقبال الروشتات الجديدة فورياً وتوزيعها آلياً.
+        </span>
+</div>
+<!-- Pharmacist Quick Checklist (Delight UX) -->
+<div class="w-full bg-surface-container-low rounded-lg p-3.5 mb-6 text-right">
+<span class="font-label-md text-label-md text-secondary block mb-2">إجراءات مقترحة للصيدلي المناوب:</span>
+<div class="space-y-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-base">check_box</span>
+<span class="font-body-sm text-body-sm text-on-surface">مراجعة أدوية الثلاجة ودرجات الحرارة المسجلة</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-base">check_box</span>
+<span class="font-body-sm text-body-sm text-on-surface">تحديث كميات الأدوية منتهية الصلاحية لشهر مايو</span>
+</div>
+</div>
+</div>
+<!-- Primary Action -->
+<div class="w-full flex flex-col gap-2.5">
+<button class="w-full py-3 px-4 rounded-lg bg-primary hover:bg-primary-container text-on-primary font-label-lg text-label-lg flex items-center justify-center gap-2 shadow-sm transition-colors active:scale-[0.99]">
+<span class="material-symbols-outlined text-lg">point_of_sale</span>
+<span>العودة إلى نقطة البيع (POS)</span>
+</button>
+<button class="w-full py-2.5 px-4 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-md text-label-md flex items-center justify-center gap-2 transition-colors">
+<span class="material-symbols-outlined text-lg text-secondary">history_edu</span>
+<span>أرشيف الروشتات السابقة اليوم</span>
+</button>
+</div>
+</div>
+<!-- Active Prescription Channel Monitor -->
+<div class="grid grid-cols-2 gap-2">
+<div class="bg-surface-container-lowest p-3 rounded-xl flex items-center gap-2 shadow-sm">
+<span class="w-2.5 h-2.5 rounded-full bg-primary shrink-0"></span>
+<div class="flex flex-col text-right">
+<span class="font-label-sm text-label-sm text-secondary">تطبيق المريض (App)</span>
+<span class="font-title-md text-title-md text-on-surface">نشط ومستقر</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-3 rounded-xl flex items-center gap-2 shadow-sm">
+<span class="w-2.5 h-2.5 rounded-full bg-primary shrink-0"></span>
+<div class="flex flex-col text-right">
+<span class="font-label-sm text-label-sm text-secondary">بوابة التأمين الطبي</span>
+<span class="font-title-md text-title-md text-on-surface">متصلة 100%</span>
+</div>
+</div>
+</div>
+</section>
+<!-- STATE 3: Network & Sync Error -->
+<section class="state-container hidden flex-col w-full gap-4 transition-opacity duration-300" id="state-view-3">
+<div class="bg-surface-container-lowest rounded-xl p-6 shadow-sm flex flex-col items-center text-center relative overflow-hidden">
+<!-- Clinical Amber/Red Accent Backdrop Glow -->
+<div class="absolute -top-12 -left-12 w-48 h-48 bg-error-container rounded-full blur-3xl opacity-40 pointer-events-none"></div>
+<!-- Signal Disconnect / Server Interruption Illustration -->
+<div class="relative w-36 h-36 mb-4 flex items-center justify-center">
+<!-- Pulse warning ring -->
+<div class="absolute inset-2 rounded-full bg-error-container/40 animate-ping opacity-30"></div>
+<div class="w-24 h-24 rounded-full bg-error-container flex items-center justify-center shadow-inner relative text-error">
+<svg class="w-14 h-14" fill="none" viewbox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+<!-- Server Stack -->
+<rect fill="#ffffff" height="12" rx="3" stroke="#ba1a1a" stroke-width="2" width="36" x="14" y="16"></rect>
+<circle cx="21" cy="22" fill="#ba1a1a" r="1.5"></circle>
+<rect fill="#ffffff" height="12" rx="3" stroke="#ba1a1a" stroke-width="2" width="36" x="14" y="32"></rect>
+<circle cx="21" cy="38" fill="#ba1a1a" r="1.5"></circle>
+<!-- Severed Connection Bolt -->
+<path d="M48 26L38 38H45L35 50" stroke="#EF4444" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"></path>
+<line stroke="#EF4444" stroke-linecap="round" stroke-width="2.5" x1="12" x2="52" y1="52" y2="12"></line>
+</svg>
+</div>
+<span class="absolute bottom-0 px-2 py-0.5 rounded-full bg-error text-on-error font-label-sm text-label-sm font-bold flex items-center gap-1 shadow">
+<span class="material-symbols-outlined text-xs">signal_disconnected</span>
+<span>غير متصل</span>
+</span>
+</div>
+<!-- Warning Badge -->
+<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-error-container text-on-error-container font-label-md text-label-md mb-2">
+<span class="material-symbols-outlined text-sm">cloud_off</span>
+<span>تعذر مزامنة السجلات الصيدلانية</span>
+</div>
+<!-- Heading -->
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface mb-2 font-bold">
+        انقطع الاتصال بخادم قاعدة البيانات
+      </h2>
+<!-- Body -->
+<p class="font-body-md text-body-md text-on-surface-variant max-w-xs leading-relaxed mb-4">
+        تعذر تحميل قائمة الطلبات والروشتات بسبب بطء أو انقطاع في شبكة الإنترنت بالفرع. تم حفظ العمليات المحلية في ذاكرة التخزين المؤقت.
+      </p>
+<!-- Technical Diagnostic Code Container -->
+<div class="w-full bg-surface-container rounded-lg p-3 text-right flex items-center justify-between mb-6">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-base">terminal</span>
+<span class="font-label-sm text-label-sm text-secondary font-mono tracking-wider">
+            Error 503 • ERR_PHARMA_SYNC_TIMEOUT
+          </span>
+</div>
+<button class="font-label-sm text-label-sm text-primary hover:text-primary-container flex items-center gap-0.5" id="copy-btn" onclick="copyErrorCode()">
+<span class="material-symbols-outlined text-sm">content_copy</span>
+<span>نسخ</span>
+</button>
+</div>
+<!-- Offline Safeguard Notice Box -->
+<div class="w-full bg-surface-container-low rounded-lg p-3 flex items-start gap-2.5 text-right mb-6">
+<span class="material-symbols-outlined text-medical-amber text-lg mt-0.5" style="font-variation-settings: 'FILL' 1;">shield</span>
+<div class="flex flex-col">
+<span class="font-title-md text-title-md text-on-surface text-sm">بيانات المرضى والفواتير في أمان</span>
+<span class="font-body-sm text-body-sm text-secondary">
+            يمكنك متابعة صرف الأدوية في نقطة البيع دون توقف، وستتم مزامنة العمليات تلقائياً فور عودة الشبكة.
+          </span>
+</div>
+</div>
+<!-- Dual Action Buttons -->
+<div class="w-full flex flex-col gap-2.5">
+<button class="w-full py-3 px-4 rounded-lg bg-primary hover:bg-primary-container text-on-primary font-label-lg text-label-lg flex items-center justify-center gap-2 shadow-sm transition-colors active:scale-[0.99]" id="retry-sync-btn" onclick="triggerRetry(this)">
+<span class="material-symbols-outlined text-lg" id="retry-icon">sync</span>
+<span id="retry-text">إعادة المحاولة فوراً (Retry)</span>
+</button>
+<button class="w-full py-2.5 px-4 rounded-lg bg-surface-container-high hover:bg-surface-variant text-on-surface font-label-md text-label-md flex items-center justify-center gap-2 transition-colors">
+<span class="material-symbols-outlined text-lg text-secondary">offline_bolt</span>
+<span>العمل في الوضع غير المتصل (Offline Mode)</span>
+</button>
+</div>
+</div>
+<!-- Troubleshooting Tips Accordion / Cards -->
+<div class="bg-surface-container-lowest rounded-xl p-4 shadow-sm flex flex-col gap-2.5">
+<span class="font-label-md text-label-md text-on-surface font-bold text-right flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm text-secondary">help</span>
+        خطوات استكشاف الأعطال السريعة لمسؤول الفرع:
+      </span>
+<div class="grid grid-cols-1 gap-2 text-right">
+<div class="p-2.5 rounded-lg bg-surface-container-low flex items-center gap-2">
+<span class="w-5 h-5 rounded-full bg-surface-container-highest text-secondary text-xs flex items-center justify-center font-bold">1</span>
+<span class="font-body-sm text-body-sm text-on-surface">تحقق من كابل الشبكة المتصل بجهاز التوجيه (Router الفرع).</span>
+</div>
+<div class="p-2.5 rounded-lg bg-surface-container-low flex items-center gap-2">
+<span class="w-5 h-5 rounded-full bg-surface-container-highest text-secondary text-xs flex items-center justify-center font-bold">2</span>
+<span class="font-body-sm text-body-sm text-on-surface">التواصل مع الدعم الفني المركزي الداخلي: تحويلة 108.</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Interactive JavaScript logic for tabs & simulated staff interactions -->
+<script>
+    function switchState(stateNumber) {
+      // Hide all states
+      for (let i = 1; i <= 3; i++) {
+        const view = document.getElementById(`state-view-${i}`);
+        const btn = document.getElementById(`tab-btn-${i}`);
+        const indicator = btn.querySelector('.tab-indicator');
+
+        if (i === stateNumber) {
+          view.classList.remove('hidden');
+          view.classList.add('flex');
+          // Style Active Button
+          btn.classList.add('bg-canvas-pure', 'shadow-sm', 'text-primary');
+          btn.classList.remove('text-secondary');
+          indicator.classList.remove('bg-transparent');
+          indicator.classList.add('bg-primary');
+        } else {
+          view.classList.add('hidden');
+          view.classList.remove('flex');
+          // Style Inactive Button
+          btn.classList.remove('bg-canvas-pure', 'shadow-sm', 'text-primary');
+          btn.classList.add('text-secondary');
+          indicator.classList.add('bg-transparent');
+          indicator.classList.remove('bg-primary');
+        }
+      }
+    }
+
+    function triggerRefresh(btn) {
+      const icon = document.getElementById('refresh-icon');
+      icon.classList.add('animate-spin');
+      btn.disabled = true;
+      btn.style.opacity = '0.85';
+
+      setTimeout(() => {
+        icon.classList.remove('animate-spin');
+        btn.disabled = false;
+        btn.style.opacity = '1';
+        showToast('تم فحص الطلبات: لا توجد طلبات جديدة حتى الآن');
+      }, 900);
+    }
+
+    function triggerRetry(btn) {
+      const icon = document.getElementById('retry-icon');
+      const text = document.getElementById('retry-text');
+      icon.classList.add('animate-spin');
+      text.innerText = 'جاري محاولة الاتصال...';
+      btn.disabled = true;
+
+      setTimeout(() => {
+        icon.classList.remove('animate-spin');
+        text.innerText = 'إعادة المحاولة فوراً (Retry)';
+        btn.disabled = false;
+        showToast('تعذر استعادة الاتصال. يرجى تفعيل وضع العمل دون إنترنت');
+      }, 1400);
+    }
+
+    function copyErrorCode() {
+      const copyBtn = document.getElementById('copy-btn');
+      navigator.clipboard?.writeText('Error 503 • ERR_PHARMA_SYNC_TIMEOUT');
+      copyBtn.innerHTML = '<span class="material-symbols-outlined text-sm">check</span><span>تم النسخ</span>';
+      setTimeout(() => {
+        copyBtn.innerHTML = '<span class="material-symbols-outlined text-sm">content_copy</span><span>نسخ</span>';
+      }, 2000);
+    }
+
+    function showToast(message) {
+      const existing = document.getElementById('pharma-toast');
+      if (existing) existing.remove();
+
+      const toast = document.createElement('div');
+      toast.id = 'pharma-toast';
+      toast.className = 'fixed bottom-6 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface px-4 py-2.5 rounded-full shadow-lg font-label-md text-label-md z-50 transition-all flex items-center gap-2';
+      toast.innerHTML = `<span class="material-symbols-outlined text-sm text-brand-teal-bright">info</span><span>${message}</span>`;
+      document.body.appendChild(toast);
+
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        setTimeout(() => toast.remove(), 300);
+      }, 2600);
+    }
+  </script>
+</div></main></body></html>

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_blank" name="shell-type"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@500;600;700;800&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{width:100vw;min-height:100vh;margin:0;padding:0;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "tertiary": "#004e45", "tertiary-fixed-dim": "#4fdbc8", "medical-red": "#EF4444", "on-tertiary-fixed": "#00201c", "secondary-fixed": "#dae2fd", "on-tertiary-fixed-variant": "#005047", "on-primary-fixed": "#002114", "surface-dim": "#cbdbf5", "on-primary-fixed-variant": "#005138", "surface-container-low": "#eff4ff", "on-secondary-container": "#5a6278", "surface-subtle": "#F8FAFC", "secondary": "#565e74", "on-background": "#0b1c30", "primary": "#004f36", "inverse-on-surface": "#ebf1ff", "surface-variant": "#d3e3ff", "on-secondary-fixed": "#131b2e", "on-secondary-fixed-variant": "#3f465c", "on-primary-container": "#f5fff7", "brand-mint-surface": "#F0FDF9", "brand-mint-border": "#CCFBF1", "error-container": "#ffdad6", "primary-fixed-dim": "#83d7b1", "surface-container-lowest": "#ffffff", "on-surface-variant": "#3d4a43", "surface-tint": "#076c4d", "primary-fixed": "#9ff4cc", "tertiary-container": "#008376", "inverse-primary": "#83d7b1", "secondary-fixed-dim": "#bec6e0", "brand-teal-bright": "#5EEAD4", "on-surface": "#0b1c30", "surface-bright": "#f8f9ff", "medical-amber": "#F59E0B", "brand-emerald-dark": "#007A55", "tertiary-fixed": "#a1f2e3", "outline-variant": "#bccac1", "surface-container": "#e5eeff", "on-error": "#ffffff", "primary-container": "#00855e", "inverse-surface": "#213145", "surface-container-highest": "#d3e4fe", "secondary-container": "#dae2fd", "on-error-container": "#93000a", "on-tertiary-container": "#93e4d6", "error": "#ba1a1a", "background": "#f8f9ff", "surface-container-high": "#dde9ff", "surface": "#f8f9ff", "on-secondary": "#ffffff", "on-primary": "#ffffff", "outline": "#6d7a72", "on-tertiary": "#ffffff", "canvas-pure": "#FFFFFF" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-2xl": "3rem", "margin-tablet": "2rem", "gutter-lg": "1.5rem", "space-2xs": "0.125rem", "space-lg": "1.5rem", "space-xs": "0.25rem", "margin": "1rem", "gutter": "1rem", "space-md": "1rem", "space-sm": "0.5rem", "margin-desktop": "3rem", "space-xl": "2rem", "gutter-sm": "0.75rem" }, "fontFamily": { "body-md": ["Geist"], "display-lg-mobile": ["Plus Jakarta Sans"], "headline-lg-mobile": ["Plus Jakarta Sans"], "body-lg": ["Geist"], "label-sm": ["Geist"], "headline-md": ["Plus Jakarta Sans"], "title-md": ["Plus Jakarta Sans"], "display-lg": ["Plus Jakarta Sans"], "body-sm": ["Geist"], "headline-lg": ["Plus Jakarta Sans"], "title-lg": ["Plus Jakarta Sans"], "label-lg": ["Geist"], "label-md": ["Geist"] }, "fontSize": { "body-md": ["14px", { "lineHeight": "22px", "fontWeight": "400" }], "display-lg-mobile": ["30px", { "lineHeight": "38px", "letterSpacing": "-0.015em", "fontWeight": "700" }], "headline-lg-mobile": ["22px", { "lineHeight": "30px", "letterSpacing": "-0.01em", "fontWeight": "700" }], "body-lg": ["16px", { "lineHeight": "26px", "fontWeight": "400" }], "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "600" }], "headline-md": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "title-md": ["16px", { "lineHeight": "24px", "fontWeight": "600" }], "display-lg": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "body-sm": ["12px", { "lineHeight": "18px", "fontWeight": "400" }], "headline-lg": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.015em", "fontWeight": "700" }], "title-lg": ["18px", { "lineHeight": "26px", "fontWeight": "600" }], "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }], "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }] } } } };</script><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface font-body-md text-body-md text-on-surface flex flex-col min-h-screen antialiased"><main class="flex-1 flex flex-col relative w-full bg-surface pt-safe pb-safe"><div class="flex flex-col w-full relative min-h-full font-body-md" dir="rtl">
+<!-- Underlying Pharmacy Screen Content (Dimmed & Blurred Backdrop State) -->
+<div class="flex flex-col w-full px-4 pt-4 pb-20 select-none opacity-40 blur-[1.5px] pointer-events-none transition-all duration-300">
+<!-- Top Pharmacy Mini Header -->
+<div class="flex items-center justify-between py-2">
+<div class="flex items-center gap-2">
+<div class="w-9 h-9 rounded-full bg-brand-mint-surface flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]" style="font-variation-settings: 'FILL' 1;">local_pharmacy</span>
+</div>
+<div>
+<span class="font-headline-md text-headline-md text-on-surface block leading-tight">إندكس فارما</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-1">
+<span class="inline-block w-1.5 h-1.5 rounded-full bg-primary-container"></span>
+            توصيل سريع متاح
+          </span>
+</div>
+</div>
+<div class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center text-secondary">
+<span class="material-symbols-outlined text-[20px]">shopping_bag</span>
+</div>
+</div>
+<!-- Mocked Cart Summary Card -->
+<div class="bg-surface-container-lowest rounded-xl p-4 mt-4 shadow-sm flex flex-col gap-3">
+<div class="flex items-center justify-between">
+<span class="font-title-md text-title-md text-on-surface">سلة الأدوية (3 عناصر)</span>
+<span class="font-label-md text-label-md text-primary font-semibold">142.50 ر.س</span>
+</div>
+<div class="flex items-center gap-3 bg-surface-container-low rounded-lg p-2.5">
+<div class="w-12 h-12 rounded-lg bg-surface-container-highest overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" data-alt="Pharmaceutical box packaging of essential clinical medicines on an ultra-clean white medical background with soft natural lighting and calm emerald tint." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCqZiXNG8t2E8FB5o4PRwJe56Nl-no71Edc1S_FdyQE3Cb6BGC2nsUQI2I2O_NO9ArmstVdZGg-XkIRGdHC51LVZdl_j6-CRaozVUzaQHROlpdYKPRpZjzxiPhlxN1VIxTMVOOWwSkfiWk-rini0gOlDgzIHrPzvhxiH964bnSWzQ0wPdS0OKRoggW0f4PH5x50x-uPjCY8BsP0wDmcGMYojTUxuPfMJkwFNhKm_3vx"/>
+</div>
+<div class="flex-1 min-w-0">
+<p class="font-title-md text-title-md text-on-surface truncate">بانادول إكسترا - 48 قرص</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">جرعة اعتيادية للبالغين</p>
+</div>
+</div>
+<div class="flex items-center gap-3 bg-surface-container-low rounded-lg p-2.5">
+<div class="w-12 h-12 rounded-lg bg-surface-container-highest overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" data-alt="Sterile blister pack of vitamins in hospital pharmaceutical ambient lighting, clean composition with soft mint reflections." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBkUJP-1Ezh9g5qeaDvgfBCmIxKFBws2wFJGoy3GPVMrcbgDMGbSduwofUvkpka1icMYbTNENuIj9DnVv4xXPisjBjt3e5r95DeKIbgy3eut95EEwoBHW0-RO4X0cCd2dPzFdNhk_oXgZoDAu4huAHmtH4TVVwaVS1fh2VB9j1m6-6Urm3V_UjoWHrH_SWn3nBbvsPQHywcayeZrj6VESI__wFlUBmQkyCbhIFn_8-u"/>
+</div>
+<div class="flex-1 min-w-0">
+<p class="font-title-md text-title-md text-on-surface truncate">فيتامين سي 1000 ملغ زنك</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">مكمل مناعي علاجي</p>
+</div>
+</div>
+</div>
+<!-- Mock Quick Action Row -->
+<div class="mt-4 grid grid-cols-2 gap-3">
+<div class="bg-surface-container-lowest p-3 rounded-xl flex items-center gap-2.5 shadow-sm">
+<div class="w-8 h-8 rounded-full bg-brand-mint-surface text-primary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[18px]">receipt_long</span>
+</div>
+<div class="min-w-0">
+<p class="font-label-md text-label-md text-on-surface truncate">روشتة تأمينية</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant truncate">بانتظار التحقق</p>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-3 rounded-xl flex items-center gap-2.5 shadow-sm">
+<div class="w-8 h-8 rounded-full bg-secondary-container text-secondary flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[18px]">local_shipping</span>
+</div>
+<div class="min-w-0">
+<p class="font-label-md text-label-md text-on-surface truncate">عنوان التوصيل</p>
+<p class="font-label-sm text-label-sm text-on-surface-variant truncate">الرياض، النرجس</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Deep Dimmed Scrim Overlay (Inverse Surface Level 3 Soft Tint) -->
+<div class="fixed inset-0 bg-inverse-surface/50 backdrop-blur-[2px] z-40 transition-opacity duration-300" id="modal-backdrop"></div>
+<!-- Clinical Bottom Sheet Modal Container -->
+<div class="fixed inset-x-0 bottom-0 z-50 flex flex-col justify-end max-w-[430px] mx-auto transition-transform duration-300 transform translate-y-0" id="login-bottom-sheet">
+<div class="bg-canvas-pure rounded-t-[28px] shadow-2xl pt-3 pb-6 px-5 flex flex-col relative">
+<!-- Top Tactile Drag Handle -->
+<div class="w-full flex justify-center pb-2 cursor-grab active:cursor-grabbing">
+<div class="w-11 h-1.25 bg-outline-variant/60 rounded-full h-1"></div>
+</div>
+<!-- Dismiss Button & Shield Top Area -->
+<div class="flex items-start justify-between w-full pt-1 pb-2">
+<!-- Close (X) Icon Button -->
+<button aria-label="إغلاق" class="w-9 h-9 rounded-full bg-surface-container-high hover:bg-surface-container flex items-center justify-center text-on-surface-variant hover:text-on-surface active:scale-95 transition-all" id="btn-close-sheet">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+<!-- Clinical Badge: Prescription / Shield Safeguard Emblem -->
+<div class="relative flex items-center justify-center">
+<div class="w-16 h-16 rounded-2xl bg-brand-mint-surface flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined text-primary text-[32px]" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+</div>
+<!-- Tiny lock micro-badge -->
+<div class="absolute -bottom-1 -left-1 w-6 h-6 rounded-full bg-canvas-pure shadow-sm flex items-center justify-center">
+<div class="w-5 h-5 rounded-full bg-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-on-primary text-[12px]">lock</span>
+</div>
+</div>
+</div>
+<!-- Spacer for symmetrical balance -->
+<div class="w-9 h-9 opacity-0 pointer-events-none"></div>
+</div>
+<!-- Textual Content & Healthcare Context Framing -->
+<div class="flex flex-col items-center text-center mt-2 px-1">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-mint-surface text-brand-emerald-dark font-label-sm text-label-sm mb-2.5">
+<span class="material-symbols-outlined text-[14px]">shield</span>
+          منصة صيدلانية معتمدة وقانونية
+        </span>
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface tracking-tight font-bold">
+          تسجيل الدخول مطلوب
+        </h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-2 leading-relaxed max-w-[340px]">
+          لإتمام طلبك، أو رفع الروشتة الطبية للتحقق، ومتابعة وصول الدواء حتى باب منزلك، يرجى تسجيل الدخول أو إنشاء حساب جديد بأمان وخلال دقيقة واحدة.
+        </p>
+</div>
+<!-- Value Props Mini-Grid (Delight & Reassurance) -->
+<div class="grid grid-cols-3 gap-2 mt-4 bg-surface-container-low rounded-xl p-2.5">
+<div class="flex flex-col items-center text-center p-1">
+<div class="w-7 h-7 rounded-full bg-surface-container-lowest flex items-center justify-center text-primary mb-1">
+<span class="material-symbols-outlined text-[16px]">prescriptions</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface font-semibold">حفظ الروشتات</span>
+</div>
+<div class="flex flex-col items-center text-center p-1">
+<div class="w-7 h-7 rounded-full bg-surface-container-lowest flex items-center justify-center text-primary mb-1">
+<span class="material-symbols-outlined text-[16px]">history_toggle_off</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface font-semibold">تتبع الطلبات</span>
+</div>
+<div class="flex flex-col items-center text-center p-1">
+<div class="w-7 h-7 rounded-full bg-surface-container-lowest flex items-center justify-center text-primary mb-1">
+<span class="material-symbols-outlined text-[16px]">health_and_safety</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface font-semibold">تأمين صحي</span>
+</div>
+</div>
+<!-- Action Stack Buttons -->
+<div class="flex flex-col gap-2.5 mt-5 w-full">
+<!-- 1. Primary Action: Sign In Button -->
+<button class="w-full h-12 rounded-full bg-primary hover:bg-primary-container text-on-primary font-label-lg text-label-lg font-bold flex items-center justify-center gap-2 shadow-sm active:scale-[0.99] transition-all" id="btn-login-action">
+<span class="material-symbols-outlined text-[20px]">login</span>
+<span>تسجيل الدخول</span>
+</button>
+<!-- 2. Secondary Action: Create Account Button -->
+<button class="w-full h-12 rounded-full bg-secondary-container hover:bg-surface-container-high text-on-secondary-fixed font-label-lg text-label-lg font-semibold flex items-center justify-center gap-2 active:scale-[0.99] transition-all" id="btn-register-action">
+<span class="material-symbols-outlined text-[20px]">person_add</span>
+<span>إنشاء حساب جديد</span>
+</button>
+<!-- 3. Tertiary Dismiss / Continue as Guest -->
+<button class="w-full py-2.5 text-center text-secondary hover:text-on-surface font-label-md text-label-md transition-colors active:opacity-70 mt-0.5" id="btn-guest-action">
+          الاستمرار في التصفح كضيف
+        </button>
+</div>
+<!-- Trust & Medical Privacy Pill -->
+<div class="mt-3 pt-3 flex items-center justify-center">
+<div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-surface-container-low text-secondary font-label-sm text-label-sm text-center">
+<span class="material-symbols-outlined text-[14px] text-brand-emerald-dark" style="font-variation-settings: 'FILL' 1;">lock</span>
+<span>بياناتك الصحية والطبية مشفرة ومحمية بالكامل وفق معايير HIPAA</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Interactive State Feedback Banner (Hidden by default) -->
+<div class="fixed top-6 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface px-4 py-2 rounded-full font-label-md text-label-md shadow-lg pointer-events-none opacity-0 transition-opacity duration-300 z-50 flex items-center gap-2" id="toast-feedback">
+<span class="material-symbols-outlined text-brand-teal-bright text-[18px]">info</span>
+<span id="toast-message">جاري التحويل...</span>
+</div>
+</div>
+<script>
+  (function initBottomSheet() {
+    const sheet = document.getElementById('login-bottom-sheet');
+    const backdrop = document.getElementById('modal-backdrop');
+    const closeBtn = document.getElementById('btn-close-sheet');
+    const guestBtn = document.getElementById('btn-guest-action');
+    const loginBtn = document.getElementById('btn-login-action');
+    const registerBtn = document.getElementById('btn-register-action');
+    const toast = document.getElementById('toast-feedback');
+    const toastMsg = document.getElementById('toast-message');
+
+    function showToast(message) {
+      if (!toast || !toastMsg) return;
+      toastMsg.textContent = message;
+      toast.classList.remove('opacity-0');
+      toast.classList.add('opacity-100');
+      setTimeout(() => {
+        toast.classList.remove('opacity-100');
+        toast.classList.add('opacity-0');
+      }, 2400);
+    }
+
+    function dismissSheet() {
+      if (sheet && backdrop) {
+        sheet.classList.add('translate-y-full');
+        backdrop.classList.add('opacity-0');
+        setTimeout(() => {
+          showToast('تواصل التصفح كضيف صيدلية إندكس');
+          backdrop.style.pointerEvents = 'none';
+        }, 250);
+      }
+    }
+
+    function handleLogin() {
+      showToast('جاري فتح صفحة الدخول بالهاتف...');
+      setTimeout(() => {
+        // Clinical auth transition hook
+      }, 800);
+    }
+
+    function handleRegister() {
+      showToast('جاري فتح نموذج إنشاء الملف الصحي...');
+      setTimeout(() => {
+        // Clinical registration transition hook
+      }, 800);
+    }
+
+    if (closeBtn) closeBtn.addEventListener('click', dismissSheet);
+    if (guestBtn) guestBtn.addEventListener('click', dismissSheet);
+    if (backdrop) backdrop.addEventListener('click', dismissSheet);
+    if (loginBtn) loginBtn.addEventListener('click', handleLogin);
+    if (registerBtn) registerBtn.addEventListener('click', handleRegister);
+  })();
+</script></main></body></html>

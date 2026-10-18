@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_stack" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "on-primary-fixed-variant": "#005138", "surface-container-low": "#eff4ff", "on-secondary-container": "#5c647a", "primary-container": "#00694a", "outline": "#6d7a72", "on-tertiary-container": "#93e4d6", "surface-variant": "#d3e4fe", "medical-red": "#EF4444", "inverse-primary": "#83d7b1", "surface-container-high": "#dce9ff", "brand-mint-border": "#CCFBF1", "error-container": "#ffdad6", "tertiary-container": "#008376", "on-error-container": "#93000a", "on-error": "#ffffff", "surface-dim": "#cbdbf6", "on-surface": "#0b1c30", "tertiary-fixed": "#a1f2e3", "tertiary-fixed-dim": "#85d5c7", "on-tertiary-fixed": "#00201c", "primary-fixed": "#84f8c6", "on-surface-variant": "#3f4943", "surface-tint": "#006c4c", "secondary-fixed-dim": "#bec6e0", "surface-bright": "#f8f9ff", "surface-container": "#e5eeff", "on-tertiary-fixed-variant": "#005048", "inverse-surface": "#213145", "surface-subtle": "#F8FAFC", "surface": "#f8f9ff", "primary": "#004f36", "on-primary-fixed": "#002115", "medical-amber": "#F59E0B", "on-background": "#0b1c30", "on-primary-container": "#f5fff7", "on-secondary-fixed": "#131b2e", "brand-emerald-dark": "#007A55", "primary-fixed-dim": "#67dbab", "surface-container-highest": "#d3e4fe", "on-secondary": "#ffffff", "secondary-fixed": "#dae2fd", "background": "#f8f9ff", "error": "#ba1a1a", "tertiary": "#004e45", "canvas-pure": "#FFFFFF", "brand-mint-surface": "#F0FDF9", "outline-variant": "#bec9c1", "surface-container-lowest": "#ffffff", "on-tertiary": "#ffffff", "brand-teal-bright": "#5EEAD4", "on-secondary-fixed-variant": "#3e465b", "on-primary": "#ffffff", "secondary": "#565e74", "inverse-on-surface": "#eaf1ff", "secondary-container": "#dae2fd" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "space-2xs": "0.125rem", "margin": "1rem", "margin-desktop": "3rem", "space-lg": "1.5rem", "margin-tablet": "2rem", "space-md": "1rem", "space-xs": "0.25rem", "space-xl": "2rem", "space-2xl": "3rem", "gutter": "1rem", "gutter-lg": "1.5rem", "space-sm": "0.5rem", "gutter-sm": "0.75rem" }, "fontFamily": { "title-lg": ["Plus Jakarta Sans"], "headline-lg": ["Plus Jakarta Sans"], "label-lg": ["Geist"], "display-lg": ["Plus Jakarta Sans"], "body-md": ["Geist"], "body-lg": ["Geist"], "headline-md": ["Plus Jakarta Sans"], "headline-lg-mobile": ["Plus Jakarta Sans"], "body-sm": ["Geist"], "title-md": ["Plus Jakarta Sans"], "display-lg-mobile": ["Plus Jakarta Sans"], "label-sm": ["Geist"], "label-md": ["Geist"] }, "fontSize": { "title-lg": ["18px", { "lineHeight": "26px", "fontWeight": "600" }], "headline-lg": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.015em", "fontWeight": "700" }], "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }], "display-lg": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "body-md": ["14px", { "lineHeight": "22px", "fontWeight": "400" }], "body-lg": ["16px", { "lineHeight": "26px", "fontWeight": "400" }], "headline-md": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "headline-lg-mobile": ["22px", { "lineHeight": "30px", "letterSpacing": "-0.01em", "fontWeight": "700" }], "body-sm": ["12px", { "lineHeight": "18px", "fontWeight": "400" }], "title-md": ["16px", { "lineHeight": "24px", "fontWeight": "600" }], "display-lg-mobile": ["30px", { "lineHeight": "38px", "letterSpacing": "-0.015em", "fontWeight": "700" }], "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "600" }], "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }] } } } };</script><style>@layer base{html,body{width:100vw;margin:0;padding:0;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface font-body-md text-body-md text-on-surface antialiased flex flex-col min-h-screen"><header class="fixed top-0 w-full z-50 pt-safe bg-surface/80 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 px-margin flex items-center justify-between gap-space-sm"><div class="flex items-center gap-space-sm"><button aria-label="رجوع" class="w-11 h-11 -mr-2 rounded-full flex items-center justify-center text-on-surface hover:text-primary hover:bg-surface-container-low transition-colors" onclick="history.back()"><span class="material-symbols-outlined text-[24px]">arrow_forward</span></button><h1 class="font-title-lg text-title-lg text-on-surface">Branch Selection</h1></div><div class="flex items-center gap-space-xs"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex flex-col relative w-full pt-16 pb-safe bg-surface min-h-screen"><div class="flex flex-col w-full pb-32">
+<!-- Interactive Intro & Location Pill -->
+<div class="px-margin pt-space-md flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="inline-flex items-center gap-space-xs px-space-md py-1.5 rounded-full bg-surface-container-high text-on-surface">
+<span class="material-symbols-outlined text-primary text-[18px]">location_on</span>
+<span class="font-label-md text-label-md">محافظة القاهرة والجيزة</span>
+<span class="w-1.5 h-1.5 rounded-full bg-primary mx-1"></span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">٤ فروع نشطة</span>
+</div>
+<button class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-brand-mint-surface text-brand-emerald-dark shadow-sm active:scale-95 transition-transform" id="locateBtn" onclick="triggerGpsPing()">
+<span class="material-symbols-outlined text-[16px]">my_location</span>
+<span class="font-label-sm text-label-sm">تحديد تلقائي</span>
+</button>
+</div>
+<div class="flex flex-col gap-1">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">اختر الفرع الأقرب إليك</h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
+        تعتمد الأسعار وتوفر الأدوية والتركيبات بدقة وسرعة التوصيل على الفرع المختار لخدمتكم
+      </p>
+</div>
+<!-- Mode Switcher Tabs -->
+<div class="p-1 rounded-xl bg-surface-container flex items-center gap-1 shadow-sm mt-space-xs">
+<button class="flex-1 py-2 px-3 rounded-lg font-label-md text-label-md flex items-center justify-center gap-2 bg-surface-container-lowest text-primary shadow-sm transition-all duration-200" id="tabList" onclick="switchView('list')">
+<span class="material-symbols-outlined text-[18px]">view_list</span>
+<span>عرض القائمة الكاملة</span>
+</button>
+<button class="flex-1 py-2 px-3 rounded-lg font-label-md text-label-md flex items-center justify-center gap-2 text-on-surface-variant hover:text-on-surface transition-all duration-200" id="tabSheet" onclick="switchView('sheet')">
+<span class="material-symbols-outlined text-[18px]">layers</span>
+<span>نافذة التغيير السريع</span>
+</button>
+</div>
+</div>
+<!-- VIEW 1: FULL LIST VIEW -->
+<div class="px-margin flex flex-col gap-space-md mt-space-md" id="fullListView">
+<!-- Branch 1: SELECTED -->
+<div class="cursor-pointer rounded-xl p-space-md bg-canvas-pure shadow-md relative overflow-hidden transition-all duration-200 bg-brand-mint-surface/40" id="branchCard1" onclick="selectBranch(1)">
+<div class="absolute top-0 right-0 left-0 h-1 bg-primary"></div>
+<div class="flex items-start justify-between gap-space-sm mb-space-xs">
+<div class="flex items-center gap-space-xs">
+<div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-on-primary">
+<span class="material-symbols-outlined text-[18px]">local_pharmacy</span>
+</div>
+<div>
+<h3 class="font-title-md text-title-md text-on-surface">فرع مدينة نصر - شارع عباس العقاد</h3>
+<span class="font-label-sm text-label-sm text-primary font-semibold">الفرع الرئيسي • كود: INX-01</span>
+</div>
+</div>
+<div class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-primary text-on-primary font-label-sm text-label-sm shadow-sm" id="badge1">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+<span>الفرع النشط حالياً</span>
+</div>
+</div>
+<div class="flex flex-col gap-1.5 my-space-sm text-on-surface-variant font-body-sm text-body-sm">
+<div class="flex items-start gap-2">
+<span class="material-symbols-outlined text-[16px] text-primary shrink-0 mt-0.5">location_on</span>
+<span>٤٥ ش عباس العقاد، المنطقة الأولى، مدينة نصر، القاهرة</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-primary shrink-0">schedule</span>
+<span class="text-on-surface font-medium">متاح ٢٤ ساعة • طوال أيام الأسبوع</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-primary shrink-0">call</span>
+<span class="font-mono text-body-sm" dir="ltr">0222718900</span>
+</div>
+</div>
+<!-- Live Clinical Status -->
+<div class="p-2.5 rounded-lg bg-surface-container-low flex items-center justify-between text-on-surface">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-brand-emerald-dark animate-pulse"></span>
+<span class="font-label-sm text-label-sm text-brand-emerald-dark">مخزون الأدوية مكتمل • خدمة التوصيل فعالة</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-secondary-container">توصيل: ٣٠-٤٥ دقيقة</span>
+</div>
+</div>
+<!-- Branch 2 -->
+<div class="cursor-pointer rounded-xl p-space-md bg-canvas-pure shadow-sm relative transition-all duration-200 hover:shadow-md" id="branchCard2" onclick="selectBranch(2)">
+<div class="flex items-start justify-between gap-space-sm mb-space-xs">
+<div class="flex items-center gap-space-xs">
+<div class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[18px]">domain</span>
+</div>
+<div>
+<h3 class="font-title-md text-title-md text-on-surface">فرع المعادي - دجلة</h3>
+<span class="font-label-sm text-label-sm text-on-surface-variant">خدمة جنوب القاهرة • كود: INX-04</span>
+</div>
+</div>
+<div class="hidden items-center gap-1 px-2.5 py-1 rounded-full bg-primary text-on-primary font-label-sm text-label-sm" id="badge2">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+<span>محدد الآن</span>
+</div>
+</div>
+<div class="flex flex-col gap-1.5 my-space-sm text-on-surface-variant font-body-sm text-body-sm">
+<div class="flex items-start gap-2">
+<span class="material-symbols-outlined text-[16px] text-secondary shrink-0 mt-0.5">location_on</span>
+<span>١٢ شارع ٢٣٣، دجلة المعادي، القاهرة</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-secondary shrink-0">schedule</span>
+<span>من ٨:٠٠ ص حتى ٢:٠٠ ص</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-secondary shrink-0">call</span>
+<span class="font-mono text-body-sm" dir="ltr">0225194432</span>
+</div>
+</div>
+<div class="p-2.5 rounded-lg bg-surface-container-low flex items-center justify-between text-on-surface">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-brand-teal-bright"></span>
+<span class="font-label-sm text-label-sm">توصيل سريع للمعادي وطرة وحلوان</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-secondary-container">توصيل: ٤٠-٥٥ دقيقة</span>
+</div>
+</div>
+<!-- Branch 3 -->
+<div class="cursor-pointer rounded-xl p-space-md bg-canvas-pure shadow-sm relative transition-all duration-200 hover:shadow-md" id="branchCard3" onclick="selectBranch(3)">
+<div class="flex items-start justify-between gap-space-sm mb-space-xs">
+<div class="flex items-center gap-space-xs">
+<div class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[18px]">local_hospital</span>
+</div>
+<div>
+<h3 class="font-title-md text-title-md text-on-surface">فرع المهندسين - شارع جامعة الدول</h3>
+<span class="font-label-sm text-label-sm text-on-surface-variant">خدمة محافظة الجيزة • كود: INX-02</span>
+</div>
+</div>
+<div class="hidden items-center gap-1 px-2.5 py-1 rounded-full bg-primary text-on-primary font-label-sm text-label-sm" id="badge3">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+<span>محدد الآن</span>
+</div>
+</div>
+<div class="flex flex-col gap-1.5 my-space-sm text-on-surface-variant font-body-sm text-body-sm">
+<div class="flex items-start gap-2">
+<span class="material-symbols-outlined text-[16px] text-secondary shrink-0 mt-0.5">location_on</span>
+<span>٧٨ ش جامعة الدول العربية، أمام نادي الصيد، الجيزة</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-secondary shrink-0">schedule</span>
+<span>متاح ٢٤ ساعة • قسم التركيبات والمستلزمات</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-secondary shrink-0">call</span>
+<span class="font-mono text-body-sm" dir="ltr">0237612040</span>
+</div>
+</div>
+<div class="p-2.5 rounded-lg bg-surface-container-low flex items-center justify-between text-on-surface">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-brand-emerald-dark"></span>
+<span class="font-label-sm text-label-sm">جاهز للاستلام والتوصيل المباشر</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-secondary-container">توصيل: ٢٥-٤٠ دقيقة</span>
+</div>
+</div>
+<!-- Branch 4 -->
+<div class="cursor-pointer rounded-xl p-space-md bg-canvas-pure shadow-sm relative transition-all duration-200 hover:shadow-md" id="branchCard4" onclick="selectBranch(4)">
+<div class="flex items-start justify-between gap-space-sm mb-space-xs">
+<div class="flex items-center gap-space-xs">
+<div class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[18px]">medication</span>
+</div>
+<div>
+<h3 class="font-title-md text-title-md text-on-surface">فرع التجمع الخامس - مول تريفيوم</h3>
+<span class="font-label-sm text-label-sm text-on-surface-variant">القاهرة الجديدة • كود: INX-07</span>
+</div>
+</div>
+<div class="hidden items-center gap-1 px-2.5 py-1 rounded-full bg-primary text-on-primary font-label-sm text-label-sm" id="badge4">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+<span>محدد الآن</span>
+</div>
+</div>
+<div class="flex flex-col gap-1.5 my-space-sm text-on-surface-variant font-body-sm text-body-sm">
+<div class="flex items-start gap-2">
+<span class="material-symbols-outlined text-[16px] text-secondary shrink-0 mt-0.5">location_on</span>
+<span>التجمع الخامس، شارع التسعين الشمالي، القاهرة الجديدة</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-secondary shrink-0">schedule</span>
+<span>من ٩:٠٠ ص حتى ١٢:٠٠ منتصف الليل</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-secondary shrink-0">call</span>
+<span class="font-mono text-body-sm" dir="ltr">01099887766</span>
+</div>
+</div>
+<div class="p-2.5 rounded-lg bg-surface-container-low flex items-center justify-between text-on-surface">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-brand-emerald-dark"></span>
+<span class="font-label-sm text-label-sm">تغطية الرحاب ومدينتي والتجمع</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-secondary-container">توصيل: ٣٥-٥٠ دقيقة</span>
+</div>
+</div>
+</div>
+<!-- VIEW 2: COMPACT BOTTOM SHEET PREVIEW / DRAWER -->
+<div class="hidden px-margin flex-col gap-space-md mt-space-md" id="sheetOverlayView">
+<div class="p-space-md rounded-xl bg-surface-container-high/60 flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-primary text-[24px]">info</span>
+<p class="font-body-sm text-body-sm text-on-surface">
+        هذا التصميم يمثل نافذة التغيير السريع (Modal Bottom Sheet) التي تنبثق بنقرة واحدة من أعلى الشاشة لتسهيل التبديل الفوري دون مغادرة سلة الأدوية.
+      </p>
+</div>
+<!-- Mocked Interactive Bottom Sheet Panel -->
+<div class="rounded-2xl bg-canvas-pure shadow-xl overflow-hidden flex flex-col">
+<!-- Sheet Handle -->
+<div class="pt-3 pb-2 flex items-center justify-center">
+<div class="w-12 h-1.5 rounded-full bg-outline-variant/60"></div>
+</div>
+<div class="px-space-md pb-space-sm flex items-center justify-between">
+<div>
+<h3 class="font-title-lg text-title-lg text-on-surface">تبديل فرع الطلب</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">اختر صيدلية الفحص والتسليم الأقرب</p>
+</div>
+<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-on-surface">
+<span class="material-symbols-outlined text-[18px]">tune</span>
+</div>
+</div>
+<!-- Quick Radio Selector in Sheet -->
+<div class="flex flex-col p-space-sm gap-2">
+<label class="flex items-center justify-between p-space-sm rounded-xl cursor-pointer bg-brand-mint-surface/60 transition-colors" onclick="setRadioSelection(1)">
+<div class="flex items-center gap-space-sm">
+<input checked="" class="w-4 h-4 accent-primary text-primary" id="radioBranch1" name="sheetBranch" type="radio"/>
+<div>
+<p class="font-title-md text-title-md text-on-surface">فرع مدينة نصر (عباس العقاد)</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">متاح ٢٤ ساعة • توصيل فوري</p>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-brand-emerald-dark px-2 py-0.5 rounded-full bg-canvas-pure shadow-sm">الأقرب 1.2 كم</span>
+</label>
+<label class="flex items-center justify-between p-space-sm rounded-xl cursor-pointer hover:bg-surface-container-low transition-colors" onclick="setRadioSelection(2)">
+<div class="flex items-center gap-space-sm">
+<input class="w-4 h-4 accent-primary text-primary" id="radioBranch2" name="sheetBranch" type="radio"/>
+<div>
+<p class="font-title-md text-title-md text-on-surface">فرع المعادي (دجلة)</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">حتى ٢:٠٠ ص • تغطية جنوب القاهرة</p>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant px-2 py-0.5">8.4 كم</span>
+</label>
+<label class="flex items-center justify-between p-space-sm rounded-xl cursor-pointer hover:bg-surface-container-low transition-colors" onclick="setRadioSelection(3)">
+<div class="flex items-center gap-space-sm">
+<input class="w-4 h-4 accent-primary text-primary" id="radioBranch3" name="sheetBranch" type="radio"/>
+<div>
+<p class="font-title-md text-title-md text-on-surface">فرع المهندسين (جامعة الدول)</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">متاح ٢٤ ساعة • مستلزمات وتركيبات</p>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant px-2 py-0.5">11.1 كم</span>
+</label>
+<label class="flex items-center justify-between p-space-sm rounded-xl cursor-pointer hover:bg-surface-container-low transition-colors" onclick="setRadioSelection(4)">
+<div class="flex items-center gap-space-sm">
+<input class="w-4 h-4 accent-primary text-primary" id="radioBranch4" name="sheetBranch" type="radio"/>
+<div>
+<p class="font-title-md text-title-md text-on-surface">فرع التجمع الخامس (تريفيوم)</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">حتى منتصف الليل • شرق القاهرة</p>
+</div>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant px-2 py-0.5">14.7 كم</span>
+</label>
+</div>
+<div class="p-space-md bg-surface-container-low/50 flex flex-col gap-2">
+<button class="w-full py-3 px-space-md rounded-xl bg-primary text-on-primary font-label-lg text-label-lg flex items-center justify-center gap-2 shadow-md active:opacity-90" onclick="confirmQuickSheet()">
+<span class="material-symbols-outlined text-[20px]">check</span>
+<span>تأكيد اختيار الفرع للشحن</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Clinical Quality & Cold Chain Banner -->
+<div class="px-margin mt-space-lg">
+<div class="rounded-xl p-space-md bg-canvas-pure shadow-sm flex items-center gap-space-md">
+<div class="w-12 h-12 rounded-xl bg-brand-mint-surface flex items-center justify-center shrink-0 text-brand-emerald-dark">
+<span class="material-symbols-outlined text-[26px]">ac_unit</span>
+</div>
+<div class="flex flex-col">
+<h4 class="font-title-md text-title-md text-on-surface">سلسلة التبريد الدوائي المضمونة</h4>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+          تنقل كافة أدوية الأنسولين واللقاحات في حقائب تبريد حرارية خاصة تحت درجة حرارة (٢-٨) مئوية من باب الفرع حتى منزلك.
+        </p>
+</div>
+</div>
+</div>
+<!-- Bottom Floating Confirmation Bar -->
+<div class="fixed bottom-0 left-0 right-0 z-40 p-margin bg-surface/90 backdrop-blur-md shadow-[0_-4px_24px_rgba(11,28,48,0.06)]">
+<div class="max-w-md mx-auto flex flex-col gap-2">
+<div class="flex items-center justify-between text-body-sm font-body-sm text-on-surface-variant px-1">
+<span>الفرع المعتمد: <strong class="text-on-surface font-semibold" id="selectedBranchTitle">مدينة نصر (عباس العقاد)</strong></span>
+<span class="text-brand-emerald-dark font-medium flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-brand-emerald-dark"></span>
+          متاح الآن
+        </span>
+</div>
+<button class="w-full h-12 rounded-full bg-primary text-on-primary font-label-lg text-label-lg flex items-center justify-center gap-2 shadow-lg hover:bg-primary-container active:scale-[0.99] transition-all" onclick="handleConfirm()">
+<span>تأكيد الفرع ومتابعة التسوق</span>
+<span class="material-symbols-outlined text-[20px] rtl:rotate-180">arrow_back</span>
+</button>
+</div>
+</div>
+</div>
+<script>
+  let activeBranchId = 1;
+
+  const branchNames = {
+    1: 'مدينة نصر (عباس العقاد)',
+    2: 'المعادي (شارع ٢٣٣ دجلة)',
+    3: 'المهندسين (جامعة الدول العربية)',
+    4: 'التجمع الخامس (تريفيوم مول)'
+  };
+
+  function switchView(mode) {
+    const listTab = document.getElementById('tabList');
+    const sheetTab = document.getElementById('tabSheet');
+    const fullList = document.getElementById('fullListView');
+    const sheetView = document.getElementById('sheetOverlayView');
+
+    if (mode === 'list') {
+      fullList.classList.remove('hidden');
+      sheetView.classList.add('hidden');
+      listTab.classList.add('bg-surface-container-lowest', 'text-primary', 'shadow-sm');
+      listTab.classList.remove('text-on-surface-variant');
+      sheetTab.classList.remove('bg-surface-container-lowest', 'text-primary', 'shadow-sm');
+      sheetTab.classList.add('text-on-surface-variant');
+    } else {
+      fullList.classList.add('hidden');
+      sheetView.classList.remove('hidden');
+      sheetTab.classList.add('bg-surface-container-lowest', 'text-primary', 'shadow-sm');
+      sheetTab.classList.remove('text-on-surface-variant');
+      listTab.classList.remove('bg-surface-container-lowest', 'text-primary', 'shadow-sm');
+      listTab.classList.add('text-on-surface-variant');
+    }
+  }
+
+  function selectBranch(id) {
+    activeBranchId = id;
+    for (let i = 1; i <= 4; i++) {
+      const card = document.getElementById('branchCard' + i);
+      const badge = document.getElementById('badge' + i);
+      const radio = document.getElementById('radioBranch' + i);
+
+      if (i === id) {
+        card.classList.add('bg-brand-mint-surface/40', 'shadow-md');
+        badge.classList.remove('hidden');
+        badge.classList.add('flex');
+        if (radio) radio.checked = true;
+      } else {
+        card.classList.remove('bg-brand-mint-surface/40', 'shadow-md');
+        badge.classList.add('hidden');
+        badge.classList.remove('flex');
+        if (radio) radio.checked = false;
+      }
+    }
+    document.getElementById('selectedBranchTitle').innerText = branchNames[id];
+  }
+
+  function setRadioSelection(id) {
+    selectBranch(id);
+  }
+
+  function confirmQuickSheet() {
+    switchView('list');
+    triggerNoticeToast('تم اعتماد ' + branchNames[activeBranchId] + ' بنجاح');
+  }
+
+  function triggerGpsPing() {
+    const btn = document.getElementById('locateBtn');
+    btn.innerHTML = '<span class="material-symbols-outlined text-[16px] animate-spin">refresh</span><span class="font-label-sm text-label-sm">جارِ الفحص...</span>';
+    setTimeout(() => {
+      btn.innerHTML = '<span class="material-symbols-outlined text-[16px]">check</span><span class="font-label-sm text-label-sm">الأقرب إليك</span>';
+      selectBranch(1);
+    }, 600);
+  }
+
+  function handleConfirm() {
+    triggerNoticeToast('تم تفعيل مخزون وأسعار: ' + branchNames[activeBranchId]);
+  }
+
+  function triggerNoticeToast(msg) {
+    const existing = document.getElementById('pharmaToast');
+    if (existing) existing.remove();
+
+    const toast = document.createElement('div');
+    toast.id = 'pharmaToast';
+    toast.className = 'fixed top-20 right-4 left-4 z-50 p-space-md rounded-xl bg-inverse-surface text-inverse-on-surface shadow-2xl flex items-center justify-between transition-all duration-300';
+    toast.innerHTML = `
+      <div class="flex items-center gap-2">
+        <span class="material-symbols-outlined text-inverse-primary text-[20px]">check_circle</span>
+        <span class="font-body-md text-body-md">${msg}</span>
+      </div>
+      <button onclick="this.parentElement.remove()" class="text-inverse-on-surface/80">
+        <span class="material-symbols-outlined text-[18px]">close</span>
+      </button>
+    `;
+    document.body.appendChild(toast);
+    setTimeout(() => {
+      if (toast && toast.parentElement) toast.remove();
+    }, 3200);
+  }
+</script></main></body></html>

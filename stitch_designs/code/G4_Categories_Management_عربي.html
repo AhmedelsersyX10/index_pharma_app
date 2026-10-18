@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_tab" name="shell-type"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700&amp;family=Geist:wght@400;600&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "surface-container-low": "#eff4ff", "surface-container-high": "#dce9ff", "surface-bright": "#f8f9ff", "on-tertiary-fixed-variant": "#005048", "outline": "#6d7a72", "on-secondary-fixed": "#131b2e", "on-error-container": "#93000a", "brand-mint-surface": "#F0FDF9", "on-primary-fixed": "#002114", "on-surface-variant": "#3d4a43", "secondary-fixed": "#dae2fd", "on-tertiary": "#ffffff", "inverse-surface": "#213145", "secondary-container": "#d7dff9", "on-primary": "#ffffff", "error-container": "#ffdad6", "on-secondary-fixed-variant": "#3f465c", "primary-fixed-dim": "#83d7b1", "on-error": "#ffffff", "brand-teal-bright": "#5EEAD4", "primary-container": "#00855e", "surface-container-highest": "#d3e4fe", "on-secondary-container": "#5c647a", "surface-tint": "#006c4c", "brand-mint-border": "#CCFBF1", "brand-emerald-dark": "#007A55", "surface-container-lowest": "#ffffff", "on-surface": "#0b1c30", "on-primary-container": "#91e5be", "on-tertiary-fixed": "#00201c", "on-tertiary-container": "#f4fffb", "medical-red": "#EF4444", "medical-amber": "#F59E0B", "surface-variant": "#d3e4fe", "tertiary-container": "#008376", "outline-variant": "#bccac1", "on-primary-fixed-variant": "#005139", "on-background": "#0b1c30", "surface-dim": "#cbdbf5", "inverse-primary": "#83d7b1", "surface-container": "#e5eeff", "primary-fixed": "#84f8c6", "inverse-on-surface": "#ebf1ff", "canvas-pure": "#FFFFFF", "secondary": "#565e74", "tertiary-fixed-dim": "#4fdbc8", "secondary-fixed-dim": "#bec6e0", "surface": "#f8f9ff", "primary": "#004f36", "tertiary-fixed": "#a1f2e3", "background": "#f8f9ff", "on-secondary": "#ffffff", "error": "#ba1a1a", "tertiary": "#004e45", "surface-subtle": "#F8FAFC" }, borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, spacing: { "space-lg": "1.5rem", "gutter-sm": "0.75rem", "margin-desktop": "3rem", "space-xs": "0.25rem", "space-2xl": "3rem", "margin": "1rem", "space-md": "1rem", "space-2xs": "0.125rem", "margin-tablet": "2rem", "gutter-lg": "1.5rem", "space-sm": "0.5rem", "space-xl": "2rem", "gutter": "1rem" }, fontFamily: { "label-lg": ["Geist"], "headline-md": ["Plus Jakarta Sans"], "body-md": ["Geist"], "body-lg": ["Geist"], "headline-lg": ["Plus Jakarta Sans"], "display-lg": ["Plus Jakarta Sans"], "label-sm": ["Geist"], "body-sm": ["Geist"], "title-md": ["Plus Jakarta Sans"], "display-lg-mobile": ["Plus Jakarta Sans"], "headline-lg-mobile": ["Plus Jakarta Sans"], "label-md": ["Geist"], "title-lg": ["Plus Jakarta Sans"] }, fontSize: { "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }], "headline-md": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "body-md": ["14px", { "lineHeight": "22px", "fontWeight": "400" }], "body-lg": ["16px", { "lineHeight": "26px", "fontWeight": "400" }], "headline-lg": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.015em", "fontWeight": "700" }], "display-lg": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "600" }], "body-sm": ["12px", { "lineHeight": "18px", "fontWeight": "400" }], "title-md": ["16px", { "lineHeight": "24px", "fontWeight": "600" }], "display-lg-mobile": ["30px", { "lineHeight": "38px", "letterSpacing": "-0.015em", "fontWeight": "700" }], "headline-lg-mobile": ["22px", { "lineHeight": "30px", "letterSpacing": "-0.01em", "fontWeight": "700" }], "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }], "title-lg": ["18px", { "lineHeight": "26px", "fontWeight": "600" }] } } } }</script><style>@layer base{html,body{width:100vw;margin:0;padding:0;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface font-body-md text-body-md text-on-surface flex flex-col min-h-screen selection:bg-brand-mint-surface selection:text-brand-emerald-dark"><header class="fixed top-0 w-full z-50 bg-surface/85 backdrop-blur-xl pt-safe shadow-[0_1px_8px_rgba(11,28,48,0.04)]"><div class="h-16 px-margin flex items-center justify-between gap-space-sm"><div class="flex items-center gap-space-sm min-w-0 flex-1"><div class="w-9 h-9 rounded-lg bg-surface-container-low flex items-center justify-center shrink-0"><span class="material-symbols-outlined text-primary text-[20px]">local_pharmacy</span></div><div class="flex flex-col min-w-0"><div class="flex items-center gap-space-2xs"><span class="material-symbols-outlined text-brand-emerald-dark text-[14px]">pin_drop</span><span class="font-label-sm text-label-sm text-brand-emerald-dark truncate">فرع عباس العقاد - مدينة نصر</span></div><h1 class="font-title-md text-title-md text-on-surface truncate">Inventory Catalog</h1></div></div><div class="flex items-center gap-space-sm shrink-0"><button aria-label="التنبيهات" class="w-11 h-11 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-container-low transition-colors"><span class="material-symbols-outlined text-[22px]">notifications</span></button><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center shrink-0 ring-2 ring-brand-mint-border"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex-1 flex flex-col relative w-full px-margin pt-16 pb-20 bg-surface"><div class="flex flex-col w-full pb-6 space-y-space-md">
+<!-- Interactive View Switcher Tabs -->
+<div class="w-full bg-surface-container-low p-space-xs rounded-xl flex items-center justify-between gap-space-xs shadow-sm">
+<button class="flex-1 py-space-sm px-space-md rounded-lg flex items-center justify-center gap-space-xs transition-all duration-200 bg-surface-container-lowest text-primary shadow-sm font-label-lg text-label-lg" id="tab-list-btn" onclick="switchView('list')">
+<span class="material-symbols-outlined text-[18px]">category</span>
+<span>قائمة التصنيفات (12)</span>
+</button>
+<button class="flex-1 py-space-sm px-space-md rounded-lg flex items-center justify-center gap-space-xs transition-all duration-200 text-on-surface-variant hover:text-on-surface font-label-lg text-label-lg" id="tab-form-btn" onclick="switchView('form')">
+<span class="material-symbols-outlined text-[18px]">add_circle</span>
+<span>إضافة تصنيف جديد</span>
+</button>
+</div>
+<!-- SECTION 1: Categories List View -->
+<div class="flex flex-col w-full space-y-space-md" id="view-categories-list">
+<!-- List Summary & Add Action -->
+<div class="flex items-center justify-between gap-space-sm bg-surface-container-lowest p-space-md rounded-xl shadow-sm">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="w-10 h-10 rounded-xl bg-brand-mint-surface flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-brand-emerald-dark text-[22px]">format_list_bulleted</span>
+</div>
+<div class="flex flex-col min-w-0">
+<span class="font-title-md text-title-md text-on-surface truncate">الأقسام الدوائية النشطة</span>
+<div class="flex items-center gap-space-xs">
+<span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+<span class="font-label-sm text-label-sm text-brand-emerald-dark">12 تصنيف طبي معتمد في الفرع</span>
+</div>
+</div>
+</div>
+<button class="h-10 px-space-md bg-primary hover:bg-primary-container text-on-primary rounded-lg font-label-lg text-label-lg flex items-center gap-space-xs shadow-sm transition-all duration-150 active:scale-95 shrink-0" onclick="switchView('form')">
+<span class="material-symbols-outlined text-[20px]">add</span>
+<span>تصنيف جديد</span>
+</button>
+</div>
+<!-- Category Cards Stack -->
+<div class="flex flex-col space-y-space-sm">
+<!-- Card 1: Cardiology & BP -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col space-y-space-sm relative overflow-hidden transition-all duration-200 hover:shadow-md">
+<div class="flex items-start justify-between gap-space-sm">
+<div class="flex items-start gap-space-sm min-w-0 flex-1">
+<div class="w-12 h-12 rounded-xl bg-surface-container-low flex items-center justify-center shrink-0 text-primary">
+<span class="material-symbols-outlined text-[26px]">cardiology</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-space-xs flex-wrap">
+<h2 class="font-title-md text-title-md text-on-surface truncate">أدوية القلب والضغط</h2>
+<span class="font-body-sm text-body-sm text-on-surface-variant font-label-md dir-ltr">Cardiology &amp; BP</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-space-2xs line-clamp-1">أدوية تنظيم ضربات القلب والضغط والشرايين والجلطات</p>
+</div>
+</div>
+<div class="flex items-center gap-space-2xs shrink-0">
+<button class="w-8 h-8 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-surface-container-low transition-colors" onclick="editCategoryMock('أدوية القلب والضغط', 'Cardiology &amp; BP', 'أدوية تنظيم ضربات القلب والضغط والشرايين', '1')" title="تعديل">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="w-8 h-8 rounded-lg flex items-center justify-center text-error hover:bg-error-container/30 transition-colors" onclick="deleteCategoryMock(this)" title="حذف">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</div>
+<div class="flex items-center justify-between pt-space-xs text-on-surface-variant">
+<div class="flex items-center gap-space-xs">
+<span class="px-space-sm py-space-2xs rounded-full bg-surface-container text-on-surface font-label-sm text-label-sm flex items-center gap-space-2xs">
+<span class="material-symbols-outlined text-[14px]">medication</span>
+<span>45 منتج</span>
+</span>
+<span class="px-space-sm py-space-2xs rounded-full bg-brand-mint-surface text-brand-emerald-dark font-label-sm text-label-sm">
+              رف A-12
+            </span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant/80">الترتيب: #1</span>
+</div>
+</div>
+<!-- Card 2: Antibiotics (Rx Required) -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col space-y-space-sm relative overflow-hidden transition-all duration-200 hover:shadow-md">
+<div class="flex items-start justify-between gap-space-sm">
+<div class="flex items-start gap-space-sm min-w-0 flex-1">
+<div class="w-12 h-12 rounded-xl bg-error-container/40 flex items-center justify-center shrink-0 text-medical-red">
+<span class="material-symbols-outlined text-[26px]">pill</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-space-xs flex-wrap">
+<h2 class="font-title-md text-title-md text-on-surface truncate">المضادات الحيوية</h2>
+<span class="font-body-sm text-body-sm text-on-surface-variant font-label-md dir-ltr">Antibiotics</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-space-2xs line-clamp-1">مضادات البكتيريا والميكروبات الخاضعة للرقابة الصيدلية</p>
+</div>
+</div>
+<div class="flex items-center gap-space-2xs shrink-0">
+<button class="w-8 h-8 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-surface-container-low transition-colors" onclick="editCategoryMock('المضادات الحيوية', 'Antibiotics', 'مضادات البكتيريا والميكروبات الخاضعة للرقابة', '2')" title="تعديل">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="w-8 h-8 rounded-lg flex items-center justify-center text-error hover:bg-error-container/30 transition-colors" onclick="deleteCategoryMock(this)" title="حذف">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</div>
+<div class="flex items-center justify-between pt-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="px-space-sm py-space-2xs rounded-full bg-surface-container text-on-surface font-label-sm text-label-sm flex items-center gap-space-2xs">
+<span class="material-symbols-outlined text-[14px]">inventory</span>
+<span>62 منتج</span>
+</span>
+<span class="px-space-sm py-space-2xs rounded-full bg-error-container text-on-error-container font-label-sm text-label-sm flex items-center gap-space-2xs font-semibold">
+<span class="material-symbols-outlined text-[14px]">prescriptions</span>
+<span>روشتة إلزامية (Rx)</span>
+</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant/80">الترتيب: #2</span>
+</div>
+</div>
+<!-- Card 3: Diabetes & Insulin (Cold Storage) -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col space-y-space-sm relative overflow-hidden transition-all duration-200 hover:shadow-md">
+<div class="flex items-start justify-between gap-space-sm">
+<div class="flex items-start gap-space-sm min-w-0 flex-1">
+<div class="w-12 h-12 rounded-xl bg-surface-container-high flex items-center justify-center shrink-0 text-primary">
+<span class="material-symbols-outlined text-[26px]">water_drop</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-space-xs flex-wrap">
+<h2 class="font-title-md text-title-md text-on-surface truncate">السكري ورعاية الإنسولين</h2>
+<span class="font-body-sm text-body-sm text-on-surface-variant font-label-md dir-ltr">Diabetes &amp; Insulin</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-space-2xs line-clamp-1">أقلام وإبر الإنسولين وأدوية الميتفورمين المنظمة للسكر</p>
+</div>
+</div>
+<div class="flex items-center gap-space-2xs shrink-0">
+<button class="w-8 h-8 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-surface-container-low transition-colors" onclick="editCategoryMock('السكري ورعاية الإنسولين', 'Diabetes &amp; Insulin', 'أقلام وإبر الإنسولين وأدوية الميتفورمين المنظمة للسكر', '3')" title="تعديل">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="w-8 h-8 rounded-lg flex items-center justify-center text-error hover:bg-error-container/30 transition-colors" onclick="deleteCategoryMock(this)" title="حذف">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</div>
+<div class="flex items-center justify-between pt-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="px-space-sm py-space-2xs rounded-full bg-surface-container text-on-surface font-label-sm text-label-sm flex items-center gap-space-2xs">
+<span class="material-symbols-outlined text-[14px]">inventory</span>
+<span>38 منتج</span>
+</span>
+<span class="px-space-sm py-space-2xs rounded-full bg-surface-container-highest text-on-surface-variant font-label-sm text-label-sm flex items-center gap-space-2xs font-semibold">
+<span class="material-symbols-outlined text-[14px] text-tertiary">ac_unit</span>
+<span>تخزين مبرد (2° - 8°م)</span>
+</span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant/80">الترتيب: #3</span>
+</div>
+</div>
+<!-- Card 4: Pain & Fever -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col space-y-space-sm relative overflow-hidden transition-all duration-200 hover:shadow-md">
+<div class="flex items-start justify-between gap-space-sm">
+<div class="flex items-start gap-space-sm min-w-0 flex-1">
+<div class="w-12 h-12 rounded-xl bg-brand-mint-surface flex items-center justify-center shrink-0 text-brand-emerald-dark">
+<span class="material-symbols-outlined text-[26px]">healing</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-space-xs flex-wrap">
+<h2 class="font-title-md text-title-md text-on-surface truncate">المسكنات وخافضات الحرارة</h2>
+<span class="font-body-sm text-body-sm text-on-surface-variant font-label-md dir-ltr">Pain &amp; Fever</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-space-2xs line-clamp-1">مضادات الالتهاب غير الستيرويدية والباراسيتامول الآمن</p>
+</div>
+</div>
+<div class="flex items-center gap-space-2xs shrink-0">
+<button class="w-8 h-8 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-surface-container-low transition-colors" onclick="editCategoryMock('المسكنات وخافضات الحرارة', 'Pain &amp; Fever', 'مضادات الالتهاب غير الستيرويدية والباراسيتامول الآمن', '4')" title="تعديل">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="w-8 h-8 rounded-lg flex items-center justify-center text-error hover:bg-error-container/30 transition-colors" onclick="deleteCategoryMock(this)" title="حذف">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</div>
+<div class="flex items-center justify-between pt-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="px-space-sm py-space-2xs rounded-full bg-surface-container text-on-surface font-label-sm text-label-sm flex items-center gap-space-2xs">
+<span class="material-symbols-outlined text-[14px]">inventory</span>
+<span>54 منتج</span>
+</span>
+<span class="px-space-sm py-space-2xs rounded-full bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm">
+              صرف مباشر (OTC)
+            </span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant/80">الترتيب: #4</span>
+</div>
+</div>
+<!-- Card 5: Gastrointestinal -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col space-y-space-sm relative overflow-hidden transition-all duration-200 hover:shadow-md">
+<div class="flex items-start justify-between gap-space-sm">
+<div class="flex items-start gap-space-sm min-w-0 flex-1">
+<div class="w-12 h-12 rounded-xl bg-surface-container flex items-center justify-center shrink-0 text-primary">
+<span class="material-symbols-outlined text-[26px]">science</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-space-xs flex-wrap">
+<h2 class="font-title-md text-title-md text-on-surface truncate">الجهاز الهضمي والمعدة</h2>
+<span class="font-body-sm text-body-sm text-on-surface-variant font-label-md dir-ltr">Gastrointestinal</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-space-2xs line-clamp-1">مضادات الحموضة وعلاجات القولون ومطهرات الأمعاء</p>
+</div>
+</div>
+<div class="flex items-center gap-space-2xs shrink-0">
+<button class="w-8 h-8 rounded-lg flex items-center justify-center text-on-surface-variant hover:bg-surface-container-low transition-colors" onclick="editCategoryMock('الجهاز الهضمي والمعدة', 'Gastrointestinal', 'مضادات الحموضة وعلاجات القولون ومطهرات الأمعاء', '5')" title="تعديل">
+<span class="material-symbols-outlined text-[18px]">edit</span>
+</button>
+<button class="w-8 h-8 rounded-lg flex items-center justify-center text-error hover:bg-error-container/30 transition-colors" onclick="deleteCategoryMock(this)" title="حذف">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+</button>
+</div>
+</div>
+<div class="flex items-center justify-between pt-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="px-space-sm py-space-2xs rounded-full bg-surface-container text-on-surface font-label-sm text-label-sm flex items-center gap-space-2xs">
+<span class="material-symbols-outlined text-[14px]">inventory</span>
+<span>41 منتج</span>
+</span>
+<span class="px-space-sm py-space-2xs rounded-full bg-surface-container-low text-on-surface-variant font-label-sm text-label-sm">
+              رف B-04
+            </span>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant/80">الترتيب: #5</span>
+</div>
+</div>
+</div>
+<!-- Quick Insight Pill -->
+<div class="w-full bg-brand-mint-surface p-space-md rounded-xl flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-brand-emerald-dark text-[24px]">verified</span>
+<p class="font-body-sm text-body-sm text-brand-emerald-dark">
+        تظهر جميع هذه التصنيفات فوراً على أجهزة الكاشير وتطبيقات الصيدلية الميدانية مع المزامنة التلقائية.
+      </p>
+</div>
+</div>
+<!-- SECTION 2: Add / Edit Category Form (Default hidden via style, controlled via JS) -->
+<div class="hidden flex-col w-full space-y-space-md" id="view-category-form">
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col space-y-space-md">
+<!-- Form Header -->
+<div class="flex items-center justify-between pb-space-xs">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-xl bg-surface-container-low flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[22px]">category</span>
+</div>
+<div class="flex flex-col">
+<h2 class="font-title-lg text-title-lg text-on-surface" id="form-title">إضافة تصنيف دوائي جديد</h2>
+<span class="font-body-sm text-body-sm text-on-surface-variant">تحديد تفاصيل وبيانات الفئة الطبية بدقة</span>
+</div>
+</div>
+<button class="w-9 h-9 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-colors" onclick="switchView('list')" type="button">
+<span class="material-symbols-outlined text-[20px]">close</span>
+</button>
+</div>
+<!-- Form Inputs Grid -->
+<form class="flex flex-col space-y-space-md" id="category-crud-form" onsubmit="handleFormSubmit(event)">
+<!-- Category Name (Arabic) -->
+<div class="flex flex-col space-y-space-xs">
+<label class="font-label-md text-label-md text-on-surface flex items-center gap-space-2xs" for="cat-name-ar">
+<span>اسم التصنيف (عربي)</span>
+<span class="text-error">*</span>
+</label>
+<div class="relative">
+<input class="w-full h-11 px-space-md bg-canvas-pure rounded-lg text-on-surface placeholder:text-on-surface-variant/60 font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-primary shadow-sm" id="cat-name-ar" placeholder="مثال: الفيتامينات والمكملات الغذائية" required="" type="text" value="الفيتامينات والمكملات الغذائية"/>
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-on-surface-variant text-[20px]">translate</span>
+</div>
+</div>
+<!-- Category Name (English) -->
+<div class="flex flex-col space-y-space-xs">
+<label class="font-label-md text-label-md text-on-surface flex items-center gap-space-2xs" for="cat-name-en">
+<span>Category Name (English)</span>
+<span class="text-error">*</span>
+</label>
+<div class="relative">
+<input class="w-full h-11 px-space-md bg-canvas-pure rounded-lg text-on-surface placeholder:text-on-surface-variant/60 font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-primary shadow-sm text-left" dir="ltr" id="cat-name-en" placeholder="e.g. Vitamins &amp; Nutritional Supplements" required="" type="text" value="Vitamins &amp; Nutritional Supplements"/>
+<span class="material-symbols-outlined absolute right-3 top-2.5 text-on-surface-variant text-[20px]">language</span>
+</div>
+</div>
+<!-- Description -->
+<div class="flex flex-col space-y-space-xs">
+<label class="font-label-md text-label-md text-on-surface flex items-center gap-space-2xs" for="cat-description">
+<span>الوصف الطبي للتصنيف</span>
+</label>
+<textarea class="w-full p-space-md bg-canvas-pure rounded-lg text-on-surface placeholder:text-on-surface-variant/60 font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-primary shadow-sm resize-none" id="cat-description" placeholder="اكتب وصفاً مختصراً لأنواع الأدوية أو المستلزمات المدرجة تحت هذا القسم الصيدلي..." rows="3">فيتامينات متعددة ومعادن وأحماض أوميغا والمكملات الداعمة للمناعة والعظام وصحة الرياضيين.</textarea>
+</div>
+<!-- Image Upload / Attachment Area -->
+<div class="flex flex-col space-y-space-xs">
+<span class="font-label-md text-label-md text-on-surface">صورة توضيحية للقسم (اختياري)</span>
+<div class="flex items-center gap-space-md bg-surface-container-low p-space-md rounded-xl">
+<!-- Thumbnail preview -->
+<div class="relative w-20 h-20 rounded-lg overflow-hidden shrink-0 bg-surface-container-high shadow-sm">
+<img alt="معاينة أيقونة القسم" class="w-full h-full object-cover" data-alt="Modern clean pharmaceutical supplements bottles arranged neatly with soft emerald laboratory lighting, clinical high resolution display" id="cat-preview-img" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD5YetI0ufrFqssBr8hKL8QzMgmvSYrYX0Nh8OZ5ZUBqjyQWCbKSv5NBgf-xdC-xE2h-flA1WrDD4oJR12vPtepJAWl5jJ-t_CbacvNRB2Blpb0yWnCpMx02OGMnK6efeLldEvQJb6k7nBqPKkaTib46wTG5ldhdTgyMWZzbD9UiGjW4aHlwdDh5msPakmUCFwE9I4d-EeMwDtWKGCyBgLEtP8ONloe2L3yQT-cCP23"/>
+<div class="absolute bottom-1 right-1 bg-surface-container-lowest/90 px-1 py-0.5 rounded text-[10px] text-primary font-bold">
+                1:1
+              </div>
+</div>
+<!-- Upload drop area -->
+<div class="flex-1 flex flex-col justify-center space-y-space-2xs">
+<label class="cursor-pointer">
+<span class="inline-flex items-center gap-space-xs px-space-md py-space-xs rounded-lg bg-surface-container-lowest hover:bg-surface text-primary font-label-md text-label-md shadow-sm transition-colors">
+<span class="material-symbols-outlined text-[18px]">cloud_upload</span>
+<span>تغيير الصورة</span>
+</span>
+<input accept="image/*" class="hidden" onchange="previewUpload(event)" type="file"/>
+</label>
+<p class="font-body-sm text-body-sm text-on-surface-variant">PNG أو WEBP أو JPG (الحد الأقصى 2 ميجابايت)</p>
+</div>
+</div>
+</div>
+<!-- Sort Order & Classification Controls -->
+<div class="grid grid-cols-2 gap-space-sm pt-space-xs">
+<!-- Sort order index -->
+<div class="flex flex-col space-y-space-xs">
+<label class="font-label-md text-label-md text-on-surface" for="cat-sort-order">ترتيب الظهور</label>
+<div class="relative">
+<input class="w-full h-11 px-space-md bg-canvas-pure rounded-lg text-on-surface font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-primary shadow-sm" id="cat-sort-order" max="99" min="1" type="number" value="6"/>
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-on-surface-variant text-[20px]">sort</span>
+</div>
+</div>
+<!-- Color Tint Selection -->
+<div class="flex flex-col space-y-space-xs">
+<label class="font-label-md text-label-md text-on-surface">لون الشعار التمييزي</label>
+<div class="flex items-center h-11 gap-space-xs px-space-xs bg-canvas-pure rounded-lg shadow-sm">
+<button class="w-7 h-7 rounded-full bg-primary ring-2 ring-primary-fixed-dim" title="زمردي" type="button"></button>
+<button class="w-7 h-7 rounded-full bg-tertiary-container hover:opacity-80" title="سماوي سريري" type="button"></button>
+<button class="w-7 h-7 rounded-full bg-medical-red hover:opacity-80" title="أحمر رقابي" type="button"></button>
+<button class="w-7 h-7 rounded-full bg-medical-amber hover:opacity-80" title="عنبري" type="button"></button>
+</div>
+</div>
+</div>
+<!-- Toggle Badges / Policy Settings -->
+<div class="bg-surface-container-low p-space-md rounded-xl space-y-space-sm">
+<span class="font-label-md text-label-md text-on-surface block">إعدادات الرقابة والصرف</span>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[20px]">prescriptions</span>
+<span class="font-body-md text-body-md text-on-surface">إلزام إرفاق روشتة طبية للقسم</span>
+</div>
+<input class="w-5 h-5 accent-primary rounded cursor-pointer" type="checkbox"/>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-tertiary text-[20px]">ac_unit</span>
+<span class="font-body-md text-body-md text-on-surface">يتطلب ثلاجة تبريد ومراقبة حرارة</span>
+</div>
+<input class="w-5 h-5 accent-primary rounded cursor-pointer" type="checkbox"/>
+</div>
+</div>
+<!-- Actions: Save & Cancel -->
+<div class="flex items-center gap-space-sm pt-space-sm">
+<button class="flex-1 h-12 bg-primary hover:bg-primary-container text-on-primary rounded-lg font-label-lg text-label-lg flex items-center justify-center gap-space-xs shadow-md transition-all duration-150 active:scale-98" type="submit">
+<span class="material-symbols-outlined text-[20px]">check_circle</span>
+<span>حفظ التصنيف</span>
+</button>
+<button class="h-12 px-space-lg bg-surface-container hover:bg-surface-container-high text-on-surface rounded-lg font-label-lg text-label-lg transition-colors" onclick="switchView('list')" type="button">
+            إلغاء
+          </button>
+</div>
+</form>
+</div>
+</div>
+<!-- Notification Toast for feedback -->
+<div class="fixed top-20 left-4 right-4 z-50 transform -translate-y-28 opacity-0 pointer-events-none transition-all duration-300 flex items-center gap-space-sm p-space-md rounded-xl bg-surface-container-lowest text-on-surface shadow-xl" id="toast-message">
+<div class="w-8 h-8 rounded-full bg-brand-mint-surface flex items-center justify-center text-brand-emerald-dark shrink-0">
+<span class="material-symbols-outlined text-[18px]">check</span>
+</div>
+<span class="font-body-md text-body-md text-on-surface flex-1" id="toast-text">تم حفظ التصنيف الطبي بنجاح!</span>
+</div>
+</div>
+<script>
+  function switchView(target) {
+    const listView = document.getElementById('view-categories-list');
+    const formView = document.getElementById('view-category-form');
+    const tabListBtn = document.getElementById('tab-list-btn');
+    const tabFormBtn = document.getElementById('tab-form-btn');
+    const formTitle = document.getElementById('form-title');
+
+    if (target === 'list') {
+      listView.classList.remove('hidden');
+      formView.classList.add('hidden');
+      formView.classList.remove('flex');
+
+      tabListBtn.className = "flex-1 py-space-sm px-space-md rounded-lg flex items-center justify-center gap-space-xs transition-all duration-200 bg-surface-container-lowest text-primary shadow-sm font-label-lg text-label-lg";
+      tabFormBtn.className = "flex-1 py-space-sm px-space-md rounded-lg flex items-center justify-center gap-space-xs transition-all duration-200 text-on-surface-variant hover:text-on-surface font-label-lg text-label-lg";
+    } else {
+      listView.classList.add('hidden');
+      formView.classList.remove('hidden');
+      formView.classList.add('flex');
+
+      tabFormBtn.className = "flex-1 py-space-sm px-space-md rounded-lg flex items-center justify-center gap-space-xs transition-all duration-200 bg-surface-container-lowest text-primary shadow-sm font-label-lg text-label-lg";
+      tabListBtn.className = "flex-1 py-space-sm px-space-md rounded-lg flex items-center justify-center gap-space-xs transition-all duration-200 text-on-surface-variant hover:text-on-surface font-label-lg text-label-lg";
+
+      if (formTitle.dataset.mode !== 'edit') {
+        formTitle.textContent = "إضافة تصنيف دوائي جديد";
+      }
+    }
+  }
+
+  function editCategoryMock(nameAr, nameEn, desc, sort) {
+    const formTitle = document.getElementById('form-title');
+    formTitle.dataset.mode = 'edit';
+    formTitle.textContent = "تعديل فئة: " + nameAr;
+    
+    document.getElementById('cat-name-ar').value = nameAr;
+    document.getElementById('cat-name-en').value = nameEn;
+    document.getElementById('cat-description').value = desc;
+    document.getElementById('cat-sort-order').value = sort;
+
+    switchView('form');
+  }
+
+  function deleteCategoryMock(btn) {
+    const card = btn.closest('.bg-surface-container-lowest');
+    if (confirm('هل أنت متأكد من رغبتك في حذف هذا التصنيف من صيدلية عباس العقاد؟')) {
+      card.style.opacity = '0';
+      card.style.transform = 'scale(0.95)';
+      setTimeout(() => {
+        card.remove();
+        showToast('تم حذف التصنيف بنجاح من قاعدة البيانات.');
+      }, 200);
+    }
+  }
+
+  function handleFormSubmit(e) {
+    e.preventDefault();
+    const nameAr = document.getElementById('cat-name-ar').value;
+    showToast('تم حفظ تصنيف "' + nameAr + '" بنجاح');
+    setTimeout(() => {
+      switchView('list');
+      document.getElementById('form-title').dataset.mode = '';
+    }, 600);
+  }
+
+  function showToast(msg) {
+    const toast = document.getElementById('toast-message');
+    const toastText = document.getElementById('toast-text');
+    toastText.textContent = msg;
+    toast.classList.remove('opacity-0', '-translate-y-28', 'pointer-events-none');
+    toast.classList.add('opacity-100', 'translate-y-0');
+    setTimeout(() => {
+      toast.classList.add('opacity-0', '-translate-y-28', 'pointer-events-none');
+      toast.classList.remove('opacity-100', 'translate-y-0');
+    }, 2800);
+  }
+
+  function previewUpload(event) {
+    const file = event.target.files[0];
+    if (file) {
+      showToast('تم تحديد الصورة وجاري معالجتها');
+    }
+  }
+</script></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface/90 backdrop-blur-xl shadow-[0_-2px_12px_rgba(11,28,48,0.05)]" data-active-classes="text-primary font-bold"><div class="flex items-center justify-around h-16 px-space-xs"><a class="flex flex-col items-center justify-center gap-space-2xs w-16 h-12 text-on-surface-variant hover:text-on-surface transition-colors" data-path="pos-terminal" href="#"><span class="material-symbols-outlined text-[22px]">point_of_sale</span><span class="font-label-sm text-label-sm">بيع</span></a><a class="flex flex-col items-center justify-center gap-space-2xs w-16 h-12 text-on-surface-variant hover:text-on-surface transition-colors" data-path="orders-management" href="#"><span class="material-symbols-outlined text-[22px]">receipt_long</span><span class="font-label-sm text-label-sm">الطلبات</span></a><a class="flex flex-col items-center justify-center gap-space-2xs w-16 h-12 text-on-surface-variant hover:text-on-surface transition-colors" data-path="prescriptions-desk" href="#"><span class="material-symbols-outlined text-[22px]">prescriptions</span><span class="font-label-sm text-label-sm">الروشتات</span></a><a aria-current="page" class="flex flex-col items-center justify-center gap-space-2xs w-16 h-12 transition-colors text-primary font-bold" data-path="inventory-catalog" href="#"><span class="material-symbols-outlined text-[22px]">inventory_2</span><span class="font-label-sm text-label-sm">المنتجات</span></a><a class="flex flex-col items-center justify-center gap-space-2xs w-16 h-12 text-on-surface-variant hover:text-on-surface transition-colors" data-path="branch-menu" href="#"><span class="material-symbols-outlined text-[22px]">more_horiz</span><span class="font-label-sm text-label-sm">المزيد</span></a></div></nav></body></html>

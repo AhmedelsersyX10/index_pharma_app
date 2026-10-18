@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_stack" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "on-tertiary-container": "#f4fffb", "brand-emerald-dark": "#007A55", "surface-dim": "#cbdbf6", "on-primary-container": "#91e5be", "on-error-container": "#93000a", "on-tertiary-fixed": "#00201c", "on-background": "#0b1c30", "surface-container": "#e6eeff", "primary-fixed-dim": "#83d7b1", "secondary-fixed-dim": "#bec6e0", "tertiary-fixed-dim": "#4fdbc8", "on-tertiary-fixed-variant": "#005048", "primary-container": "#00694a", "surface-variant": "#d3e3ff", "surface-container-high": "#dce9ff", "surface-subtle": "#F8FAFC", "on-secondary-fixed-variant": "#3f465c", "tertiary": "#004e45", "on-error": "#ffffff", "inverse-primary": "#83d7b1", "surface-bright": "#f8f9ff", "secondary-container": "#dae2fd", "surface-container-highest": "#d3e3ff", "on-primary-fixed": "#002114", "error": "#ba1a1a", "on-surface-variant": "#3f4943", "secondary": "#565e74", "on-secondary": "#ffffff", "medical-red": "#EF4444", "on-surface": "#0b1c30", "on-primary": "#ffffff", "surface-container-lowest": "#ffffff", "on-secondary-fixed": "#131b2e", "inverse-on-surface": "#eaf1ff", "error-container": "#ffdad6", "tertiary-container": "#008376", "tertiary-fixed": "#71f8e4", "inverse-surface": "#213146", "brand-mint-surface": "#F0FDF9", "on-secondary-container": "#5a6278", "surface-tint": "#076c4d", "surface": "#f8f9ff", "medical-amber": "#F59E0B", "brand-teal-bright": "#5EEAD4", "secondary-fixed": "#dae2fc", "primary-fixed": "#84f8c6", "outline": "#6d7a72", "background": "#f8f9ff", "outline-variant": "#bec9c1", "brand-mint-border": "#CCFBF1", "canvas-pure": "#FFFFFF", "primary": "#004f36", "on-primary-fixed-variant": "#005138", "surface-container-low": "#eff4ff", "on-tertiary": "#ffffff" }, borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, spacing: { "space-xs": "0.25rem", "margin-desktop": "3rem", "gutter": "1rem", "margin": "1rem", "space-xl": "2rem", "space-2xl": "3rem", "gutter-sm": "0.75rem", "gutter-lg": "1.5rem", "space-sm": "0.5rem", "space-md": "1rem", "space-2xs": "0.125rem", "space-lg": "1.5rem", "margin-tablet": "2rem" }, fontFamily: { "body-lg": ["Geist", "sans-serif"], "headline-lg-mobile": ["Plus Jakarta Sans", "sans-serif"], "body-md": ["Geist", "sans-serif"], "display-lg": ["Plus Jakarta Sans", "sans-serif"], "label-sm": ["Geist", "sans-serif"], "label-lg": ["Geist", "sans-serif"], "display-lg-mobile": ["Plus Jakarta Sans", "sans-serif"], "title-lg": ["Plus Jakarta Sans", "sans-serif"], "headline-lg": ["Plus Jakarta Sans", "sans-serif"], "title-md": ["Plus Jakarta Sans", "sans-serif"], "body-sm": ["Geist", "sans-serif"], "label-md": ["Geist", "sans-serif"], "headline-md": ["Plus Jakarta Sans", "sans-serif"] }, fontSize: { "body-lg": ["16px", { "lineHeight": "26px", "fontWeight": "400" }], "headline-lg-mobile": ["22px", { "lineHeight": "30px", "letterSpacing": "-0.01em", "fontWeight": "700" }], "body-md": ["14px", { "lineHeight": "22px", "fontWeight": "400" }], "display-lg": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "600" }], "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }], "display-lg-mobile": ["30px", { "lineHeight": "38px", "letterSpacing": "-0.015em", "fontWeight": "700" }], "title-lg": ["18px", { "lineHeight": "26px", "fontWeight": "600" }], "headline-lg": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.015em", "fontWeight": "700" }], "title-md": ["16px", { "lineHeight": "24px", "fontWeight": "600" }], "body-sm": ["12px", { "lineHeight": "18px", "fontWeight": "400" }], "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }], "headline-md": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }] } } } };</script><style>@layer base{html,body{width:100vw;margin:0;padding:0;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface font-body-md text-body-md text-on-surface flex flex-col min-h-screen"><header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl pt-safe shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 px-margin flex items-center justify-between"><div class="flex items-center gap-space-xs"><button aria-label="الرجوع" class="w-11 h-11 flex items-center justify-center text-on-surface hover:text-primary transition-colors" onclick="history.back()"><span class="material-symbols-outlined text-[24px]">arrow_forward</span></button><h1 class="font-title-lg text-title-lg text-on-surface font-bold">Order Details</h1></div><div class="flex items-center gap-space-sm"><div class="hidden sm:flex items-center gap-space-xs px-space-sm py-space-2xs rounded-full bg-brand-mint-surface text-brand-emerald-dark font-label-sm text-label-sm"><span class="material-symbols-outlined text-[16px]">storefront</span><span>فرع مدينة نصر</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex-1 w-full pt-16 px-margin bg-surface pb-safe"><div class="flex flex-col w-full pb-safe space-y-space-md" dir="rtl">
+<!-- Interactive State Simulation Bar (Design Delight / Preview Toggle) -->
+<div class="w-full bg-surface-container p-space-sm rounded-xl flex items-center justify-between shadow-sm">
+<div class="flex items-center gap-space-xs text-on-surface-variant font-label-sm">
+<span class="material-symbols-outlined text-[18px] text-primary">tune</span>
+<span>معاينة حالة الطلب:</span>
+</div>
+<div class="flex items-center gap-space-xs bg-surface-container-lowest p-space-2xs rounded-full shadow-sm">
+<button class="px-space-sm py-1 rounded-full text-label-sm font-label-sm transition-all duration-200 bg-primary text-on-primary shadow-sm flex items-center gap-1" id="btn-state-active" onclick="setOrderState('processing')">
+<span class="w-1.5 h-1.5 rounded-full bg-brand-teal-bright animate-pulse"></span>
+        جاري التحضير
+      </button>
+<button class="px-space-sm py-1 rounded-full text-label-sm font-label-sm transition-all duration-200 text-on-surface-variant hover:text-medical-red flex items-center gap-1" id="btn-state-cancelled" onclick="setOrderState('cancelled')">
+<span>ملغي</span>
+</button>
+</div>
+</div>
+<!-- Cancellation Alert Banner (Conditionally toggled) -->
+<div class="hidden w-full bg-error-container text-on-error-container p-space-md rounded-xl shadow-sm transition-all duration-300" id="cancellation-banner">
+<div class="flex items-start gap-space-sm">
+<div class="w-8 h-8 rounded-full bg-medical-red text-canvas-pure flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[20px]">cancel</span>
+</div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between">
+<h3 class="font-title-md text-title-md text-on-error-container font-bold">تم إلغاء هذا الطلب</h3>
+<span class="font-label-sm text-label-sm text-error font-semibold">١٥ مايو ٢٠٢٥، ٠٣:١٠ م</span>
+</div>
+<p class="font-body-md text-body-md mt-space-xs text-on-error-container/90">
+          تم الإلغاء لعدم توفر صنف بوصفة طبية في الفرع المختار. تم استرداد أية مبالغ متعلقة بحسابك تلقائياً.
+        </p>
+</div>
+</div>
+</div>
+<!-- Section 1: Order Header & Core Meta -->
+<div class="w-full bg-surface-container-lowest rounded-xl p-space-md shadow-sm space-y-space-md relative overflow-hidden">
+<!-- Accent background glow -->
+<div class="absolute -top-12 -left-12 w-32 h-32 rounded-full bg-brand-mint-surface/60 blur-2xl pointer-events-none"></div>
+<div class="flex items-start justify-between relative z-10">
+<div class="space-y-space-2xs min-w-0 flex-1">
+<div class="flex items-center gap-space-xs flex-wrap">
+<span class="font-label-md text-label-md text-on-surface-variant">رقم الطلب</span>
+<div class="flex items-center gap-1 bg-surface-container px-space-xs py-0.5 rounded-lg">
+<span class="font-body-sm text-body-sm font-bold tracking-wider text-on-surface" id="order-id">ONL-1792143299899</span>
+<button aria-label="نسخ رقم الطلب" class="w-6 h-6 flex items-center justify-center text-on-surface-variant hover:text-primary transition-colors active:scale-95" onclick="copyOrderNumber()" title="نسخ رقم الطلب">
+<span class="material-symbols-outlined text-[16px]" id="copy-icon">content_copy</span>
+</button>
+</div>
+<span class="opacity-0 transition-opacity duration-200 font-label-sm text-label-sm text-brand-emerald-dark bg-brand-mint-surface px-space-xs rounded" id="copy-toast">تم النسخ!</span>
+</div>
+<div class="flex items-center gap-space-xs text-on-surface-variant font-body-sm text-body-sm mt-1">
+<span class="material-symbols-outlined text-[16px]">calendar_today</span>
+<span>١٥ مايو ٢٠٢٥، ٠٢:٤٥ م</span>
+</div>
+</div>
+<!-- Dynamic Status Badge -->
+<div class="shrink-0" id="status-badge-container">
+<div class="inline-flex items-center gap-1.5 px-space-sm py-1 rounded-full bg-brand-mint-surface text-brand-emerald-dark font-label-sm text-label-sm shadow-sm" id="status-badge-processing">
+<span class="w-2 h-2 rounded-full bg-primary animate-ping"></span>
+<span>جاري التحضير</span>
+</div>
+<div class="hidden inline-flex items-center gap-1.5 px-space-sm py-1 rounded-full bg-error-container text-error font-label-sm text-label-sm shadow-sm" id="status-badge-cancelled">
+<span class="material-symbols-outlined text-[16px]">close</span>
+<span>ملغي</span>
+</div>
+</div>
+</div>
+<!-- Fulfillment Pharmacy Branch Card -->
+<div class="bg-surface-subtle p-space-sm rounded-xl flex items-center justify-between gap-space-sm">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="w-10 h-10 rounded-xl bg-surface-container flex items-center justify-center text-primary shrink-0">
+<span class="material-symbols-outlined text-[22px]">local_pharmacy</span>
+</div>
+<div class="min-w-0">
+<div class="font-label-sm text-label-sm text-on-surface-variant">الفرع المجهز</div>
+<div class="font-title-md text-title-md text-on-surface font-semibold truncate">صيدلية فرع عباس العقاد - مدينة نصر</div>
+</div>
+</div>
+<a aria-label="اتصال بالصيدلية" class="w-9 h-9 rounded-full bg-canvas-pure flex items-center justify-center text-primary shadow-sm hover:bg-surface-container transition-colors shrink-0" href="tel:19011">
+<span class="material-symbols-outlined text-[18px]">call</span>
+</a>
+</div>
+</div>
+<!-- Section 2: Vertical Order Timeline -->
+<div class="w-full bg-surface-container-lowest rounded-xl p-space-md shadow-sm space-y-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[22px]">timeline</span>
+<h2 class="font-title-lg text-title-lg text-on-surface font-bold">مراحل الطلب</h2>
+</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant" id="timeline-eta">الوقت المتوقع: ٣٠ دقيقة</span>
+</div>
+<!-- Active Process Timeline Flow -->
+<div class="relative pr-2" id="timeline-normal">
+<!-- Step 1: Pending (Completed) -->
+<div class="flex items-start gap-space-md relative pb-6">
+<!-- Connecting Line -->
+<div class="absolute right-4 top-8 bottom-0 w-0.5 bg-brand-emerald-dark"></div>
+<!-- Node Circle -->
+<div class="w-8 h-8 rounded-full bg-brand-emerald-dark text-on-primary flex items-center justify-center z-10 shrink-0 shadow-sm">
+<span class="material-symbols-outlined text-[18px]">check</span>
+</div>
+<!-- Content -->
+<div class="flex-1 min-w-0 pt-1">
+<div class="flex items-center justify-between">
+<span class="font-title-md text-title-md text-on-surface font-bold">قيد الانتظار</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">٠٢:٤٥ م</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">تم استلام طلبك ومراجعته من النظام الصيدلي</p>
+</div>
+</div>
+<!-- Step 2: Processing (Active Step) -->
+<div class="flex items-start gap-space-md relative pb-6">
+<!-- Connecting Line -->
+<div class="absolute right-4 top-8 bottom-0 w-0.5 bg-surface-container"></div>
+<!-- Node Circle (Pulsing ring) -->
+<div class="w-8 h-8 rounded-full bg-primary-container text-on-tertiary-container flex items-center justify-center z-10 shrink-0 shadow-md ring-4 ring-brand-mint-border">
+<span class="material-symbols-outlined text-[18px] animate-spin">autorenew</span>
+</div>
+<!-- Content -->
+<div class="flex-1 min-w-0 pt-1">
+<div class="flex items-center justify-between">
+<span class="font-title-md text-title-md text-primary font-bold">جاري التحضير</span>
+<span class="font-label-sm text-label-sm text-primary font-semibold">٠٢:٥٥ م</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface mt-0.5">الصيدلي يقوم الآن بتجهيز الأدوية ومطابقة التواريخ</p>
+<div class="mt-space-xs inline-flex items-center gap-1 bg-brand-mint-surface px-space-xs py-0.5 rounded-full text-brand-emerald-dark font-label-sm text-label-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-primary"></span>
+<span>المرحلة الحالية النشطة</span>
+</div>
+</div>
+</div>
+<!-- Step 3: Ready (Waiting) -->
+<div class="flex items-start gap-space-md relative pb-6">
+<!-- Connecting Line -->
+<div class="absolute right-4 top-8 bottom-0 w-0.5 bg-surface-container"></div>
+<!-- Node Circle -->
+<div class="w-8 h-8 rounded-full bg-surface-container text-on-surface-variant flex items-center justify-center z-10 shrink-0">
+<span class="material-symbols-outlined text-[18px]">inventory_2</span>
+</div>
+<!-- Content -->
+<div class="flex-1 min-w-0 pt-1">
+<div class="flex items-center justify-between">
+<span class="font-title-md text-title-md text-on-surface-variant font-medium">تم التجهيز</span>
+<span class="font-label-sm text-label-sm text-outline-variant">في الانتظار</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">تغليف الطلب وتسليمه لمندوب التوصيل</p>
+</div>
+</div>
+<!-- Step 4: Delivered (Waiting) -->
+<div class="flex items-start gap-space-md relative">
+<!-- Node Circle -->
+<div class="w-8 h-8 rounded-full bg-surface-container text-on-surface-variant flex items-center justify-center z-10 shrink-0">
+<span class="material-symbols-outlined text-[18px]">sports_motorsports</span>
+</div>
+<!-- Content -->
+<div class="flex-1 min-w-0 pt-1">
+<div class="flex items-center justify-between">
+<span class="font-title-md text-title-md text-on-surface-variant font-medium">تم التوصيل</span>
+<span class="font-label-sm text-label-sm text-outline-variant">في الانتظار</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">وصول الطلب إلى باب منزلك واستلام الحساب</p>
+</div>
+</div>
+</div>
+<!-- Cancelled Timeline Flow (Hidden by default) -->
+<div class="hidden relative pr-2" id="timeline-cancelled">
+<!-- Step 1: Received -->
+<div class="flex items-start gap-space-md relative pb-6">
+<div class="absolute right-4 top-8 bottom-0 w-0.5 bg-outline-variant/40"></div>
+<div class="w-8 h-8 rounded-full bg-secondary-fixed text-on-secondary-fixed flex items-center justify-center z-10 shrink-0">
+<span class="material-symbols-outlined text-[18px]">check</span>
+</div>
+<div class="flex-1 min-w-0 pt-1">
+<div class="flex items-center justify-between">
+<span class="font-title-md text-title-md text-on-surface font-semibold">قيد الانتظار</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">٠٢:٤٥ م</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">تم استلام الطلب بالصيدلية</p>
+</div>
+</div>
+<!-- Step 2: Cancelled Interruption -->
+<div class="flex items-start gap-space-md relative">
+<div class="w-8 h-8 rounded-full bg-medical-red text-on-error flex items-center justify-center z-10 shrink-0 shadow-md">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</div>
+<div class="flex-1 min-w-0 pt-1">
+<div class="flex items-center justify-between">
+<span class="font-title-md text-title-md text-error font-bold">تم إلغاء الطلب (ملغي)</span>
+<span class="font-label-sm text-label-sm text-error">٠٣:١٠ م</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">تم توقف دورة التجهيز بناءً على اعتذار الفرع لعدم توفر المستحضر الطبي</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Section 3: Items Ordered -->
+<div class="w-full bg-surface-container-lowest rounded-xl p-space-md shadow-sm space-y-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[22px]">medication</span>
+<h2 class="font-title-lg text-title-lg text-on-surface font-bold">الأصناف المطلوبة</h2>
+</div>
+<span class="bg-surface-container px-space-sm py-0.5 rounded-full font-label-sm text-label-sm text-on-surface-variant">٣ منتجات</span>
+</div>
+<div class="space-y-space-sm">
+<!-- Item 1: Augmentin -->
+<div class="flex items-center gap-space-sm p-space-sm bg-surface rounded-xl">
+<div class="w-14 h-14 rounded-lg bg-surface-container overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" data-alt="A clean pharmaceutical medicine box of Augmentin 1g tablets, displayed on a sterile medical background with soft studio mint lighting and sharp clinical details" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBEW5itLzY6_ocSTvTLhcAKQy8spkSLQKgOp0_-tlnrIhY9km8-r1B8soYfNWZvEYF_42RiPitRkuNT18doREAjDpHCDNESP6h1wpzxRrqzTOu9x9IcUSFbQYuiyQ_gw5ynzS7CEnY384BGcwQhgWYduohSZ4VqN5soIDrGMBVGMHMS_MCD72ahlGiaGoD1mJ1rd8aebVfO9PtADkkybZqszphKtkMqpIJXZuwQKASf"/>
+</div>
+<div class="flex-1 min-w-0">
+<h3 class="font-title-md text-title-md text-on-surface font-semibold truncate">أوجمنتين ١ جم أقراص</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">علبة كاملة (١٤ قرص)</p>
+<div class="flex items-center justify-between mt-1">
+<span class="font-label-md text-label-md text-secondary">الكمية: ١</span>
+<span class="font-title-md text-title-md text-primary font-bold">٩٩٫٠٠ ج.م</span>
+</div>
+</div>
+</div>
+<!-- Item 2: Panadol Extra -->
+<div class="flex items-center gap-space-sm p-space-sm bg-surface rounded-xl">
+<div class="w-14 h-14 rounded-lg bg-surface-container overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" data-alt="Red packaging of Panadol Extra 500mg pain relief tablets resting on an ice-toned neutral clinical counter with soft professional lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCMK57yULLCiA1TmT3Re_OraoNRy2WYEVapRFkvDB2jkBBQbWvVBsNI_D6jWXXybLEVUv8LVmJHRN_scIGKUXhNvsSZHRk4UlILqo3zGOYrh7xpwGBTZcLRy_8r3ZkMP-ICBlx8DmfSuegq6DjwIvr0SGhf2aiK1QMoAu0d_BX0GUqjvXkb-a3LznDu3IKdqk8qeLA7BZoyhI4Gza24zb_3p7q3NudigMyfc_1HpQcz"/>
+</div>
+<div class="flex-1 min-w-0">
+<h3 class="font-title-md text-title-md text-on-surface font-semibold truncate">بنادول إكسترا ٥٠٠ مجم</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">شريطين (٢٤ قرص)</p>
+<div class="flex items-center justify-between mt-1">
+<span class="font-label-md text-label-md text-secondary">الكمية: ٢</span>
+<span class="font-title-md text-title-md text-primary font-bold">٩٠٫٠٠ ج.م</span>
+</div>
+</div>
+</div>
+<!-- Item 3: Concor COR -->
+<div class="flex items-center gap-space-sm p-space-sm bg-surface rounded-xl">
+<div class="w-14 h-14 rounded-lg bg-surface-container overflow-hidden shrink-0">
+<img class="w-full h-full object-cover" data-alt="A pharmaceutical white and heart-themed package of Concor Cor 2.5mg cardiovascular medication on a bright clinical laboratory table" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA4B0_vmQ-1kCZoSGHUz1l8Dv1DoWL3PTZ_uzmLmqIvMlCtakWFLemMzMyHlcaO0pqLvQPvJw3KtMqXLqWOfDNqZDpfEFCYp21gjNxjf-lPeOpQwwKoJRhVtH_97ewAfPEqepMcTRhQCryIeRXKs7Z9-pe36X4HPUNZsYqgfcq13dNOqbVFybgmY0wqJ6__Gmt5IxiD-9VCXfu5G3nE9EjzeLCzV3wI12Cl8FiTRBvY"/>
+</div>
+<div class="flex-1 min-w-0">
+<h3 class="font-title-md text-title-md text-on-surface font-semibold truncate">كونكور كور ٢٫٥ مجم</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant">علبة (٣٠ قرص)</p>
+<div class="flex items-center justify-between mt-1">
+<span class="font-label-md text-label-md text-secondary">الكمية: ١</span>
+<span class="font-title-md text-title-md text-primary font-bold">٤٢٫٥٠ ج.م</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Section 4: Delivery & Customer Info -->
+<div class="w-full bg-surface-container-lowest rounded-xl p-space-md shadow-sm space-y-space-md">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[22px]">local_shipping</span>
+<h2 class="font-title-lg text-title-lg text-on-surface font-bold">بيانات التوصيل والاستلام</h2>
+</div>
+<!-- Mini Map / Area Overview -->
+<div class="w-full h-28 bg-cover bg-center rounded-xl overflow-hidden relative shadow-sm" data-location="Abbas El Akkad, Nasr City, Cairo, Egypt" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAswnDikrxsB6jEK1Al-WNOJJO0w7jqPsUMhdMXNgEl1d2vHW-UAoihxLjzdhC5sYZ4FKhpkrJJyFGPX1cMRqNs-WK-pFCRqctvvxE3-Y3UCjqRuuQQhYiLE-wByVbovemD581GngAENmHwQ-92jze089MP423d-bPBOEGC_Z7S-J8wJquYTSURFExh_qVQdqdlzkjgWCwOGY_wQDQ7CTAaLCi97Lv0MlDd98SixJmH')">
+<div class="absolute inset-0 bg-gradient-to-t from-inverse-surface/60 via-transparent to-transparent flex items-end p-space-sm">
+<div class="flex items-center gap-1.5 text-canvas-pure font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[16px] text-brand-teal-bright">pin_drop</span>
+<span>منطقة التوصيل: عباس العقاد، مدينة نصر</span>
+</div>
+</div>
+</div>
+<div class="space-y-space-sm">
+<!-- Address Details -->
+<div class="flex items-start gap-space-sm p-space-sm rounded-lg bg-surface-subtle">
+<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-primary shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[18px]">home_pin</span>
+</div>
+<div class="flex-1 min-w-0">
+<span class="font-label-sm text-label-sm text-on-surface-variant block">عنوان التوصيل</span>
+<p class="font-body-md text-body-md text-on-surface font-medium leading-relaxed mt-0.5">
+            ش عباس العقاد، عمارة ٢٤، الدور الرابع، شقة ٨، مدينة نصر، القاهرة
+          </p>
+</div>
+</div>
+<!-- Phone Number -->
+<div class="flex items-center justify-between p-space-sm rounded-lg bg-surface-subtle">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-primary shrink-0">
+<span class="material-symbols-outlined text-[18px]">smartphone</span>
+</div>
+<div>
+<span class="font-label-sm text-label-sm text-on-surface-variant block">رقم هاتف المستلم</span>
+<span class="font-title-md text-title-md text-on-surface font-semibold tracking-wide" dir="ltr">01012345678</span>
+</div>
+</div>
+<a class="px-space-sm py-1 bg-brand-mint-surface text-brand-emerald-dark rounded-full font-label-sm text-label-sm font-semibold flex items-center gap-1" href="tel:01012345678">
+<span class="material-symbols-outlined text-[16px]">call</span>
+<span>اتصال</span>
+</a>
+</div>
+<!-- Special Delivery Notes -->
+<div class="flex items-start gap-space-sm p-space-sm rounded-lg bg-secondary-container/40">
+<div class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center text-secondary shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[18px]">speaker_notes</span>
+</div>
+<div class="flex-1 min-w-0">
+<span class="font-label-sm text-label-sm text-on-secondary-container block font-semibold">ملاحظات التوصيل</span>
+<p class="font-body-sm text-body-sm text-on-secondary-container mt-0.5">يرجى الاتصال قبل الصعود بالطلب لتواجد جرس معطل</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Section 5: Financial Summary -->
+<div class="w-full bg-surface-container-lowest rounded-xl p-space-md shadow-sm space-y-space-md mb-4">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-[22px]">receipt_long</span>
+<h2 class="font-title-lg text-title-lg text-on-surface font-bold">ملخص الحساب</h2>
+</div>
+<div class="space-y-space-xs pt-space-xs">
+<!-- Subtotal -->
+<div class="flex items-center justify-between text-on-surface-variant font-body-md text-body-md">
+<span>الإجمالي الفرعي</span>
+<span class="font-medium text-on-surface">٢٣١٫٥٠ ج.م</span>
+</div>
+<!-- Delivery Fee -->
+<div class="flex items-center justify-between text-on-surface-variant font-body-md text-body-md">
+<span>مصاريف التوصيل</span>
+<span class="font-medium text-on-surface">١٥٫٠٠ ج.م</span>
+</div>
+<!-- Total Price Highlight -->
+<div class="flex items-center justify-between pt-space-sm mt-space-sm bg-surface-subtle p-space-sm rounded-xl">
+<div>
+<span class="font-title-md text-title-md text-on-surface font-bold block">الإجمالي الكلي</span>
+<span class="font-label-sm text-label-sm text-on-surface-variant">شامل ضريبة القيمة المضافة</span>
+</div>
+<span class="font-headline-lg-mobile text-headline-lg-mobile text-primary font-bold">٢٤٦٫٥٠ ج.م</span>
+</div>
+</div>
+<!-- Payment Method -->
+<div class="flex items-center justify-between p-space-sm rounded-xl bg-surface">
+<div class="flex items-center gap-space-sm">
+<div class="w-9 h-9 rounded-lg bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">payments</span>
+</div>
+<div>
+<span class="font-label-sm text-label-sm text-on-surface-variant block">طريقة الدفع</span>
+<span class="font-title-md text-title-md text-on-surface font-semibold">الدفع نقداً أو بالبطاقة عند الاستلام (COD)</span>
+</div>
+</div>
+<span class="px-space-xs py-0.5 rounded bg-brand-mint-surface text-brand-emerald-dark font-label-sm text-label-sm font-semibold">
+        عند الاستلام
+      </span>
+</div>
+<!-- Need Help / Support Action Buttons -->
+<div class="pt-space-xs flex items-center gap-space-sm">
+<button class="flex-1 py-2.5 rounded bg-surface-container text-on-surface hover:bg-surface-variant transition-colors font-label-lg text-label-lg font-semibold flex items-center justify-center gap-1.5 shadow-sm">
+<span class="material-symbols-outlined text-[18px]">headset_mic</span>
+<span>مساعدة في الطلب</span>
+</button>
+<button class="px-space-md py-2.5 rounded bg-canvas-pure text-on-surface hover:bg-surface-container transition-colors font-label-lg text-label-lg font-semibold flex items-center justify-center gap-1.5 shadow-sm">
+<span class="material-symbols-outlined text-[18px]">download</span>
+<span>الفاتورة</span>
+</button>
+</div>
+</div>
+</div>
+<script>
+  function copyOrderNumber() {
+    const orderId = document.getElementById('order-id').innerText;
+    navigator.clipboard.writeText(orderId).then(() => {
+      const toast = document.getElementById('copy-toast');
+      const icon = document.getElementById('copy-icon');
+      
+      toast.classList.remove('opacity-0');
+      icon.innerText = 'check';
+      icon.classList.add('text-brand-emerald-dark');
+      
+      setTimeout(() => {
+        toast.classList.add('opacity-0');
+        icon.innerText = 'content_copy';
+        icon.classList.remove('text-brand-emerald-dark');
+      }, 2000);
+    });
+  }
+
+  function setOrderState(state) {
+    const banner = document.getElementById('cancellation-banner');
+    const badgeProcessing = document.getElementById('status-badge-processing');
+    const badgeCancelled = document.getElementById('status-badge-cancelled');
+    const timelineNormal = document.getElementById('timeline-normal');
+    const timelineCancelled = document.getElementById('timeline-cancelled');
+    const timelineEta = document.getElementById('timeline-eta');
+
+    const btnActive = document.getElementById('btn-state-active');
+    const btnCancelled = document.getElementById('btn-state-cancelled');
+
+    if (state === 'cancelled') {
+      banner.classList.remove('hidden');
+      badgeProcessing.classList.add('hidden');
+      badgeCancelled.classList.remove('hidden');
+      timelineNormal.classList.add('hidden');
+      timelineCancelled.classList.remove('hidden');
+      timelineEta.innerText = 'الطلب متوقف';
+
+      btnActive.className = "px-space-sm py-1 rounded-full text-label-sm font-label-sm transition-all duration-200 text-on-surface-variant hover:text-primary flex items-center gap-1";
+      btnCancelled.className = "px-space-sm py-1 rounded-full text-label-sm font-label-sm transition-all duration-200 bg-medical-red text-on-error shadow-sm flex items-center gap-1";
+    } else {
+      banner.classList.add('hidden');
+      badgeProcessing.classList.remove('hidden');
+      badgeCancelled.classList.add('hidden');
+      timelineNormal.classList.remove('hidden');
+      timelineCancelled.classList.add('hidden');
+      timelineEta.innerText = 'الوقت المتوقع: ٣٠ دقيقة';
+
+      btnActive.className = "px-space-sm py-1 rounded-full text-label-sm font-label-sm transition-all duration-200 bg-primary text-on-primary shadow-sm flex items-center gap-1";
+      btnCancelled.className = "px-space-sm py-1 rounded-full text-label-sm font-label-sm transition-all duration-200 text-on-surface-variant hover:text-medical-red flex items-center gap-1";
+    }
+  }
+</script></main></body></html>

@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_stack" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "on-tertiary-container": "#f4fffb", "brand-emerald-dark": "#007A55", "surface-dim": "#cbdbf6", "on-primary-container": "#91e5be", "on-error-container": "#93000a", "on-tertiary-fixed": "#00201c", "on-background": "#0b1c30", "surface-container": "#e6eeff", "primary-fixed-dim": "#83d7b1", "secondary-fixed-dim": "#bec6e0", "tertiary-fixed-dim": "#4fdbc8", "on-tertiary-fixed-variant": "#005048", "primary-container": "#00694a", "surface-variant": "#d3e3ff", "surface-container-high": "#dce9ff", "surface-subtle": "#F8FAFC", "on-secondary-fixed-variant": "#3f465c", "tertiary": "#004e45", "on-error": "#ffffff", "inverse-primary": "#83d7b1", "surface-bright": "#f8f9ff", "secondary-container": "#dae2fd", "surface-container-highest": "#d3e3ff", "on-primary-fixed": "#002114", "error": "#ba1a1a", "on-surface-variant": "#3f4943", "secondary": "#565e74", "on-secondary": "#ffffff", "medical-red": "#EF4444", "on-surface": "#0b1c30", "on-primary": "#ffffff", "surface-container-lowest": "#ffffff", "on-secondary-fixed": "#131b2e", "inverse-on-surface": "#eaf1ff", "error-container": "#ffdad6", "tertiary-container": "#008376", "tertiary-fixed": "#71f8e4", "inverse-surface": "#213146", "brand-mint-surface": "#F0FDF9", "on-secondary-container": "#5a6278", "surface-tint": "#076c4d", "surface": "#f8f9ff", "medical-amber": "#F59E0B", "brand-teal-bright": "#5EEAD4", "secondary-fixed": "#dae2fc", "primary-fixed": "#84f8c6", "outline": "#6d7a72", "background": "#f8f9ff", "outline-variant": "#bec9c1", "brand-mint-border": "#CCFBF1", "canvas-pure": "#FFFFFF", "primary": "#004f36", "on-primary-fixed-variant": "#005138", "surface-container-low": "#eff4ff", "on-tertiary": "#ffffff" }, borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, spacing: { "space-xs": "0.25rem", "margin-desktop": "3rem", "gutter": "1rem", "margin": "1rem", "space-xl": "2rem", "space-2xl": "3rem", "gutter-sm": "0.75rem", "gutter-lg": "1.5rem", "space-sm": "0.5rem", "space-md": "1rem", "space-2xs": "0.125rem", "space-lg": "1.5rem", "margin-tablet": "2rem" }, fontFamily: { "body-lg": ["Geist", "sans-serif"], "headline-lg-mobile": ["Plus Jakarta Sans", "sans-serif"], "body-md": ["Geist", "sans-serif"], "display-lg": ["Plus Jakarta Sans", "sans-serif"], "label-sm": ["Geist", "sans-serif"], "label-lg": ["Geist", "sans-serif"], "display-lg-mobile": ["Plus Jakarta Sans", "sans-serif"], "title-lg": ["Plus Jakarta Sans", "sans-serif"], "headline-lg": ["Plus Jakarta Sans", "sans-serif"], "title-md": ["Plus Jakarta Sans", "sans-serif"], "body-sm": ["Geist", "sans-serif"], "label-md": ["Geist", "sans-serif"], "headline-md": ["Plus Jakarta Sans", "sans-serif"] }, fontSize: { "body-lg": ["16px", { "lineHeight": "26px", "fontWeight": "400" }], "headline-lg-mobile": ["22px", { "lineHeight": "30px", "letterSpacing": "-0.01em", "fontWeight": "700" }], "body-md": ["14px", { "lineHeight": "22px", "fontWeight": "400" }], "display-lg": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "600" }], "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }], "display-lg-mobile": ["30px", { "lineHeight": "38px", "letterSpacing": "-0.015em", "fontWeight": "700" }], "title-lg": ["18px", { "lineHeight": "26px", "fontWeight": "600" }], "headline-lg": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.015em", "fontWeight": "700" }], "title-md": ["16px", { "lineHeight": "24px", "fontWeight": "600" }], "body-sm": ["12px", { "lineHeight": "18px", "fontWeight": "400" }], "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }], "headline-md": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }] } } } };</script><style>@layer base{html,body{width:100vw;margin:0;padding:0;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface font-body-md text-body-md text-on-surface flex flex-col min-h-screen"><header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl pt-safe shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 px-margin flex items-center justify-between"><div class="flex items-center gap-space-xs"><button aria-label="الرجوع" class="w-11 h-11 flex items-center justify-center text-on-surface hover:text-primary transition-colors" onclick="history.back()"><span class="material-symbols-outlined text-[24px]">arrow_forward</span></button><h1 class="font-title-lg text-title-lg text-on-surface font-bold">Status Badge Sheet</h1></div><div class="flex items-center gap-space-sm"><div class="hidden sm:flex items-center gap-space-xs px-space-sm py-space-2xs rounded-full bg-brand-mint-surface text-brand-emerald-dark font-label-sm text-label-sm"><span class="material-symbols-outlined text-[16px]">storefront</span><span>فرع مدينة نصر</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex-1 w-full pt-16 px-margin bg-surface pb-safe"><div class="flex flex-col w-full pb-10">
+<div class="w-full bg-surface-container-lowest rounded-xl p-space-md shadow-sm mb-space-md">
+<div class="flex items-center justify-between gap-space-sm mb-space-xs">
+<div class="flex items-center gap-space-xs">
+<div class="w-8 h-8 rounded-full bg-brand-mint-surface flex items-center justify-center text-brand-emerald-dark">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+</div>
+<div>
+<span class="font-title-md text-title-md text-on-surface block">نظام شارات الحالات الصيدلانية</span>
+<span class="font-label-sm text-label-sm text-secondary block">إصدار التوثيق التشغيلي v2.4 • المعيار المصري الموحد</span>
+</div>
+</div>
+<span class="font-label-sm text-label-sm bg-surface-container px-space-xs py-space-2xs rounded-full text-on-surface">5 حالات معتمدة</span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant">
+      دليل بصري استرشادي مصمم للفرق الطبية والتقنية لصيدليات مصر. يعتمد هندسة الألوان النغمية الهادئة لمنع الإجهاد البصري مع ضمان تباين قياسي يتوافق مع معايير النفاذية العالمية (WCAG AAA).
+    </p>
+</div>
+<div class="w-full bg-surface-container-lowest rounded-xl p-space-md shadow-sm mb-space-md">
+<div class="flex items-center justify-between mb-space-sm">
+<div class="flex items-center gap-space-2xs">
+<span class="material-symbols-outlined text-primary text-[20px]">palette</span>
+<span class="font-title-md text-title-md text-on-surface">العرض الأفقي المتتابع (Matrix)</span>
+</div>
+<span class="font-label-sm text-label-sm text-secondary">Pill • R-9999px</span>
+</div>
+<div class="flex flex-wrap items-center gap-space-xs p-space-sm bg-surface-subtle rounded-lg">
+<div class="inline-flex items-center gap-space-2xs px-space-sm py-space-2xs rounded-full bg-[#FEF3C7] text-[#92400E]">
+<span class="material-symbols-outlined text-[14px]">schedule</span>
+<span class="font-label-sm text-label-sm font-semibold">قيد الانتظار</span>
+</div>
+<div class="inline-flex items-center gap-space-2xs px-space-sm py-space-2xs rounded-full bg-[#E0F2FE] text-[#0369A1]">
+<span class="material-symbols-outlined text-[14px]">science</span>
+<span class="font-label-sm text-label-sm font-semibold">جاري التحضير</span>
+</div>
+<div class="inline-flex items-center gap-space-2xs px-space-sm py-space-2xs rounded-full bg-[#EDE9FE] text-[#6D28D9]">
+<span class="material-symbols-outlined text-[14px]">inventory_2</span>
+<span class="font-label-sm text-label-sm font-semibold">تم التجهيز</span>
+</div>
+<div class="inline-flex items-center gap-space-2xs px-space-sm py-space-2xs rounded-full bg-[#ECFDF5] text-[#047857]">
+<span class="material-symbols-outlined text-[14px]">verified_user</span>
+<span class="font-label-sm text-label-sm font-semibold">تم التوصيل</span>
+</div>
+<div class="inline-flex items-center gap-space-2xs px-space-sm py-space-2xs rounded-full bg-[#FEF2F2] text-[#B91C1C]">
+<span class="material-symbols-outlined text-[14px]">cancel</span>
+<span class="font-label-sm text-label-sm font-semibold">ملغي</span>
+</div>
+</div>
+</div>
+<div class="flex items-center justify-between mb-space-xs px-space-2xs">
+<div class="flex items-center gap-space-2xs">
+<span class="material-symbols-outlined text-primary text-[20px]">rule</span>
+<h2 class="font-title-lg text-title-lg text-on-surface font-bold">المواصفات التفصيلية وسياق الاستخدام</h2>
+</div>
+<span class="font-label-sm text-label-sm text-secondary">دليل الصيدلي</span>
+</div>
+<div class="flex flex-col gap-space-sm mb-space-md">
+<div class="w-full bg-surface-container-lowest rounded-xl p-space-md shadow-sm">
+<div class="flex items-start justify-between gap-space-sm mb-space-xs">
+<div class="inline-flex items-center gap-space-2xs px-space-sm py-space-2xs rounded-full bg-[#FEF3C7] text-[#92400E]">
+<span class="material-symbols-outlined text-[15px]">schedule</span>
+<span class="font-label-sm text-label-sm font-semibold">قيد الانتظار</span>
+</div>
+<div class="flex items-center gap-space-2xs bg-surface-container-low px-space-xs py-space-2xs rounded-full">
+<span class="material-symbols-outlined text-[14px] text-brand-emerald-dark">accessibility_new</span>
+<span class="font-label-sm text-label-sm text-secondary">تباين 7.8:1 (AAA)</span>
+</div>
+</div>
+<p class="font-body-md text-body-md text-on-surface mb-space-sm">
+        الطلب مسجل لدى النظام بانتظار مراجعة الصيدلي للروشتة والتأكد من توافر الدواء وصلاحية الجرعات الموصوفة وتطابقها مع سن المريض.
+      </p>
+<div class="grid grid-cols-2 gap-space-xs bg-surface-subtle p-space-xs rounded-lg font-label-sm text-label-sm text-on-surface-variant">
+<div>الرمز: <span class="text-on-surface font-semibold font-mono">#FEF3C7</span> (خلفية)</div>
+<div>النص: <span class="text-on-surface font-semibold font-mono">#92400E</span> (أمبر كستنائي)</div>
+<div>الأيقونة: <span class="text-on-surface font-semibold">schedule / clock</span></div>
+<div>المدة القصوى: <span class="text-on-surface font-semibold">10 دقائق بالمناوبة</span></div>
+</div>
+</div>
+<div class="w-full bg-surface-container-lowest rounded-xl p-space-md shadow-sm">
+<div class="flex items-start justify-between gap-space-sm mb-space-xs">
+<div class="inline-flex items-center gap-space-2xs px-space-sm py-space-2xs rounded-full bg-[#E0F2FE] text-[#0369A1]">
+<span class="material-symbols-outlined text-[15px]">science</span>
+<span class="font-label-sm text-label-sm font-semibold">جاري التحضير</span>
+</div>
+<div class="flex items-center gap-space-2xs bg-surface-container-low px-space-xs py-space-2xs rounded-full">
+<span class="material-symbols-outlined text-[14px] text-brand-emerald-dark">accessibility_new</span>
+<span class="font-label-sm text-label-sm text-secondary">تباين 7.4:1 (AAA)</span>
+</div>
+</div>
+<p class="font-body-md text-body-md text-on-surface mb-space-sm">
+        الصيدلي يقوم بتجميع الأدوية من أرفف التخزين، فحص تواريخ الصلاحية، مراجعة باركود وزارة الصحة المصرية، وبدء التغليف الطبي الآمن.
+      </p>
+<div class="grid grid-cols-2 gap-space-xs bg-surface-subtle p-space-xs rounded-lg font-label-sm text-label-sm text-on-surface-variant">
+<div>الرمز: <span class="text-on-surface font-semibold font-mono">#E0F2FE</span> (سماوي هادئ)</div>
+<div>النص: <span class="text-on-surface font-semibold font-mono">#0369A1</span> (أزرق سريري)</div>
+<div>الأيقونة: <span class="text-on-surface font-semibold">science / beaker</span></div>
+<div>فحص التشغيلة: <span class="text-on-surface font-semibold">إلزامي قبل الختم</span></div>
+</div>
+</div>
+<div class="w-full bg-surface-container-lowest rounded-xl p-space-md shadow-sm">
+<div class="flex items-start justify-between gap-space-sm mb-space-xs">
+<div class="inline-flex items-center gap-space-2xs px-space-sm py-space-2xs rounded-full bg-[#EDE9FE] text-[#6D28D9]">
+<span class="material-symbols-outlined text-[15px]">inventory_2</span>
+<span class="font-label-sm text-label-sm font-semibold">تم التجهيز</span>
+</div>
+<div class="flex items-center gap-space-2xs bg-surface-container-low px-space-xs py-space-2xs rounded-full">
+<span class="material-symbols-outlined text-[14px] text-brand-emerald-dark">accessibility_new</span>
+<span class="font-label-sm text-label-sm text-secondary">تباين 7.9:1 (AAA)</span>
+</div>
+</div>
+<p class="font-body-md text-body-md text-on-surface mb-space-sm">
+        الأدوية جاهزة ومحفوظة بحقيبة التبريد في حالة الأنسولين أو اللقاحات، ومغلفة بملصق الضمان بانتظار استلام مندوب التوصيل الميداني.
+      </p>
+<div class="grid grid-cols-2 gap-space-xs bg-surface-subtle p-space-xs rounded-lg font-label-sm text-label-sm text-on-surface-variant">
+<div>الرمز: <span class="text-on-surface font-semibold font-mono">#EDE9FE</span> (بنفسجي ناعم)</div>
+<div>النص: <span class="text-on-surface font-semibold font-mono">#6D28D9</span> (إنديجو ملكي)</div>
+<div>الأيقونة: <span class="text-on-surface font-semibold">inventory_2 / package</span></div>
+<div>التبريد: <span class="text-on-surface font-semibold">2° - 8° مئوية للحساس</span></div>
+</div>
+</div>
+<div class="w-full bg-surface-container-lowest rounded-xl p-space-md shadow-sm">
+<div class="flex items-start justify-between gap-space-sm mb-space-xs">
+<div class="inline-flex items-center gap-space-2xs px-space-sm py-space-2xs rounded-full bg-[#ECFDF5] text-[#047857]">
+<span class="material-symbols-outlined text-[15px]">verified_user</span>
+<span class="font-label-sm text-label-sm font-semibold">تم التوصيل</span>
+</div>
+<div class="flex items-center gap-space-2xs bg-surface-container-low px-space-xs py-space-2xs rounded-full">
+<span class="material-symbols-outlined text-[14px] text-brand-emerald-dark">accessibility_new</span>
+<span class="font-label-sm text-label-sm text-secondary">تباين 8.2:1 (AAA)</span>
+</div>
+</div>
+<p class="font-body-md text-body-md text-on-surface mb-space-sm">
+        تم تسليم الطلب للعميل يدًا بيد بمقر التوصيل، تأكيد استلام الفاتورة الضريبية، واستلام المبلغ نقداً أو عبر محفظة الهاتف المحمول بنجاح.
+      </p>
+<div class="grid grid-cols-2 gap-space-xs bg-surface-subtle p-space-xs rounded-lg font-label-sm text-label-sm text-on-surface-variant">
+<div>الرمز: <span class="text-on-surface font-semibold font-mono">#ECFDF5</span> (زمردي صيدلي)</div>
+<div>النص: <span class="text-on-surface font-semibold font-mono">#047857</span> (أخضر داكن موثوق)</div>
+<div>الأيقونة: <span class="text-on-surface font-semibold">verified_user / check</span></div>
+<div>الإغلاق: <span class="text-on-surface font-semibold">مكتمل ومؤرشف</span></div>
+</div>
+</div>
+<div class="w-full bg-surface-container-lowest rounded-xl p-space-md shadow-sm">
+<div class="flex items-start justify-between gap-space-sm mb-space-xs">
+<div class="inline-flex items-center gap-space-2xs px-space-sm py-space-2xs rounded-full bg-[#FEF2F2] text-[#B91C1C]">
+<span class="material-symbols-outlined text-[15px]">cancel</span>
+<span class="font-label-sm text-label-sm font-semibold">ملغي</span>
+</div>
+<div class="flex items-center gap-space-2xs bg-surface-container-low px-space-xs py-space-2xs rounded-full">
+<span class="material-symbols-outlined text-[14px] text-brand-emerald-dark">accessibility_new</span>
+<span class="font-label-sm text-label-sm text-secondary">تباين 7.3:1 (AAA)</span>
+</div>
+</div>
+<p class="font-body-md text-body-md text-on-surface mb-space-sm">
+        تم إلغاء الطلب بناءً على رغبة العميل، أو لتعذر تأكيد العنوان تليفونياً، أو لعدم استيفاء الشروط القانونية لصرف الروشتة (كالأدوية الخاضعة لجدول الرقابة).
+      </p>
+<div class="grid grid-cols-2 gap-space-xs bg-surface-subtle p-space-xs rounded-lg font-label-sm text-label-sm text-on-surface-variant">
+<div>الرمز: <span class="text-on-surface font-semibold font-mono">#FEF2F2</span> (أحمر ناعم)</div>
+<div>النص: <span class="text-on-surface font-semibold font-mono">#B91C1C</span> (أحمر سريري)</div>
+<div>الأيقونة: <span class="text-on-surface font-semibold">cancel / cross</span></div>
+<div>التراجع: <span class="text-on-surface font-semibold">إعادة الأصناف للمخزن</span></div>
+</div>
+</div>
+</div>
+<div class="w-full bg-surface-container-lowest rounded-xl p-space-md shadow-sm mb-space-md">
+<div class="flex items-center justify-between mb-space-sm">
+<div class="flex items-center gap-space-2xs">
+<span class="material-symbols-outlined text-primary text-[20px]">preview</span>
+<h3 class="font-title-md text-title-md text-on-surface font-bold">معاينة تفاعلية حية (In Situ Preview)</h3>
+</div>
+<span class="font-label-sm text-label-sm text-brand-emerald-dark bg-brand-mint-surface px-space-xs py-space-2xs rounded-full">محاكاة القائمة</span>
+</div>
+<div class="flex flex-col gap-space-xs">
+<div class="flex items-center justify-between p-space-sm bg-surface-subtle rounded-lg">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="w-10 h-10 rounded-lg bg-surface-container-lowest flex items-center justify-center shrink-0 text-secondary">
+<span class="material-symbols-outlined text-[20px]">medication</span>
+</div>
+<div class="min-w-0">
+<div class="font-title-md text-title-md text-on-surface truncate">أوجمنتين 1 جم (14 قرص)</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">طلب رقم #EG-8921 • روشتة عيادة باطنة</div>
+</div>
+</div>
+<div class="shrink-0 mr-space-xs">
+<span class="inline-flex items-center gap-space-2xs px-space-sm py-space-2xs rounded-full bg-[#FEF3C7] text-[#92400E] font-label-sm text-label-sm font-semibold">
+<span class="material-symbols-outlined text-[13px]">schedule</span>
+<span>قيد الانتظار</span>
+</span>
+</div>
+</div>
+<div class="flex items-center justify-between p-space-sm bg-surface-subtle rounded-lg">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="w-10 h-10 rounded-lg bg-surface-container-lowest flex items-center justify-center shrink-0 text-secondary">
+<span class="material-symbols-outlined text-[20px]">vaccines</span>
+</div>
+<div class="min-w-0">
+<div class="font-title-md text-title-md text-on-surface truncate">لانتوس سولوستار 100 وحدة/مل</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">طلب رقم #EG-8919 • حقيبة تبريد</div>
+</div>
+</div>
+<div class="shrink-0 mr-space-xs">
+<span class="inline-flex items-center gap-space-2xs px-space-sm py-space-2xs rounded-full bg-[#E0F2FE] text-[#0369A1] font-label-sm text-label-sm font-semibold">
+<span class="material-symbols-outlined text-[13px]">science</span>
+<span>جاري التحضير</span>
+</span>
+</div>
+</div>
+<div class="flex items-center justify-between p-space-sm bg-surface-subtle rounded-lg">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="w-10 h-10 rounded-lg bg-surface-container-lowest flex items-center justify-center shrink-0 text-secondary">
+<span class="material-symbols-outlined text-[20px]">medical_services</span>
+</div>
+<div class="min-w-0">
+<div class="font-title-md text-title-md text-on-surface truncate">كونكور 5 مجم + بنادول أزرق</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">طلب رقم #EG-8910 • مندوب: أحمد الشناوي</div>
+</div>
+</div>
+<div class="shrink-0 mr-space-xs">
+<span class="inline-flex items-center gap-space-2xs px-space-sm py-space-2xs rounded-full bg-[#EDE9FE] text-[#6D28D9] font-label-sm text-label-sm font-semibold">
+<span class="material-symbols-outlined text-[13px]">inventory_2</span>
+<span>تم التجهيز</span>
+</span>
+</div>
+</div>
+<div class="flex items-center justify-between p-space-sm bg-surface-subtle rounded-lg">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="w-10 h-10 rounded-lg bg-surface-container-lowest flex items-center justify-center shrink-0 text-secondary">
+<span class="material-symbols-outlined text-[20px]">healing</span>
+</div>
+<div class="min-w-0">
+<div class="font-title-md text-title-md text-on-surface truncate">شاش فازلين طبي + بيتادين مطهر</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">طلب رقم #EG-8902 • مدفوع نقدياً (240 ج.م)</div>
+</div>
+</div>
+<div class="shrink-0 mr-space-xs">
+<span class="inline-flex items-center gap-space-2xs px-space-sm py-space-2xs rounded-full bg-[#ECFDF5] text-[#047857] font-label-sm text-label-sm font-semibold">
+<span class="material-symbols-outlined text-[13px]">verified_user</span>
+<span>تم التوصيل</span>
+</span>
+</div>
+</div>
+<div class="flex items-center justify-between p-space-sm bg-surface-subtle rounded-lg">
+<div class="flex items-center gap-space-sm min-w-0">
+<div class="w-10 h-10 rounded-lg bg-surface-container-lowest flex items-center justify-center shrink-0 text-secondary">
+<span class="material-symbols-outlined text-[20px]">inventory</span>
+</div>
+<div class="min-w-0">
+<div class="font-title-md text-title-md text-on-surface truncate">أقراص زولام 0.5 مجم (جدول)</div>
+<div class="font-label-sm text-label-sm text-on-surface-variant">طلب رقم #EG-8890 • روشتة غير معتمدة</div>
+</div>
+</div>
+<div class="shrink-0 mr-space-xs">
+<span class="inline-flex items-center gap-space-2xs px-space-sm py-space-2xs rounded-full bg-[#FEF2F2] text-[#B91C1C] font-label-sm text-label-sm font-semibold">
+<span class="material-symbols-outlined text-[13px]">cancel</span>
+<span>ملغي</span>
+</span>
+</div>
+</div>
+</div>
+</div>
+<div class="w-full bg-surface-container-lowest rounded-xl p-space-md shadow-sm">
+<div class="flex items-center gap-space-2xs mb-space-xs">
+<span class="material-symbols-outlined text-primary text-[20px]">health_and_safety</span>
+<h3 class="font-title-md text-title-md text-on-surface font-bold">معايير التصميم للصيدليات الذكية</h3>
+</div>
+<div class="space-y-space-xs font-body-md text-body-md text-on-surface-variant">
+<div class="flex items-start gap-space-xs">
+<span class="material-symbols-outlined text-brand-emerald-dark text-[18px] shrink-0 mt-0.5">check_circle</span>
+<span><strong class="text-on-surface">التلوين الهادئ (Low Cognitive Load):</strong> تم استخدام تدرجات باهتة ومستقرة للأرضيات لتجنب إجهاد عيون الصيادلة أثناء فترات النوبتجية الليلية الطويلة.</span>
+</div>
+<div class="flex items-start gap-space-xs">
+<span class="material-symbols-outlined text-brand-emerald-dark text-[18px] shrink-0 mt-0.5">check_circle</span>
+<span><strong class="text-on-surface">الدقة المكانية RTL:</strong> تم تثبيت الأيقونة الدلالية يمين النص العربي وفق نمط القراءة المعتمد للأجهزة الطبية المحمولة.</span>
+</div>
+<div class="flex items-start gap-space-xs">
+<span class="material-symbols-outlined text-brand-emerald-dark text-[18px] shrink-0 mt-0.5">check_circle</span>
+<span><strong class="text-on-surface">إمكانية الوصول والتباين:</strong> جميع أزواج الألوان تحقق نسبة تباين لا تقل عن 7.0:1، مما يضمن قراءتها بوضوح حتى تحت أشعة الشمس لفرق التوصيل.</span>
+</div>
+</div>
+</div>
+</div></main></body></html>

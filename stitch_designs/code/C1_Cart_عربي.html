@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+
+<html dir="rtl" lang="ar"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><meta content="mobile_stack" name="shell-type"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { colors: { "on-tertiary-container": "#f4fffb", "brand-emerald-dark": "#007A55", "surface-dim": "#cbdbf6", "on-primary-container": "#91e5be", "on-error-container": "#93000a", "on-tertiary-fixed": "#00201c", "on-background": "#0b1c30", "surface-container": "#e6eeff", "primary-fixed-dim": "#83d7b1", "secondary-fixed-dim": "#bec6e0", "tertiary-fixed-dim": "#4fdbc8", "on-tertiary-fixed-variant": "#005048", "primary-container": "#00694a", "surface-variant": "#d3e3ff", "surface-container-high": "#dce9ff", "surface-subtle": "#F8FAFC", "on-secondary-fixed-variant": "#3f465c", "tertiary": "#004e45", "on-error": "#ffffff", "inverse-primary": "#83d7b1", "surface-bright": "#f8f9ff", "secondary-container": "#dae2fd", "surface-container-highest": "#d3e3ff", "on-primary-fixed": "#002114", "error": "#ba1a1a", "on-surface-variant": "#3f4943", "secondary": "#565e74", "on-secondary": "#ffffff", "medical-red": "#EF4444", "on-surface": "#0b1c30", "on-primary": "#ffffff", "surface-container-lowest": "#ffffff", "on-secondary-fixed": "#131b2e", "inverse-on-surface": "#eaf1ff", "error-container": "#ffdad6", "tertiary-container": "#008376", "tertiary-fixed": "#71f8e4", "inverse-surface": "#213146", "brand-mint-surface": "#F0FDF9", "on-secondary-container": "#5a6278", "surface-tint": "#076c4d", "surface": "#f8f9ff", "medical-amber": "#F59E0B", "brand-teal-bright": "#5EEAD4", "secondary-fixed": "#dae2fc", "primary-fixed": "#84f8c6", "outline": "#6d7a72", "background": "#f8f9ff", "outline-variant": "#bec9c1", "brand-mint-border": "#CCFBF1", "canvas-pure": "#FFFFFF", "primary": "#004f36", "on-primary-fixed-variant": "#005138", "surface-container-low": "#eff4ff", "on-tertiary": "#ffffff" }, borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, spacing: { "space-xs": "0.25rem", "margin-desktop": "3rem", "gutter": "1rem", "margin": "1rem", "space-xl": "2rem", "space-2xl": "3rem", "gutter-sm": "0.75rem", "gutter-lg": "1.5rem", "space-sm": "0.5rem", "space-md": "1rem", "space-2xs": "0.125rem", "space-lg": "1.5rem", "margin-tablet": "2rem" }, fontFamily: { "body-lg": ["Geist", "sans-serif"], "headline-lg-mobile": ["Plus Jakarta Sans", "sans-serif"], "body-md": ["Geist", "sans-serif"], "display-lg": ["Plus Jakarta Sans", "sans-serif"], "label-sm": ["Geist", "sans-serif"], "label-lg": ["Geist", "sans-serif"], "display-lg-mobile": ["Plus Jakarta Sans", "sans-serif"], "title-lg": ["Plus Jakarta Sans", "sans-serif"], "headline-lg": ["Plus Jakarta Sans", "sans-serif"], "title-md": ["Plus Jakarta Sans", "sans-serif"], "body-sm": ["Geist", "sans-serif"], "label-md": ["Geist", "sans-serif"], "headline-md": ["Plus Jakarta Sans", "sans-serif"] }, fontSize: { "body-lg": ["16px", { "lineHeight": "26px", "fontWeight": "400" }], "headline-lg-mobile": ["22px", { "lineHeight": "30px", "letterSpacing": "-0.01em", "fontWeight": "700" }], "body-md": ["14px", { "lineHeight": "22px", "fontWeight": "400" }], "display-lg": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "label-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.04em", "fontWeight": "600" }], "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }], "display-lg-mobile": ["30px", { "lineHeight": "38px", "letterSpacing": "-0.015em", "fontWeight": "700" }], "title-lg": ["18px", { "lineHeight": "26px", "fontWeight": "600" }], "headline-lg": ["28px", { "lineHeight": "36px", "letterSpacing": "-0.015em", "fontWeight": "700" }], "title-md": ["16px", { "lineHeight": "24px", "fontWeight": "600" }], "body-sm": ["12px", { "lineHeight": "18px", "fontWeight": "400" }], "label-md": ["12px", { "lineHeight": "16px", "letterSpacing": "0.02em", "fontWeight": "600" }], "headline-md": ["20px", { "lineHeight": "28px", "letterSpacing": "-0.01em", "fontWeight": "600" }] } } } };</script><style>@layer base{html,body{width:100vw;margin:0;padding:0;}body{overscroll-behavior:none;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface font-body-md text-body-md text-on-surface flex flex-col min-h-screen"><header class="fixed top-0 w-full z-50 bg-surface/80 backdrop-blur-xl pt-safe shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 px-margin flex items-center justify-between"><div class="flex items-center gap-space-xs"><button aria-label="الرجوع" class="w-11 h-11 flex items-center justify-center text-on-surface hover:text-primary transition-colors" onclick="history.back()"><span class="material-symbols-outlined text-[24px]">arrow_forward</span></button><h1 class="font-title-lg text-title-lg text-on-surface font-bold">Cart</h1></div><div class="flex items-center gap-space-sm"><div class="hidden sm:flex items-center gap-space-xs px-space-sm py-space-2xs rounded-full bg-brand-mint-surface text-brand-emerald-dark font-label-sm text-label-sm"><span class="material-symbols-outlined text-[16px]">storefront</span><span>فرع مدينة نصر</span></div><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div></div></div></header><main class="flex-1 w-full pt-16 px-margin bg-surface pb-safe"><div class="flex flex-col w-full pb-28">
+<!-- Interactive View Toggle Bar (Design Preview) -->
+<section class="mb-space-md bg-surface-container-low p-space-xs rounded-xl shadow-sm">
+<div class="grid grid-cols-3 gap-space-2xs text-center" role="tablist">
+<button class="py-space-xs px-space-2xs rounded-lg font-label-md text-label-md bg-surface-container-lowest text-primary shadow-sm font-bold transition-all flex items-center justify-center gap-1" id="tab-active" onclick="switchCartView('active')">
+<span class="material-symbols-outlined text-[16px]">shopping_cart</span>
+<span>السلة النشطة</span>
+</button>
+<button class="py-space-xs px-space-2xs rounded-lg font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-all flex items-center justify-center gap-1" id="tab-warning" onclick="switchCartView('warning')">
+<span class="material-symbols-outlined text-[16px] text-medical-amber">inventory_2</span>
+<span>تنبيه المخزون</span>
+</button>
+<button class="py-space-xs px-space-2xs rounded-lg font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-all flex items-center justify-center gap-1" id="tab-empty" onclick="switchCartView('empty')">
+<span class="material-symbols-outlined text-[16px]">remove_shopping_cart</span>
+<span>سلة فارغة</span>
+</button>
+</div>
+</section>
+<!-- Branch Context Badge -->
+<div class="flex items-center justify-between mb-space-md px-space-xs">
+<div class="flex items-center gap-space-xs bg-brand-mint-surface text-brand-emerald-dark px-space-md py-space-xs rounded-full">
+<span class="material-symbols-outlined text-[18px]">location_on</span>
+<span class="font-label-md text-label-md">فرع عباس العقاد - مدينة نصر</span>
+</div>
+<span class="font-label-sm text-label-sm text-secondary">٣ أصناف</span>
+</div>
+<!-- VIEW 1: ACTIVE / MAIN CART VIEW -->
+<div class="flex flex-col gap-space-md" id="view-cart-content">
+<!-- Emergency / Stock Adjustment Banner (Shown conditionally or triggered via toggle) -->
+<div class="hidden flex-col gap-space-xs p-space-md rounded-xl bg-error-container text-on-error-container shadow-sm transition-all duration-300" id="stock-banner">
+<div class="flex items-start gap-space-sm">
+<span class="material-symbols-outlined text-medical-red text-[22px] shrink-0">crisis_alert</span>
+<div class="flex flex-col flex-1">
+<p class="font-title-md text-title-md font-bold">تم تعديل الكمية تلقائياً لتوفر المخزون</p>
+<p class="font-body-sm text-body-sm mt-space-2xs">عقار <span class="font-bold">كونكور كور ٢٫٥ مجم</span> غير متوفر بالكمية السابقة (٣ علب). تم تعديل سلتك لعلبة واحدة وفقاً لرصيد الصيدلية الحالي.</p>
+</div>
+</div>
+<div class="flex justify-end gap-space-sm mt-space-2xs">
+<button class="px-space-md py-space-2xs rounded-full bg-surface-container-lowest text-on-error-container font-label-sm text-label-sm shadow-sm hover:opacity-90" onclick="dismissStockAlert()">حسناً، فهمت</button>
+</div>
+</div>
+<!-- Prescription Reminder Pill -->
+<div class="flex items-center justify-between p-space-sm px-space-md rounded-xl bg-secondary-container text-on-secondary-container">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-[20px] text-primary">clinical_notes</span>
+<span class="font-body-sm text-body-sm">تتضمن سلّتك مضاداً حيوياً يحتاج تأكيد الوصفة الطبية</span>
+</div>
+<span class="font-label-sm text-label-sm text-brand-emerald-dark font-bold bg-surface-container-lowest px-space-xs py-space-2xs rounded-full">معتمد</span>
+</div>
+<!-- Cart Item 1: Augmentin -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col gap-space-sm transition-all duration-200" id="item-augmentin">
+<div class="flex items-start justify-between gap-space-sm">
+<div class="flex gap-space-md">
+<div class="w-16 h-16 rounded-lg bg-surface-subtle overflow-hidden shrink-0 flex items-center justify-center relative">
+<img class="w-full h-full object-cover" data-alt="Modern crisp packaging box of Augmentin 1g antibiotic tablets in clean sterile pharmaceutical white and mint tones, professional clinical photography on soft gradient background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDBQgwmhN4qPud-gap6cI7fWs_6cReTdPtNfaInj5xkiymmvDyzc2R9HKPdeHZEYc70j8PYzZ7jkUPYBmPOd0Jsjn--aT6wOurNsS1kK7wwlP--5UmExtnKzI78UNUGXKFGxqEfDCTqULNJNzBwlJ_lx_lC0if09NM_uIIWdI7KhpNIGk9_Tf6Gc02nO511eRBMP0q4Nw0ine8ZUFC5BaXdxo7ivtW50-aRUKa0QmXA"/>
+<span class="absolute bottom-0 right-0 bg-brand-emerald-dark text-on-primary font-label-sm text-[9px] px-1 rounded-tl">Rx</span>
+</div>
+<div class="flex flex-col min-w-0">
+<h2 class="font-title-md text-title-md text-on-surface font-bold truncate">أوجمنتين ١ جم أقراص</h2>
+<p class="font-body-sm text-body-sm text-secondary truncate">Amoxicillin + Clavulanic Acid</p>
+<span class="font-label-sm text-label-sm text-on-surface-variant mt-space-2xs">علبة كاملة (١٤ قرص)</span>
+</div>
+</div>
+<button aria-label="حذف الدواء" class="text-secondary hover:text-medical-red p-space-xs rounded-lg transition-colors" onclick="removeItem('item-augmentin')">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+<div class="flex items-center justify-between pt-space-xs">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-secondary">سعر الوحدة</span>
+<span class="font-title-md text-title-md text-primary font-bold">٩٩٫٠٠ <span class="font-label-sm text-label-sm font-normal">ج.م</span></span>
+</div>
+<!-- Stepper -->
+<div class="flex items-center bg-surface-container-low rounded-lg p-space-2xs">
+<button aria-label="تقليل الكمية" class="w-8 h-8 rounded-lg bg-surface-container-lowest text-on-surface shadow-xs flex items-center justify-center hover:bg-surface-container font-bold text-lg active:scale-95 transition-transform" onclick="decrementQty('qty-augmentin', 99)">−</button>
+<span class="w-9 text-center font-title-md text-title-md text-on-surface font-bold" id="qty-augmentin">١</span>
+<button aria-label="زيادة الكمية" class="w-8 h-8 rounded-lg bg-primary text-on-primary flex items-center justify-center hover:bg-primary-container font-bold text-lg active:scale-95 transition-transform" onclick="incrementQty('qty-augmentin', 99)">+</button>
+</div>
+</div>
+</div>
+<!-- Cart Item 2: Panadol Extra -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col gap-space-sm transition-all duration-200" id="item-panadol">
+<div class="flex items-start justify-between gap-space-sm">
+<div class="flex gap-space-md">
+<div class="w-16 h-16 rounded-lg bg-surface-subtle overflow-hidden shrink-0 flex items-center justify-center">
+<img class="w-full h-full object-cover" data-alt="Panadol Extra red pharmaceutical package with blister pack tablets neatly composed on minimalist clinic counter under clean soft surgical light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA24-Tuy8_lLw5rghFMd2cPNh5_dP5vH1xTd_9mukAxX1iMdBB7zLsdsEz0TTq9kWDMY9s7XKboDGYyhNgJPMalV0zp9KYWfT2CtzdUs19DwoD1SbIZyeAffIMTOykaDLYGygxlD9Ht4PjwtamxOh_VhzuhILkqrgWYIMIRND_dl70aMIFiJeGd8HRrStynoHO5ZziVdy3tLxYO3AZilGIAf1mN4Y2rLoLwOgHUttXb"/>
+</div>
+<div class="flex flex-col min-w-0">
+<h2 class="font-title-md text-title-md text-on-surface font-bold truncate">بنادول إكسترا ٥٠٠ مجم</h2>
+<p class="font-body-sm text-body-sm text-secondary truncate">باراسيتامول + كافيين (مسكن)</p>
+<span class="font-label-sm text-label-sm text-on-surface-variant mt-space-2xs">شريطين (٢٤ قرص)</span>
+</div>
+</div>
+<button aria-label="حذف الدواء" class="text-secondary hover:text-medical-red p-space-xs rounded-lg transition-colors" onclick="removeItem('item-panadol')">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+<div class="flex items-center justify-between pt-space-xs">
+<div class="flex flex-col">
+<div class="flex items-baseline gap-space-xs">
+<span class="font-title-md text-title-md text-primary font-bold" id="total-panadol">٩٠٫٠٠</span>
+<span class="font-label-sm text-label-sm text-primary">ج.م</span>
+<span class="font-label-sm text-label-sm text-secondary"> (٤٥٫٠٠ ج.م للوحدة)</span>
+</div>
+</div>
+<!-- Stepper -->
+<div class="flex items-center bg-surface-container-low rounded-lg p-space-2xs">
+<button aria-label="تقليل الكمية" class="w-8 h-8 rounded-lg bg-surface-container-lowest text-on-surface shadow-xs flex items-center justify-center hover:bg-surface-container font-bold text-lg active:scale-95 transition-transform" onclick="decrementQty('qty-panadol', 45, 'total-panadol')">−</button>
+<span class="w-9 text-center font-title-md text-title-md text-on-surface font-bold" id="qty-panadol">٢</span>
+<button aria-label="زيادة الكمية" class="w-8 h-8 rounded-lg bg-primary text-on-primary flex items-center justify-center hover:bg-primary-container font-bold text-lg active:scale-95 transition-transform" onclick="incrementQty('qty-panadol', 45, 'total-panadol')">+</button>
+</div>
+</div>
+</div>
+<!-- Cart Item 3: Concor COR (With Stock Warning) -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col gap-space-sm relative overflow-hidden transition-all duration-200" id="item-concor">
+<!-- Stock Conflict Warning Badge -->
+<div class="flex items-center gap-space-xs bg-amber-50 text-amber-900 p-space-xs px-space-sm rounded-lg">
+<span class="material-symbols-outlined text-medical-amber text-[18px] shrink-0">warning</span>
+<span class="font-label-sm text-label-sm leading-tight">الكمية المطلوبة (٣) تتجاوز المتاح بالفرع (المتبقي علبة واحدة فقط)</span>
+</div>
+<div class="flex items-start justify-between gap-space-sm">
+<div class="flex gap-space-md">
+<div class="w-16 h-16 rounded-lg bg-surface-subtle overflow-hidden shrink-0 flex items-center justify-center relative">
+<img class="w-full h-full object-cover" data-alt="Concor Cor heart medication cardiology medicine package with subtle clinical cardiology pulse wave graphics in professional soft studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPN2XbTkuzZu93lXAd4rAwB7TKh6tYPcFNMxj0ONlIUmyvJyI7zbvx4vtKpoBeT2sGPl207HdHsg_8xhEgQgUx6Fdk1ChLilV2sFYEIzJI9av8z-RLl7Ao1A1Vt3Xiw0R-fXrKuz_N2yU8F_2ffD7SKRrmcSDHZxkE7-uN8bkSLQtTaUfz4EGJ1FBgyXEDCzL2Xqcy0MHKsoPpThuCI5BV4SAbl8z7a16BITjVAW7-"/>
+<span class="absolute top-0 right-0 bg-medical-amber text-on-primary font-label-sm text-[9px] px-1 rounded-br">مخزون محدود</span>
+</div>
+<div class="flex flex-col min-w-0">
+<div class="flex items-center gap-space-2xs">
+<h2 class="font-title-md text-title-md text-on-surface font-bold truncate">كونكور كور ٢٫٥ مجم</h2>
+</div>
+<p class="font-body-sm text-body-sm text-secondary truncate">بيسوبرولول فومارات (تنظيم الضغط)</p>
+<span class="font-label-sm text-label-sm text-on-surface-variant mt-space-2xs">علبة (٣٠ قرص)</span>
+</div>
+</div>
+<button aria-label="حذف الدواء" class="text-secondary hover:text-medical-red p-space-xs rounded-lg transition-colors" onclick="removeItem('item-concor')">
+<span class="material-symbols-outlined text-[20px]">delete</span>
+</button>
+</div>
+<div class="flex items-center justify-between pt-space-xs">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-secondary">سعر الوحدة المعدل</span>
+<span class="font-title-md text-title-md text-primary font-bold">٤٢٫٥٠ <span class="font-label-sm text-label-sm font-normal">ج.م</span></span>
+</div>
+<!-- Stepper (Capped at 1) -->
+<div class="flex items-center bg-surface-container-low rounded-lg p-space-2xs">
+<button aria-label="لا يمكن التقليل" class="w-8 h-8 rounded-lg bg-surface-dim/40 text-on-surface/30 flex items-center justify-center cursor-not-allowed font-bold text-lg" disabled="">−</button>
+<span class="w-9 text-center font-title-md text-title-md text-on-surface font-bold">١</span>
+<button aria-label="الحد الأقصى" class="w-8 h-8 rounded-lg bg-surface-dim/40 text-on-surface/30 flex items-center justify-center cursor-not-allowed font-bold text-lg" disabled="" title="الحد الأقصى للمخزون متوفر بالفرع">+</button>
+</div>
+</div>
+</div>
+<!-- Suggested Add-on Item (Micro-Delight Carousel Card) -->
+<div class="p-space-md rounded-xl bg-brand-mint-surface flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-10 h-10 rounded-full bg-surface-container-lowest flex items-center justify-center text-brand-emerald-dark shadow-xs">
+<span class="material-symbols-outlined text-[22px]">medication</span>
+</div>
+<div class="flex flex-col">
+<p class="font-label-md text-label-md text-brand-emerald-dark font-bold">موصى به مع المضاد الحيوي</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">بروبيوتيك لحماية الجهاز الهضمي (+٣٥ ج.م)</p>
+</div>
+</div>
+<button class="px-space-md py-space-xs rounded-full bg-primary text-on-primary font-label-sm text-label-sm shadow-xs hover:bg-primary-container transition-all" onclick="this.innerHTML='تمت الإضافة'; this.classList.replace('bg-primary','bg-surface-container-highest'); this.classList.replace('text-on-primary','text-primary')">إضافة</button>
+</div>
+<!-- Order Summary Card -->
+<div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col gap-space-md mt-space-xs">
+<div class="flex items-center justify-between">
+<h3 class="font-title-md text-title-md text-on-surface font-bold">ملخص الفاتورة التقديرية</h3>
+<span class="material-symbols-outlined text-secondary text-[20px]">receipt_long</span>
+</div>
+<div class="flex flex-col gap-space-xs text-body-md">
+<div class="flex justify-between items-center text-on-surface-variant font-body-md">
+<span>المجموع الفرعي (٤ أصناف)</span>
+<span class="font-bold text-on-surface">٢٣١٫٥٠ ج.م</span>
+</div>
+<div class="flex justify-between items-center text-on-surface-variant font-body-md">
+<div class="flex items-center gap-space-xs">
+<span>خدمة التوصيل بالفرع</span>
+<span class="font-label-sm text-label-sm bg-brand-mint-surface text-brand-emerald-dark px-space-xs rounded-full">سريع (٤٥ دقيقة)</span>
+</div>
+<span class="font-bold text-brand-emerald-dark">١٥٫٠٠ ج.م</span>
+</div>
+<div class="flex justify-between items-center text-on-surface-variant font-body-md">
+<span>ضريبة القيمة المضافة ومصاريف الإعداد</span>
+<span class="font-bold text-brand-emerald-dark">٠٫٠٠ ج.م (معفى طبياً)</span>
+</div>
+</div>
+<div class="h-[1px] w-full bg-surface-container-low my-space-2xs"></div>
+<div class="flex justify-between items-baseline">
+<div class="flex flex-col">
+<span class="font-title-md text-title-md text-on-surface font-bold">إجمالي القيمة المقدرة</span>
+<span class="font-label-sm text-label-sm text-secondary">شاملة التوصيل والأسعار المقررة</span>
+</div>
+<div class="flex items-baseline gap-space-2xs">
+<span class="font-headline-lg-mobile text-headline-lg-mobile text-primary font-bold">٢٤٦٫٥٠</span>
+<span class="font-label-md text-label-md text-primary font-bold">ج.م</span>
+</div>
+</div>
+<!-- Compliance Notice -->
+<div class="flex items-center gap-space-xs p-space-sm rounded-lg bg-surface-container-low text-on-surface-variant">
+<span class="material-symbols-outlined text-primary text-[18px] shrink-0">verified_user</span>
+<p class="font-body-sm text-body-sm">الأسعار رسمية ومطابقة تماماً للتسعيرة الجبرية المعتمدة لوزارة الصحة والسكان المصرية.</p>
+</div>
+</div>
+</div>
+<!-- VIEW 2: EMPTY CART STATE -->
+<div class="hidden flex-col items-center justify-center text-center py-space-xl px-space-md" id="view-cart-empty">
+<div class="w-36 h-36 rounded-full bg-brand-mint-surface flex items-center justify-center mb-space-lg relative">
+<div class="w-24 h-24 rounded-full bg-surface-container-lowest flex items-center justify-center shadow-md">
+<span class="material-symbols-outlined text-[54px] text-brand-emerald-dark">shopping_cart_off</span>
+</div>
+<div class="absolute top-2 right-2 w-8 h-8 rounded-full bg-brand-teal-bright/30 flex items-center justify-center animate-pulse">
+<span class="material-symbols-outlined text-[18px] text-primary">local_pharmacy</span>
+</div>
+</div>
+<h2 class="font-headline-md text-headline-md text-on-surface font-bold mb-space-2xs">سلة التسوق فارغة</h2>
+<p class="font-body-md text-body-md text-secondary max-w-xs mb-space-xl">لم تقم بإضافة أي أدوية أو مستلزمات طبية حتى الآن من فرع عباس العقاد.</p>
+<div class="flex flex-col w-full gap-space-sm max-w-xs">
+<button class="w-full py-space-md rounded-lg bg-primary text-on-primary font-label-lg text-label-lg shadow-md hover:bg-primary-container active:scale-[0.99] transition-all flex items-center justify-center gap-space-xs" onclick="switchCartView('active')">
+<span class="material-symbols-outlined text-[20px]">search</span>
+<span>تصفح الأدوية والروشتات</span>
+</button>
+<button class="w-full py-space-sm rounded-lg bg-surface-container-lowest text-primary font-label-md text-label-md shadow-xs hover:bg-surface-container transition-all flex items-center justify-center gap-space-xs" onclick="switchCartView('active')">
+<span class="material-symbols-outlined text-[18px]">history</span>
+<span>إعادة طلب أدوية سابقة</span>
+</button>
+</div>
+</div>
+<!-- Sticky Bottom Checkout Bar (Active View Only) -->
+<div class="fixed bottom-0 left-0 right-0 z-40 bg-surface/90 backdrop-blur-lg px-margin py-space-md shadow-[0_-4px_24px_rgba(11,28,48,0.08)]" id="sticky-checkout">
+<div class="max-w-md mx-auto flex items-center justify-between gap-space-md">
+<div class="flex flex-col">
+<span class="font-label-sm text-label-sm text-secondary">الإجمالي المستحق</span>
+<div class="flex items-baseline gap-space-2xs">
+<span class="font-headline-md text-headline-md text-primary font-bold">٢٤٦٫٥٠</span>
+<span class="font-label-sm text-label-sm text-primary">ج.م</span>
+</div>
+</div>
+<button class="flex-1 max-w-[220px] py-space-md px-space-lg rounded-lg bg-primary text-on-primary font-label-lg text-label-lg shadow-md hover:bg-primary-container active:scale-[0.98] transition-all flex items-center justify-center gap-space-xs" onclick="proceedToPayment()">
+<span>إتمام الطلب</span>
+<span class="material-symbols-outlined text-[20px] rotate-180">arrow_forward</span>
+</button>
+</div>
+</div>
+</div>
+<script>
+  function switchCartView(mode) {
+    const activeView = document.getElementById('view-cart-content');
+    const emptyView = document.getElementById('view-cart-empty');
+    const stockBanner = document.getElementById('stock-banner');
+    const stickyCheckout = document.getElementById('sticky-checkout');
+    
+    const tabActive = document.getElementById('tab-active');
+    const tabWarning = document.getElementById('tab-warning');
+    const tabEmpty = document.getElementById('tab-empty');
+
+    // Reset tab active styling
+    [tabActive, tabWarning, tabEmpty].forEach(tab => {
+      tab.className = "py-space-xs px-space-2xs rounded-lg font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-all flex items-center justify-center gap-1";
+    });
+
+    if (mode === 'active') {
+      activeView.classList.remove('hidden');
+      emptyView.classList.add('hidden');
+      stockBanner.classList.add('hidden');
+      stickyCheckout.classList.remove('hidden');
+      tabActive.className = "py-space-xs px-space-2xs rounded-lg font-label-md text-label-md bg-surface-container-lowest text-primary shadow-sm font-bold transition-all flex items-center justify-center gap-1";
+    } else if (mode === 'warning') {
+      activeView.classList.remove('hidden');
+      emptyView.classList.add('hidden');
+      stockBanner.classList.remove('hidden');
+      stickyCheckout.classList.remove('hidden');
+      tabWarning.className = "py-space-xs px-space-2xs rounded-lg font-label-md text-label-md bg-surface-container-lowest text-medical-amber shadow-sm font-bold transition-all flex items-center justify-center gap-1";
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else if (mode === 'empty') {
+      activeView.classList.add('hidden');
+      emptyView.classList.remove('hidden');
+      stockBanner.classList.add('hidden');
+      stickyCheckout.classList.add('hidden');
+      tabEmpty.className = "py-space-xs px-space-2xs rounded-lg font-label-md text-label-md bg-surface-container-lowest text-primary shadow-sm font-bold transition-all flex items-center justify-center gap-1";
+    }
+  }
+
+  function dismissStockAlert() {
+    const banner = document.getElementById('stock-banner');
+    banner.classList.add('opacity-0', 'scale-95');
+    setTimeout(() => {
+      banner.classList.add('hidden');
+      banner.classList.remove('opacity-0', 'scale-95');
+    }, 200);
+  }
+
+  function removeItem(itemId) {
+    const el = document.getElementById(itemId);
+    if (!el) return;
+    el.style.transform = 'translateX(60px)';
+    el.style.opacity = '0';
+    setTimeout(() => {
+      el.remove();
+      // If no items remain, go empty
+      const remainingItems = document.querySelectorAll('#view-cart-content > div[id^="item-"]');
+      if (remainingItems.length === 0) {
+        switchCartView('empty');
+      }
+    }, 250);
+  }
+
+  function incrementQty(spanId, unitPrice, totalSpanId) {
+    const span = document.getElementById(spanId);
+    let val = parseInt(span.innerText.replace(/[٠-٩]/g, d => "٠١٢٣٤٥٦٧٨٩".indexOf(d))) || 1;
+    val += 1;
+    span.innerText = toArabicDigits(val);
+    if (totalSpanId) {
+      const totalSpan = document.getElementById(totalSpanId);
+      totalSpan.innerText = toArabicDigits((val * unitPrice).toFixed(2));
+    }
+  }
+
+  function decrementQty(spanId, unitPrice, totalSpanId) {
+    const span = document.getElementById(spanId);
+    let val = parseInt(span.innerText.replace(/[٠-٩]/g, d => "٠١٢٣٤٥٦٧٨٩".indexOf(d))) || 1;
+    if (val > 1) {
+      val -= 1;
+      span.innerText = toArabicDigits(val);
+      if (totalSpanId) {
+        const totalSpan = document.getElementById(totalSpanId);
+        totalSpan.innerText = toArabicDigits((val * unitPrice).toFixed(2));
+      }
+    }
+  }
+
+  function toArabicDigits(n) {
+    return n.toString().replace(/\d/g, d => "٠١٢٣٤٥٦٧٨٩"[d]);
+  }
+
+  function proceedToPayment() {
+    alert("جارٍ التوجيه لخيارات الدفع وتأكيد الوصفات الطبية...");
+  }
+</script></main></body></html>
