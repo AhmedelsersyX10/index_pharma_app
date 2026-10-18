@@ -5,6 +5,8 @@ import 'package:index_pharma/core/storage/storage_service.dart';
 import 'package:index_pharma/core/utils/app_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:index_pharma/features/auth/di/auth_di.dart';
+
 /// Global service locator instance.
 final GetIt getIt = GetIt.instance;
 
@@ -58,7 +60,5 @@ void _setupCoreServices() {
 ///   feature route, screen, or flow that requires them.
 /// - Call feature registration functions here when new features are added.
 void _setupFeatureDependencies() {
-  // Feature module registrations will be added here as features are implemented.
-  // Example:
-  // setupAuthDependencies();
+  setupAuthDependencies(getIt);
 }
