@@ -9,6 +9,7 @@ import 'package:index_pharma/features/auth/di/auth_di.dart';
 import 'package:index_pharma/features/choose_branshs/di/branch_di.dart';
 import 'package:index_pharma/features/settings/di/settings_di.dart';
 import 'package:index_pharma/features/categories/di/categories_di.dart';
+import 'package:index_pharma/features/products/di/products_di.dart';
 
 /// Global service locator instance.
 final GetIt getIt = GetIt.instance;
@@ -67,5 +68,6 @@ void _setupFeatureDependencies() {
   setupBranchDependencies(getIt);
   setupSettingsDependencies(getIt);
   setupCategoriesDependencies(getIt);
+  setupProductsDependencies(getIt);
 }
 

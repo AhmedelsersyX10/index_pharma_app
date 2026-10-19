@@ -148,6 +148,23 @@
     "empty_desc": "No clinical categories found at the moment.",
     "error_title": "Failed to load categories",
     "error_desc": "An error occurred while fetching categories. Please try again."
+  },
+  "products": {
+    "title": "Medications for Immediate Delivery",
+    "all": "All",
+    "search_hint": "Search current branch stock...",
+    "in_stock": "In stock ({} packs)",
+    "requires_prescription": "Prescription (Rx)",
+    "otc": "Non-prescription (OTC)",
+    "add_to_cart": "Add to Cart",
+    "currency": "EGP",
+    "load_more": "Load more medicines",
+    "loading_more": "Loading more...",
+    "empty_title": "No medicines found",
+    "empty_desc": "No medicines match your search criteria in this branch currently.",
+    "error_title": "Failed to load medicines",
+    "error_desc": "An error occurred while loading medicines. Please try again.",
+    "select_branch_prompt": "Please select a branch first to view store stock"
   }
 }
 

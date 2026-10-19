@@ -58,7 +58,13 @@ class AppBadge extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           if (icon != null) ...[icon!, const SizedBox(width: AppSpacing.spaceXs)],
-          Text(label, style: AppTypography.pillBadge(color: textColor)),
+          Flexible(
+            child: Text(
+              label,
+              style: AppTypography.pillBadge(color: textColor),
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
         ],
       ),
     );

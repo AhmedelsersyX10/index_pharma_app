@@ -124,5 +124,22 @@ abstract class AppLocaleKeys {
   static const categoriesEmptyDesc = 'categories.empty_desc';
   static const categoriesErrorTitle = 'categories.error_title';
   static const categoriesErrorDesc = 'categories.error_desc';
+
+  // Products
+  static const productsTitle = 'products.title';
+  static const productsAll = 'products.all';
+  static const productsSearchHint = 'products.search_hint';
+  static const productsInStock = 'products.in_stock';
+  static const productsRequiresPrescription = 'products.requires_prescription';
+  static const productsOtc = 'products.otc';
+  static const productsAddToCart = 'products.add_to_cart';
+  static const productsCurrency = 'products.currency';
+  static const productsLoadMore = 'products.load_more';
+  static const productsLoadingMore = 'products.loading_more';
+  static const productsEmptyTitle = 'products.empty_title';
+  static const productsEmptyDesc = 'products.empty_desc';
+  static const productsErrorTitle = 'products.error_title';
+  static const productsErrorDesc = 'products.error_desc';
+  static const productsSelectBranchPrompt = 'products.select_branch_prompt';
 }
 
