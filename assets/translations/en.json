@@ -140,5 +140,14 @@
     "empty_branches_desc": "We are currently expanding and activating new branches to serve you soon.",
     "fetch_error_title": "Failed to load branches",
     "fetch_error_desc": "An error occurred while loading pharmacy branches. Please try again."
+  },
+  "categories": {
+    "title": "Clinical Departments",
+    "view_all": "View All",
+    "empty_title": "No categories available",
+    "empty_desc": "No clinical categories found at the moment.",
+    "error_title": "Failed to load categories",
+    "error_desc": "An error occurred while fetching categories. Please try again."
   }
 }
+

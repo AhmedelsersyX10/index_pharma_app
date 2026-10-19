@@ -1,0 +1,142 @@
+import 'package:flutter/material.dart';
+import 'package:index_pharma/core/theme/theme.dart';
+import '../../domain/entities/category.dart';
+
+/// Reusable card component displaying a single clinical category.
+///
+/// Strictly follows Clinical Clarity design system:
+/// - Level 1 ambient shadow
+/// - Mint tonal circle with clinical department icon
+/// - Clear typography adhering to 8pt spatial grid
+/// - Accessible touch target (>= 44px)
+class CategoryCard extends StatelessWidget {
+  const CategoryCard({
+    super.key,
+    required this.category,
+    this.onTap,
+    this.isSelected = false,
+  });
+
+  final Category category;
+  final VoidCallback? onTap;
+  final bool isSelected;
+
+  @override
+  Widget build(BuildContext context) {
+    final borderColor = isSelected
+        ? AppColors.primary
+        : AppColors.borderSubtle;
+    final backgroundColor = isSelected
+        ? AppColors.brandMintSurface
+        : AppColors.canvasPure;
+
+    return Semantics(
+      button: true,
+      label: category.name,
+      selected: isSelected,
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: AppRadii.roundedXl,
+          child: Container(
+            constraints: const BoxConstraints(minHeight: 88, minWidth: 88),
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppSpacing.spaceSm,
+              vertical: AppSpacing.spaceMd,
+            ),
+            decoration: BoxDecoration(
+              color: backgroundColor,
+              borderRadius: AppRadii.roundedXl,
+              border: Border.all(
+                color: borderColor,
+                width: isSelected ? 1.5 : 1,
+              ),
+              boxShadow: isSelected ? AppShadows.level2 : AppShadows.level1,
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                _CategoryIconBadge(
+                  name: category.name,
+                  isSelected: isSelected,
+                ),
+                const SizedBox(height: AppSpacing.spaceSm),
+                Text(
+                  category.name,
+                  textAlign: TextAlign.center,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: AppTypography.labelMd(
+                    color: isSelected ? AppColors.primary : AppColors.onSurface,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _CategoryIconBadge extends StatelessWidget {
+  const _CategoryIconBadge({
+    required this.name,
+    required this.isSelected,
+  });
+
+  final String name;
+  final bool isSelected;
+
+  IconData _resolveCategoryIcon(String name) {
+    final lower = name.toLowerCase();
+    if (lower.contains('skin') || lower.contains('بشرة') || lower.contains('جلد')) {
+      return Icons.spa_outlined;
+    }
+    if (lower.contains('vitamin') || lower.contains('فيتامين') || lower.contains('مكمل')) {
+      return Icons.health_and_safety_outlined;
+    }
+    if (lower.contains('cardio') || lower.contains('heart') || lower.contains('قلب')) {
+      return Icons.favorite_outline;
+    }
+    if (lower.contains('pain') || lower.contains('ألم') || lower.contains('مسكن')) {
+      return Icons.healing_outlined;
+    }
+    if (lower.contains('diabetes') || lower.contains('سكر')) {
+      return Icons.monitor_heart_outlined;
+    }
+    if (lower.contains('digest') || lower.contains('معدة') || lower.contains('هضم')) {
+      return Icons.medication_liquid_outlined;
+    }
+    return Icons.medication_outlined;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final iconData = _resolveCategoryIcon(name);
+
+    return Container(
+      width: 44,
+      height: 44,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        color: isSelected
+            ? AppColors.primary
+            : AppColors.brandMintSurface,
+        shape: BoxShape.circle,
+        border: Border.all(
+          color: isSelected ? AppColors.primary : AppColors.brandMintBorder,
+          width: 1,
+        ),
+      ),
+      child: Icon(
+        iconData,
+        size: 22,
+        color: isSelected ? AppColors.onPrimary : AppColors.primary,
+      ),
+    );
+  }
+}

@@ -116,4 +116,13 @@ abstract class AppLocaleKeys {
   static const authErrorTimeout = 'auth.error.timeout';
   static const authErrorServer = 'auth.error.server';
   static const authErrorUnexpected = 'auth.error.unexpected';
+
+  // Categories
+  static const categoriesTitle = 'categories.title';
+  static const categoriesViewAll = 'categories.view_all';
+  static const categoriesEmptyTitle = 'categories.empty_title';
+  static const categoriesEmptyDesc = 'categories.empty_desc';
+  static const categoriesErrorTitle = 'categories.error_title';
+  static const categoriesErrorDesc = 'categories.error_desc';
 }
+
