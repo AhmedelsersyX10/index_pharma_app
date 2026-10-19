@@ -9,7 +9,7 @@ import 'package:index_pharma/features/auth/domain/entities/user.dart';
 import 'package:index_pharma/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:index_pharma/features/auth/presentation/cubit/auth_state.dart';
 import 'package:index_pharma/features/auth/di/auth_di.dart';
-import 'package:index_pharma/features/choose_branshs/di/branch_di.dart';
+import 'package:index_pharma/features/choose_branches/di/branch_di.dart';
 import 'package:index_pharma/features/settings/di/settings_di.dart';
 import 'package:index_pharma/features/categories/di/categories_di.dart';
 import 'package:index_pharma/features/products/di/products_di.dart';

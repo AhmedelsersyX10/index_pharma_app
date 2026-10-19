@@ -10,8 +10,8 @@ import 'package:index_pharma/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:index_pharma/features/auth/presentation/cubit/auth_state.dart';
 import 'package:index_pharma/features/auth/presentation/screens/login_screen.dart';
 import 'package:index_pharma/features/auth/presentation/screens/register_screen.dart';
-import 'package:index_pharma/features/choose_branshs/presentation/screens/branch_selection_screen.dart';
-import 'package:index_pharma/features/onbording/presentation/view/onboarding_view.dart';
+import 'package:index_pharma/features/choose_branches/presentation/screens/branch_selection_screen.dart';
+import 'package:index_pharma/features/onboarding/presentation/view/onboarding_view.dart';
 import 'package:index_pharma/features/splash/presentation/view/splash_view.dart';
 
 class AppRouter {

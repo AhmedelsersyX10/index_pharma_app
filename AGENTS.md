@@ -51,9 +51,9 @@ lib/
     widgets/        ← Shared widgets
   features/
     auth/           ← تسجيل الدخول والتسجيل
-    choose_branshs/ ← اختيار الفرع
+    choose_branches/ ← اختيار الفرع
     home/           ← الصفحة الرئيسية والمنتجات
-    onbording/      ← شاشة الترحيب
+    onboarding/     ← شاشة الترحيب
     splash/         ← Splash screen
 ```
 
