@@ -425,7 +425,7 @@ Public keys الحالية:
 
 | Method | Path | Auth | Purpose |
 |---|---|---|---|
-| `GET` | `/api/customers/lookup` | Admin/Pharmacist | البحث عن عميل |
+| `GET` | `/api/customers/lookup` | Admin/Pharmacist | البحث عن عميل بالهاتف (`?phone=xxx`) |
 | `GET` | `/api/customers` | Admin/Pharmacist | قائمة العملاء |
 | `POST` | `/api/customers` | Admin/Pharmacist | إنشاء عميل |
 | `GET` | `/api/customers/:id/purchases` | Admin/Pharmacist* | سجل مشتريات العميل؛ حسب باتش الصلاحية الأخير |
@@ -482,9 +482,9 @@ Public keys الحالية:
 | Method | Path | Auth | Purpose |
 |---|---|---|---|
 | `GET` | `/api/reports/daily` | Admin/Pharmacist | تقرير يومي |
-| `GET` | `/api/reports/monthly` | Admin/Pharmacist | تقرير شهري |
-| `GET` | `/api/reports/top-products` | Admin/Pharmacist | الأكثر مبيعًا |
-| `GET` | `/api/reports/expiry-alerts` | Admin/Pharmacist | تنبيهات الصلاحية |
+| `GET` | `/api/reports/monthly` | Admin/Pharmacist | تقرير شهري (`?year=&month=`) |
+| `GET` | `/api/reports/top-products` | Admin/Pharmacist | الأكثر مبيعًا (`?days=&limit=`) |
+| `GET` | `/api/reports/expiry-alerts` | Admin/Pharmacist | تنبيهات الصلاحية (`?days=`) |
 | `GET` | `/api/reports/low-stock` | Admin/Pharmacist | مخزون منخفض |
 | `GET` | `/api/reports/shortages` | Admin/Pharmacist | تحليل النواقص |
 | `GET` | `/api/reports/financial-analysis` | Admin/Pharmacist | تحليل مالي |
@@ -557,15 +557,28 @@ Public keys الحالية:
 
 Flutter **مش لازم** يبدأ بالـ Socket.IO؛ ممكن أول نسخة تعتمد polling / refresh. لو عايز realtime استخدم `socket_io_client` مع نفس server origin بدون `/api`.
 
-## 7) Header خاص بالفروع للـ Staff
+## 7) نظام تحديد الفروع وهيدر `X-Branch-Id` (سلوك محقق ومؤكد)
 
-بعض APIs الداخلية تستخدم:
+تحديد الفرع في الـ Backend يتم وفق القواعد الصارمة التالية:
 
 ```text
 X-Branch-Id: <branchId>
 ```
 
-لكن **عميل الاستور** لا يعتمد عليه في checkout؛ يرسل `branchId` في body/query كما هو موضح فوق.
+### تفصيل السلوك الفعلي حسب الدور (Role):
+1. **المدير العام (`superadmin`):**
+   - هو الدور **الوحيد** الذي يقرأ منه السيرفر هيدر `X-Branch-Id` (`authMiddleware.js`).
+   - عند إرسال الهيدر: تُفلتر التقارير والمخزون للفرع المحدد فقط.
+   - عند **حذف الهيدر**: يُرجع السيرفر عرضاً مجمعاً شاملاً لكافة فروع الصيدلية (Aggregate View).
+2. **الصيدلي والمدير (`pharmacist`, `admin`):**
+   - **هيدر `X-Branch-Id` مُتجاهل بالكامل** حتى لو تم إرساله (حماية ضد تزييف الفروع).
+   - الفرع يُحدد إجبارياً من `user.branchId` المسجل في قاعدة البيانات.
+   - إذا كان حساب الموظف غير مربوط بفرع، يرفض السيرفر الطلب فوراً بـ `403 Forbidden` (`يجب ربط المستخدم بفرع أولاً`).
+3. **العميل (`customer`):**
+   - لا يستخدم هيدر `X-Branch-Id` إطلاقاً.
+   - في واجهة المتجر (`/api/store/*`): يمرر `branchId` في الـ `query` (للقراءة) أو في الـ `body` (لإنشاء الطلب).
+   - مسارات الموظفين والتقارير والـ POS محظورة تماماً على العملاء (`403 Forbidden`).
+
 
 ## 8) ملاحظات للمبرمج
 

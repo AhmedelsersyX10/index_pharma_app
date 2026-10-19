@@ -67,11 +67,17 @@
 - `address`: نص (إرسال `null` أو `""` يقوم بمسح العنوان).
 *(ملاحظة: أي حقول إضافية بعد السطر 552 في كود السيرفر لم تُقرأ بعد).*
 
-### 3.2 البحث عن عميل في الـ POS
+### 3.2 البحث عن عميل في الـ POS `GET /customers/lookup?phone=xxx`
 ```http
 GET /customers/lookup?phone=xxx
 ```
-مخصص للبحث عن عميل بنمرة الهاتف لشاشات البيع POS (شكل الرد النهائي قيد التأكيد).
+- **الصلاحيات:** `Admin`, `Pharmacist`, `Superadmin` (العميل ممنوع `403`).
+- **المعاملات:** `phone` إجباري (أقل طول 3 أحرف بعد التنظيف).
+- **الردود المحققة:**
+  - `200 OK`: يعيد كائن العميل الكامل داخل `data` (انظر §9.11).
+  - `400 Bad Request`: عند إرسال رقم أقل من 3 أحرف `{"message": "Phone number too short"}`.
+  - `404 Not Found`: إذا لم يتم العثور على العميل `{"message": "Customer not found"}`.
+
 
 ### 3.3 معاملات المنتجات الداخلية `GET /products`
 Query Parameters:
@@ -945,7 +951,215 @@ Body:
 
 ---
 
+### 9.8 التقرير الشهري `GET /reports/monthly`
+- **Query Parameters:** `year` (2000–2100، اختياري، الافتراضي: السنة الحالية بتوقيت القاهرة)، `month` (1–12، اختياري، الافتراضي: الشهر الحالي).
+- **تحديد الفرع:** للصيدلي/المدير يُحدد تلقائياً من `user.branchId`، وللـ superadmin عبر `X-Branch-Id` (أو إجمالي لكافة الفروع عند حذفه).
+- **الصلاحيات:** `Admin`, `Pharmacist`, `Superadmin`.
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "year": 2026,
+    "month": 10,
+    "totalSales": 130,
+    "grossSales": 130,
+    "totalReturns": 0,
+    "netSales": 130,
+    "totalOrders": 1,
+    "salesCOGS": 90,
+    "returnsCOGS": 0,
+    "cogs": 90,
+    "totalExpenses": 0,
+    "grossProfit": 40,
+    "operatingProfit": 40,
+    "netProfit": 40,
+    "netRevenue": 130,
+    "dailyBreakdown": [
+      {
+        "_id": 16,
+        "totalSales": 130,
+        "grossSales": 130,
+        "totalReturns": 0,
+        "netSales": 130,
+        "orderCount": 1
+      }
+    ],
+    "expenseBreakdown": []
+  }
+}
+```
+
+---
+
+### 9.9 المنتجات الأكثر مبيعاً `GET /reports/top-products`
+- **Query Parameters:** `days` (اختياري، الافتراضي: 30، الحد الأقصى: 3650)، `limit` (اختياري، الافتراضي: 10، الحد الأقصى: 100).
+- **تحديد الفرع:** للصيدلي/المدير يُحدد من `user.branchId`، وللـ superadmin عبر `X-Branch-Id` (أو إجمالي لكافة الفروع عند حذفه).
+- **الصلاحيات:** `Admin`, `Pharmacist`, `Superadmin`.
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "_id": "cmv9mnyoi0006wqgoyfa9mv60",
+      "productName": "Hydrating Cream 50ml",
+      "quantityUnit": "base",
+      "grossQuantity": 1,
+      "returnedQuantity": 0,
+      "totalQuantity": 1,
+      "grossRevenue": 130,
+      "returnedRevenue": 0,
+      "totalRevenue": 130
+    }
+  ]
+}
+```
+
+---
+
+### 9.10 تنبيهات الصلاحية `GET /reports/expiry-alerts`
+- **Query Parameters:** `days` (اختياري، الافتراضي: 90، الحد الأقصى: 3650).
+- **تحديد الفرع:** للصيدلي/المدير يُحدد من `user.branchId`، وللـ superadmin عبر `X-Branch-Id` (أو إجمالي لكافة الفروع عند حذفه).
+- **الصلاحيات:** `Admin`, `Pharmacist`, `Superadmin`.
+- **ملاحظة:** يُرجع مصفوفة `expired` (منتهية الصلاحية) ومصفوفة `expiringSoon` (ستنتهي خلال عدد الأيام المحدد) مع إجمالي التنبيهات `totalAlerts`.
+
+**Response:**
+```json
+{
+  "success": true,
+  "data": {
+    "expired": [
+      {
+        "id": "cmv9mnym50004wqgopr2luret",
+        "name": "Vitamin C 1000mg",
+        "scientificName": "Ascorbic Acid",
+        "barcode": "6221000000011",
+        "description": "Vitamin C effervescent tablets",
+        "image": null,
+        "categoryId": "cmv9bxrw70002wqgo7j1crx4h",
+        "purchasingPrice": 60,
+        "sellingPrice": 85,
+        "expiryDate": "2026-10-01T00:00:00.000Z",
+        "requiresPrescription": false,
+        "isAvailableOnline": true,
+        "unit": "قطعة",
+        "isSplittable": false,
+        "unitsPerBox": null,
+        "unitName": null,
+        "unitPrice": null,
+        "hasSecondaryUnit": false,
+        "secondaryUnitsPerUnit": null,
+        "secondaryUnitName": null,
+        "secondaryUnitPrice": null,
+        "supplierId": null,
+        "stockQuantity": 48,
+        "minStockAlert": 10,
+        "looseQuantity": 0,
+        "createdAt": "2026-10-15T14:22:07.613Z",
+        "updatedAt": "2026-10-15T14:22:07.613Z",
+        "branchStocks": [
+          {
+            "id": "cmv9mnyna0005wqgo0um6qez2",
+            "productId": "cmv9mnym50004wqgopr2luret",
+            "branchId": "cmv9bxrvj0001wqgov68wj0wb",
+            "stockQuantity": 48,
+            "looseQuantity": 0,
+            "averageCost": 60,
+            "inTransitQuantity": 0,
+            "minStockAlert": 10,
+            "createdAt": "2026-10-15T14:22:07.654Z",
+            "updatedAt": "2026-10-16T09:34:59.926Z"
+          }
+        ],
+        "category": {
+          "name": "Vitamins"
+        }
+      }
+    ],
+    "expiringSoon": [
+      {
+        "id": "cmv9mnyp80008wqgoepyhqdof",
+        "name": "Amoxicillin 500mg",
+        "scientificName": "Amoxicillin",
+        "barcode": "6221000000035",
+        "description": "Antibiotic capsules, prescription only",
+        "image": null,
+        "categoryId": null,
+        "purchasingPrice": 40,
+        "sellingPrice": 60,
+        "expiryDate": "2026-11-20T00:00:00.000Z",
+        "requiresPrescription": true,
+        "isAvailableOnline": true,
+        "unit": "قطعة",
+        "isSplittable": true,
+        "unitsPerBox": 10,
+        "unitName": null,
+        "unitPrice": 6,
+        "hasSecondaryUnit": false,
+        "secondaryUnitsPerUnit": null,
+        "secondaryUnitName": null,
+        "secondaryUnitPrice": null,
+        "supplierId": null,
+        "stockQuantity": 20,
+        "minStockAlert": 5,
+        "looseQuantity": 0,
+        "createdAt": "2026-10-15T14:22:07.724Z",
+        "updatedAt": "2026-10-15T14:22:07.724Z",
+        "branchStocks": [
+          {
+            "id": "cmv9mnyp90009wqgoc9jbowcs",
+            "productId": "cmv9mnyp80008wqgoepyhqdof",
+            "branchId": "cmv9bxrvj0001wqgov68wj0wb",
+            "stockQuantity": 20,
+            "looseQuantity": 0,
+            "averageCost": 40,
+            "inTransitQuantity": 0,
+            "minStockAlert": 5,
+            "createdAt": "2026-10-15T14:22:07.725Z",
+            "updatedAt": "2026-10-15T14:22:07.725Z"
+          }
+        ],
+        "category": null
+      }
+    ],
+    "totalAlerts": 2
+  }
+}
+```
+
+---
+
+### 9.11 البحث عن عميل في الـ POS برقم الهاتف `GET /customers/lookup`
+- **Query Parameters:** `phone` (إجباري، أقل طول 3 أحرف).
+- **الصلاحيات:** `Admin`, `Pharmacist`, `Superadmin`.
+- **أكواد الخطأ:**
+  - `400 Bad Request`: `{"message": "Phone number too short"}`
+  - `404 Not Found`: `{"message": "Customer not found"}`
+
+**Response (200 OK):**
+```json
+{
+  "success": true,
+  "data": {
+    "id": "cmvfft5h20000iagq0n4o12gz",
+    "name": "Ahmed Mohamed",
+    "phone": "<phone>",
+    "loyaltyPoints": 0,
+    "totalSpent": 0,
+    "notes": "Test customer",
+    "createdAt": "2026-10-19T15:56:49.526Z",
+    "updatedAt": "2026-10-19T15:56:49.526Z"
+  }
+}
+```
+
+---
+
 ## 10. جدول الفروقات والتنبيهات الموجهة للمطور والـ Agent
+
 
 | النقطة | تفاصيل السلوك الفعلي | التوصية عند كتابة الكود |
 | :--- | :--- | :--- |
@@ -955,3 +1169,307 @@ Body:
 | **`user` مقابل `data`** | رد `login`/`register` يرجع المستخدم في `user`، بينما `GET /auth/me` يرجعه في `data`. | مراعاة الـ Deserialization المناسب لكل endpoint. |
 | **حفظ الجلسة في Flutter** | الكوكي `token` محمية (`HttpOnly`) ولا تُرجع في الـ JSON. | استخدام `Dio` مع `dio_cookie_manager` و `cookie_jar` لإدارة الجلسات تلقائياً. |
 | **روابط الملفات والصور** | الصور مثل `/uploads/prescriptions/...` تبدأ بمسار نسبي. | دمجها مع Server Origin مباشرة (مثلاً: `http://localhost:5000/uploads/...`) بدون تكرار `/api`. |
+
+---
+
+## 11. التحقق من تعدد الفروع (Multi-branch Verification)
+
+> [!IMPORTANT]
+> **بيانات اختبار محلية (Local Test Data Only):**
+> تم إنشاء 3 فروع تجريبية إضافية و 30 صنفاً دوائياً في قاعدة البيانات المحلية `indexpharma_dev` لاختبار سلوك الفلترة والتجميع وعزل الصلاحيات.
+> جميع أكواد الأصناف التجريبية تبدأ بـ `TEST-` وأسماء الفروع تبدأ بـ `Test Branch` لسهولة تمييزها وحذفها لاحقاً.
+
+### 11.1 الفروع المعتمدة في الاختبار
+
+| الفرع | معرف الفرع (Branch ID) | عدد المنتجات | مبيعات أكتوبر 2026 | عدد الطلبات | منتجات منتهية | ستنتهي خلال 90 يوم | مخزون منخفض |
+|---|---|:---:|:---:|:---:|:---:|:---:|:---:|
+| **Main Branch** (الأصلي) | `cmv9bxrvj0001wqgov68wj0wb` | 3 | 130 ج.م | 1 | 1 | 1 | 0 |
+| **Test Branch A** | `cmvfhrdeq0001iagqkxwt9vpg` | 10 | 165 ج.م | 2 | 1 | 2 | 2 |
+| **Test Branch B** | `cmvfhrdfa0002iagq4r691gxs` | 10 | 204 ج.م | 3 | 1 | 2 | 3 |
+| **Test Branch C** | `cmvfhrdfp0003iagqaro5o7mw` | 10 | 106 ج.م | 2 | 1 | 2 | 2 |
+| **الإجمالي الكلي (Aggregate)** | *بدون هيدر* | **33** | **605 ج.م** | **8** | **4** | **7** | **7** |
+
+---
+
+### 11.2 إثبات سلوك الصلاحيات وعزل الفروع (Role Behavior Matrix)
+
+| الدور (Role) | الهيدر المرسل (`X-Branch-Id`) | السلوك الفعلي المحقق | النتيجة |
+|---|---|---|---|
+| **`superadmin`** | فرع محدد (مثال: Branch A) | تُفلتر التقارير والمخزون لفرع A فقط (مبيعات: 165 ج.م، طلبات: 2، منتجات: 10). | ✅ ناجح |
+| **`superadmin`** | *بدون هيدر* | يتم تجميع كل الفروع في تقرير موحد (مبيعات: 605 ج.م، طلبات: 8، تنبيهات صلاحية: 11). | ✅ ناجح |
+| **`pharmacist`** (تابع لفرع A) | `X-Branch-Id` لفرع B (محاولة تزييف) | **الهيدر يُتجاهل بالكامل**، وتعود البيانات محصورة بفرع الصيدلي (فرع A: 165 ج.م). | ✅ آمن (لا تسريب) |
+| **`customer`** | أي هيدر أو بدونه | السيرفر يرجع `HTTP 403 Forbidden` على كافة مسارات الموظفين `/api/reports/*`, `/api/products`. | ✅ آمن ومحمي |
+
+---
+
+### 11.3 عينات حقيقية محققة (Branch A مقابل Aggregate)
+
+#### 1. التقرير الشهري `GET /api/reports/monthly?year=2026&month=10`
+
+##### فرع A عبر الهيدر (`X-Branch-Id: cmvfhrdeq0001iagqkxwt9vpg`):
+```json
+{
+  "success": true,
+  "data": {
+    "year": 2026,
+    "month": 10,
+    "totalSales": 165,
+    "grossSales": 165,
+    "totalReturns": 0,
+    "netSales": 165,
+    "totalOrders": 2,
+    "salesCOGS": 120,
+    "returnsCOGS": 0,
+    "cogs": 120,
+    "totalExpenses": 0,
+    "grossProfit": 45,
+    "operatingProfit": 45,
+    "netProfit": 45,
+    "netRevenue": 165,
+    "dailyBreakdown": [
+      {
+        "_id": 17,
+        "totalSales": 70,
+        "grossSales": 70,
+        "totalReturns": 0,
+        "netSales": 70,
+        "orderCount": 1
+      },
+      {
+        "_id": 18,
+        "totalSales": 95,
+        "grossSales": 95,
+        "totalReturns": 0,
+        "netSales": 95,
+        "orderCount": 1
+      }
+    ],
+    "expenseBreakdown": []
+  }
+}
+```
+
+##### الإجمالي المجمع لكافة الفروع (بدون هيدر `X-Branch-Id`):
+```json
+{
+  "success": true,
+  "data": {
+    "year": 2026,
+    "month": 10,
+    "totalSales": 605,
+    "grossSales": 605,
+    "totalReturns": 0,
+    "netSales": 605,
+    "totalOrders": 8,
+    "salesCOGS": 421,
+    "returnsCOGS": 0,
+    "cogs": 421,
+    "totalExpenses": 0,
+    "grossProfit": 184,
+    "operatingProfit": 184,
+    "netProfit": 184,
+    "netRevenue": 605,
+    "dailyBreakdown": [
+      {
+        "_id": 16,
+        "totalSales": 130,
+        "grossSales": 130,
+        "totalReturns": 0,
+        "netSales": 130,
+        "orderCount": 1
+      },
+      {
+        "_id": 17,
+        "totalSales": 166,
+        "grossSales": 166,
+        "totalReturns": 0,
+        "netSales": 166,
+        "orderCount": 2
+      },
+      "... 2 more items"
+    ],
+    "expenseBreakdown": []
+  }
+}
+```
+
+---
+
+#### 2. الأكثر مبيعاً `GET /api/reports/top-products?days=30&limit=10`
+
+##### فرع A:
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "_id": "cmvfhucqd0003pggq9a2hn6c0",
+      "productName": "Panadol Extra 500mg",
+      "quantityUnit": "base",
+      "grossQuantity": 2,
+      "returnedQuantity": 0,
+      "totalQuantity": 2,
+      "grossRevenue": 70,
+      "returnedRevenue": 0,
+      "totalRevenue": 70
+    },
+    {
+      "_id": "cmvfhucr00005pggq6asx3pen",
+      "productName": "Augmentin 1g Tablets",
+      "quantityUnit": "base",
+      "grossQuantity": 1,
+      "returnedQuantity": 0,
+      "totalQuantity": 1,
+      "grossRevenue": 95,
+      "returnedRevenue": 0,
+      "totalRevenue": 95
+    }
+  ]
+}
+```
+
+##### الإجمالي المجمع لكافة الفروع:
+```json
+{
+  "success": true,
+  "data": [
+    {
+      "_id": "cmvfhucri000npggqkhi33uel",
+      "productName": "Congestal Tablets",
+      "quantityUnit": "base",
+      "grossQuantity": 3,
+      "returnedQuantity": 0,
+      "totalQuantity": 3,
+      "grossRevenue": 96,
+      "returnedRevenue": 0,
+      "totalRevenue": 96
+    },
+    {
+      "_id": "cmvfhucqd0003pggq9a2hn6c0",
+      "productName": "Panadol Extra 500mg",
+      "quantityUnit": "base",
+      "grossQuantity": 2,
+      "returnedQuantity": 0,
+      "totalQuantity": 2,
+      "grossRevenue": 70,
+      "returnedRevenue": 0,
+      "totalRevenue": 70
+    },
+    "... 6 more items"
+  ]
+}
+```
+
+---
+
+#### 3. تنبيهات الصلاحية `GET /api/reports/expiry-alerts?days=90`
+
+##### فرع A (`totalAlerts = 3`):
+```json
+{
+  "success": true,
+  "data": {
+    "expired": [
+      {
+        "id": "cmvfhucrg000lpggqb4crb4go",
+        "name": "Gaviscon Liquid 200ml",
+        "barcode": "TEST-A10",
+        "expiryDate": "2026-09-01T00:00:00.000Z",
+        "stockQuantity": 15,
+        "branchStocks": [
+          {
+            "branchId": "cmvfhrdeq0001iagqkxwt9vpg",
+            "stockQuantity": 15
+          }
+        ]
+      }
+    ],
+    "expiringSoon": [
+      {
+        "id": "cmvfhucrf000jpggq5n3o34u8",
+        "name": "Paracetamol Suspension 120mg",
+        "barcode": "TEST-A09",
+        "expiryDate": "2026-11-15T00:00:00.000Z",
+        "stockQuantity": 25,
+        "branchStocks": [
+          {
+            "branchId": "cmvfhrdeq0001iagqkxwt9vpg",
+            "stockQuantity": 25
+          }
+        ]
+      },
+      {
+        "id": "cmvfhucr50009pggq2934lq5a",
+        "name": "Cetirizine 10mg",
+        "barcode": "TEST-A06",
+        "expiryDate": "2026-12-05T00:00:00.000Z",
+        "stockQuantity": 40,
+        "branchStocks": [
+          {
+            "branchId": "cmvfhrdeq0001iagqkxwt9vpg",
+            "stockQuantity": 40
+          }
+        ]
+      }
+    ],
+    "totalAlerts": 3
+  }
+}
+```
+
+##### الإجمالي المجمع لكافة الفروع (`totalAlerts = 11`):
+* `expired`: 4 أصناف (صنف لكل فرع من الفروع الأربعة).
+* `expiringSoon`: 7 أصناف (صنفان لكل من الفروع الثلاثة الجديدة + صنف للفرع الرئيسي).
+* `totalAlerts`: 11 صنفاً.
+
+---
+
+#### 4. تنبيهات المخزون المنخفض `GET /api/reports/low-stock`
+
+##### فرع A (`count = 2`, `branchId = cmvfhrdeq0001iagqkxwt9vpg`):
+```json
+{
+  "success": true,
+  "count": 2,
+  "branchId": "cmvfhrdeq0001iagqkxwt9vpg",
+  "data": [
+    {
+      "id": "cmvfhucrb000fpggqm9yop0ts",
+      "name": "Otrivin Adult Nasal Spray",
+      "barcode": "TEST-A07",
+      "stockQuantity": 3,
+      "minStockAlert": 10,
+      "branch": {
+        "id": "cmvfhrdeq0001iagqkxwt9vpg",
+        "name": "Test Branch A"
+      }
+    },
+    {
+      "id": "cmvfhucrd000hpggqy9b434o3",
+      "name": "Strepsils Honey & Lemon",
+      "barcode": "TEST-A08",
+      "stockQuantity": 4,
+      "minStockAlert": 10,
+      "branch": {
+        "id": "cmvfhrdeq0001iagqkxwt9vpg",
+        "name": "Test Branch A"
+      }
+    }
+  ]
+}
+```
+
+##### الإجمالي المجمع لكافة الفروع (`count = 7`, `branchId = null`):
+يعيد الأصناف السبعة من كافة الفروع مرتبة تصاعدياً حسب المخزون المتبقي (`Bepanthen: 2`, `Otrivin: 3`, `CeraVe: 3`, `Strepsils: 4`, `Bioderma: 4`, `Pantogar: 5`, `Zyrtec: 10`).
+
+---
+
+#### 5. قائمة المنتجات `GET /api/products` مع `inStockOnly=true`
+
+- عند إرسال `X-Branch-Id: cmvfhrdeq0001iagqkxwt9vpg` مع `inStockOnly=true`:
+  يعيد `totalCount: 10` (أصناف الفرع A فقط: `TEST-A01` .. `TEST-A10`).
+- عند استدعاء `GET /api/products` العادي (Catalog View):
+  يعيد `totalCount: 33` (الكاتالوج العام)، ولكن حقل `stockQuantity` لكل صنف يُعكس رصيد الفرع المحدد (الأصناف التابعة للفروع الأخرى يظهر رصيدها `0`).
+- عند استدعاء `inStockOnly=true` بدون تحديد فرع:
+  يرجع السيرفر `HTTP 400 Bad Request` مع رسالة: `{"message": "يجب اختيار فرع لتصفية المخزون"}`.
+
