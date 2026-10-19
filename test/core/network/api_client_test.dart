@@ -186,16 +186,87 @@ void main() {
 
         expect(sessionExpiredCalled, isTrue);
       });
+
+      test('does not invoke onSessionExpired callback when receiving 401 on /auth/login', () async {
+        var sessionExpiredCalled = false;
+
+        final client = ApiClient(
+          cookieJar: cookieJar,
+          onSessionExpired: () {
+            sessionExpiredCalled = true;
+          },
+          enableLogging: false,
+        );
+
+        client.dio.httpClientAdapter = FakeHttpClientAdapter((options) async {
+          return ResponseBody.fromString(
+            '{"message": "Invalid email or password"}',
+            401,
+            headers: {
+              Headers.contentTypeHeader: [Headers.jsonContentType],
+            },
+          );
+        });
+
+        await expectLater(
+          client.dio.post<dynamic>('/auth/login', data: {'email': 'test@example.com'}),
+          throwsA(
+            isA<DioException>().having(
+              (e) => e.response?.statusCode,
+              'statusCode',
+              401,
+            ),
+          ),
+        );
+
+        expect(sessionExpiredCalled, isFalse);
+      });
+
+      test('does not invoke onSessionExpired callback when receiving 401 on /auth/register', () async {
+        var sessionExpiredCalled = false;
+
+        final client = ApiClient(
+          cookieJar: cookieJar,
+          onSessionExpired: () {
+            sessionExpiredCalled = true;
+          },
+          enableLogging: false,
+        );
+
+        client.dio.httpClientAdapter = FakeHttpClientAdapter((options) async {
+          return ResponseBody.fromString(
+            '{"message": "Registration unauthorized"}',
+            401,
+            headers: {
+              Headers.contentTypeHeader: [Headers.jsonContentType],
+            },
+          );
+        });
+
+        await expectLater(
+          client.dio.post<dynamic>('/auth/register', data: {'email': 'test@example.com'}),
+          throwsA(
+            isA<DioException>().having(
+              (e) => e.response?.statusCode,
+              'statusCode',
+              401,
+            ),
+          ),
+        );
+
+        expect(sessionExpiredCalled, isFalse);
+      });
     });
 
     group('Branch Header Interceptor', () {
-      test('attaches X-Branch-Id header when branchIdProvider returns a valid id',
+      test('attaches X-Branch-Id header when branchIdProvider returns a valid id and user is superadmin',
           () async {
         RequestOptions? capturedOptions;
 
         final client = ApiClient(
           cookieJar: cookieJar,
           branchIdProvider: () => 'branch-xyz-987',
+          isSuperAdminProvider: () => true,
           enableLogging: false,
         );
 
@@ -213,12 +284,13 @@ void main() {
         );
       });
 
-      test('trims whitespace when attaching X-Branch-Id header', () async {
+      test('trims whitespace when attaching X-Branch-Id header for superadmin', () async {
         RequestOptions? capturedOptions;
 
         final client = ApiClient(
           cookieJar: cookieJar,
           branchIdProvider: () => '  branch-padded-01  ',
+          isSuperAdminProvider: () => true,
           enableLogging: false,
         );
 
@@ -236,6 +308,56 @@ void main() {
         );
       });
 
+      test('does not attach X-Branch-Id header when user is not superadmin',
+          () async {
+        RequestOptions? capturedOptions;
+
+        final client = ApiClient(
+          cookieJar: cookieJar,
+          branchIdProvider: () => 'branch-xyz-987',
+          isSuperAdminProvider: () => false,
+          enableLogging: false,
+        );
+
+        client.dio.httpClientAdapter = FakeHttpClientAdapter((options) async {
+          capturedOptions = options;
+          return ResponseBody.fromString('{"success": true}', 200);
+        });
+
+        await client.dio.get<dynamic>('/store/products');
+
+        expect(capturedOptions, isNotNull);
+        expect(
+          capturedOptions!.headers.containsKey(ApiClient.branchHeaderKey),
+          isFalse,
+        );
+      });
+
+      test('does not attach X-Branch-Id header when isSuperAdminProvider is not set',
+          () async {
+        RequestOptions? capturedOptions;
+
+        final client = ApiClient(
+          cookieJar: cookieJar,
+          branchIdProvider: () => 'branch-xyz-987',
+          isSuperAdminProvider: null,
+          enableLogging: false,
+        );
+
+        client.dio.httpClientAdapter = FakeHttpClientAdapter((options) async {
+          capturedOptions = options;
+          return ResponseBody.fromString('{"success": true}', 200);
+        });
+
+        await client.dio.get<dynamic>('/store/products');
+
+        expect(capturedOptions, isNotNull);
+        expect(
+          capturedOptions!.headers.containsKey(ApiClient.branchHeaderKey),
+          isFalse,
+        );
+      });
+
       test(
           'does not attach X-Branch-Id header when branchIdProvider returns empty or whitespace',
           () async {
@@ -244,6 +366,7 @@ void main() {
         final client = ApiClient(
           cookieJar: cookieJar,
           branchIdProvider: () => '    ',
+          isSuperAdminProvider: () => true,
           enableLogging: false,
         );
 
@@ -268,6 +391,7 @@ void main() {
         final client = ApiClient(
           cookieJar: cookieJar,
           branchIdProvider: () => null,
+          isSuperAdminProvider: () => true,
           enableLogging: false,
         );
 

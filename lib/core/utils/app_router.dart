@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:index_pharma/core/di/service_locator.dart';
-import 'package:index_pharma/core/network/api_client.dart';
 import 'package:index_pharma/core/storage/storage_service.dart';
 import 'package:index_pharma/core/utils/go_router_refresh_stream.dart';
 import 'package:index_pharma/core/widgets/route_placeholder_screens.dart';
@@ -45,26 +44,16 @@ class AppRouter {
 
   AuthCubit? get _activeAuthCubit {
     if (_authCubit != null) return _authCubit;
-    if (!getIt.isRegistered<AuthCubit>()) return null;
-    if (getIt.isRegistered<ApiClient>() && !getIt.isReadySync<ApiClient>()) {
-      return null;
-    }
-    try {
+    if (getIt.isRegistered<AuthCubit>()) {
       return getIt<AuthCubit>();
-    } catch (_) {
-      return null;
     }
+    return null;
   }
 
   StorageService? get _activeStorageService {
     if (_storageService != null) return _storageService;
-    if (getIt.isRegistered<StorageService>() &&
-        getIt.isReadySync<StorageService>()) {
-      try {
-        return getIt<StorageService>();
-      } catch (_) {
-        return null;
-      }
+    if (getIt.isRegistered<StorageService>()) {
+      return getIt<StorageService>();
     }
     return null;
   }
@@ -185,27 +174,16 @@ class AppRouter {
   );
 }
 
-/// Fallback listenable that safely attaches to [AuthCubit] once ready in GetIt without blocking synchronous instantiation.
+/// Listenable that notifies GoRouter whenever [AuthCubit] emits a new state.
 class _AuthRefreshListenable extends ChangeNotifier {
   _AuthRefreshListenable() {
-    _tryAttach();
+    if (getIt.isRegistered<AuthCubit>()) {
+      _subscription =
+          getIt<AuthCubit>().stream.listen((_) => notifyListeners());
+    }
   }
 
   StreamSubscription<dynamic>? _subscription;
-
-  void _tryAttach() {
-    if (!getIt.isRegistered<AuthCubit>()) return;
-
-    if (getIt.isRegistered<ApiClient>() && !getIt.isReadySync<ApiClient>()) {
-      getIt.isReady<ApiClient>().then((_) => _tryAttach());
-      return;
-    }
-
-    try {
-      final cubit = getIt<AuthCubit>();
-      _subscription = cubit.stream.listen((_) => notifyListeners());
-    } catch (_) {}
-  }
 
   @override
   void dispose() {

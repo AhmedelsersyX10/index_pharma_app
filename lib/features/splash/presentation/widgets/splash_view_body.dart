@@ -98,35 +98,17 @@ class _SplashViewBodyState extends State<SplashViewBody>
     final timerFuture = Future.delayed(widget.minSplashDuration);
 
     // 1. Resolve StorageService
-    StorageService? storage = widget.storageService;
-    if (storage == null && getIt.isRegistered<StorageService>()) {
-      try {
-        if (getIt.isReadySync<StorageService>()) {
-          storage = getIt<StorageService>();
-        } else {
-          storage = await getIt.getAsync<StorageService>();
-        }
-      } catch (_) {
-        // Fallback gracefully
-      }
-    }
+    final storage = widget.storageService ??
+        (getIt.isRegistered<StorageService>()
+            ? getIt<StorageService>()
+            : null);
 
     // 2. Resolve AuthCubit and restoreSession()
-    AuthCubit? auth = widget.authCubit;
-    if (auth == null && getIt.isRegistered<AuthCubit>()) {
-      try {
-        auth = getIt<AuthCubit>();
-      } catch (_) {
-        // Fallback gracefully
-      }
-    }
+    final auth = widget.authCubit ??
+        (getIt.isRegistered<AuthCubit>() ? getIt<AuthCubit>() : null);
 
     if (auth != null) {
-      try {
-        await auth.restoreSession();
-      } catch (_) {
-        // Handle session restore network or unknown error gracefully
-      }
+      await auth.restoreSession();
     }
 
     // Wait for minimum splash animation duration

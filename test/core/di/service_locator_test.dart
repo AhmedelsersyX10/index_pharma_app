@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 import 'package:index_pharma/core/di/service_locator.dart';
@@ -9,13 +12,25 @@ import 'package:shared_preferences/shared_preferences.dart';
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
+  late Directory tempDir;
+
   setUp(() async {
+    tempDir = Directory.systemTemp.createTempSync('service_locator_test_');
+    const channel = MethodChannel('plugins.flutter.io/path_provider');
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+        .setMockMethodCallHandler(channel, (MethodCall methodCall) async {
+      return tempDir.path;
+    });
+
     SharedPreferences.setMockInitialValues({});
     await getIt.reset();
   });
 
   tearDown(() async {
     await getIt.reset();
+    if (tempDir.existsSync()) {
+      tempDir.deleteSync(recursive: true);
+    }
   });
 
   group('ServiceLocator', () {
@@ -43,22 +58,21 @@ void main() {
       expect(getIt.isRegistered<StorageService>(), isTrue);
     });
 
-    test('Core service registrations are lazy (not instantiated until requested)',
+    test('Core service registrations are eager and ready after setupServiceLocator',
         () async {
       await setupServiceLocator();
 
-      // Before accessing them, the instances should not be ready/instantiated yet
-      expect(getIt.isReadySync<ApiClient>(), isFalse);
-      expect(getIt.isReadySync<StorageService>(), isFalse);
+      // Both services should be ready immediately after setupServiceLocator
+      expect(getIt.isReadySync<ApiClient>(), isTrue);
+      expect(getIt.isReadySync<StorageService>(), isTrue);
     });
 
-    test('StorageService resolves asynchronously and returns functional instance',
+    test('StorageService resolves synchronously once ready and is fully functional',
         () async {
       await setupServiceLocator();
 
-      final storage = await getIt.getAsync<StorageService>();
+      final storage = getIt<StorageService>();
       expect(storage, isNotNull);
-      expect(getIt.isReadySync<StorageService>(), isTrue);
 
       await storage.setSelectedBranchId('di-branch-1');
       expect(storage.selectedBranchId, equals('di-branch-1'));

@@ -14,6 +14,7 @@ class ApiClient {
     String? baseUrl,
     this.onSessionExpired,
     this.branchIdProvider,
+    this.isSuperAdminProvider,
     bool? enableLogging,
   })  : enableLogging = enableLogging ?? kDebugMode,
         dio = dio ?? _createDefaultDio(baseUrl) {
@@ -54,6 +55,12 @@ class ApiClient {
   /// or null if no branch should be attached.
   String? Function()? branchIdProvider;
 
+  /// Provider that returns whether the current user is a superadmin.
+  ///
+  /// According to the backend specification (task 0.8 / INDEX_PHARMA_API_REFERENCE.md §7),
+  /// `X-Branch-Id` is ONLY read for superadmins; all other roles must not send this header.
+  bool Function()? isSuperAdminProvider;
+
   /// Creates an [ApiClient] with a persistent cookie jar stored in the
   /// application documents directory.
   static Future<ApiClient> create({
@@ -63,6 +70,7 @@ class ApiClient {
     Dio? dio,
     void Function()? onSessionExpired,
     String? Function()? branchIdProvider,
+    bool Function()? isSuperAdminProvider,
     bool? enableLogging,
   }) async {
     final jar = cookieJar ?? await _createPersistCookieJar(storagePath);
@@ -72,6 +80,7 @@ class ApiClient {
       baseUrl: baseUrl,
       onSessionExpired: onSessionExpired,
       branchIdProvider: branchIdProvider,
+      isSuperAdminProvider: isSuperAdminProvider,
       enableLogging: enableLogging,
     );
   }
@@ -109,7 +118,7 @@ class ApiClient {
   }
 }
 
-/// Adds the staff-only `X-Branch-Id` header if a branch ID is available.
+/// Adds the superadmin-only `X-Branch-Id` header if the user is a superadmin and a branch ID is available.
 class _BranchHeaderInterceptor extends Interceptor {
   _BranchHeaderInterceptor(this._client);
 
@@ -117,15 +126,19 @@ class _BranchHeaderInterceptor extends Interceptor {
 
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
-    final branchId = _client.branchIdProvider?.call();
-    if (branchId != null && branchId.trim().isNotEmpty) {
-      options.headers[ApiClient.branchHeaderKey] = branchId.trim();
+    final isSuperAdmin = _client.isSuperAdminProvider?.call() ?? false;
+    if (isSuperAdmin) {
+      final branchId = _client.branchIdProvider?.call();
+      if (branchId != null && branchId.trim().isNotEmpty) {
+        options.headers[ApiClient.branchHeaderKey] = branchId.trim();
+      }
     }
     handler.next(options);
   }
 }
 
-/// Listens for HTTP 401 Unauthorized responses and invokes [onSessionExpired].
+/// Listens for HTTP 401 Unauthorized responses and invokes [onSessionExpired],
+/// ignoring public authentication endpoints (/auth/login, /auth/register).
 class _SessionExpiredInterceptor extends Interceptor {
   _SessionExpiredInterceptor(this._client);
 
@@ -134,9 +147,20 @@ class _SessionExpiredInterceptor extends Interceptor {
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) {
     if (err.response?.statusCode == 401) {
-      _client.onSessionExpired?.call();
+      final path = err.requestOptions.path;
+      final uriPath = err.requestOptions.uri.path;
+      if (!_isAuthEndpoint(path) && !_isAuthEndpoint(uriPath)) {
+        _client.onSessionExpired?.call();
+      }
     }
     handler.next(err);
+  }
+
+  bool _isAuthEndpoint(String path) {
+    final cleanPath = path.split('?').first.trim();
+    final normalized = cleanPath.startsWith('/') ? cleanPath : '/$cleanPath';
+    return normalized.endsWith('/auth/login') ||
+        normalized.endsWith('/auth/register');
   }
 }
 

@@ -59,18 +59,10 @@ class _OnboardingViewBodyState extends State<OnboardingViewBody> {
   }
 
   Future<void> _markOnboardingSeenAndNavigate(String targetRoute) async {
-    StorageService? storage = widget.storageService;
-    if (storage == null && getIt.isRegistered<StorageService>()) {
-      try {
-        if (getIt.isReadySync<StorageService>()) {
-          storage = getIt<StorageService>();
-        } else {
-          storage = await getIt.getAsync<StorageService>();
-        }
-      } catch (_) {
-        // Fallback gracefully
-      }
-    }
+    final storage = widget.storageService ??
+        (getIt.isRegistered<StorageService>()
+            ? getIt<StorageService>()
+            : null);
     await storage?.setOnboardingSeen(true);
 
     if (!mounted) return;

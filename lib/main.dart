@@ -9,6 +9,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   await setupServiceLocator();
+  await getIt.allReady();
 
   runApp(
     EasyLocalization(

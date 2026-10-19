@@ -37,23 +37,14 @@ void setupAuthDependencies([GetIt? sl]) {
   if (!locator.isRegistered<AuthCubit>()) {
     locator.registerLazySingleton<AuthCubit>(
       () {
-        ApiClient? client;
-        if (locator.isRegistered<ApiClient>()) {
-          try {
-            client = locator<ApiClient>();
-          } catch (_) {
-            // An async singleton not ready yet.
-          }
-        }
+        final client = locator.isRegistered<ApiClient>()
+            ? locator<ApiClient>()
+            : null;
         final cubit = AuthCubit(
           authRepository: locator<AuthRepository>(),
           apiClient: client,
         );
-        if (client == null && locator.isRegistered<ApiClient>()) {
-          locator.isReady<ApiClient>().then((_) {
-            locator<ApiClient>().onSessionExpired = cubit.onSessionExpired;
-          });
-        }
+        client?.onSessionExpired = cubit.onSessionExpired;
         return cubit;
       },
     );

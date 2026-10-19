@@ -5,6 +5,9 @@ import 'package:index_pharma/core/storage/storage_service.dart';
 import 'package:index_pharma/core/utils/app_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:index_pharma/features/auth/domain/entities/user.dart';
+import 'package:index_pharma/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:index_pharma/features/auth/presentation/cubit/auth_state.dart';
 import 'package:index_pharma/features/auth/di/auth_di.dart';
 import 'package:index_pharma/features/choose_branshs/di/branch_di.dart';
 import 'package:index_pharma/features/settings/di/settings_di.dart';
@@ -21,12 +24,13 @@ final GetIt getIt = GetIt.instance;
 Future<void> setupServiceLocator() async {
   _setupCoreServices();
   _setupFeatureDependencies();
+  await getIt.allReady();
 }
 
 /// Registers core services (networking, local storage, etc.).
 void _setupCoreServices() {
   if (!getIt.isRegistered<StorageService>()) {
-    getIt.registerLazySingletonAsync<StorageService>(
+    getIt.registerSingletonAsync<StorageService>(
       () async {
         final preferences = await SharedPreferences.getInstance();
         return SharedPreferencesStorageService(preferences);
@@ -35,16 +39,24 @@ void _setupCoreServices() {
   }
 
   if (!getIt.isRegistered<ApiClient>()) {
-    getIt.registerLazySingletonAsync<ApiClient>(
+    getIt.registerSingletonAsync<ApiClient>(
       () => ApiClient.create(
         branchIdProvider: () {
-          if (getIt.isRegistered<StorageService>() &&
-              getIt.isReadySync<StorageService>()) {
+          if (getIt.isRegistered<StorageService>()) {
             return getIt<StorageService>().selectedBranchId;
           }
           return null;
         },
+        isSuperAdminProvider: () {
+          if (getIt.isRegistered<AuthCubit>()) {
+            final authState = getIt<AuthCubit>().state;
+            return authState is AuthAuthenticated &&
+                authState.user.role == UserRole.superadmin;
+          }
+          return false;
+        },
       ),
+      dependsOn: [StorageService],
     );
   }
 
