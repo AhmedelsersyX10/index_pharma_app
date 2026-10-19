@@ -59,6 +59,120 @@ void main() {
     await EasyLocalization.ensureInitialized();
   });
 
+  group('AppBadge', () {
+    testWidgets('renders all 5 WCAG AAA status tones with correct tokens', (tester) async {
+      await tester.pumpWidget(
+        const MaterialApp(
+          home: Scaffold(
+            body: Column(
+              children: [
+                AppBadge.warning(label: 'قيد الانتظار'),
+                AppBadge.info(label: 'جاري التحضير'),
+                AppBadge.purple(label: 'تم التجهيز'),
+                AppBadge.success(label: 'تم التوصيل'),
+                AppBadge.error(label: 'ملغي'),
+              ],
+            ),
+          ),
+        ),
+      );
+
+      expect(find.text('قيد الانتظار'), findsOneWidget);
+      expect(find.text('جاري التحضير'), findsOneWidget);
+      expect(find.text('تم التجهيز'), findsOneWidget);
+      expect(find.text('تم التوصيل'), findsOneWidget);
+      expect(find.text('ملغي'), findsOneWidget);
+
+      final warningContainer = tester.widget<Container>(find.ancestor(
+        of: find.text('قيد الانتظار'),
+        matching: find.byType(Container),
+      ));
+      expect((warningContainer.decoration as BoxDecoration).color, AppColors.badgeWarningBg);
+
+      final infoContainer = tester.widget<Container>(find.ancestor(
+        of: find.text('جاري التحضير'),
+        matching: find.byType(Container),
+      ));
+      expect((infoContainer.decoration as BoxDecoration).color, AppColors.badgeInfoBg);
+
+      final purpleContainer = tester.widget<Container>(find.ancestor(
+        of: find.text('تم التجهيز'),
+        matching: find.byType(Container),
+      ));
+      expect((purpleContainer.decoration as BoxDecoration).color, AppColors.badgePurpleBg);
+
+      final successContainer = tester.widget<Container>(find.ancestor(
+        of: find.text('تم التوصيل'),
+        matching: find.byType(Container),
+      ));
+      expect((successContainer.decoration as BoxDecoration).color, AppColors.badgeSuccessBg);
+
+      final errorContainer = tester.widget<Container>(find.ancestor(
+        of: find.text('ملغي'),
+        matching: find.byType(Container),
+      ));
+      expect((errorContainer.decoration as BoxDecoration).color, AppColors.badgeErrorBg);
+    });
+
+    testWidgets('renders trust, offer, urgent and neutral badges', (tester) async {
+      await tester.pumpWidget(
+        const MaterialApp(
+          home: Scaffold(
+            body: Column(
+              children: [
+                AppBadge.trust(label: '100% أصلي'),
+                AppBadge.neutral(label: '500 ملجم'),
+                AppBadge.offer(label: 'خصم'),
+                AppBadge.urgent(label: 'روشتة مطلوبة'),
+              ],
+            ),
+          ),
+        ),
+      );
+
+      expect(find.text('100% أصلي'), findsOneWidget);
+      expect(find.text('500 ملجم'), findsOneWidget);
+      expect(find.text('خصم'), findsOneWidget);
+      expect(find.text('روشتة مطلوبة'), findsOneWidget);
+    });
+
+    testWidgets('renders icon and responds to RTL and LTR directionality', (tester) async {
+      // English LTR
+      await tester.pumpWidget(
+        createTestLocalizedApp(
+          locale: const Locale('en'),
+          child: const AppBadge.info(
+            label: 'Processing',
+            icon: Icon(Icons.sync_rounded),
+          ),
+        ),
+      );
+      await tester.pump();
+      await tester.pump();
+
+      expect(Directionality.of(tester.element(find.byType(Scaffold).first)), TextDirection.ltr);
+      expect(find.text('Processing'), findsOneWidget);
+      expect(find.byIcon(Icons.sync_rounded), findsOneWidget);
+
+      // Arabic RTL
+      await tester.pumpWidget(
+        createTestLocalizedApp(
+          locale: const Locale('ar'),
+          child: const AppBadge.info(
+            label: 'جاري التحضير',
+            icon: Icon(Icons.sync_rounded),
+          ),
+        ),
+      );
+      await tester.pump();
+      await tester.pump();
+
+      expect(Directionality.of(tester.element(find.byType(Scaffold).first)), TextDirection.rtl);
+      expect(find.text('جاري التحضير'), findsOneWidget);
+      expect(find.byIcon(Icons.sync_rounded), findsOneWidget);
+    });
+  });
+
   group('AppLoadingIndicator', () {
     testWidgets('renders circular progress indicator with default styling', (tester) async {
       await tester.pumpWidget(
@@ -190,18 +304,15 @@ void main() {
       expect(retryTapped, isTrue);
     });
 
-    testWidgets('renders custom title, message, icon, and retry text in Arabic (RTL)', (tester) async {
-      var customRetryTapped = false;
+    testWidgets('renders dedicated offline state in Arabic (RTL)', (tester) async {
+      var retryTapped = false;
 
       await tester.pumpWidget(
         createTestLocalizedApp(
           locale: const Locale('ar'),
-          child: AppErrorView(
-            title: 'لا يوجد اتصال بالإنترنت',
-            message: 'تأكد من اتصالك بالشبكة وحاول مجدداً',
-            retryText: 'حاول مجدداً',
-            icon: const Icon(Icons.wifi_off_rounded, size: 36, color: AppColors.error),
-            onRetry: () => customRetryTapped = true,
+          child: AppErrorView.offline(
+            errorCode: 'ERR_TIMEOUT_503',
+            onRetry: () => retryTapped = true,
           ),
         ),
       );
@@ -209,15 +320,63 @@ void main() {
       await tester.pump();
 
       expect(Directionality.of(tester.element(find.byType(Scaffold).first)), TextDirection.rtl);
-      expect(find.text('لا يوجد اتصال بالإنترنت'), findsOneWidget);
-      expect(find.text('تأكد من اتصالك بالشبكة وحاول مجدداً'), findsOneWidget);
-      expect(find.text('حاول مجدداً'), findsOneWidget);
+      expect(find.text('انقطع الاتصال بالشبكة'), findsOneWidget);
+      expect(find.text('تعذر الاتصال بالخادم بسبب انقطاع الإنترنت. تم حفظ العمليات في الذاكرة المحلية.'), findsOneWidget);
+      expect(find.text('غير متصل'), findsOneWidget);
+      expect(find.text('بياناتك في أمان'), findsOneWidget);
+      expect(find.text('ERR_TIMEOUT_503'), findsOneWidget);
       expect(find.byIcon(Icons.wifi_off_rounded), findsOneWidget);
+      expect(find.byIcon(Icons.sync_rounded), findsOneWidget);
 
-      await tester.tap(find.text('حاول مجدداً'));
+      await tester.tap(find.text('إعادة المحاولة'));
       await tester.pump();
 
-      expect(customRetryTapped, isTrue);
+      expect(retryTapped, isTrue);
+    });
+
+    testWidgets('renders dedicated offline state in English (LTR)', (tester) async {
+      await tester.pumpWidget(
+        createTestLocalizedApp(
+          locale: const Locale('en'),
+          child: const AppErrorView.offline(),
+        ),
+      );
+      await tester.pump();
+      await tester.pump();
+
+      expect(Directionality.of(tester.element(find.byType(Scaffold).first)), TextDirection.ltr);
+      expect(find.text('Network Connection Lost'), findsOneWidget);
+      expect(find.text('Offline'), findsOneWidget);
+      expect(find.text('Your Data is Safe'), findsOneWidget);
+      expect(find.byIcon(Icons.wifi_off_rounded), findsOneWidget);
+    });
+
+    testWidgets('renders custom secondary action in error view', (tester) async {
+      var secondaryTapped = false;
+
+      await tester.pumpWidget(
+        createTestLocalizedApp(
+          locale: const Locale('ar'),
+          child: AppErrorView(
+            title: 'خطأ مخصص',
+            message: 'رسالة مخصصة',
+            secondaryAction: AppButton.outlined(
+              text: 'العودة للرئيسية',
+              onPressed: () => secondaryTapped = true,
+            ),
+          ),
+        ),
+      );
+      await tester.pump();
+      await tester.pump();
+
+      expect(find.text('خطأ مخصص'), findsOneWidget);
+      expect(find.text('العودة للرئيسية'), findsOneWidget);
+
+      await tester.tap(find.text('العودة للرئيسية'));
+      await tester.pump();
+
+      expect(secondaryTapped, isTrue);
     });
   });
 
@@ -252,35 +411,46 @@ void main() {
       expect(find.byIcon(Icons.inventory_2_outlined), findsOneWidget);
     });
 
-    testWidgets('renders custom title and message', (tester) async {
+    testWidgets('renders custom title, message, badge, and reassurance widget', (tester) async {
       await tester.pumpWidget(
-        const MaterialApp(
-          home: Scaffold(
-            body: AppEmptyState(
-              title: 'سلة المشتريات فارغة',
-              message: 'أضف بعض المنتجات لبدء التسوق',
-            ),
+        createTestLocalizedApp(
+          locale: const Locale('ar'),
+          child: const AppEmptyState(
+            badge: AppBadge.trust(label: 'طابور التجهيز مكتمل 100%'),
+            title: 'صندوق الطلبات فارغ حالياً',
+            message: 'تمت معالجة جميع الطلبات بنجاح',
+            reassuranceWidget: Text('النظام متزامن ومستعد'),
           ),
         ),
       );
+      await tester.pump();
+      await tester.pump();
 
-      expect(find.text('سلة المشتريات فارغة'), findsOneWidget);
-      expect(find.text('أضف بعض المنتجات لبدء التسوق'), findsOneWidget);
+      expect(find.text('طابور التجهيز مكتمل 100%'), findsOneWidget);
+      expect(find.text('صندوق الطلبات فارغ حالياً'), findsOneWidget);
+      expect(find.text('تمت معالجة جميع الطلبات بنجاح'), findsOneWidget);
+      expect(find.text('النظام متزامن ومستعد'), findsOneWidget);
     });
 
-    testWidgets('renders optional action widget and handles interaction', (tester) async {
-      var actionTapped = false;
+    testWidgets('renders both primary and secondary actions and handles interaction', (tester) async {
+      var primaryTapped = false;
+      var secondaryTapped = false;
 
       await tester.pumpWidget(
         createTestLocalizedApp(
           locale: const Locale('ar'),
           child: AppEmptyState(
-            title: 'لا توجد أدوية مفضلة',
-            message: 'يمكنك إضافة الأدوية إلى المفضلة للرجوع إليها لاحقاً',
+            title: 'لا توجد أدوية',
+            message: 'تصفح قائمة الأدوية أو حدث القائمة',
             action: AppButton.primary(
+              text: 'تحديث القائمة',
+              isFullWidth: false,
+              onPressed: () => primaryTapped = true,
+            ),
+            secondaryAction: AppButton.outlined(
               text: 'تصفح الأدوية',
               isFullWidth: false,
-              onPressed: () => actionTapped = true,
+              onPressed: () => secondaryTapped = true,
             ),
           ),
         ),
@@ -288,14 +458,16 @@ void main() {
       await tester.pump();
       await tester.pump();
 
-      expect(find.text('لا توجد أدوية مفضلة'), findsOneWidget);
-      expect(find.text('يمكنك إضافة الأدوية إلى المفضلة للرجوع إليها لاحقاً'), findsOneWidget);
+      expect(find.text('تحديث القائمة'), findsOneWidget);
       expect(find.text('تصفح الأدوية'), findsOneWidget);
+
+      await tester.tap(find.text('تحديث القائمة'));
+      await tester.pump();
+      expect(primaryTapped, isTrue);
 
       await tester.tap(find.text('تصفح الأدوية'));
       await tester.pump();
-
-      expect(actionTapped, isTrue);
+      expect(secondaryTapped, isTrue);
     });
   });
 }

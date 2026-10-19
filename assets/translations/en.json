@@ -27,7 +27,12 @@
   },
   "error": {
     "title": "Something Went Wrong",
-    "default_message": "An unexpected error occurred. Please try again."
+    "default_message": "An unexpected error occurred. Please try again.",
+    "offline_title": "Network Connection Lost",
+    "offline_message": "Unable to connect to the server. Your actions have been cached locally.",
+    "offline_badge": "Offline",
+    "data_safe_title": "Your Data is Safe",
+    "data_safe_desc": "Local records are saved safely and will sync automatically once reconnected."
   },
   "empty_state": {
     "title": "No Items Found",

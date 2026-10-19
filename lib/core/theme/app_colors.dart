@@ -99,6 +99,20 @@ abstract class AppColors {
   static const Color medicalBlue = Color(0xFF3B82F6);
 
   // ===========================================================================
+  // WCAG AAA Clinical Status Badge Tones (Stitch C6 & F8)
+  // ===========================================================================
+  static const Color badgeWarningBg = Color(0xFFFEF3C7);
+  static const Color badgeWarningText = Color(0xFF92400E);
+  static const Color badgeInfoBg = Color(0xFFE0F2FE);
+  static const Color badgeInfoText = Color(0xFF0369A1);
+  static const Color badgePurpleBg = Color(0xFFEDE9FE);
+  static const Color badgePurpleText = Color(0xFF6D28D9);
+  static const Color badgeSuccessBg = Color(0xFFECFDF5);
+  static const Color badgeSuccessText = Color(0xFF047857);
+  static const Color badgeErrorBg = Color(0xFFFEF2F2);
+  static const Color badgeErrorText = Color(0xFFB91C1C);
+
+  // ===========================================================================
   // Neutral Slate Palette
   // ===========================================================================
   static const Color slate50 = Color(0xFFF8FAFC);

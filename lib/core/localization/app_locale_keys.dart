@@ -27,9 +27,14 @@ abstract class AppLocaleKeys {
   static const commonFilter = 'common.filter';
   static const commonRetry = 'common.retry';
 
-  // Error
+  // Error & Offline
   static const errorTitle = 'error.title';
   static const errorDefaultMessage = 'error.default_message';
+  static const errorOfflineTitle = 'error.offline_title';
+  static const errorOfflineMessage = 'error.offline_message';
+  static const errorOfflineBadge = 'error.offline_badge';
+  static const errorDataSafeTitle = 'error.data_safe_title';
+  static const errorDataSafeDesc = 'error.data_safe_desc';
 
   // Empty State
   static const emptyStateTitle = 'empty_state.title';

@@ -4,13 +4,17 @@ import 'package:index_pharma/core/localization/app_locale_keys.dart';
 import 'package:index_pharma/core/theme/theme.dart';
 
 /// Clinical Clarity Empty State View
-/// Renders an empty-state illustration/icon, a title, an optional message,
-/// and an optional action widget.
+/// Follows Stitch Design System (F7 Empty & Error States).
+/// Renders an antiseptic mint visual container, optional top status badge,
+/// authoritative title, message, optional reassurance note, and primary/secondary actions.
 class AppEmptyState extends StatelessWidget {
   final String? title;
   final String? message;
   final Widget? icon;
+  final Widget? badge;
+  final Widget? reassuranceWidget;
   final Widget? action;
+  final Widget? secondaryAction;
   final EdgeInsetsGeometry padding;
 
   const AppEmptyState({
@@ -18,7 +22,10 @@ class AppEmptyState extends StatelessWidget {
     this.title,
     this.message,
     this.icon,
+    this.badge,
+    this.reassuranceWidget,
     this.action,
+    this.secondaryAction,
     this.padding = const EdgeInsets.symmetric(
       horizontal: AppSpacing.spaceLg,
       vertical: AppSpacing.spaceLg,
@@ -39,13 +46,24 @@ class AppEmptyState extends StatelessWidget {
           children: [
             _EmptyStateIconBadge(icon: icon),
             const SizedBox(height: AppSpacing.spaceLg),
+            if (badge != null) ...[
+              badge!,
+              const SizedBox(height: AppSpacing.spaceSm),
+            ],
             _EmptyStateContent(
               title: effectiveTitle,
               message: message,
             ),
-            if (action != null) ...[
+            if (reassuranceWidget != null) ...[
+              const SizedBox(height: AppSpacing.spaceMd),
+              reassuranceWidget!,
+            ],
+            if (action != null || secondaryAction != null) ...[
               const SizedBox(height: AppSpacing.spaceLg),
-              action!,
+              _EmptyStateActions(
+                action: action,
+                secondaryAction: secondaryAction,
+              ),
             ],
           ],
         ),
@@ -62,18 +80,29 @@ class _EmptyStateIconBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 72,
-      height: 72,
+      width: 88,
+      height: 88,
       alignment: Alignment.center,
-      decoration: const BoxDecoration(
-        color: AppColors.slate100,
+      decoration: BoxDecoration(
+        color: AppColors.brandMintSurface,
         shape: BoxShape.circle,
+        border: Border.all(
+          color: AppColors.brandMintBorder,
+          width: 1.5,
+        ),
+        boxShadow: const [
+          BoxShadow(
+            color: Color(0x0A007A55),
+            blurRadius: 16,
+            offset: Offset(0, 4),
+          ),
+        ],
       ),
       child: icon ??
           const Icon(
             Icons.inventory_2_outlined,
-            size: 36,
-            color: AppColors.slate400,
+            size: 42,
+            color: AppColors.brandEmeraldDark,
           ),
     );
   }
@@ -97,16 +126,44 @@ class _EmptyStateContent extends StatelessWidget {
         Text(
           title,
           textAlign: TextAlign.center,
-          style: AppTypography.titleLg(color: AppColors.onSurface),
+          style: AppTypography.headlineMd(color: AppColors.onSurface).copyWith(
+            fontWeight: FontWeight.w700,
+          ),
         ),
         if (message != null && message!.isNotEmpty) ...[
           const SizedBox(height: AppSpacing.spaceSm),
-          Text(
-            message!,
-            textAlign: TextAlign.center,
-            style: AppTypography.bodyMd(color: AppColors.slate600),
+          ConstrainedBox(
+            constraints: const BoxConstraints(maxWidth: 340),
+            child: Text(
+              message!,
+              textAlign: TextAlign.center,
+              style: AppTypography.bodyMd(color: AppColors.slate600),
+            ),
           ),
         ],
+      ],
+    );
+  }
+}
+
+class _EmptyStateActions extends StatelessWidget {
+  final Widget? action;
+  final Widget? secondaryAction;
+
+  const _EmptyStateActions({
+    this.action,
+    this.secondaryAction,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        ?action,
+        if (action != null && secondaryAction != null)
+          const SizedBox(height: AppSpacing.spaceSm),
+        ?secondaryAction,
       ],
     );
   }
