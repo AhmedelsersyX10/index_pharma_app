@@ -38,7 +38,7 @@ class ProductsGrid extends StatelessWidget {
             crossAxisCount: 2,
             crossAxisSpacing: AppSpacing.spaceSm,
             mainAxisSpacing: AppSpacing.spaceSm,
-            childAspectRatio: 0.65,
+            childAspectRatio: 0.58,
           ),
           itemBuilder: (context, index) {
             final product = products[index];
@@ -54,35 +54,37 @@ class ProductsGrid extends StatelessWidget {
         // Pagination loading indicator or retry prompt
         if (isLoadingMore) ...[
           const SizedBox(height: AppSpacing.spaceMd),
-          Center(
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              decoration: BoxDecoration(
-                color: AppColors.surfaceContainerLow,
-                borderRadius: AppRadii.roundedFull,
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const SizedBox(
-                    width: 16,
-                    height: 16,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 2,
-                      color: AppColors.primary,
-                    ),
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.symmetric(
+              horizontal: AppSpacing.spaceMd,
+              vertical: AppSpacing.spaceSm,
+            ),
+            decoration: BoxDecoration(
+              color: AppColors.surfaceContainer,
+              borderRadius: AppRadii.roundedXl,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const SizedBox(
+                  width: 16,
+                  height: 16,
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                    color: AppColors.primary,
                   ),
-                  const SizedBox(width: AppSpacing.spaceXs),
-                  Text(
-                    AppLocaleKeys.productsLoadingMore.tr(),
-                    style: AppTypography.bodySm(
-                      color: AppColors.primary,
-                    ).copyWith(
-                      fontWeight: FontWeight.w600,
-                    ),
+                ),
+                const SizedBox(width: AppSpacing.spaceXs),
+                Text(
+                  AppLocaleKeys.productsLoadingMore.tr(),
+                  style: AppTypography.labelMd(
+                    color: AppColors.primary,
+                  ).copyWith(
+                    fontWeight: FontWeight.w600,
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ] else if (loadingMoreError != null) ...[

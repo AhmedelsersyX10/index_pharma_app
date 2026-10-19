@@ -52,7 +52,7 @@ class _ProductsLoadingSkeletonState extends State<ProductsLoadingSkeleton>
               crossAxisCount: 2,
               crossAxisSpacing: AppSpacing.spaceSm,
               mainAxisSpacing: AppSpacing.spaceSm,
-              childAspectRatio: 0.65,
+              childAspectRatio: 0.58,
             ),
             itemBuilder: (context, index) => _buildSkeletonCard(),
           ),
@@ -68,24 +68,30 @@ class _ProductsLoadingSkeletonState extends State<ProductsLoadingSkeleton>
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Align(
-            alignment: Alignment.centerRight,
-            child: Container(
-              width: 70,
-              height: 20,
-              decoration: BoxDecoration(
-                color: AppColors.slate200,
-                borderRadius: AppRadii.roundedFull,
-              ),
-            ),
-          ),
-          const SizedBox(height: AppSpacing.spaceXs),
-          Expanded(
-            child: Container(
-              decoration: BoxDecoration(
-                color: AppColors.slate100,
-                borderRadius: AppRadii.roundedLg,
-              ),
+          // Square Image Placeholder with internal badge skeleton
+          AspectRatio(
+            aspectRatio: 1,
+            child: Stack(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    color: AppColors.surfaceContainerLow,
+                    borderRadius: AppRadii.roundedLg,
+                  ),
+                ),
+                PositionedDirectional(
+                  top: AppSpacing.spaceXs,
+                  end: AppSpacing.spaceXs,
+                  child: Container(
+                    width: 55,
+                    height: 18,
+                    decoration: BoxDecoration(
+                      color: AppColors.slate200,
+                      borderRadius: AppRadii.roundedFull,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
           const SizedBox(height: AppSpacing.spaceSm),
@@ -105,7 +111,16 @@ class _ProductsLoadingSkeletonState extends State<ProductsLoadingSkeleton>
               borderRadius: AppRadii.roundedSm,
             ),
           ),
-          const SizedBox(height: AppSpacing.spaceSm),
+          const SizedBox(height: AppSpacing.spaceXs),
+          Container(
+            height: 12,
+            width: 100,
+            decoration: BoxDecoration(
+              color: AppColors.slate100,
+              borderRadius: AppRadii.roundedSm,
+            ),
+          ),
+          const Spacer(),
           Container(
             height: 20,
             width: 60,
@@ -114,12 +129,12 @@ class _ProductsLoadingSkeletonState extends State<ProductsLoadingSkeleton>
               borderRadius: AppRadii.roundedSm,
             ),
           ),
-          const SizedBox(height: AppSpacing.spaceSm),
+          const SizedBox(height: AppSpacing.spaceXs),
           Container(
-            height: 38,
+            height: 36,
             decoration: BoxDecoration(
               color: AppColors.slate200,
-              borderRadius: AppRadii.roundedFull,
+              borderRadius: AppRadii.roundedLg,
             ),
           ),
         ],

@@ -146,5 +146,11 @@ abstract class AppLocaleKeys {
   static const productsErrorTitle = 'products.error_title';
   static const productsErrorDesc = 'products.error_desc';
   static const productsSelectBranchPrompt = 'products.select_branch_prompt';
+  static const productsTotalCount = 'products.total_count';
+  static const productsLiveStock = 'products.live_stock';
+  static const productsAvailableOnly = 'products.available_only';
+  static const productsPrescriptionHelpTitle = 'products.prescription_help_title';
+  static const productsPrescriptionHelpDesc = 'products.prescription_help_desc';
+  static const productsUploadPrescriptionAction = 'products.upload_prescription_action';
 }
 

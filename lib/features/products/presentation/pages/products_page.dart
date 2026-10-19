@@ -5,7 +5,6 @@ import 'package:get_it/get_it.dart';
 import 'package:index_pharma/core/localization/app_locale_keys.dart';
 import 'package:index_pharma/core/theme/theme.dart';
 import 'package:index_pharma/core/widgets/app_buttons.dart';
-import 'package:index_pharma/core/widgets/app_card.dart';
 import 'package:index_pharma/features/categories/presentation/cubit/categories_cubit.dart';
 import 'package:index_pharma/features/categories/presentation/cubit/categories_state.dart';
 import '../cubit/products_cubit.dart';
@@ -111,6 +110,10 @@ class _ProductsViewState extends State<_ProductsView> {
                       ),
                       const SizedBox(height: AppSpacing.spaceSm),
 
+                      // Live Stock & Availability Notice (per Stitch B3)
+                      _buildLiveStockNotice(),
+                      const SizedBox(height: AppSpacing.spaceSm),
+
                       // Category Filter Chips
                       _buildCategoryFilters(),
                       const SizedBox(height: AppSpacing.spaceMd),
@@ -138,6 +141,45 @@ class _ProductsViewState extends State<_ProductsView> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildLiveStockNotice() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.space2xs),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                width: 8,
+                height: 8,
+                decoration: const BoxDecoration(
+                  color: AppColors.brandEmeraldDark,
+                  shape: BoxShape.circle,
+                ),
+              ),
+              const SizedBox(width: AppSpacing.spaceXs),
+              Text(
+                AppLocaleKeys.productsLiveStock.tr(),
+                style: AppTypography.labelSm(
+                  color: AppColors.brandEmeraldDark,
+                ).copyWith(
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
+          ),
+          Text(
+            AppLocaleKeys.productsAvailableOnly.tr(),
+            style: AppTypography.labelSm(
+              color: AppColors.slate500,
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -197,10 +239,23 @@ class _ProductsViewState extends State<_ProductsView> {
               ),
             ),
             if (totalCount != null)
-              Text(
-                '($totalCount)',
-                style: AppTypography.labelMd(color: AppColors.primary).copyWith(
-                  fontWeight: FontWeight.bold,
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: AppSpacing.spaceSm,
+                  vertical: AppSpacing.space2xs,
+                ),
+                decoration: BoxDecoration(
+                  color: AppColors.surfaceContainerLow,
+                  borderRadius: AppRadii.roundedFull,
+                ),
+                child: Text(
+                  AppLocaleKeys.productsTotalCount
+                      .tr(args: [totalCount.toString()]),
+                  style: AppTypography.labelSm(
+                    color: AppColors.onSurfaceVariant,
+                  ).copyWith(
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
           ],
@@ -238,37 +293,96 @@ class _ProductsViewState extends State<_ProductsView> {
   }
 
   Widget _buildEmptyState() {
-    return AppCard(
-      padding: const EdgeInsets.all(AppSpacing.spaceLg),
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        vertical: AppSpacing.spaceLg,
+        horizontal: AppSpacing.spaceXs,
+      ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Icon(
-            Icons.search_off_rounded,
-            size: 56,
-            color: AppColors.slate300,
+          Container(
+            width: 72,
+            height: 72,
+            decoration: const BoxDecoration(
+              color: AppColors.surfaceContainer,
+              shape: BoxShape.circle,
+            ),
+            child: const Center(
+              child: Icon(
+                Icons.inventory_2_outlined,
+                size: 36,
+                color: AppColors.primary,
+              ),
+            ),
           ),
-          const SizedBox(height: AppSpacing.spaceSm),
+          const SizedBox(height: AppSpacing.spaceMd),
           Text(
             AppLocaleKeys.productsEmptyTitle.tr(),
-            style: AppTypography.titleMd(color: AppColors.onSurface).copyWith(
+            style: AppTypography.headlineMd(color: AppColors.onSurface).copyWith(
               fontWeight: FontWeight.bold,
             ),
+            textAlign: TextAlign.center,
           ),
           const SizedBox(height: AppSpacing.spaceXs),
           Text(
             AppLocaleKeys.productsEmptyDesc.tr(),
-            style: AppTypography.bodySm(color: AppColors.slate500),
+            style: AppTypography.bodyMd(color: AppColors.onSurfaceVariant),
             textAlign: TextAlign.center,
           ),
+          const SizedBox(height: AppSpacing.spaceLg),
+
+          // Prescription Assistance Card (per Stitch B3)
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.all(AppSpacing.spaceMd),
+            decoration: BoxDecoration(
+              color: AppColors.brandMintSurface,
+              borderRadius: AppRadii.roundedXl,
+              border: Border.all(
+                color: AppColors.brandMintBorder,
+                width: 1,
+              ),
+            ),
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(
+                      Icons.receipt_long_rounded,
+                      size: 20,
+                      color: AppColors.brandEmeraldDark,
+                    ),
+                    const SizedBox(width: AppSpacing.spaceXs),
+                    Text(
+                      AppLocaleKeys.productsPrescriptionHelpTitle.tr(),
+                      style: AppTypography.titleMd(
+                        color: AppColors.brandEmeraldDark,
+                      ).copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: AppSpacing.spaceXs),
+                Text(
+                  AppLocaleKeys.productsPrescriptionHelpDesc.tr(),
+                  style: AppTypography.bodySm(color: AppColors.onSurface),
+                  textAlign: TextAlign.center,
+                ),
+              ],
+            ),
+          ),
           const SizedBox(height: AppSpacing.spaceMd),
-          SizedBox(
-            width: 160,
-            child: AppButton.outlined(
-              text: AppLocaleKeys.commonRetry.tr(),
-              onPressed: () =>
-                  context.read<ProductsCubit>().loadFirstPage(),
-              height: 40,
+          TextButton.icon(
+            onPressed: () => context.read<ProductsCubit>().loadFirstPage(),
+            icon: const Icon(Icons.refresh_rounded, size: 18),
+            label: Text(
+              AppLocaleKeys.commonRetry.tr(),
+              style: AppTypography.labelMd(color: AppColors.primary).copyWith(
+                fontWeight: FontWeight.w600,
+              ),
             ),
           ),
         ],
@@ -277,36 +391,55 @@ class _ProductsViewState extends State<_ProductsView> {
   }
 
   Widget _buildFailureState(ProductsFailure state) {
-    return AppCard(
-      padding: const EdgeInsets.all(AppSpacing.spaceLg),
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        vertical: AppSpacing.spaceLg,
+        horizontal: AppSpacing.spaceXs,
+      ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Icon(
-            Icons.error_outline_rounded,
-            size: 56,
-            color: AppColors.error,
+          Container(
+            width: 72,
+            height: 72,
+            decoration: const BoxDecoration(
+              color: AppColors.errorContainer,
+              shape: BoxShape.circle,
+            ),
+            child: const Center(
+              child: Icon(
+                Icons.cloud_off_rounded,
+                size: 36,
+                color: AppColors.onErrorContainer,
+              ),
+            ),
           ),
-          const SizedBox(height: AppSpacing.spaceSm),
+          const SizedBox(height: AppSpacing.spaceMd),
           Text(
             AppLocaleKeys.productsErrorTitle.tr(),
-            style: AppTypography.titleMd(color: AppColors.onSurface).copyWith(
+            style: AppTypography.headlineMd(color: AppColors.onSurface).copyWith(
               fontWeight: FontWeight.bold,
             ),
+            textAlign: TextAlign.center,
           ),
           const SizedBox(height: AppSpacing.spaceXs),
           Text(
             state.message,
-            style: AppTypography.bodySm(color: AppColors.slate500),
+            style: AppTypography.bodyMd(color: AppColors.onSurfaceVariant),
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: AppSpacing.spaceMd),
+          const SizedBox(height: AppSpacing.spaceLg),
           SizedBox(
-            width: 160,
+            width: 180,
             child: AppButton.primary(
               text: AppLocaleKeys.commonRetry.tr(),
+              icon: const Icon(
+                Icons.refresh_rounded,
+                size: 18,
+                color: Colors.white,
+              ),
               onPressed: () => context.read<ProductsCubit>().retry(),
-              height: 40,
+              height: 42,
             ),
           ),
         ],

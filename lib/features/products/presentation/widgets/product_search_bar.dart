@@ -47,14 +47,15 @@ class _ProductSearchBarState extends State<ProductSearchBar> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 48,
+      height: 44,
       decoration: BoxDecoration(
-        color: AppColors.surfaceContainerLow,
-        borderRadius: AppRadii.roundedFull,
+        color: AppColors.canvasPure,
+        borderRadius: AppRadii.roundedXl,
         border: Border.all(
           color: AppColors.borderSubtle,
           width: 1,
         ),
+        boxShadow: AppShadows.level1,
       ),
       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.spaceSm),
       child: Row(

@@ -169,7 +169,13 @@
     "empty_desc": "No medicines match your search criteria in this branch currently.",
     "error_title": "Failed to load medicines",
     "error_desc": "An error occurred while loading medicines. Please try again.",
-    "select_branch_prompt": "Please select a branch first to view store stock"
+    "select_branch_prompt": "Please select a branch first to view store stock",
+    "total_count": "{} medicines",
+    "live_stock": "Live updated stock",
+    "available_only": "Available medicines only",
+    "prescription_help_title": "Looking for specific medication?",
+    "prescription_help_desc": "You can upload your prescription image, and our pharmacists will prepare it for you.",
+    "upload_prescription_action": "Upload Prescription Now"
   }
 }
 

@@ -64,7 +64,7 @@ class CategoryFilterChips extends StatelessWidget {
         decoration: BoxDecoration(
           color: isSelected
               ? AppColors.primary
-              : AppColors.surfaceContainerLow,
+              : AppColors.surfaceContainerLowest,
           borderRadius: AppRadii.roundedFull,
           border: Border.all(
             color: isSelected
@@ -72,6 +72,7 @@ class CategoryFilterChips extends StatelessWidget {
                 : AppColors.borderSubtle,
             width: 1,
           ),
+          boxShadow: isSelected ? null : AppShadows.level1,
         ),
         alignment: Alignment.center,
         child: Text(

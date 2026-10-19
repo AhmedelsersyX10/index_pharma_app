@@ -38,7 +38,7 @@ class IndexPharmaApp extends StatelessWidget {
             : AppRouter());
 
     return MaterialApp.router(
-      title: AppLocaleKeys.appTitle.tr(),
+      onGenerateTitle: (context) => AppLocaleKeys.appTitle.tr(),
       debugShowCheckedModeBanner: false,
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,

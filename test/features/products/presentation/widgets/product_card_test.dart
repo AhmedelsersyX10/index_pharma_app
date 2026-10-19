@@ -1,10 +1,44 @@
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:index_pharma/core/theme/theme.dart';
 import 'package:index_pharma/features/categories/domain/entities/category.dart';
 import 'package:index_pharma/features/products/domain/entities/product.dart';
 import 'package:index_pharma/features/products/presentation/widgets/product_card.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+late final Map<String, dynamic> _arTranslations;
+late final Map<String, dynamic> _enTranslations;
+
+class SynchronousDiskAssetLoader extends AssetLoader {
+  const SynchronousDiskAssetLoader();
+
+  @override
+  Future<Map<String, dynamic>> load(String path, Locale locale) {
+    if (locale.languageCode == 'en') {
+      return Future.value(_enTranslations);
+    }
+    return Future.value(_arTranslations);
+  }
+}
 
 void main() {
+  setUpAll(() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    SharedPreferences.setMockInitialValues({});
+    await EasyLocalization.ensureInitialized();
+
+    final arFile = File('assets/translations/ar.json');
+    final enFile = File('assets/translations/en.json');
+    _arTranslations =
+        jsonDecode(await arFile.readAsString()) as Map<String, dynamic>;
+    _enTranslations =
+        jsonDecode(await enFile.readAsString()) as Map<String, dynamic>;
+  });
+
   const testProductRx = Product(
     id: 'p01',
     name: 'Augmentin 1g Tablets',
@@ -31,16 +65,35 @@ void main() {
     branchId: 'b01',
   );
 
-  Widget createWidgetUnderTest(Product product) {
-    return MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: SizedBox(
-            width: 260,
-            height: 420,
-            child: ProductCard(product: product),
-          ),
-        ),
+  Widget createWidgetUnderTest(Product product,
+      {Locale locale = const Locale('ar')}) {
+    return EasyLocalization(
+      key: ValueKey('EasyLocalization_${locale.languageCode}'),
+      supportedLocales: const [Locale('ar'), Locale('en')],
+      path: 'assets/translations',
+      fallbackLocale: const Locale('ar'),
+      startLocale: locale,
+      saveLocale: false,
+      useOnlyLangCode: true,
+      assetLoader: const SynchronousDiskAssetLoader(),
+      child: Builder(
+        builder: (context) {
+          return MaterialApp(
+            locale: context.locale,
+            supportedLocales: context.supportedLocales,
+            localizationsDelegates: context.localizationDelegates,
+            theme: AppTheme.lightTheme,
+            home: Scaffold(
+              body: Center(
+                child: SizedBox(
+                  width: 260,
+                  height: 420,
+                  child: ProductCard(product: product),
+                ),
+              ),
+            ),
+          );
+        },
       ),
     );
   }
