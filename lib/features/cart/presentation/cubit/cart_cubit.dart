@@ -225,6 +225,64 @@ class CartCubit extends Cubit<CartState> {
     }
   }
 
+  /// Syncs cart items against a list of fresh server [Product] models.
+  ///
+  /// - If a product's stock is 0 or it is no longer available online, it is removed from the cart.
+  /// - If a product's stock is less than the current item quantity, the quantity is clamped to the new stock.
+  /// - Updates the cart state and persists to storage.
+  /// - Returns a list of names of items that were adjusted or removed.
+  Future<List<String>> syncWithUpdatedProducts(
+      List<Product> updatedProducts) async {
+    final currentState = state;
+    if (currentState is! CartHasItems) return [];
+
+    final adjustedItemNames = <String>[];
+    final updatedCartItems = <CartItem>[];
+
+    final productMap = {for (final p in updatedProducts) p.id: p};
+
+    for (final item in currentState.items) {
+      final freshProduct = productMap[item.product.id];
+      if (freshProduct == null) {
+        updatedCartItems.add(item);
+        continue;
+      }
+
+      if (freshProduct.stockQuantity <= 0) {
+        adjustedItemNames.add(item.product.name);
+        continue;
+      }
+
+      if (item.quantity > freshProduct.stockQuantity) {
+        adjustedItemNames.add(item.product.name);
+        updatedCartItems.add(item.copyWith(
+          product: freshProduct,
+          quantity: freshProduct.stockQuantity,
+        ));
+      } else {
+        updatedCartItems.add(item.copyWith(product: freshProduct));
+      }
+    }
+
+    if (updatedCartItems.isEmpty) {
+      await _cartRepository.clearCart(currentState.branchId);
+      emit(CartEmpty(branchId: currentState.branchId));
+    } else {
+      final newState = _buildHasItemsState(
+        branchId: currentState.branchId,
+        items: updatedCartItems,
+        stockAlertMessage: adjustedItemNames.isNotEmpty
+            ? adjustedItemNames.first
+            : null,
+      );
+      emit(newState);
+      await _cartRepository.saveCartItems(
+          currentState.branchId, updatedCartItems);
+    }
+
+    return adjustedItemNames;
+  }
+
   /// Checks if selecting [newBranchId] conflicts with the cart's existing branch.
   bool hasConflictWithBranch(String newBranchId) {
     final currentState = state;

@@ -14,10 +14,7 @@ import 'package:index_pharma/core/theme/theme.dart';
 /// Deviations per decisions:
 /// - "Insurance accepted" is omitted (no insurance API).
 class HomePrescriptionUploadCard extends StatelessWidget {
-  const HomePrescriptionUploadCard({
-    super.key,
-    this.onUploadTap,
-  });
+  const HomePrescriptionUploadCard({super.key, this.onUploadTap});
 
   final VoidCallback? onUploadTap;
 
@@ -28,10 +25,7 @@ class HomePrescriptionUploadCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.brandMintSurface,
         borderRadius: AppRadii.roundedXl,
-        border: Border.all(
-          color: AppColors.brandMintBorder,
-          width: 1,
-        ),
+        border: Border.all(color: AppColors.brandMintBorder, width: 1),
         boxShadow: AppShadows.level1,
       ),
       child: Column(
@@ -53,11 +47,7 @@ class HomePrescriptionUploadCard extends StatelessWidget {
                         borderRadius: AppRadii.roundedLg,
                       ),
                       alignment: Alignment.center,
-                      child: const Icon(
-                        Icons.receipt_long_rounded,
-                        color: Colors.white,
-                        size: 22,
-                      ),
+                      child: const Icon(Icons.receipt_long_rounded, color: Colors.white, size: 22),
                     ),
                     const SizedBox(width: AppSpacing.spaceSm),
                     Expanded(
@@ -68,9 +58,7 @@ class HomePrescriptionUploadCard extends StatelessWidget {
                             AppLocaleKeys.homeRxServiceTitle.tr(),
                             style: AppTypography.titleMd(
                               color: AppColors.onSurface,
-                            ).copyWith(
-                              fontWeight: FontWeight.bold,
-                            ),
+                            ).copyWith(fontWeight: FontWeight.bold),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -78,9 +66,7 @@ class HomePrescriptionUploadCard extends StatelessWidget {
                             AppLocaleKeys.homeRxServiceSubtitle.tr(),
                             style: AppTypography.labelSm(
                               color: AppColors.brandEmeraldDark,
-                            ).copyWith(
-                              fontWeight: FontWeight.w600,
-                            ),
+                            ).copyWith(fontWeight: FontWeight.w600),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -113,9 +99,7 @@ class HomePrescriptionUploadCard extends StatelessWidget {
                       AppLocaleKeys.homeRxBadgeSecure.tr(),
                       style: AppTypography.labelSm(
                         color: AppColors.brandEmeraldDark,
-                      ).copyWith(
-                        fontWeight: FontWeight.w600,
-                      ),
+                      ).copyWith(fontWeight: FontWeight.w600),
                     ),
                   ],
                 ),
@@ -129,18 +113,12 @@ class HomePrescriptionUploadCard extends StatelessWidget {
             AppLocaleKeys.homeRxHeading.tr(),
             style: AppTypography.titleMd(
               color: AppColors.onSurface,
-            ).copyWith(
-              fontWeight: FontWeight.w700,
-            ),
+            ).copyWith(fontWeight: FontWeight.w700),
           ),
           const SizedBox(height: 4),
           Text(
             AppLocaleKeys.homeRxDesc.tr(),
-            style: AppTypography.bodySm(
-              color: AppColors.onSurfaceVariant,
-            ).copyWith(
-              height: 1.4,
-            ),
+            style: AppTypography.bodySm(color: AppColors.onSurfaceVariant).copyWith(height: 1.4),
           ),
           const SizedBox(height: AppSpacing.spaceMd),
 
@@ -150,26 +128,18 @@ class HomePrescriptionUploadCard extends StatelessWidget {
             height: 44,
             child: ElevatedButton.icon(
               onPressed: onUploadTap ?? () => context.go('/prescription'),
-              icon: const Icon(
-                Icons.add_a_photo_outlined,
-                size: 18,
-                color: Colors.white,
-              ),
+              icon: const Icon(Icons.add_a_photo_outlined, size: 18, color: Colors.white),
               label: Text(
                 AppLocaleKeys.homeRxCta.tr(),
-                style: AppTypography.labelLg(
+                style: AppTypography.labelMd(
                   color: Colors.white,
-                ).copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
+                ).copyWith(fontWeight: FontWeight.bold),
               ),
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.primary,
                 foregroundColor: Colors.white,
                 elevation: 0,
-                shape: const RoundedRectangleBorder(
-                  borderRadius: AppRadii.roundedLg,
-                ),
+                shape: const RoundedRectangleBorder(borderRadius: AppRadii.roundedLg),
               ),
             ),
           ),

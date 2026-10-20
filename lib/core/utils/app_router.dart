@@ -17,6 +17,9 @@ import 'package:index_pharma/features/home/presentation/screens/home_screen.dart
 import 'package:index_pharma/features/onboarding/presentation/view/onboarding_view.dart';
 import 'package:index_pharma/features/products/presentation/screens/product_details_screen.dart';
 import 'package:index_pharma/features/splash/presentation/view/splash_view.dart';
+import 'package:index_pharma/features/checkout/domain/entities/order.dart';
+import 'package:index_pharma/features/checkout/presentation/screens/checkout_screen.dart';
+import 'package:index_pharma/features/checkout/presentation/screens/order_confirmation_screen.dart';
 
 class AppRouter {
   AppRouter({
@@ -47,6 +50,7 @@ class AppRouter {
   static const kAccountView = '/account';
   static const kCartView = '/cart';
   static const kCheckoutView = '/checkout';
+  static const kOrderConfirmationView = '/checkout/confirmation';
   static const kBranchSelectionView = '/choose-branch';
   static const kLoginView = '/login';
   static const kRegisterView = '/register';
@@ -287,8 +291,18 @@ class AppRouter {
         builder: (context, state) => AuthRequiredGuard(
           routePath: kCheckoutView,
           authCubit: _activeAuthCubit,
-          child: const CheckoutPlaceholderScreen(),
+          child: const CheckoutScreen(),
         ),
+      ),
+      GoRoute(
+        path: kOrderConfirmationView,
+        builder: (context, state) {
+          final order = state.extra;
+          if (order is Order) {
+            return OrderConfirmationScreen(order: order);
+          }
+          return const HomeScreen();
+        },
       ),
       GoRoute(
         path: kStaffDashboardView,
