@@ -13,6 +13,7 @@ import 'package:index_pharma/features/auth/presentation/screens/register_screen.
 import 'package:index_pharma/features/choose_branches/presentation/screens/branch_selection_screen.dart';
 import 'package:index_pharma/features/home/presentation/screens/home_screen.dart';
 import 'package:index_pharma/features/onboarding/presentation/view/onboarding_view.dart';
+import 'package:index_pharma/features/products/presentation/screens/product_details_screen.dart';
 import 'package:index_pharma/features/splash/presentation/view/splash_view.dart';
 
 class AppRouter {
@@ -37,6 +38,7 @@ class AppRouter {
   static const kSplashView = '/';
   static const kOnboardingView = '/onboardingView';
   static const kStoreView = '/store';
+  static const kProductDetailsView = '/store/products/:id';
   static const kBrowseView = '/browse';
   static const kPrescriptionView = '/prescription';
   static const kOrdersView = '/orders';
@@ -47,6 +49,9 @@ class AppRouter {
   static const kRegisterView = '/register';
   static const kStaffDashboardView = '/staff';
   static const kBranchManagementView = '/admin/branches';
+
+  /// Generates the product details path for a specific [productId].
+  static String productDetailsPath(String productId) => '/store/products/$productId';
 
   AuthCubit? get _activeAuthCubit {
     if (_authCubit != null) return _authCubit;
@@ -166,6 +171,17 @@ class AppRouter {
       GoRoute(
         path: kStoreView,
         builder: (context, state) => const HomeScreen(),
+      ),
+      GoRoute(
+        path: kProductDetailsView,
+        builder: (context, state) {
+          final productId = state.pathParameters['id'] ?? '';
+          final branchId = state.uri.queryParameters['branchId'];
+          return ProductDetailsScreen(
+            productId: productId,
+            branchId: branchId,
+          );
+        },
       ),
       GoRoute(
         path: kBrowseView,

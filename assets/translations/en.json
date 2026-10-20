@@ -214,6 +214,29 @@
     "account_title": "My Account",
     "cart_title": "Shopping Cart",
     "under_construction": "This screen is currently under active development."
+  },
+  "product_details": {
+    "title": "Product Details",
+    "certified_pharmacy_badge": "Licensed Certified Pharmacy",
+    "moh_registered_pill": "EDA Registered Medication",
+    "expiry_date_label": "Expiry Date:",
+    "dispensing_branch": "Dispensing Branch",
+    "available_units": "Available {} {}",
+    "rx_required_title": "Requires Valid Prescription (Rx)",
+    "rx_required_desc": "Per Egyptian Ministry of Health regulations, a valid prescription must be attached for pharmacist verification prior to dispensing.",
+    "upload_prescription_btn": "Upload Prescription for this Medicine",
+    "active_ingredient_label": "Active Pharmaceutical Ingredient",
+    "barcode_gtin_label": "Standard Barcode (GTIN)",
+    "usage_guidelines_title": "Indications & Clinical Guidelines",
+    "requested_quantity": "Required Quantity",
+    "max_available_stock": "Max available stock: {} {}",
+    "total_price_label": "Total Amount",
+    "add_to_cart_cta": "Add to Cart",
+    "added_to_cart_success": "Added {} {} to medication cart",
+    "view_cart": "View Cart",
+    "not_found_desc": "Sorry, this product could not be found in this branch.",
+    "out_of_stock": "Currently out of stock",
+    "unit_default": "pack"
   }
 }
 

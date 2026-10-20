@@ -149,5 +149,89 @@ void main() {
         throwsA(isA<FormatException>()),
       );
     });
+
+    test('getProductById parses real JSON sample successfully', () async {
+      final sampleDetailJson = {
+        'success': true,
+        'data': {
+          'id': 'p01f8a22-1118-4089-9e8c-669a6e118999',
+          'name': 'Hydrating Cream 50ml',
+          'scientificName': 'Hyaluronic Acid',
+          'barcode': '6221000000028',
+          'description': 'Daily moisturizing cream for dry and sensitive skin',
+          'image': null,
+          'sellingPrice': 130,
+          'stockQuantity': 30,
+          'expiryDate': '2028-06-30T00:00:00.000Z',
+          'requiresPrescription': false,
+          'unit': 'قطعة',
+          'category': {
+            'id': 'c10f8a91-4418-4089-9e8c-779a6e118902',
+            'name': 'Skincare',
+          },
+          'looseQuantity': 0,
+          'branchId': 'b18f3a22-3118-4089-9e8c-529a6e118901',
+        },
+      };
+
+      RequestOptions? capturedOptions;
+
+      dio.interceptors.add(
+        InterceptorsWrapper(
+          onRequest: (options, handler) {
+            capturedOptions = options;
+            handler.resolve(
+              Response(
+                requestOptions: options,
+                data: sampleDetailJson,
+                statusCode: 200,
+              ),
+            );
+          },
+        ),
+      );
+
+      final result = await dataSource.getProductById(
+        productId: 'p01f8a22-1118-4089-9e8c-669a6e118999',
+        branchId: 'b18f3a22-3118-4089-9e8c-529a6e118901',
+      );
+
+      expect(capturedOptions?.path, equals('/store/products/p01f8a22-1118-4089-9e8c-669a6e118999'));
+      expect(capturedOptions?.queryParameters['branchId'], equals('b18f3a22-3118-4089-9e8c-529a6e118901'));
+      expect(result.id, equals('p01f8a22-1118-4089-9e8c-669a6e118999'));
+      expect(result.name, equals('Hydrating Cream 50ml'));
+      expect(result.sellingPrice, equals(130.0));
+      expect(result.stockQuantity, equals(30));
+      expect(result.requiresPrescription, isFalse);
+      expect(result.category?.name, equals('Skincare'));
+    });
+
+    test('getProductById throws ArgumentError if branchId is empty', () async {
+      expect(
+        () => dataSource.getProductById(productId: 'p1', branchId: '   '),
+        throwsA(isA<ArgumentError>()),
+      );
+    });
+
+    test('getProductById throws FormatException when response format is invalid', () async {
+      dio.interceptors.add(
+        InterceptorsWrapper(
+          onRequest: (options, handler) {
+            handler.resolve(
+              Response(
+                requestOptions: options,
+                data: {'success': false},
+                statusCode: 200,
+              ),
+            );
+          },
+        ),
+      );
+
+      expect(
+        () => dataSource.getProductById(productId: 'p1', branchId: 'b1'),
+        throwsA(isA<FormatException>()),
+      );
+    });
   });
 }

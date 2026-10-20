@@ -1,8 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:index_pharma/core/localization/app_locale_keys.dart';
 import 'package:index_pharma/core/theme/theme.dart';
+import 'package:index_pharma/core/utils/app_router.dart';
 import 'package:index_pharma/core/widgets/app_empty_state.dart';
 import 'package:index_pharma/core/widgets/app_error_view.dart';
 import 'package:index_pharma/features/choose_branches/presentation/cubit/branch_cubit.dart';
@@ -103,7 +105,10 @@ class HomeFeaturedProductsSection extends StatelessWidget {
                 ),
               ProductsLoaded(:final products) => _FeaturedProductsGrid(
                   products: products.take(maxItems).toList(),
-                  onProductTap: onProductTap,
+                  onProductTap: onProductTap ??
+                      (prod) {
+                        context.push(AppRouter.productDetailsPath(prod.id));
+                      },
                   onAddToCart: onAddToCart ??
                       (prod) {
                         ScaffoldMessenger.of(context).showSnackBar(

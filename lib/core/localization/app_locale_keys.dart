@@ -190,5 +190,28 @@ abstract class AppLocaleKeys {
   static const placeholdersAccountTitle = 'placeholders.account_title';
   static const placeholdersCartTitle = 'placeholders.cart_title';
   static const placeholdersUnderConstruction = 'placeholders.under_construction';
+
+  // Product Details (Stitch B4)
+  static const productDetailsTitle = 'product_details.title';
+  static const productDetailsCertifiedPharmacyBadge = 'product_details.certified_pharmacy_badge';
+  static const productDetailsMohRegisteredPill = 'product_details.moh_registered_pill';
+  static const productDetailsExpiryDateLabel = 'product_details.expiry_date_label';
+  static const productDetailsDispensingBranch = 'product_details.dispensing_branch';
+  static const productDetailsAvailableUnits = 'product_details.available_units';
+  static const productDetailsRxRequiredTitle = 'product_details.rx_required_title';
+  static const productDetailsRxRequiredDesc = 'product_details.rx_required_desc';
+  static const productDetailsUploadPrescriptionBtn = 'product_details.upload_prescription_btn';
+  static const productDetailsActiveIngredientLabel = 'product_details.active_ingredient_label';
+  static const productDetailsBarcodeGtinLabel = 'product_details.barcode_gtin_label';
+  static const productDetailsUsageGuidelinesTitle = 'product_details.usage_guidelines_title';
+  static const productDetailsRequestedQuantity = 'product_details.requested_quantity';
+  static const productDetailsMaxAvailableStock = 'product_details.max_available_stock';
+  static const productDetailsTotalPriceLabel = 'product_details.total_price_label';
+  static const productDetailsAddToCartCta = 'product_details.add_to_cart_cta';
+  static const productDetailsAddedToCartSuccess = 'product_details.added_to_cart_success';
+  static const productDetailsViewCart = 'product_details.view_cart';
+  static const productDetailsNotFoundDesc = 'product_details.not_found_desc';
+  static const productDetailsOutOfStock = 'product_details.out_of_stock';
+  static const productDetailsUnitDefault = 'product_details.unit_default';
 }
 

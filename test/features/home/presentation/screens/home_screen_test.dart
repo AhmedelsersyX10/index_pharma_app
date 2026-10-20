@@ -136,6 +136,27 @@ class FakeProductsRepository implements ProductsRepository {
           ),
         );
   }
+
+  ApiResult<Product>? productDetailResult;
+
+  @override
+  Future<ApiResult<Product>> getProductDetails({
+    required String productId,
+    required String branchId,
+  }) async {
+    return productDetailResult ??
+        Success(
+          Product(
+            id: productId,
+            name: 'بنادول إكسترا ٥٠٠ مجم',
+            scientificName: 'Paracetamol 500mg',
+            sellingPrice: 45.0,
+            stockQuantity: 24,
+            requiresPrescription: false,
+            branchId: branchId,
+          ),
+        );
+  }
 }
 
 class FakeStorageService implements StorageService {

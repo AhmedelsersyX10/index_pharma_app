@@ -1,3 +1,4 @@
+import '../models/product_model.dart';
 import '../models/products_page_model.dart';
 
 /// Contract for fetching products from the remote Index Pharma Store API.
@@ -16,5 +17,13 @@ abstract class ProductsRemoteDataSource {
     int limit = 20,
     String? keyword,
     String? category,
+  });
+
+  /// Fetches single product details by [productId] within [branchId].
+  ///
+  /// Calls `GET /store/products/:id?branchId=:branchId`.
+  Future<ProductModel> getProductById({
+    required String productId,
+    required String branchId,
   });
 }

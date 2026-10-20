@@ -33,6 +33,16 @@ class FakeProductsRepository implements ProductsRepository {
     lastCategory = category;
     return stubResult!;
   }
+
+  ApiResult<Product>? stubProductDetailsResult;
+
+  @override
+  Future<ApiResult<Product>> getProductDetails({
+    required String productId,
+    required String branchId,
+  }) async {
+    return stubProductDetailsResult!;
+  }
 }
 
 void main() {

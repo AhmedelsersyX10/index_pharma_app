@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:index_pharma/core/errors/failure.dart';
 import 'package:index_pharma/core/network/api_result.dart';
 import 'package:index_pharma/core/network/error_mapper.dart';
+import '../../domain/entities/product.dart';
 import '../../domain/entities/products_page.dart';
 import '../../domain/repositories/products_repository.dart';
 import '../datasources/products_remote_data_source.dart';
@@ -31,6 +32,42 @@ class ProductsRepositoryImpl implements ProductsRepository {
         category: category,
       );
       return Success(pageModel.toEntity());
+    } on DioException catch (e) {
+      return Err(e.toFailure());
+    } catch (e) {
+      return Err(Unexpected(serverMessage: e.toString()));
+    }
+  }
+
+  @override
+  Future<ApiResult<Product>> getProductDetails({
+    required String productId,
+    required String branchId,
+  }) async {
+    final cleanBranchId = branchId.trim();
+    if (cleanBranchId.isEmpty) {
+      return const Err(
+        Validation(
+          serverMessage: 'معرّف الفرع مطلوب لعرض تفاصيل المنتج',
+        ),
+      );
+    }
+
+    final cleanProductId = productId.trim();
+    if (cleanProductId.isEmpty) {
+      return const Err(
+        Validation(
+          serverMessage: 'معرّف المنتج مطلوب',
+        ),
+      );
+    }
+
+    try {
+      final productModel = await _remoteDataSource.getProductById(
+        productId: cleanProductId,
+        branchId: cleanBranchId,
+      );
+      return Success(productModel.toEntity());
     } on DioException catch (e) {
       return Err(e.toFailure());
     } catch (e) {

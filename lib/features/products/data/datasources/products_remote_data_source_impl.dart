@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import '../models/product_model.dart';
 import '../models/products_page_model.dart';
 import 'products_remote_data_source.dart';
 
@@ -44,6 +45,37 @@ class ProductsRemoteDataSourceImpl implements ProductsRemoteDataSource {
 
     throw const FormatException(
       'Invalid or corrupted products payload from server',
+    );
+  }
+
+  @override
+  Future<ProductModel> getProductById({
+    required String productId,
+    required String branchId,
+  }) async {
+    final cleanBranchId = branchId.trim();
+    if (cleanBranchId.isEmpty) {
+      throw ArgumentError('branchId is required and cannot be empty');
+    }
+
+    final response = await _dio.get<dynamic>(
+      '/store/products/$productId',
+      queryParameters: {'branchId': cleanBranchId},
+    );
+
+    final body = response.data;
+    if (body is Map) {
+      final data = body['data'];
+      if (data is Map) {
+        return ProductModel.fromJson(Map<String, dynamic>.from(data));
+      }
+      if (body['id'] != null) {
+        return ProductModel.fromJson(Map<String, dynamic>.from(body));
+      }
+    }
+
+    throw const FormatException(
+      'Invalid or corrupted product details payload from server',
     );
   }
 }

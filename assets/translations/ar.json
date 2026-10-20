@@ -214,6 +214,29 @@
     "account_title": "حسابي",
     "cart_title": "سلة المشتريات",
     "under_construction": "هذه الشاشة قيد التطوير والتجهيز حالياً."
+  },
+  "product_details": {
+    "title": "تفاصيل الدواء",
+    "certified_pharmacy_badge": "صيدلية معتمدة مرخصة",
+    "moh_registered_pill": "دواء مسجل بوزارة الصحة المصرية",
+    "expiry_date_label": "تاريخ الصلاحية:",
+    "dispensing_branch": "فرع الصرف الفوري",
+    "available_units": "متوفر {} {}",
+    "rx_required_title": "يتطلب روشتة طبية معتمدة (Rx)",
+    "rx_required_desc": "تنفيذاً للائحة وزارة الصحة المصرية الخاصة بصرف الأدوية الخاضعة للرقابة، يلزم إرفاق صورة الروشتة الحالية للمراجعة الصيدلية قبل التسليم.",
+    "upload_prescription_btn": "ارفع الروشتة الآن لهذا الدواء",
+    "active_ingredient_label": "التركيب العلمي الفعال (Active Ingredient)",
+    "barcode_gtin_label": "الباركود الدولي الموحد (GTIN)",
+    "usage_guidelines_title": "دواعي الاستعمال والإرشادات",
+    "requested_quantity": "الكمية المطلوبة",
+    "max_available_stock": "الحد الأقصى المتاح حالياً: {} {}",
+    "total_price_label": "إجمالي القيمة المقررة",
+    "add_to_cart_cta": "أضف إلى السلة",
+    "added_to_cart_success": "تمت إضافة {} {} إلى سلة الأدوية",
+    "view_cart": "مراجعة السلة",
+    "not_found_desc": "عذراً، لم يتم العثور على هذا المنتج في هذا الفرع.",
+    "out_of_stock": "غير متوفر بالمخزون حالياً",
+    "unit_default": "علبة"
   }
 }
 

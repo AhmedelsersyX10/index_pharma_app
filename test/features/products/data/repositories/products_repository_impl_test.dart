@@ -7,6 +7,7 @@ import 'package:index_pharma/features/products/data/datasources/products_remote_
 import 'package:index_pharma/features/products/data/models/product_model.dart';
 import 'package:index_pharma/features/products/data/models/products_page_model.dart';
 import 'package:index_pharma/features/products/data/repositories/products_repository_impl.dart';
+import 'package:index_pharma/features/products/domain/entities/product.dart';
 import 'package:index_pharma/features/products/domain/entities/products_page.dart';
 
 class FakeProductsRemoteDataSource implements ProductsRemoteDataSource {
@@ -32,6 +33,26 @@ class FakeProductsRemoteDataSource implements ProductsRemoteDataSource {
           limit: 20,
           products: [],
         );
+  }
+
+  ProductModel? mockProduct;
+  String? lastProductId;
+  String? lastProductBranchId;
+
+  @override
+  Future<ProductModel> getProductById({
+    required String productId,
+    required String branchId,
+  }) async {
+    lastProductId = productId;
+    lastProductBranchId = branchId;
+    if (errorToThrow != null) {
+      throw errorToThrow!;
+    }
+    if (mockProduct != null) {
+      return mockProduct!;
+    }
+    throw const FormatException('Product not found in fake');
   }
 }
 
@@ -159,6 +180,97 @@ void main() {
       expect(result, isA<Err<ProductsPage>>());
       final failure = (result as Err<ProductsPage>).failure;
       expect(failure, isA<Unexpected>());
+    });
+
+    group('getProductDetails Tests', () {
+      const testProductModel = ProductModel(
+        id: 'p01',
+        name: 'Hydrating Cream 50ml',
+        sellingPrice: 130.0,
+        stockQuantity: 30,
+        requiresPrescription: false,
+        branchId: 'b01',
+      );
+
+      test('returns Success with mapped Product entity', () async {
+        fakeDataSource.mockProduct = testProductModel;
+
+        final result = await repository.getProductDetails(
+          productId: 'p01',
+          branchId: 'b01',
+        );
+
+        expect(result, isA<Success<Product>>());
+        final product = (result as Success<Product>).data;
+        expect(product.id, equals('p01'));
+        expect(product.name, equals('Hydrating Cream 50ml'));
+        expect(product.sellingPrice, equals(130.0));
+        expect(product.stockQuantity, equals(30));
+        expect(fakeDataSource.lastProductId, equals('p01'));
+        expect(fakeDataSource.lastProductBranchId, equals('b01'));
+      });
+
+      test('returns Validation failure when branchId is empty', () async {
+        final result = await repository.getProductDetails(
+          productId: 'p01',
+          branchId: '   ',
+        );
+
+        expect(result, isA<Err<Product>>());
+        final failure = (result as Err<Product>).failure;
+        expect(failure, isA<Validation>());
+      });
+
+      test('returns Validation failure when productId is empty', () async {
+        final result = await repository.getProductDetails(
+          productId: '',
+          branchId: 'b01',
+        );
+
+        expect(result, isA<Err<Product>>());
+        final failure = (result as Err<Product>).failure;
+        expect(failure, isA<Validation>());
+      });
+
+      test('maps DioException 404 to NotFound Failure', () async {
+        fakeDataSource.errorToThrow = DioException(
+          requestOptions: testRequestOptions,
+          response: Response(
+            requestOptions: testRequestOptions,
+            statusCode: 404,
+            data: {'message': 'المنتج غير موجود'},
+          ),
+        );
+
+        final result = await repository.getProductDetails(
+          productId: 'p01',
+          branchId: 'b01',
+        );
+
+        expect(result, isA<Err<Product>>());
+        final failure = (result as Err<Product>).failure;
+        expect(failure, isA<NotFound>());
+      });
+
+      test('maps DioException 500 to Server Failure', () async {
+        fakeDataSource.errorToThrow = DioException(
+          requestOptions: testRequestOptions,
+          response: Response(
+            requestOptions: testRequestOptions,
+            statusCode: 500,
+            data: {'message': 'خطأ في السيرفر'},
+          ),
+        );
+
+        final result = await repository.getProductDetails(
+          productId: 'p01',
+          branchId: 'b01',
+        );
+
+        expect(result, isA<Err<Product>>());
+        final failure = (result as Err<Product>).failure;
+        expect(failure, isA<Server>());
+      });
     });
   });
 }
