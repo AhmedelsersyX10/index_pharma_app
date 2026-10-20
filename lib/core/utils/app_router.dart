@@ -11,6 +11,7 @@ import 'package:index_pharma/features/auth/presentation/cubit/auth_state.dart';
 import 'package:index_pharma/features/auth/presentation/screens/login_screen.dart';
 import 'package:index_pharma/features/auth/presentation/screens/register_screen.dart';
 import 'package:index_pharma/features/choose_branches/presentation/screens/branch_selection_screen.dart';
+import 'package:index_pharma/features/home/presentation/screens/home_screen.dart';
 import 'package:index_pharma/features/onboarding/presentation/view/onboarding_view.dart';
 import 'package:index_pharma/features/splash/presentation/view/splash_view.dart';
 
@@ -36,6 +37,11 @@ class AppRouter {
   static const kSplashView = '/';
   static const kOnboardingView = '/onboardingView';
   static const kStoreView = '/store';
+  static const kBrowseView = '/browse';
+  static const kPrescriptionView = '/prescription';
+  static const kOrdersView = '/orders';
+  static const kAccountView = '/account';
+  static const kCartView = '/cart';
   static const kBranchSelectionView = '/choose-branch';
   static const kLoginView = '/login';
   static const kRegisterView = '/register';
@@ -159,7 +165,27 @@ class AppRouter {
       ),
       GoRoute(
         path: kStoreView,
-        builder: (context, state) => const StorePlaceholderScreen(),
+        builder: (context, state) => const HomeScreen(),
+      ),
+      GoRoute(
+        path: kBrowseView,
+        builder: (context, state) => const BrowsePlaceholderScreen(),
+      ),
+      GoRoute(
+        path: kPrescriptionView,
+        builder: (context, state) => const PrescriptionPlaceholderScreen(),
+      ),
+      GoRoute(
+        path: kOrdersView,
+        builder: (context, state) => const MyOrdersPlaceholderScreen(),
+      ),
+      GoRoute(
+        path: kAccountView,
+        builder: (context, state) => const AccountPlaceholderScreen(),
+      ),
+      GoRoute(
+        path: kCartView,
+        builder: (context, state) => const CartPlaceholderScreen(),
       ),
       GoRoute(
         path: kStaffDashboardView,

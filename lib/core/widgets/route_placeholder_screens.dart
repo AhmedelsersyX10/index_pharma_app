@@ -84,3 +84,133 @@ class BranchManagementPlaceholderScreen extends StatelessWidget {
     );
   }
 }
+
+/// Minimal placeholder screen for customer Browse tab (Decision 0.6).
+class BrowsePlaceholderScreen extends StatelessWidget {
+  const BrowsePlaceholderScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: AppColors.background,
+      appBar: AppBar(
+        title: const Text('تصفح الأدوية'),
+        backgroundColor: Colors.transparent,
+      ),
+      body: const Center(
+        child: Text(
+          'Browse Screen (Placeholder)',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
+            color: AppColors.onSurface,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Minimal placeholder screen for customer Prescription tab (Decision 0.6).
+class PrescriptionPlaceholderScreen extends StatelessWidget {
+  const PrescriptionPlaceholderScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: AppColors.background,
+      appBar: AppBar(
+        title: const Text('صرف الروشتة'),
+        backgroundColor: Colors.transparent,
+      ),
+      body: const Center(
+        child: Text(
+          'Prescription Screen (Placeholder)',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
+            color: AppColors.onSurface,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Minimal placeholder screen for customer My Orders tab (Decision 0.6).
+class MyOrdersPlaceholderScreen extends StatelessWidget {
+  const MyOrdersPlaceholderScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: AppColors.background,
+      appBar: AppBar(
+        title: const Text('طلباتي'),
+        backgroundColor: Colors.transparent,
+      ),
+      body: const Center(
+        child: Text(
+          'My Orders Screen (Placeholder)',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
+            color: AppColors.onSurface,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Minimal placeholder screen for customer Account tab (Decision 0.6).
+class AccountPlaceholderScreen extends StatelessWidget {
+  const AccountPlaceholderScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: AppColors.background,
+      appBar: AppBar(
+        title: const Text('حسابي'),
+        backgroundColor: Colors.transparent,
+      ),
+      body: const Center(
+        child: Text(
+          'Account Screen (Placeholder)',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
+            color: AppColors.onSurface,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// Minimal placeholder screen for customer Cart.
+class CartPlaceholderScreen extends StatelessWidget {
+  const CartPlaceholderScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: AppColors.background,
+      appBar: AppBar(
+        title: const Text('سلة المشتريات'),
+        backgroundColor: Colors.transparent,
+      ),
+      body: const Center(
+        child: Text(
+          'Cart Screen (Placeholder)',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
+            color: AppColors.onSurface,
+          ),
+        ),
+      ),
+    );
+  }
+}

@@ -89,7 +89,7 @@ void main() {
           .map((r) => r.path)
           .toList();
       expect(routePaths, contains(AppRouter.kBranchSelectionView));
-      expect(appRouter.router.configuration.routes.length, equals(8));
+      expect(appRouter.router.configuration.routes.length, equals(13));
     });
   });
 }

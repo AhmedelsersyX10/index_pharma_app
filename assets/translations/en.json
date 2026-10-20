@@ -176,6 +176,44 @@
     "prescription_help_title": "Looking for specific medication?",
     "prescription_help_desc": "You can upload your prescription image, and our pharmacists will prepare it for you.",
     "upload_prescription_action": "Upload Prescription Now"
+  },
+  "home": {
+    "title": "Home",
+    "selected_branch_label": "Selected Pharmacy",
+    "select_branch": "Select Nearest Branch",
+    "live_stock": "Live Stock",
+    "search_hint": "Search by trade name, active ingredient...",
+    "hero_badge": "EDA Regulatory Compliance",
+    "hero_title_default": "Certified Pharmacy Services in Egypt",
+    "hero_desc_default": "EDA-approved medications stored under strict pharmaceutical climate control.",
+    "hero_cta": "Shop Medications Now",
+    "hero_coverage": "Nationwide Delivery Coverage",
+    "rx_service_title": "Prescription Refill Service",
+    "rx_service_subtitle": "Licensed Pharmacist Review",
+    "rx_badge_secure": "Doctor verification",
+    "rx_heading": "Have a Prescription or Chronic Refill?",
+    "rx_desc": "Snap a photo of your prescription. A licensed pharmacist reviews dosages and prepares your order.",
+    "rx_cta": "Upload Prescription",
+    "featured_title": "Essential Pharmaceuticals",
+    "featured_subtitle": "Official Regulated Pricing",
+    "guarantee_title": "Licensed Pharmacist Care",
+    "guarantee_desc": "Official Egyptian Drug Authority Registration #2024-IP. Climate-controlled cold chain logistics.",
+    "cart_added": "Added to cart"
+  },
+  "nav": {
+    "home": "Home",
+    "browse": "Browse",
+    "prescription": "Prescription",
+    "orders": "My Orders",
+    "account": "Account"
+  },
+  "placeholders": {
+    "browse_title": "Browse Medications",
+    "prescription_title": "Upload Prescription",
+    "orders_title": "My Orders",
+    "account_title": "My Account",
+    "cart_title": "Shopping Cart",
+    "under_construction": "This screen is currently under active development."
   }
 }
 

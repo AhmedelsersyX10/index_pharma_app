@@ -152,5 +152,43 @@ abstract class AppLocaleKeys {
   static const productsPrescriptionHelpTitle = 'products.prescription_help_title';
   static const productsPrescriptionHelpDesc = 'products.prescription_help_desc';
   static const productsUploadPrescriptionAction = 'products.upload_prescription_action';
+
+  // Home
+  static const homeTitle = 'home.title';
+  static const homeSelectedBranchLabel = 'home.selected_branch_label';
+  static const homeSelectBranch = 'home.select_branch';
+  static const homeLiveStock = 'home.live_stock';
+  static const homeSearchHint = 'home.search_hint';
+  static const homeHeroBadge = 'home.hero_badge';
+  static const homeHeroTitleDefault = 'home.hero_title_default';
+  static const homeHeroDescDefault = 'home.hero_desc_default';
+  static const homeHeroCta = 'home.hero_cta';
+  static const homeHeroCoverage = 'home.hero_coverage';
+  static const homeRxServiceTitle = 'home.rx_service_title';
+  static const homeRxServiceSubtitle = 'home.rx_service_subtitle';
+  static const homeRxBadgeSecure = 'home.rx_badge_secure';
+  static const homeRxHeading = 'home.rx_heading';
+  static const homeRxDesc = 'home.rx_desc';
+  static const homeRxCta = 'home.rx_cta';
+  static const homeFeaturedTitle = 'home.featured_title';
+  static const homeFeaturedSubtitle = 'home.featured_subtitle';
+  static const homeGuaranteeTitle = 'home.guarantee_title';
+  static const homeGuaranteeDesc = 'home.guarantee_desc';
+  static const homeCartAdded = 'home.cart_added';
+
+  // Navigation
+  static const navHome = 'nav.home';
+  static const navBrowse = 'nav.browse';
+  static const navPrescription = 'nav.prescription';
+  static const navOrders = 'nav.orders';
+  static const navAccount = 'nav.account';
+
+  // Placeholders
+  static const placeholdersBrowseTitle = 'placeholders.browse_title';
+  static const placeholdersPrescriptionTitle = 'placeholders.prescription_title';
+  static const placeholdersOrdersTitle = 'placeholders.orders_title';
+  static const placeholdersAccountTitle = 'placeholders.account_title';
+  static const placeholdersCartTitle = 'placeholders.cart_title';
+  static const placeholdersUnderConstruction = 'placeholders.under_construction';
 }
 
