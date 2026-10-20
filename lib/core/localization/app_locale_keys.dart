@@ -84,6 +84,16 @@ abstract class AppLocaleKeys {
   static const authGuestSubtitle = 'auth.guest_subtitle';
   static const authGuestButton = 'auth.guest_button';
   static const authDataSecurityNote = 'auth.data_security_note';
+  static const authLoginRequiredBadge = 'auth.login_required_badge';
+  static const authLoginRequiredTitle = 'auth.login_required_title';
+  static const authLoginRequiredDesc = 'auth.login_required_desc';
+  static const authLoginRequiredSaveRx = 'auth.login_required_save_rx';
+  static const authLoginRequiredTrackOrders = 'auth.login_required_track_orders';
+  static const authLoginRequiredGenuineMeds = 'auth.login_required_genuine_meds';
+  static const authLoginRequiredBtnLogin = 'auth.login_required_btn_login';
+  static const authLoginRequiredBtnRegister = 'auth.login_required_btn_register';
+  static const authLoginRequiredBtnContinueGuest = 'auth.login_required_btn_continue_guest';
+  static const authLoginRequiredPrivacyPill = 'auth.login_required_privacy_pill';
 
   // Auth - Register
   static const authRegisterBadge = 'auth.register_badge';
@@ -213,5 +223,43 @@ abstract class AppLocaleKeys {
   static const productDetailsNotFoundDesc = 'product_details.not_found_desc';
   static const productDetailsOutOfStock = 'product_details.out_of_stock';
   static const productDetailsUnitDefault = 'product_details.unit_default';
+
+  // Cart (Stitch C1)
+  static const cartTitle = 'cart.title';
+  static const cartItemsCount = 'cart.items_count';
+  static const cartSingleItem = 'cart.single_item';
+  static const cartTwoItems = 'cart.two_items';
+  static const cartUnitPriceLabel = 'cart.unit_price_label';
+  static const cartAdjustedUnitPriceLabel = 'cart.adjusted_unit_price_label';
+  static const cartDeleteItemTooltip = 'cart.delete_item_tooltip';
+  static const cartDeleteDialogTitle = 'cart.delete_dialog_title';
+  static const cartDeleteDialogMessage = 'cart.delete_dialog_message';
+  static const cartDeleteConfirm = 'cart.delete_confirm';
+  static const cartCancel = 'cart.cancel';
+  static const cartStockAlertTitle = 'cart.stock_alert_title';
+  static const cartStockAlertDesc = 'cart.stock_alert_desc';
+  static const cartStockAlertDismiss = 'cart.stock_alert_dismiss';
+  static const cartLimitedStockBadge = 'cart.limited_stock_badge';
+  static const cartRxNoticeText = 'cart.rx_notice_text';
+  static const cartRxNoticeBadge = 'cart.rx_notice_badge';
+  static const cartSummaryTitle = 'cart.summary_title';
+  static const cartSubtotalLabel = 'cart.subtotal_label';
+  static const cartTotalLabel = 'cart.total_label';
+  static const cartTotalNote = 'cart.total_note';
+  static const cartCurrency = 'cart.currency';
+  static const cartEdaCompliance = 'cart.eda_compliance';
+  static const cartStickyTotalLabel = 'cart.sticky_total_label';
+  static const cartCheckoutBtn = 'cart.checkout_btn';
+  static const cartEmptyTitle = 'cart.empty_title';
+  static const cartEmptyDesc = 'cart.empty_desc';
+  static const cartBrowseBtn = 'cart.browse_btn';
+  static const cartBranchConflictTitle = 'cart.branch_conflict_title';
+  static const cartBranchConflictMessage = 'cart.branch_conflict_message';
+  static const cartBranchConflictConfirm = 'cart.branch_conflict_confirm';
+  static const cartBranchConflictCancel = 'cart.branch_conflict_cancel';
+  static const cartItemAddedSuccess = 'cart.item_added_success';
+  static const cartViewCartAction = 'cart.view_cart_action';
+  static const cartMaxStockReached = 'cart.max_stock_reached';
+  static const cartMinQtyReached = 'cart.min_qty_reached';
 }
 

@@ -4,12 +4,14 @@ import 'package:go_router/go_router.dart';
 import 'package:index_pharma/core/di/service_locator.dart';
 import 'package:index_pharma/core/storage/storage_service.dart';
 import 'package:index_pharma/core/utils/go_router_refresh_stream.dart';
+import 'package:index_pharma/core/widgets/auth_required_guard.dart';
 import 'package:index_pharma/core/widgets/route_placeholder_screens.dart';
 import 'package:index_pharma/features/auth/domain/entities/user.dart';
 import 'package:index_pharma/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:index_pharma/features/auth/presentation/cubit/auth_state.dart';
 import 'package:index_pharma/features/auth/presentation/screens/login_screen.dart';
 import 'package:index_pharma/features/auth/presentation/screens/register_screen.dart';
+import 'package:index_pharma/features/cart/presentation/screens/cart_screen.dart';
 import 'package:index_pharma/features/choose_branches/presentation/screens/branch_selection_screen.dart';
 import 'package:index_pharma/features/home/presentation/screens/home_screen.dart';
 import 'package:index_pharma/features/onboarding/presentation/view/onboarding_view.dart';
@@ -44,6 +46,7 @@ class AppRouter {
   static const kOrdersView = '/orders';
   static const kAccountView = '/account';
   static const kCartView = '/cart';
+  static const kCheckoutView = '/checkout';
   static const kBranchSelectionView = '/choose-branch';
   static const kLoginView = '/login';
   static const kRegisterView = '/register';
@@ -69,6 +72,40 @@ class AppRouter {
     return null;
   }
 
+  /// Sanitizes and authorizes a [from] return route path for the given [role].
+  ///
+  /// Returns the validated target path, or `null` if the path is invalid or unauthorized.
+  static String? sanitizeReturnRoute(String from, UserRole role) {
+    final trimmed = from.trim();
+    if (trimmed.isEmpty || !trimmed.startsWith('/')) {
+      return null;
+    }
+
+    final pathOnly = trimmed.split('?').first;
+    // Auth routes are never valid return targets (avoids redirect loops)
+    if (pathOnly == kLoginView || pathOnly == kRegisterView) {
+      return null;
+    }
+
+    final bool isStaffRoute = pathOnly == kStaffDashboardView ||
+        pathOnly.startsWith('$kStaffDashboardView/');
+    final bool isBranchManagementRoute = pathOnly == kBranchManagementView ||
+        pathOnly.startsWith('$kBranchManagementView/');
+
+    if (isBranchManagementRoute) {
+      return role == UserRole.superadmin ? trimmed : null;
+    }
+
+    if (isStaffRoute) {
+      final isStaff = role == UserRole.pharmacist ||
+          role == UserRole.admin ||
+          role == UserRole.superadmin;
+      return isStaff ? trimmed : null;
+    }
+
+    return trimmed;
+  }
+
   /// Pure routing guard to determine redirect destinations based on authentication state and current path.
   ///
   /// Rules:
@@ -76,10 +113,11 @@ class AppRouter {
   /// - Pharmacists and Admins can access staff routes (`kStaffDashboardView`).
   /// - Superadmins can access staff routes (`kStaffDashboardView`) plus branch-management routes (`kBranchManagementView`).
   /// - Any staff route or branch-management route requested without the required role redirects to store (`kStoreView`).
-  /// - Already authenticated users attempting to access login or register are redirected to their appropriate home screen (staff for staff roles, store for customers).
+  /// - Already authenticated users attempting to access login or register are redirected to their appropriate home screen (staff for staff roles, or the requested [from] return route if safe and valid for customers, otherwise store).
   static String? redirectGuard({
     required AuthState authState,
     required String location,
+    String? from,
   }) {
     final bool isStaffRoute = location == kStaffDashboardView ||
         location.startsWith('$kStaffDashboardView/');
@@ -116,8 +154,20 @@ class AppRouter {
       if (role == UserRole.pharmacist ||
           role == UserRole.admin ||
           role == UserRole.superadmin) {
+        if (from != null) {
+          final safeFrom = sanitizeReturnRoute(from, role);
+          if (safeFrom != null) return safeFrom;
+        }
         return kStaffDashboardView;
       }
+
+      if (from != null) {
+        final safeFrom = sanitizeReturnRoute(from, role);
+        if (safeFrom != null) {
+          return safeFrom;
+        }
+      }
+
       return kStoreView;
     }
 
@@ -133,6 +183,7 @@ class AppRouter {
       return redirectGuard(
         authState: authState,
         location: state.matchedLocation,
+        from: state.uri.queryParameters['from'],
       );
     },
     routes: <RouteBase>[
@@ -151,18 +202,34 @@ class AppRouter {
       ),
       GoRoute(
         path: kLoginView,
-        builder: (context, state) => LoginScreen(
-          authCubit: _activeAuthCubit,
-          onNavigateToRegister: () => context.go(kRegisterView),
-          onNavigateToGuest: () => context.go(kStoreView),
-        ),
+        builder: (context, state) {
+          final from = state.uri.queryParameters['from'];
+          return LoginScreen(
+            authCubit: _activeAuthCubit,
+            onNavigateToRegister: () {
+              final uri = from != null && from.isNotEmpty
+                  ? Uri(path: kRegisterView, queryParameters: {'from': from}).toString()
+                  : kRegisterView;
+              context.go(uri);
+            },
+            onNavigateToGuest: () => context.go(kStoreView),
+          );
+        },
       ),
       GoRoute(
         path: kRegisterView,
-        builder: (context, state) => RegisterScreen(
-          authCubit: _activeAuthCubit,
-          onNavigateToLogin: () => context.go(kLoginView),
-        ),
+        builder: (context, state) {
+          final from = state.uri.queryParameters['from'];
+          return RegisterScreen(
+            authCubit: _activeAuthCubit,
+            onNavigateToLogin: () {
+              final uri = from != null && from.isNotEmpty
+                  ? Uri(path: kLoginView, queryParameters: {'from': from}).toString()
+                  : kLoginView;
+              context.go(uri);
+            },
+          );
+        },
       ),
       GoRoute(
         path: kBranchSelectionView,
@@ -189,19 +256,39 @@ class AppRouter {
       ),
       GoRoute(
         path: kPrescriptionView,
-        builder: (context, state) => const PrescriptionPlaceholderScreen(),
+        builder: (context, state) => AuthRequiredGuard(
+          routePath: kPrescriptionView,
+          authCubit: _activeAuthCubit,
+          child: const PrescriptionPlaceholderScreen(),
+        ),
       ),
       GoRoute(
         path: kOrdersView,
-        builder: (context, state) => const MyOrdersPlaceholderScreen(),
+        builder: (context, state) => AuthRequiredGuard(
+          routePath: kOrdersView,
+          authCubit: _activeAuthCubit,
+          child: const MyOrdersPlaceholderScreen(),
+        ),
       ),
       GoRoute(
         path: kAccountView,
-        builder: (context, state) => const AccountPlaceholderScreen(),
+        builder: (context, state) => AuthRequiredGuard(
+          routePath: kAccountView,
+          authCubit: _activeAuthCubit,
+          child: const AccountPlaceholderScreen(),
+        ),
       ),
       GoRoute(
         path: kCartView,
-        builder: (context, state) => const CartPlaceholderScreen(),
+        builder: (context, state) => const CartScreen(),
+      ),
+      GoRoute(
+        path: kCheckoutView,
+        builder: (context, state) => AuthRequiredGuard(
+          routePath: kCheckoutView,
+          authCubit: _activeAuthCubit,
+          child: const CheckoutPlaceholderScreen(),
+        ),
       ),
       GoRoute(
         path: kStaffDashboardView,

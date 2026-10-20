@@ -1,0 +1,171 @@
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
+import 'package:index_pharma/core/localization/app_locale_keys.dart';
+import 'package:index_pharma/core/theme/theme.dart';
+
+/// Order Summary Card for C1 Cart screen.
+///
+/// Features:
+/// - Title with receipt icon.
+/// - Subtotal row showing total unit count and price.
+/// - Estimated total amount (strictly computed from selling prices, with no unverified fees).
+/// - Official Egyptian Drug Authority (EDA) pricing compliance notice.
+class CartOrderSummaryCard extends StatelessWidget {
+  const CartOrderSummaryCard({
+    super.key,
+    required this.subtotal,
+    required this.totalUnitsCount,
+  });
+
+  final double subtotal;
+  final int totalUnitsCount;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(AppSpacing.spaceMd),
+      decoration: BoxDecoration(
+        color: AppColors.surfaceContainerLowest,
+        borderRadius: AppRadii.roundedXl,
+        boxShadow: AppShadows.level1,
+        border: Border.all(
+          color: AppColors.outlineVariant.withValues(alpha: 0.3),
+          width: 0.5,
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          // Header
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                AppLocaleKeys.cartSummaryTitle.tr(),
+                style: AppTypography.titleMd(
+                  color: AppColors.onSurface,
+                ).copyWith(fontWeight: FontWeight.bold),
+              ),
+              const Icon(
+                Icons.receipt_long_outlined,
+                size: 20,
+                color: AppColors.secondary,
+              ),
+            ],
+          ),
+
+          const SizedBox(height: AppSpacing.spaceSm),
+
+          // Subtotal Row
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                AppLocaleKeys.cartSubtotalLabel.tr(
+                  args: [
+                    AppLocaleKeys.cartItemsCount.tr(
+                      args: [totalUnitsCount.toString()],
+                    ),
+                  ],
+                ),
+                style: AppTypography.bodyMd(color: AppColors.onSurfaceVariant),
+              ),
+              Text(
+                '${subtotal.toStringAsFixed(2)} ${AppLocaleKeys.cartCurrency.tr()}',
+                style: AppTypography.bodyMd(
+                  color: AppColors.onSurface,
+                ).copyWith(fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
+
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: AppSpacing.spaceSm),
+            child: Divider(
+              color: AppColors.surfaceContainerLow,
+              height: 1,
+              thickness: 1,
+            ),
+          ),
+
+          // Estimated Total Row
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.baseline,
+            textBaseline: TextBaseline.alphabetic,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    AppLocaleKeys.cartTotalLabel.tr(),
+                    style: AppTypography.titleMd(
+                      color: AppColors.onSurface,
+                    ).copyWith(fontWeight: FontWeight.bold),
+                  ),
+                  const SizedBox(height: 2),
+                  Text(
+                    AppLocaleKeys.cartTotalNote.tr(),
+                    style: AppTypography.labelSm(color: AppColors.secondary),
+                  ),
+                ],
+              ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.baseline,
+                textBaseline: TextBaseline.alphabetic,
+                children: [
+                  Text(
+                    subtotal.toStringAsFixed(2),
+                    style: AppTypography.headlineLg(
+                      color: AppColors.primary,
+                    ).copyWith(
+                      fontWeight: FontWeight.w800,
+                      fontSize: 22,
+                    ),
+                  ),
+                  const SizedBox(width: AppSpacing.space2xs),
+                  Text(
+                    AppLocaleKeys.cartCurrency.tr(),
+                    style: AppTypography.labelMd(
+                      color: AppColors.primary,
+                    ).copyWith(fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+            ],
+          ),
+
+          const SizedBox(height: AppSpacing.spaceMd),
+
+          // EDA Pricing Compliance Notice
+          Container(
+            padding: const EdgeInsets.all(AppSpacing.spaceSm),
+            decoration: BoxDecoration(
+              color: AppColors.surfaceContainerLow,
+              borderRadius: AppRadii.roundedLg,
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Icon(
+                  Icons.verified_outlined,
+                  size: 18,
+                  color: AppColors.brandEmeraldDark,
+                ),
+                const SizedBox(width: AppSpacing.spaceSm),
+                Expanded(
+                  child: Text(
+                    AppLocaleKeys.cartEdaCompliance.tr(),
+                    style: AppTypography.bodySm(
+                      color: AppColors.onSurfaceVariant,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

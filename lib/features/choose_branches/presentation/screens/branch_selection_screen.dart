@@ -4,6 +4,8 @@ import 'package:go_router/go_router.dart';
 import 'package:index_pharma/core/di/service_locator.dart';
 import 'package:index_pharma/core/theme/theme.dart';
 import 'package:index_pharma/core/utils/app_router.dart';
+import 'package:index_pharma/features/cart/presentation/cubit/cart_cubit.dart';
+import 'package:index_pharma/features/cart/presentation/widgets/cart_branch_conflict_dialog.dart';
 import 'package:index_pharma/features/choose_branches/presentation/cubit/branch_cubit.dart';
 import 'package:index_pharma/features/choose_branches/presentation/cubit/branch_state.dart';
 import 'package:index_pharma/features/choose_branches/presentation/widgets/branch_bottom_bar.dart';
@@ -71,6 +73,26 @@ class _BranchSelectionViewState extends State<_BranchSelectionView> {
     }
   }
 
+  Future<void> _handleBranchSelection(String targetBranchId) async {
+    final branchCubit = context.read<BranchCubit>();
+    CartCubit? cartCubit;
+    try {
+      cartCubit = context.read<CartCubit>();
+    } catch (_) {
+      if (getIt.isRegistered<CartCubit>()) {
+        cartCubit = getIt<CartCubit>();
+      }
+    }
+
+    if (cartCubit != null && cartCubit.hasConflictWithBranch(targetBranchId)) {
+      final shouldClear = await CartBranchConflictDialog.show(context);
+      if (!shouldClear) return;
+      await cartCubit.clearCart();
+    }
+
+    await branchCubit.selectBranch(targetBranchId);
+  }
+
   void _onConfirm(BranchState state) {
     if (widget.onBranchConfirmed != null) {
       widget.onBranchConfirmed!();
@@ -122,11 +144,7 @@ class _BranchSelectionViewState extends State<_BranchSelectionView> {
                     BranchIntroSection(
                       branchesCount: branches.length,
                       onAutoLocatePressed: branches.isNotEmpty
-                          ? () {
-                              context
-                                  .read<BranchCubit>()
-                                  .selectBranch(branches.first.id);
-                            }
+                          ? () => _handleBranchSelection(branches.first.id)
                           : null,
                     ),
 
@@ -148,11 +166,7 @@ class _BranchSelectionViewState extends State<_BranchSelectionView> {
                         return BranchCard(
                           branch: branch,
                           isSelected: isSelected,
-                          onTap: () {
-                            context
-                                .read<BranchCubit>()
-                                .selectBranch(branch.id);
-                          },
+                          onTap: () => _handleBranchSelection(branch.id),
                         );
                       },
                     ),

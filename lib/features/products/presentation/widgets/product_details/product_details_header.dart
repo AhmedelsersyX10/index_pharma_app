@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:index_pharma/core/localization/app_locale_keys.dart';
 import 'package:index_pharma/core/theme/theme.dart';
 import 'package:index_pharma/core/utils/app_router.dart';
+import 'package:index_pharma/features/cart/presentation/widgets/cart_badge_button.dart';
 
 /// Clinical app bar for the Product Details screen per Stitch B4.
 class ProductDetailsHeader extends StatelessWidget implements PreferredSizeWidget {
@@ -50,14 +51,8 @@ class ProductDetailsHeader extends StatelessWidget implements PreferredSizeWidge
         ),
       ),
       actions: [
-        IconButton(
-          icon: const Icon(
-            Icons.shopping_bag_outlined,
-            color: AppColors.onSurface,
-            size: 22,
-          ),
-          tooltip: AppLocaleKeys.placeholdersCartTitle.tr(),
-          onPressed: onCartTap ?? () => context.push(AppRouter.kCartView),
+        CartBadgeButton(
+          onTap: onCartTap ?? () => context.push(AppRouter.kCartView),
         ),
         const SizedBox(width: AppSpacing.spaceXs),
       ],

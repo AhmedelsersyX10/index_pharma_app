@@ -10,7 +10,12 @@ import 'package:index_pharma/features/categories/presentation/cubit/categories_s
 import 'package:index_pharma/features/products/presentation/cubit/products_cubit.dart';
 import 'package:index_pharma/features/settings/presentation/cubit/settings_cubit.dart';
 import 'package:index_pharma/features/settings/presentation/cubit/settings_state.dart';
+import 'package:index_pharma/core/utils/app_router.dart';
 import 'package:index_pharma/core/widgets/route_placeholder_screens.dart';
+import 'package:index_pharma/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:index_pharma/features/auth/presentation/cubit/auth_state.dart';
+import 'package:index_pharma/features/auth/presentation/widgets/login_required_prompt.dart';
+import 'package:index_pharma/features/cart/presentation/cubit/cart_cubit.dart';
 import '../widgets/customer_bottom_nav.dart';
 import '../widgets/home_branch_selector_strip.dart';
 import '../widgets/home_categories_section.dart';
@@ -42,12 +47,14 @@ class HomeScreen extends StatelessWidget {
     this.settingsCubit,
     this.categoriesCubit,
     this.productsCubit,
+    this.cartCubit,
   });
 
   final BranchCubit? branchCubit;
   final SettingsCubit? settingsCubit;
   final CategoriesCubit? categoriesCubit;
   final ProductsCubit? productsCubit;
+  final CartCubit? cartCubit;
 
   @override
   Widget build(BuildContext context) {
@@ -83,6 +90,12 @@ class HomeScreen extends StatelessWidget {
         else if (getIt.isRegistered<ProductsCubit>())
           BlocProvider<ProductsCubit>(
             create: (context) => getIt<ProductsCubit>(),
+          ),
+        if (cartCubit != null)
+          BlocProvider.value(value: cartCubit!)
+        else if (getIt.isRegistered<CartCubit>())
+          BlocProvider<CartCubit>.value(
+            value: getIt<CartCubit>(),
           ),
       ],
       child: const _HomeView(),
@@ -154,6 +167,19 @@ class _HomeViewState extends State<_HomeView> {
     ]);
   }
 
+  void _handleProtectedNav(String route) {
+    try {
+      final authCubit = context.read<AuthCubit>();
+      if (authCubit.state is! AuthAuthenticated) {
+        LoginRequiredBottomSheet.show(context, returnRoute: route);
+        return;
+      }
+    } catch (_) {
+      // In minimal test setups where AuthCubit is not in tree
+    }
+    context.go(route);
+  }
+
   void _onBottomNavTapped(int index) {
     switch (index) {
       case 0:
@@ -168,11 +194,11 @@ class _HomeViewState extends State<_HomeView> {
       case 1:
         context.go('/browse');
       case 2:
-        context.go('/prescription');
+        _handleProtectedNav(AppRouter.kPrescriptionView);
       case 3:
-        context.go('/orders');
+        _handleProtectedNav(AppRouter.kOrdersView);
       case 4:
-        context.go('/account');
+        _handleProtectedNav(AppRouter.kAccountView);
     }
   }
 
@@ -199,7 +225,7 @@ class _HomeViewState extends State<_HomeView> {
         backgroundColor: AppColors.background,
         appBar: HomeHeaderBar(
           onCartTap: () => context.push('/cart'),
-          onAccountTap: () => context.go('/account'),
+          onAccountTap: () => _handleProtectedNav(AppRouter.kAccountView),
         ),
         body: RefreshIndicator(
           onRefresh: _onRefresh,
@@ -227,7 +253,10 @@ class _HomeViewState extends State<_HomeView> {
                 const SizedBox(height: AppSpacing.spaceMd),
 
                 // 4. Prescription Upload Card
-                const HomePrescriptionUploadCard(),
+                HomePrescriptionUploadCard(
+                  onUploadTap: () =>
+                      _handleProtectedNav(AppRouter.kPrescriptionView),
+                ),
                 const SizedBox(height: AppSpacing.spaceLg),
 
                 // 5. Therapeutic Categories Grid

@@ -214,3 +214,29 @@ class CartPlaceholderScreen extends StatelessWidget {
     );
   }
 }
+
+/// Minimal placeholder screen for customer Checkout.
+class CheckoutPlaceholderScreen extends StatelessWidget {
+  const CheckoutPlaceholderScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: AppColors.background,
+      appBar: AppBar(
+        title: const Text('إتمام الطلب'),
+        backgroundColor: Colors.transparent,
+      ),
+      body: const Center(
+        child: Text(
+          'Checkout Screen (Placeholder)',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
+            color: AppColors.onSurface,
+          ),
+        ),
+      ),
+    );
+  }
+}

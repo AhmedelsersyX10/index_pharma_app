@@ -5,6 +5,8 @@ import 'package:go_router/go_router.dart';
 import 'package:index_pharma/core/localization/app_locale_keys.dart';
 import 'package:index_pharma/core/theme/theme.dart';
 import 'package:index_pharma/core/utils/app_router.dart';
+import 'package:index_pharma/features/cart/presentation/cubit/cart_cubit.dart';
+import 'package:index_pharma/features/cart/presentation/cubit/cart_state.dart';
 import 'package:index_pharma/features/choose_branches/domain/entities/branch_entity.dart';
 import 'package:index_pharma/features/choose_branches/presentation/cubit/branch_cubit.dart';
 import 'package:index_pharma/features/choose_branches/presentation/cubit/branch_state.dart';
@@ -96,44 +98,64 @@ class HomeHeaderBar extends StatelessWidget implements PreferredSizeWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               // Cart Button with Badge
-              IconButton(
-                onPressed: onCartTap ?? () => context.push('/cart'),
-                icon: Stack(
-                  clipBehavior: Clip.none,
-                  children: [
-                    const Icon(
-                      Icons.shopping_bag_outlined,
-                      size: 24,
-                      color: AppColors.onSurfaceVariant,
-                    ),
-                    if (cartItemCount > 0)
-                      PositionedDirectional(
-                        top: -4,
-                        end: -4,
-                        child: Container(
-                          padding: const EdgeInsets.all(3),
-                          constraints: const BoxConstraints(
-                            minWidth: 16,
-                            minHeight: 16,
-                          ),
-                          decoration: const BoxDecoration(
-                            color: AppColors.medicalRed,
-                            shape: BoxShape.circle,
-                          ),
-                          alignment: Alignment.center,
-                          child: Text(
-                            '$cartItemCount',
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 10,
-                              fontWeight: FontWeight.bold,
-                              height: 1,
+              Builder(
+                builder: (context) {
+                  int effectiveCount = cartItemCount;
+                  try {
+                    final cartState = context.watch<CartCubit>().state;
+                    if (cartState is CartHasItems) {
+                      effectiveCount = cartState.totalItemsCount;
+                    } else if (cartState is CartEmpty) {
+                      effectiveCount = 0;
+                    }
+                  } catch (_) {
+                    // When CartCubit is not in the widget tree (e.g. isolated test)
+                  }
+
+                  return IconButton(
+                    tooltip: AppLocaleKeys.cartTitle.tr(),
+                    onPressed: onCartTap ?? () => context.push(AppRouter.kCartView),
+                    icon: Stack(
+                      clipBehavior: Clip.none,
+                      children: [
+                        const Icon(
+                          Icons.shopping_bag_outlined,
+                          size: 24,
+                          color: AppColors.onSurfaceVariant,
+                        ),
+                        if (effectiveCount > 0)
+                          PositionedDirectional(
+                            top: -4,
+                            end: -4,
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 4,
+                                vertical: 1,
+                              ),
+                              constraints: const BoxConstraints(
+                                minWidth: 16,
+                                minHeight: 16,
+                              ),
+                              decoration: const BoxDecoration(
+                                color: AppColors.medicalRed,
+                                shape: BoxShape.circle,
+                              ),
+                              alignment: Alignment.center,
+                              child: Text(
+                                effectiveCount > 99 ? '99+' : '$effectiveCount',
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.bold,
+                                  height: 1,
+                                ),
+                              ),
                             ),
                           ),
-                        ),
-                      ),
-                  ],
-                ),
+                      ],
+                    ),
+                  );
+                },
               ),
               const SizedBox(width: AppSpacing.space2xs),
 

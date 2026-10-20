@@ -90,7 +90,7 @@ void main() {
           .toList();
       expect(routePaths, contains(AppRouter.kBranchSelectionView));
       expect(routePaths, contains(AppRouter.kProductDetailsView));
-      expect(appRouter.router.configuration.routes.length, equals(14));
+      expect(appRouter.router.configuration.routes.length, equals(15));
     });
   });
 }

@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart' hide TextDirection;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:index_pharma/core/di/service_locator.dart';
 import 'package:go_router/go_router.dart';
 import 'package:index_pharma/core/localization/app_locale_keys.dart';
 import 'package:index_pharma/core/theme/theme.dart';
@@ -10,6 +11,7 @@ import 'package:index_pharma/core/widgets/app_badges.dart';
 import 'package:index_pharma/core/widgets/app_error_view.dart';
 import 'package:index_pharma/features/choose_branches/presentation/cubit/branch_cubit.dart';
 import 'package:index_pharma/features/choose_branches/presentation/cubit/branch_state.dart';
+import 'package:index_pharma/features/cart/presentation/cubit/cart_cubit.dart';
 import '../../domain/entities/product.dart';
 import '../cubit/product_details_cubit.dart';
 import '../cubit/product_details_state.dart';
@@ -89,6 +91,16 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   }
 
   void _handleAddToCart(Product product) {
+    CartCubit? cartCubit;
+    try {
+      cartCubit = context.read<CartCubit>();
+    } catch (_) {
+      if (getIt.isRegistered<CartCubit>()) {
+        cartCubit = getIt<CartCubit>();
+      }
+    }
+    cartCubit?.addToCart(product, quantity: _selectedQuantity);
+
     final unitLabel = (product.unit != null && product.unit!.trim().isNotEmpty)
         ? product.unit!.trim()
         : AppLocaleKeys.productDetailsUnitDefault.tr();

@@ -377,6 +377,108 @@ void main() {
       );
     });
 
+    test('Auth routes: authenticated customer is redirected to safe [from] return route', () {
+      // Customer visits /login with from=/orders -> redirects to /orders
+      expect(
+        AppRouter.redirectGuard(
+          authState: AuthAuthenticated(customerUser),
+          location: AppRouter.kLoginView,
+          from: AppRouter.kOrdersView,
+        ),
+        equals(AppRouter.kOrdersView),
+      );
+
+      // Customer visits /login with from=/prescription -> redirects to /prescription
+      expect(
+        AppRouter.redirectGuard(
+          authState: AuthAuthenticated(customerUser),
+          location: AppRouter.kLoginView,
+          from: AppRouter.kPrescriptionView,
+        ),
+        equals(AppRouter.kPrescriptionView),
+      );
+
+      // Customer visits /register with from=/checkout -> redirects to /checkout
+      expect(
+        AppRouter.redirectGuard(
+          authState: AuthAuthenticated(customerUser),
+          location: AppRouter.kRegisterView,
+          from: AppRouter.kCheckoutView,
+        ),
+        equals(AppRouter.kCheckoutView),
+      );
+
+      // Customer visits /login with from=/account -> redirects to /account
+      expect(
+        AppRouter.redirectGuard(
+          authState: AuthAuthenticated(customerUser),
+          location: AppRouter.kLoginView,
+          from: AppRouter.kAccountView,
+        ),
+        equals(AppRouter.kAccountView),
+      );
+
+      // Unauthorized staff route in [from] for customer falls back to /store
+      expect(
+        AppRouter.redirectGuard(
+          authState: AuthAuthenticated(customerUser),
+          location: AppRouter.kLoginView,
+          from: AppRouter.kStaffDashboardView,
+        ),
+        equals(AppRouter.kStoreView),
+      );
+
+      // Unauthorized branch management in [from] for customer falls back to /store
+      expect(
+        AppRouter.redirectGuard(
+          authState: AuthAuthenticated(customerUser),
+          location: AppRouter.kLoginView,
+          from: AppRouter.kBranchManagementView,
+        ),
+        equals(AppRouter.kStoreView),
+      );
+
+      // Auth route in [from] (prevents infinite redirect loop) falls back to /store
+      expect(
+        AppRouter.redirectGuard(
+          authState: AuthAuthenticated(customerUser),
+          location: AppRouter.kLoginView,
+          from: AppRouter.kLoginView,
+        ),
+        equals(AppRouter.kStoreView),
+      );
+
+      // External or invalid URL in [from] falls back to /store
+      expect(
+        AppRouter.redirectGuard(
+          authState: AuthAuthenticated(customerUser),
+          location: AppRouter.kLoginView,
+          from: 'https://malicious.com',
+        ),
+        equals(AppRouter.kStoreView),
+      );
+
+      // Empty [from] falls back to /store
+      expect(
+        AppRouter.redirectGuard(
+          authState: AuthAuthenticated(customerUser),
+          location: AppRouter.kLoginView,
+          from: '',
+        ),
+        equals(AppRouter.kStoreView),
+      );
+
+      // Staff user with safe staff [from] gets redirected to that staff route
+      expect(
+        AppRouter.redirectGuard(
+          authState: AuthAuthenticated(pharmacistUser),
+          location: AppRouter.kLoginView,
+          from: '${AppRouter.kStaffDashboardView}/orders',
+        ),
+        equals('${AppRouter.kStaffDashboardView}/orders'),
+      );
+    });
+
     test('Splash and onboarding routes are allowed', () {
       expect(
         AppRouter.redirectGuard(
