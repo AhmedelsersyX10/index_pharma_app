@@ -15,6 +15,11 @@ import 'package:index_pharma/features/auth/domain/entities/user.dart';
 import 'package:index_pharma/features/auth/domain/repositories/auth_repository.dart';
 import 'package:index_pharma/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:index_pharma/features/auth/presentation/widgets/login_required_prompt.dart';
+import 'package:index_pharma/features/orders/domain/entities/my_orders_page.dart';
+import 'package:index_pharma/features/orders/domain/repositories/orders_repository.dart';
+import 'package:index_pharma/features/orders/domain/usecases/get_my_orders_use_case.dart';
+import 'package:index_pharma/features/orders/presentation/screens/my_orders_screen.dart';
+import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 late final Map<String, dynamic> _arTranslations;
@@ -30,6 +35,12 @@ class SynchronousDiskAssetLoader extends AssetLoader {
     }
     return Future.value(_arTranslations);
   }
+}
+
+class FakeOrdersRepoForGuardTest implements OrdersRepository {
+  @override
+  Future<ApiResult<MyOrdersPage>> getMyOrders({int page = 1, int limit = 20}) async =>
+      const Success(MyOrdersPage(orders: [], total: 0, page: 1, limit: 20, totalPages: 0));
 }
 
 class FakeAuthRepository implements AuthRepository {
@@ -109,6 +120,12 @@ void main() {
     late AuthCubit authCubit;
 
     setUp(() {
+      final getIt = GetIt.instance;
+      if (!getIt.isRegistered<GetMyOrdersUseCase>()) {
+        getIt.registerSingleton<GetMyOrdersUseCase>(
+          GetMyOrdersUseCase(repository: FakeOrdersRepoForGuardTest()),
+        );
+      }
       fakeRepo = FakeAuthRepository();
       authCubit = AuthCubit(authRepository: fakeRepo);
     });
@@ -338,8 +355,8 @@ void main() {
       appRouter.router.go(AppRouter.kOrdersView);
       await tester.pumpAndSettle();
 
-      // Verified: guest is blocked, A4 prompt is rendered, MyOrdersPlaceholder is NOT rendered
-      expect(find.text('My Orders Screen (Placeholder)'), findsNothing);
+      // Verified: guest is blocked, A4 prompt is rendered, MyOrdersScreen is NOT rendered
+      expect(find.byType(MyOrdersScreen), findsNothing);
       expect(find.byType(LoginRequiredPrompt), findsOneWidget);
       expect(find.text('تسجيل الدخول مطلوب'), findsOneWidget);
 
@@ -355,7 +372,7 @@ void main() {
       await tester.pumpAndSettle();
 
       // 4. GoRouter should redirect customer directly to originally requested route (/orders)!
-      expect(find.text('My Orders Screen (Placeholder)'), findsOneWidget);
+      expect(find.byType(MyOrdersScreen), findsOneWidget);
       expect(find.byType(LoginRequiredPrompt), findsNothing);
     });
   });

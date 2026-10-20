@@ -91,7 +91,8 @@ void main() {
       expect(routePaths, contains(AppRouter.kBranchSelectionView));
       expect(routePaths, contains(AppRouter.kProductDetailsView));
       expect(routePaths, contains(AppRouter.kOrderConfirmationView));
-      expect(appRouter.router.configuration.routes.length, equals(16));
+      expect(routePaths, contains(AppRouter.kOrderDetailsView));
+      expect(appRouter.router.configuration.routes.length, equals(17));
     });
   });
 }

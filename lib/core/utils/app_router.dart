@@ -20,6 +20,9 @@ import 'package:index_pharma/features/splash/presentation/view/splash_view.dart'
 import 'package:index_pharma/features/checkout/domain/entities/order.dart';
 import 'package:index_pharma/features/checkout/presentation/screens/checkout_screen.dart';
 import 'package:index_pharma/features/checkout/presentation/screens/order_confirmation_screen.dart';
+import 'package:index_pharma/features/orders/domain/entities/customer_order.dart';
+import 'package:index_pharma/features/orders/presentation/screens/my_orders_screen.dart';
+import 'package:index_pharma/features/orders/presentation/screens/order_details_screen.dart';
 
 class AppRouter {
   AppRouter({
@@ -47,6 +50,7 @@ class AppRouter {
   static const kBrowseView = '/browse';
   static const kPrescriptionView = '/prescription';
   static const kOrdersView = '/orders';
+  static const kOrderDetailsView = '/orders/:id';
   static const kAccountView = '/account';
   static const kCartView = '/cart';
   static const kCheckoutView = '/checkout';
@@ -59,6 +63,9 @@ class AppRouter {
 
   /// Generates the product details path for a specific [productId].
   static String productDetailsPath(String productId) => '/store/products/$productId';
+
+  /// Generates the order details path for a specific [orderId].
+  static String orderDetailsPath(String orderId) => '/orders/$orderId';
 
   AuthCubit? get _activeAuthCubit {
     if (_authCubit != null) return _authCubit;
@@ -271,8 +278,26 @@ class AppRouter {
         builder: (context, state) => AuthRequiredGuard(
           routePath: kOrdersView,
           authCubit: _activeAuthCubit,
-          child: const MyOrdersPlaceholderScreen(),
+          child: const MyOrdersScreen(),
         ),
+      ),
+      GoRoute(
+        path: kOrderDetailsView,
+        builder: (context, state) {
+          final extraOrder = state.extra;
+          if (extraOrder is CustomerOrder) {
+            return AuthRequiredGuard(
+              routePath: kOrdersView,
+              authCubit: _activeAuthCubit,
+              child: OrderDetailsScreen(order: extraOrder),
+            );
+          }
+          return AuthRequiredGuard(
+            routePath: kOrdersView,
+            authCubit: _activeAuthCubit,
+            child: const MyOrdersScreen(),
+          );
+        },
       ),
       GoRoute(
         path: kAccountView,
