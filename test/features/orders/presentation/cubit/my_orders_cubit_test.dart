@@ -13,12 +13,14 @@ class FakeOrdersRepository implements OrdersRepository {
   ApiResult<MyOrdersPage>? resultToReturn;
   int? requestedPage;
   int? requestedLimit;
+  int callCount = 0;
 
   @override
   Future<ApiResult<MyOrdersPage>> getMyOrders({
     int page = 1,
     int limit = 20,
   }) async {
+    callCount++;
     requestedPage = page;
     requestedLimit = limit;
     return resultToReturn!;
@@ -212,6 +214,29 @@ void main() {
       expect(currentState.orders.length, 1);
       expect(currentState.isLoadingMore, isFalse);
       expect(currentState.loadingMoreError, isA<Network>());
+    });
+
+    test('loadMore stops at last page and does not call repository when hasReachedMax is true', () async {
+      fakeRepository.resultToReturn = Success(
+        MyOrdersPage(
+          orders: [testOrder1],
+          total: 1,
+          page: 1,
+          limit: 1,
+          totalPages: 1,
+        ),
+      );
+      await cubit.fetchMyOrders();
+
+      final state = cubit.state as MyOrdersLoaded;
+      expect(state.hasReachedMax, isTrue);
+
+      final initialCallCount = fakeRepository.callCount;
+      await cubit.loadMore();
+
+      // No new network/repository call was performed
+      expect(fakeRepository.callCount, equals(initialCallCount));
+      expect(cubit.state, equals(state));
     });
 
     test('setFilter correctly filters orders in MyOrdersLoaded', () async {

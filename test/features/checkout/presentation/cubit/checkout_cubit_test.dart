@@ -247,6 +247,53 @@ void main() {
       expect(updatedCart.items.first.quantity, 1);
     });
 
+    test('on 409 Conflict when item stock drops to 0, item is removed from cart, and cart transitions to CartEmpty', () async {
+      fakeCheckoutRepo.resultToReturn = const Err(
+        Conflict(serverMessage: 'الكمية غير متاحة'),
+      );
+
+      // Server reports stock is now 0
+      fakeProductsRepo.productDetails['p1'] = const Product(
+        id: 'p1',
+        name: 'Hydrating Cream 50ml',
+        sellingPrice: 130,
+        stockQuantity: 0,
+        branchId: 'b1',
+      );
+
+      final cartItems = (cartCubit.state as CartHasItems).items;
+      final success = await checkoutCubit.submitOrder(
+        branchId: 'b1',
+        cartItems: cartItems,
+      );
+
+      expect(success, isFalse);
+      expect(checkoutCubit.state, isA<CheckoutConflict>());
+      final conflictState = checkoutCubit.state as CheckoutConflict;
+      expect(conflictState.adjustedItems, contains('Hydrating Cream 50ml'));
+
+      // Cart transitions to CartEmpty because the only item was out of stock
+      expect(cartCubit.state, isA<CartEmpty>());
+    });
+
+    test('on 409 Conflict when serverMessage is empty, falls back to default conflict message', () async {
+      fakeCheckoutRepo.resultToReturn = const Err(
+        Conflict(serverMessage: ''),
+      );
+
+      // No product details in fakeProductsRepo -> details fetch returns NotFound
+      final cartItems = (cartCubit.state as CartHasItems).items;
+      final success = await checkoutCubit.submitOrder(
+        branchId: 'b1',
+        cartItems: cartItems,
+      );
+
+      expect(success, isFalse);
+      expect(checkoutCubit.state, isA<CheckoutConflict>());
+      final conflictState = checkoutCubit.state as CheckoutConflict;
+      expect(conflictState.message, 'تغير المخزون المتاح، يرجى مراجعة السلة.');
+    });
+
     test('on 400 Bad Request: emits CheckoutFailure', () async {
       fakeCheckoutRepo.resultToReturn = const Err(
         Validation(serverMessage: 'السلة فارغة'),

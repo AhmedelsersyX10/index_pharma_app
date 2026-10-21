@@ -97,6 +97,23 @@ void main() {
           'الكمية المتاحة من Hydrating Cream 50ml هي 29 فقط');
     });
 
+    test('maps HTTP 409 response with missing message to Err(Conflict)', () async {
+      fakeDataSource.errorToThrow = DioException(
+        requestOptions: RequestOptions(path: '/store/orders'),
+        response: Response(
+          requestOptions: RequestOptions(path: '/store/orders'),
+          statusCode: 409,
+          data: {'success': false},
+        ),
+      );
+
+      final result = await repository.createOrder(testRequest);
+
+      expect(result, isA<Err>());
+      final failure = (result as Err).failure;
+      expect(failure, isA<Conflict>());
+    });
+
     test('maps HTTP 404 response to Err(NotFound)', () async {
       fakeDataSource.errorToThrow = DioException(
         requestOptions: RequestOptions(path: '/store/orders'),

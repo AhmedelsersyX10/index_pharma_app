@@ -49,12 +49,14 @@ void main() {
       expect(OrderStatus.completed.isActive, isTrue);
       expect(OrderStatus.delivered.isActive, isFalse);
       expect(OrderStatus.cancelled.isActive, isFalse);
+      expect(OrderStatus.unknown.isActive, isFalse);
 
       expect(OrderStatus.delivered.isPast, isTrue);
       expect(OrderStatus.cancelled.isPast, isTrue);
       expect(OrderStatus.pending.isPast, isFalse);
       expect(OrderStatus.processing.isPast, isFalse);
       expect(OrderStatus.completed.isPast, isFalse);
+      expect(OrderStatus.unknown.isPast, isFalse);
     });
   });
 }

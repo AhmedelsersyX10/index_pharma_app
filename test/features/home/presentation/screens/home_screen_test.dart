@@ -8,6 +8,7 @@ import 'package:index_pharma/core/errors/failure.dart';
 import 'package:index_pharma/core/network/api_result.dart';
 import 'package:index_pharma/core/storage/storage_service.dart';
 import 'package:index_pharma/core/theme/theme.dart';
+import 'package:index_pharma/core/widgets/app_empty_state.dart';
 import 'package:index_pharma/core/widgets/app_error_view.dart';
 import 'package:index_pharma/features/categories/domain/entities/category.dart';
 import 'package:index_pharma/features/categories/domain/repositories/categories_repository.dart';
@@ -377,6 +378,30 @@ void main() {
       expect(find.byType(AppErrorView), findsOneWidget);
       expect(find.text('تعذر تحميل المنتجات'), findsOneWidget);
       expect(find.byType(HomeStorageGuaranteeFooter), findsOneWidget);
+    });
+
+    testWidgets(
+        'empty products list displays AppEmptyState in featured products section',
+        (tester) async {
+      fakeProductsRepo.result = const Success(
+        ProductsPage(
+          products: [],
+          total: 0,
+          totalPages: 0,
+          page: 1,
+          limit: 20,
+        ),
+      );
+
+      await tester.pumpWidget(createTestWidget(locale: const Locale('ar')));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 500));
+      await tester.pumpAndSettle();
+
+      // Featured products section displays AppEmptyState
+      expect(find.byType(HomeFeaturedProductsSection), findsOneWidget);
+      expect(find.byType(AppEmptyState), findsOneWidget);
+      expect(find.text('لم يتم العثور على أدوية'), findsOneWidget);
     });
   });
 }

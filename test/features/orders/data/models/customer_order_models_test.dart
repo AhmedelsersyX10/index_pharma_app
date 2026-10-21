@@ -131,5 +131,21 @@ void main() {
       expect(item.priceAtPurchase, 0.0);
       expect(item.isUnit, isFalse);
     });
+
+    test('CustomerOrderModel safely maps unknown status string to OrderStatus.unknown', () {
+      final orderWithUnknownStatus = {
+        "id": "ord-unknown",
+        "orderNumber": "ONL-UNK",
+        "totalAmount": 100,
+        "status": "some_future_status_shipped",
+      };
+
+      final order = CustomerOrderModel.fromJson(orderWithUnknownStatus);
+      expect(order.status, 'some_future_status_shipped');
+      final entity = order.toEntity();
+      expect(entity.statusEnum, OrderStatus.unknown);
+      expect(entity.statusEnum.isActive, isFalse);
+      expect(entity.statusEnum.isPast, isFalse);
+    });
   });
 }

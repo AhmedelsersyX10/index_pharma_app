@@ -88,6 +88,28 @@ void main() {
       expect(fakeDataSource.lastLimit, 20);
     });
 
+    test('getMyOrders correctly maps empty page on final pagination boundary', () async {
+      fakeDataSource.modelToReturn = MyOrdersResponseModel(
+        success: true,
+        count: 0,
+        total: 10,
+        page: 2,
+        limit: 10,
+        totalPages: 1,
+        data: const [],
+      );
+
+      final result = await repository.getMyOrders(page: 2, limit: 10);
+
+      expect(result, isA<Success>());
+      final page = (result as Success).data;
+      expect(page.total, 10);
+      expect(page.orders, isEmpty);
+      expect(page.page, 2);
+      expect(page.totalPages, 1);
+      expect(page.hasMore, isFalse);
+    });
+
     test('getMyOrders maps 401 DioException to Err<Unauthorized>', () async {
       fakeDataSource.errorToThrow = DioException(
         requestOptions: RequestOptions(path: '/store/orders/my'),

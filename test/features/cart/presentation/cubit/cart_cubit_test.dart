@@ -281,4 +281,62 @@ void main() {
       expect(cubit.hasConflictWithBranch('branch-alex'), isTrue);
     });
   });
+
+  group('CartCubit syncWithUpdatedProducts', () {
+    test('clamps quantity when fresh server product stock is lower than in-cart quantity', () async {
+      // sampleProductA has quantity 4 in cart
+      await cubit.addToCart(sampleProductA, quantity: 4);
+
+      // Server stock is now 2
+      final updatedProduct = sampleProductA.copyWith(stockQuantity: 2);
+      final adjusted = await cubit.syncWithUpdatedProducts([updatedProduct]);
+
+      expect(adjusted, contains(sampleProductA.name));
+      final state = cubit.state as CartHasItems;
+      expect(state.items.first.quantity, equals(2));
+      expect(state.stockAlertMessage, equals(sampleProductA.name));
+      expect(fakeRepository.storage['branch-cairo']?.first.quantity, equals(2));
+    });
+
+    test('removes item when fresh server product stock is 0 or less', () async {
+      await cubit.addToCart(sampleProductA, quantity: 2);
+      await cubit.addToCart(sampleProductB, quantity: 1);
+
+      // sampleProductA is now out of stock (0)
+      final updatedProductA = sampleProductA.copyWith(stockQuantity: 0);
+      final adjusted = await cubit.syncWithUpdatedProducts([updatedProductA]);
+
+      expect(adjusted, contains(sampleProductA.name));
+      final state = cubit.state as CartHasItems;
+      expect(state.items.length, equals(1));
+      expect(state.items.first.product.id, equals(sampleProductB.id));
+      expect(state.subtotal, equals(sampleProductB.sellingPrice));
+    });
+
+    test('emits CartEmpty and clears storage when all items drop to 0 stock', () async {
+      await cubit.addToCart(sampleProductA, quantity: 1);
+
+      final updatedProductA = sampleProductA.copyWith(stockQuantity: 0);
+      final adjusted = await cubit.syncWithUpdatedProducts([updatedProductA]);
+
+      expect(adjusted, contains(sampleProductA.name));
+      expect(cubit.state, equals(const CartEmpty(branchId: 'branch-cairo')));
+      expect(fakeRepository.storage['branch-cairo'], isNull);
+    });
+
+    test('retains in-cart items when not included in updatedProducts list', () async {
+      await cubit.addToCart(sampleProductA, quantity: 2);
+      await cubit.addToCart(sampleProductB, quantity: 3);
+
+      // Only sampleProductA is in the updated list
+      final updatedProductA = sampleProductA.copyWith(stockQuantity: 2);
+      final adjusted = await cubit.syncWithUpdatedProducts([updatedProductA]);
+
+      expect(adjusted, isEmpty);
+      final state = cubit.state as CartHasItems;
+      expect(state.items.length, equals(2));
+      expect(state.items[0].quantity, equals(2));
+      expect(state.items[1].quantity, equals(3));
+    });
+  });
 }
