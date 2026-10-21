@@ -14,12 +14,6 @@ class LanguageSelectionCard extends StatelessWidget {
     required this.iconText,
     required this.title,
     required this.badge,
-    required this.slogan,
-    required this.description,
-    required this.tagIcon,
-    required this.tagText,
-    required this.tagTrailing,
-    this.isRecommended = false,
   });
 
   final String languageCode;
@@ -28,12 +22,6 @@ class LanguageSelectionCard extends StatelessWidget {
   final String iconText;
   final String title;
   final String badge;
-  final String slogan;
-  final String description;
-  final IconData tagIcon;
-  final String tagText;
-  final String tagTrailing;
-  final bool isRecommended;
 
   @override
   Widget build(BuildContext context) {
@@ -48,49 +36,31 @@ class LanguageSelectionCard extends StatelessWidget {
           color: AppColors.surfaceContainerLowest,
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
-            color: isSelected
-                ? AppColors.primary
-                : AppColors.borderSubtle.withValues(alpha: 0.6),
+            color: isSelected ? AppColors.primary : AppColors.borderSubtle.withValues(alpha: 0.6),
             width: isSelected ? 1.5 : 1.0,
           ),
           boxShadow: isSelected
-              ? const [
-                  BoxShadow(
-                    color: Color(0x1400966B),
-                    blurRadius: 14,
-                    offset: Offset(0, 4),
-                  ),
-                ]
-              : const [
-                  BoxShadow(
-                    color: Color(0x060B1C30),
-                    blurRadius: 6,
-                    offset: Offset(0, 2),
-                  ),
-                ],
+              ? const [BoxShadow(color: Color(0x1400966B), blurRadius: 14, offset: Offset(0, 4))]
+              : const [BoxShadow(color: Color(0x060B1C30), blurRadius: 6, offset: Offset(0, 2))],
         ),
         child: Column(
           children: [
             Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 // Icon Container
                 Container(
                   width: 44,
                   height: 44,
                   decoration: BoxDecoration(
-                    color: isSelected
-                        ? AppColors.brandMintSurface
-                        : AppColors.surfaceContainer,
+                    color: isSelected ? AppColors.brandMintSurface : AppColors.surfaceContainer,
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Center(
                     child: Text(
                       iconText,
                       style: AppTypography.titleLg(
-                        color: isSelected
-                            ? AppColors.primary
-                            : AppColors.secondary,
+                        color: isSelected ? AppColors.primary : AppColors.secondary,
                       ).copyWith(fontWeight: FontWeight.bold),
                     ),
                   ),
@@ -101,7 +71,6 @@ class LanguageSelectionCard extends StatelessWidget {
                 // Text Content
                 Expanded(
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Row(
                         children: [
@@ -117,10 +86,7 @@ class LanguageSelectionCard extends StatelessWidget {
                           ),
                           const SizedBox(width: 8),
                           Container(
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 8,
-                              vertical: 2,
-                            ),
+                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                             decoration: BoxDecoration(
                               color: isSelected
                                   ? AppColors.brandMintSurface
@@ -138,22 +104,6 @@ class LanguageSelectionCard extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 3),
-                      Text(
-                        slogan,
-                        style: AppTypography.bodySm(
-                          color: isSelected
-                              ? AppColors.primary
-                              : AppColors.secondary,
-                        ).copyWith(fontWeight: FontWeight.w500),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        description,
-                        style: AppTypography.bodySm(
-                          color: AppColors.onSurfaceVariant,
-                        ),
-                      ),
                     ],
                   ),
                 ),
@@ -166,9 +116,7 @@ class LanguageSelectionCard extends StatelessWidget {
                   width: 24,
                   height: 24,
                   decoration: BoxDecoration(
-                    color: isSelected
-                        ? AppColors.primary
-                        : AppColors.surfaceContainer,
+                    color: isSelected ? AppColors.primary : AppColors.surfaceContainer,
                     shape: BoxShape.circle,
                   ),
                   child: Center(
@@ -180,59 +128,6 @@ class LanguageSelectionCard extends StatelessWidget {
                   ),
                 ),
               ],
-            ),
-
-            const SizedBox(height: 12),
-
-            // Accent Tag Bar at Bottom of Card
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-              decoration: BoxDecoration(
-                color: AppColors.surfaceContainerLow,
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: Row(
-                      children: [
-                        Icon(
-                          tagIcon,
-                          size: 14,
-                          color: isSelected
-                              ? AppColors.primary
-                              : AppColors.secondary,
-                        ),
-                        const SizedBox(width: 6),
-                        Expanded(
-                          child: Text(
-                            tagText,
-                            style: AppTypography.labelSm(
-                              color: AppColors.secondary,
-                            ),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(width: 8),
-                  Text(
-                    tagTrailing,
-                    style: AppTypography.labelSm(
-                      color: isRecommended
-                          ? AppColors.primary
-                          : AppColors.secondary,
-                    ).copyWith(
-                      fontWeight: isRecommended
-                          ? FontWeight.bold
-                          : FontWeight.w500,
-                    ),
-                  ),
-                ],
-              ),
             ),
           ],
         ),

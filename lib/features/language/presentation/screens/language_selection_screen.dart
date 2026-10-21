@@ -11,8 +11,6 @@ import 'package:index_pharma/core/utils/app_router.dart';
 import '../cubit/language_cubit.dart';
 import '../cubit/language_state.dart';
 import '../widgets/language_action_button.dart';
-import '../widgets/language_assurance_card.dart';
-import '../widgets/language_footer.dart';
 import '../widgets/language_hero_header.dart';
 import '../widgets/language_selection_card.dart';
 import '../widgets/language_top_bar.dart';
@@ -26,12 +24,7 @@ import '../widgets/language_top_bar.dart';
 /// - Dynamic routing: Gateway before onboarding on first run, or dismissible modal/view
 ///   when invoked from Account Settings.
 class LanguageSelectionScreen extends StatefulWidget {
-  const LanguageSelectionScreen({
-    super.key,
-    this.cubit,
-    this.storageService,
-    this.from,
-  });
+  const LanguageSelectionScreen({super.key, this.cubit, this.storageService, this.from});
 
   final LanguageCubit? cubit;
   final StorageService? storageService;
@@ -49,17 +42,14 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
   @override
   void initState() {
     super.initState();
-    _storageService = widget.storageService ??
-        (GetIt.instance.isRegistered<StorageService>()
-            ? GetIt.instance<StorageService>()
-            : null);
+    _storageService =
+        widget.storageService ??
+        (GetIt.instance.isRegistered<StorageService>() ? GetIt.instance<StorageService>() : null);
 
     if (widget.cubit != null) {
       _cubit = widget.cubit!;
     } else {
-      _cubit = LanguageCubit(
-        storageService: _storageService,
-      );
+      _cubit = LanguageCubit(storageService: _storageService);
       _ownsCubit = true;
     }
   }
@@ -113,18 +103,12 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
         final isEnglishSelected = state.selectedLocale == 'en';
 
         return AnnotatedRegion<SystemUiOverlayStyle>(
-          value: SystemUiOverlayStyle.dark.copyWith(
-            statusBarColor: Colors.transparent,
-          ),
+          value: SystemUiOverlayStyle.dark.copyWith(statusBarColor: Colors.transparent),
           child: Scaffold(
             backgroundColor: AppColors.background,
             body: SafeArea(
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 12,
-                ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 child: Column(
                   children: [
                     // Top Bar (Version chip + Skip / Back action)
@@ -146,15 +130,9 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
                       languageCode: 'ar',
                       isSelected: isArabicSelected,
                       onTap: () => _cubit.selectLanguage('ar'),
-                      iconText: AppLocaleKeys.languageArabicIcon.tr(),
+                      iconText: 'ع',
                       title: AppLocaleKeys.languageArabicTitle.tr(),
                       badge: AppLocaleKeys.languageArabicBadge.tr(),
-                      slogan: AppLocaleKeys.languageArabicSlogan.tr(),
-                      description: AppLocaleKeys.languageArabicDesc.tr(),
-                      tagIcon: Icons.verified_rounded,
-                      tagText: AppLocaleKeys.languageArabicTag.tr(),
-                      tagTrailing: AppLocaleKeys.languageArabicRecommended.tr(),
-                      isRecommended: true,
                     ),
 
                     const SizedBox(height: 12),
@@ -167,20 +145,9 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
                       iconText: 'En',
                       title: AppLocaleKeys.languageEnglishTitle.tr(),
                       badge: AppLocaleKeys.languageEnglishBadge.tr(),
-                      slogan: AppLocaleKeys.languageEnglishSlogan.tr(),
-                      description: AppLocaleKeys.languageEnglishDesc.tr(),
-                      tagIcon: Icons.format_align_left_rounded,
-                      tagText: AppLocaleKeys.languageEnglishTag.tr(),
-                      tagTrailing: AppLocaleKeys.languageEnglishUniversal.tr(),
-                      isRecommended: false,
                     ),
 
-                    const SizedBox(height: 16),
-
-                    // Clinical Assurance Box
-                    const LanguageAssuranceCard(),
-
-                    const SizedBox(height: 24),
+                    const Spacer(),
 
                     // Primary Action Button
                     LanguageActionButton(
@@ -189,12 +156,7 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
                       onPressed: () => _handleConfirm(state.selectedLocale),
                     ),
 
-                    const SizedBox(height: 16),
-
-                    // Footer Trust Note
-                    const LanguageFooter(),
-
-                    const SizedBox(height: 8),
+                    const SizedBox(height: 32),
                   ],
                 ),
               ),
