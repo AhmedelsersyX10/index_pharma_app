@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart' hide TextDirection;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:index_pharma/core/errors/failure.dart';
 import 'package:index_pharma/core/localization/app_locale_keys.dart';
 import 'package:index_pharma/core/theme/theme.dart';
 import 'package:index_pharma/core/widgets/app_buttons.dart';
@@ -8,6 +9,7 @@ import 'package:index_pharma/core/widgets/app_text_fields.dart';
 import 'package:index_pharma/features/auth/domain/validators/auth_validators.dart';
 import 'package:index_pharma/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:index_pharma/features/auth/presentation/cubit/auth_state.dart';
+import '../utils/auth_failure_mapper.dart';
 import 'password_text_field.dart';
 
 /// Interactive Login Form matching the Stitch design specifications.
@@ -29,6 +31,7 @@ class _LoginFormState extends State<LoginForm> {
   final _formKey = GlobalKey<FormState>();
   late final TextEditingController _emailController;
   late final TextEditingController _passwordController;
+  String? _credentialsError;
 
   @override
   void initState() {
@@ -44,7 +47,20 @@ class _LoginFormState extends State<LoginForm> {
     super.dispose();
   }
 
+  void _onFieldChanged() {
+    if (_credentialsError != null) {
+      setState(() {
+        _credentialsError = null;
+      });
+    }
+  }
+
   void _submit() {
+    if (_credentialsError != null) {
+      setState(() {
+        _credentialsError = null;
+      });
+    }
     if (_formKey.currentState?.validate() ?? false) {
       context.read<AuthCubit>().login(
             email: _emailController.text.trim(),
@@ -55,76 +71,91 @@ class _LoginFormState extends State<LoginForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(AppSpacing.spaceLg),
-      decoration: BoxDecoration(
-        color: AppColors.canvasPure,
-        borderRadius: AppRadii.roundedXl,
-        boxShadow: AppShadows.level1,
-      ),
-      child: Form(
-        key: _formKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            // Card Title Header
-            Row(
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        AppLocaleKeys.authLoginCardTitle.tr(),
-                        style: AppTypography.titleLg(color: AppColors.onSurface),
-                      ),
-                      const SizedBox(height: 2),
-                      Text(
-                        AppLocaleKeys.authLoginCardSubtitle.tr(),
-                        style: AppTypography.bodySm(color: AppColors.secondary),
-                      ),
-                    ],
+    return BlocListener<AuthCubit, AuthState>(
+      listener: (context, state) {
+        if (state is AuthFailure && state.failure is Unauthorized) {
+          setState(() {
+            _credentialsError = AuthFailureMapper.toMessage(state.failure);
+          });
+        }
+      },
+      child: Container(
+        padding: const EdgeInsets.all(AppSpacing.spaceLg),
+        decoration: BoxDecoration(
+          color: AppColors.canvasPure,
+          borderRadius: AppRadii.roundedXl,
+          boxShadow: AppShadows.level1,
+        ),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              // Card Title Header
+              Row(
+                children: [
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          AppLocaleKeys.authLoginCardTitle.tr(),
+                          style: AppTypography.titleLg(color: AppColors.onSurface),
+                        ),
+                        const SizedBox(height: 2),
+                        Text(
+                          AppLocaleKeys.authLoginCardSubtitle.tr(),
+                          style: AppTypography.bodySm(color: AppColors.secondary),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                const Icon(
-                  Icons.lock_outline_rounded,
-                  color: AppColors.primaryBrand,
-                  size: 24,
-                ),
-              ],
-            ),
-            const SizedBox(height: AppSpacing.spaceLg),
-
-            // Email Address Field
-            AppTextField(
-              controller: _emailController,
-              label: AppLocaleKeys.authEmailLabel.tr(),
-              hintText: AppLocaleKeys.authEmailHint.tr(),
-              keyboardType: TextInputType.emailAddress,
-              textInputAction: TextInputAction.next,
-              textDirection: TextDirection.ltr,
-              validator: (val) => AuthValidators.validateEmail(val)?.tr(),
-              prefix: const Padding(
-                padding: EdgeInsetsDirectional.only(start: 12, end: 8),
-                child: Icon(Icons.mail_outline_rounded, color: AppColors.slate400, size: 20),
+                  const Icon(
+                    Icons.lock_outline_rounded,
+                    color: AppColors.primaryBrand,
+                    size: 24,
+                  ),
+                ],
               ),
-            ),
-            const SizedBox(height: AppSpacing.spaceMd),
+              const SizedBox(height: AppSpacing.spaceLg),
 
-            // Password Field
-            PasswordTextField(
-              controller: _passwordController,
-              label: AppLocaleKeys.authPasswordLabel.tr(),
-              hintText: AppLocaleKeys.authPasswordHint.tr(),
-              trailingLabelWidget: Text(
-                AppLocaleKeys.authPasswordSecureHint.tr(),
-                style: AppTypography.labelSm(color: AppColors.secondary),
+              // Email Address Field
+              AppTextField(
+                controller: _emailController,
+                label: AppLocaleKeys.authEmailLabel.tr(),
+                hintText: AppLocaleKeys.authEmailHint.tr(),
+                keyboardType: TextInputType.emailAddress,
+                textInputAction: TextInputAction.next,
+                textDirection: TextDirection.ltr,
+                errorText: _credentialsError != null ? '' : null,
+                errorStyle: _credentialsError != null
+                    ? const TextStyle(height: 0, fontSize: 0)
+                    : null,
+                onChanged: (_) => _onFieldChanged(),
+                validator: (val) => AuthValidators.validateEmail(val)?.tr(),
+                prefix: const Padding(
+                  padding: EdgeInsetsDirectional.only(start: 12, end: 8),
+                  child: Icon(Icons.mail_outline_rounded, color: AppColors.slate400, size: 20),
+                ),
               ),
-              textInputAction: TextInputAction.done,
-              validator: (val) => AuthValidators.validatePassword(val)?.tr(),
-              onFieldSubmitted: (_) => _submit(),
-            ),
-            const SizedBox(height: AppSpacing.spaceLg),
+              const SizedBox(height: AppSpacing.spaceMd),
+
+              // Password Field
+              PasswordTextField(
+                controller: _passwordController,
+                label: AppLocaleKeys.authPasswordLabel.tr(),
+                hintText: AppLocaleKeys.authPasswordHint.tr(),
+                errorText: _credentialsError,
+                trailingLabelWidget: Text(
+                  AppLocaleKeys.authPasswordSecureHint.tr(),
+                  style: AppTypography.labelSm(color: AppColors.secondary),
+                ),
+                textInputAction: TextInputAction.done,
+                validator: (val) => AuthValidators.validatePassword(val)?.tr(),
+                onChanged: (_) => _onFieldChanged(),
+                onFieldSubmitted: (_) => _submit(),
+              ),
+              const SizedBox(height: AppSpacing.spaceLg),
 
             // Submit Button - BlocBuilder scoped tightly here
             BlocBuilder<AuthCubit, AuthState>(
@@ -187,6 +218,7 @@ class _LoginFormState extends State<LoginForm> {
           ],
         ),
       ),
-    );
-  }
+    ),
+  );
+}
 }

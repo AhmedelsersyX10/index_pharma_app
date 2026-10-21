@@ -12,6 +12,7 @@ import 'package:index_pharma/features/auth/domain/repositories/auth_repository.d
 import 'package:index_pharma/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:index_pharma/features/auth/presentation/screens/login_screen.dart';
 import 'package:index_pharma/features/auth/presentation/screens/register_screen.dart';
+import 'package:index_pharma/features/auth/presentation/widgets/auth_failure_banner.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 late final Map<String, dynamic> _arTranslations;
@@ -182,7 +183,8 @@ void main() {
       expect(find.text('كلمة المرور مطلوبة'), findsOneWidget);
     });
 
-    testWidgets('Authentication failure displays localized error banner without Exception.toString()',
+    testWidgets(
+        'Invalid credentials failure displays error on text fields instead of AuthFailureBanner, and typing clears it',
         (tester) async {
       fakeRepo.loginResult = Err(const Unauthorized());
 
@@ -202,11 +204,44 @@ void main() {
       await tester.tap(find.text('تسجيل الدخول'));
       await tester.pumpAndSettle();
 
-      // Failure banner must be shown with friendly title & message
-      expect(find.text('تعذر تسجيل الدخول'), findsOneWidget);
+      // AuthFailureBanner must NOT be shown for credential errors
+      expect(find.byType(AuthFailureBanner), findsNothing);
+      expect(find.text('تعذر تسجيل الدخول'), findsNothing);
+
+      // Error message is displayed on the password field
       expect(find.text('البريد أو كلمة المرور غير صحيحة، يرجى إعادة المحاولة.'), findsOneWidget);
       // Ensure no raw Exception text is ever shown
       expect(find.textContaining('Exception'), findsNothing);
+
+      // Typing in password field immediately clears the error
+      await tester.enterText(find.byType(TextFormField).at(1), 'password1234');
+      await tester.pumpAndSettle();
+      expect(find.text('البريد أو كلمة المرور غير صحيحة، يرجى إعادة المحاولة.'), findsNothing);
+    });
+
+    testWidgets('Network failure displays localized AuthFailureBanner', (tester) async {
+      fakeRepo.loginResult = Err(const Network());
+
+      await tester.pumpWidget(
+        createTestLocalizedApp(
+          locale: const Locale('ar'),
+          child: LoginScreen(authCubit: cubit),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      // Enter valid format credentials
+      await tester.enterText(find.byType(TextFormField).at(0), 'user@example.com');
+      await tester.enterText(find.byType(TextFormField).at(1), 'password123');
+
+      // Submit
+      await tester.tap(find.text('تسجيل الدخول'));
+      await tester.pumpAndSettle();
+
+      // Banner must be displayed for network failures
+      expect(find.byType(AuthFailureBanner), findsOneWidget);
+      expect(find.text('تعذر تسجيل الدخول'), findsOneWidget);
+      expect(find.text('يرجى التحقق من اتصالك بالإنترنت والمحاولة مجدداً.'), findsOneWidget);
     });
   });
 

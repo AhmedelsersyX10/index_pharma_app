@@ -62,7 +62,9 @@ class _LoginScreenState extends State<LoginScreen> {
               }
             },
             builder: (context, state) {
-              final activeFailure = (state is AuthFailure && state.failure != _dismissedFailure)
+              final activeFailure = (state is AuthFailure &&
+                      state.failure != _dismissedFailure &&
+                      state.failure is! Unauthorized)
                   ? state.failure
                   : null;
 

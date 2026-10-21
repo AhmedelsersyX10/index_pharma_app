@@ -9,22 +9,26 @@ class PasswordTextField extends StatefulWidget {
   final TextEditingController controller;
   final String? label;
   final String? hintText;
+  final String? errorText;
   final Widget? trailingLabelWidget;
   final Widget? helper;
   final FormFieldValidator<String>? validator;
   final TextInputAction textInputAction;
   final ValueChanged<String>? onFieldSubmitted;
+  final ValueChanged<String>? onChanged;
 
   const PasswordTextField({
     super.key,
     required this.controller,
     this.label,
     this.hintText,
+    this.errorText,
     this.trailingLabelWidget,
     this.helper,
     this.validator,
     this.textInputAction = TextInputAction.done,
     this.onFieldSubmitted,
+    this.onChanged,
   });
 
   @override
@@ -46,6 +50,7 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
       controller: widget.controller,
       label: widget.label,
       hintText: widget.hintText,
+      errorText: widget.errorText,
       trailingLabelWidget: widget.trailingLabelWidget,
       helper: widget.helper,
       obscureText: _obscureText,
@@ -53,7 +58,8 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
       textInputAction: widget.textInputAction,
       textDirection: TextDirection.ltr,
       validator: widget.validator,
-      onChanged: widget.onFieldSubmitted,
+      onChanged: widget.onChanged,
+      onFieldSubmitted: widget.onFieldSubmitted,
       prefix: const Padding(
         padding: EdgeInsetsDirectional.only(start: 12, end: 8),
         child: Icon(Icons.lock_outline_rounded, color: AppColors.slate400, size: 20),

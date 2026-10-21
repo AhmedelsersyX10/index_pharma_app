@@ -79,6 +79,7 @@ class AppTextField extends StatelessWidget {
   final Widget? helper;
   final String? hintText;
   final String? errorText;
+  final TextStyle? errorStyle;
   final Widget? prefix;
   final Widget? suffix;
   final bool obscureText;
@@ -90,6 +91,7 @@ class AppTextField extends StatelessWidget {
   final AutovalidateMode? autovalidateMode;
   final TextDirection? textDirection;
   final ValueChanged<String>? onChanged;
+  final ValueChanged<String>? onFieldSubmitted;
   final FormFieldValidator<String>? validator;
 
   const AppTextField({
@@ -100,6 +102,7 @@ class AppTextField extends StatelessWidget {
     this.helper,
     this.hintText,
     this.errorText,
+    this.errorStyle,
     this.prefix,
     this.suffix,
     this.obscureText = false,
@@ -111,6 +114,7 @@ class AppTextField extends StatelessWidget {
     this.autovalidateMode,
     this.textDirection,
     this.onChanged,
+    this.onFieldSubmitted,
     this.validator,
   });
 
@@ -143,11 +147,13 @@ class AppTextField extends StatelessWidget {
           autovalidateMode: autovalidateMode,
           textDirection: textDirection,
           onChanged: onChanged,
+          onFieldSubmitted: onFieldSubmitted,
           validator: validator,
           style: AppTypography.bodyMd(color: AppColors.onSurface),
           decoration: InputDecoration(
             hintText: hintText,
             errorText: errorText,
+            errorStyle: errorStyle,
             prefixIcon: prefix,
             suffixIcon: suffix,
           ),
