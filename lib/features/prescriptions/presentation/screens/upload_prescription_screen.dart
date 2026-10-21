@@ -15,10 +15,7 @@ import '../widgets/prescription_image_viewer_dialog.dart';
 
 /// Screen for uploading a prescription (Stitch D1).
 class UploadPrescriptionScreen extends StatelessWidget {
-  const UploadPrescriptionScreen({
-    super.key,
-    this.cubit,
-  });
+  const UploadPrescriptionScreen({super.key, this.cubit});
 
   final PrescriptionCubit? cubit;
 
@@ -42,8 +39,7 @@ class _UploadPrescriptionView extends StatefulWidget {
   const _UploadPrescriptionView();
 
   @override
-  State<_UploadPrescriptionView> createState() =>
-      _UploadPrescriptionViewState();
+  State<_UploadPrescriptionView> createState() => _UploadPrescriptionViewState();
 }
 
 class _UploadPrescriptionViewState extends State<_UploadPrescriptionView> {
@@ -64,7 +60,8 @@ class _UploadPrescriptionViewState extends State<_UploadPrescriptionView> {
 
   void _appendNote(String suggestion) {
     final current = _notesController.text.trim();
-    final newText = current.isEmpty ? suggestion : '$current، $suggestion';
+    final separator = AppLocaleKeys.commonListSeparator.tr();
+    final newText = current.isEmpty ? suggestion : '$current$separator$suggestion';
     if (newText.length <= 250) {
       _notesController.text = newText;
       context.read<PrescriptionCubit>().updateNotes(newText);
@@ -148,7 +145,8 @@ class _UploadPrescriptionViewState extends State<_UploadPrescriptionView> {
       },
       builder: (context, state) {
         final cubit = context.read<PrescriptionCubit>();
-        final isProcessing = state.uploadStep == PrescriptionUploadStep.uploading ||
+        final isProcessing =
+            state.uploadStep == PrescriptionUploadStep.uploading ||
             state.uploadStep == PrescriptionUploadStep.submitting;
 
         return Scaffold(
@@ -220,9 +218,7 @@ class _UploadPrescriptionViewState extends State<_UploadPrescriptionView> {
                         title: AppLocaleKeys.prescriptionsCameraBtn.tr(),
                         subtitle: AppLocaleKeys.prescriptionsCameraDesc.tr(),
                         isPrimary: true,
-                        onTap: isProcessing
-                            ? null
-                            : () => cubit.pickImage(ImageSource.camera),
+                        onTap: isProcessing ? null : () => cubit.pickImage(ImageSource.camera),
                       ),
                     ),
                     const SizedBox(width: AppSpacing.spaceSm),
@@ -232,9 +228,7 @@ class _UploadPrescriptionViewState extends State<_UploadPrescriptionView> {
                         title: AppLocaleKeys.prescriptionsGalleryBtn.tr(),
                         subtitle: AppLocaleKeys.prescriptionsGalleryDesc.tr(),
                         isPrimary: false,
-                        onTap: isProcessing
-                            ? null
-                            : () => cubit.pickImage(ImageSource.gallery),
+                        onTap: isProcessing ? null : () => cubit.pickImage(ImageSource.gallery),
                       ),
                     ),
                   ],
@@ -263,13 +257,11 @@ class _UploadPrescriptionViewState extends State<_UploadPrescriptionView> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.primary,
                       disabledBackgroundColor: AppColors.surfaceContainerHigh,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(9999),
-                      ),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(9999)),
                       elevation: 0,
                     ),
                     child: isProcessing
-                        ? const Row(
+                        ? Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               SizedBox(
@@ -282,7 +274,7 @@ class _UploadPrescriptionViewState extends State<_UploadPrescriptionView> {
                               ),
                               SizedBox(width: 10),
                               Text(
-                                'جاري الإرسال...',
+                                AppLocaleKeys.prescriptionsSubmittingTitle.tr(),
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 15,
@@ -299,9 +291,7 @@ class _UploadPrescriptionViewState extends State<_UploadPrescriptionView> {
                               Text(
                                 AppLocaleKeys.prescriptionsSubmitBtn.tr(),
                                 style: TextStyle(
-                                  color: state.canSubmit
-                                      ? Colors.white
-                                      : AppColors.neutral,
+                                  color: state.canSubmit ? Colors.white : AppColors.neutral,
                                   fontSize: 15,
                                   fontWeight: FontWeight.w700,
                                 ),
@@ -310,16 +300,7 @@ class _UploadPrescriptionViewState extends State<_UploadPrescriptionView> {
                           ),
                   ),
                 ),
-                const SizedBox(height: 8),
-                const Text(
-                  'خدمة سريعة ومجانية 100% بإشراف نقابة الصيادلة',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 11,
-                    color: AppColors.neutral,
-                  ),
-                ),
-                const SizedBox(height: AppSpacing.spaceXl),
+                SizedBox(height: AppSpacing.spaceXl),
               ],
             ),
           ),
@@ -339,13 +320,7 @@ class _UploadPrescriptionViewState extends State<_UploadPrescriptionView> {
       decoration: BoxDecoration(
         color: AppColors.canvasPure,
         borderRadius: BorderRadius.circular(16),
-        boxShadow: const [
-          BoxShadow(
-            color: Color(0x0A0F172A),
-            blurRadius: 6,
-            offset: Offset(0, 2),
-          ),
-        ],
+        boxShadow: const [BoxShadow(color: Color(0x0A0F172A), blurRadius: 6, offset: Offset(0, 2))],
       ),
       child: Material(
         color: Colors.transparent,
@@ -384,10 +359,7 @@ class _UploadPrescriptionViewState extends State<_UploadPrescriptionView> {
                 const SizedBox(height: 2),
                 Text(
                   subtitle,
-                  style: const TextStyle(
-                    fontSize: 11,
-                    color: AppColors.neutral,
-                  ),
+                  style: const TextStyle(fontSize: 11, color: AppColors.neutral),
                   textAlign: TextAlign.center,
                 ),
               ],
@@ -408,20 +380,14 @@ class _UploadPrescriptionViewState extends State<_UploadPrescriptionView> {
       decoration: BoxDecoration(
         color: AppColors.canvasPure,
         borderRadius: BorderRadius.circular(16),
-        boxShadow: const [
-          BoxShadow(
-            color: Color(0x0A0F172A),
-            blurRadius: 6,
-            offset: Offset(0, 2),
-          ),
-        ],
+        boxShadow: const [BoxShadow(color: Color(0x0A0F172A), blurRadius: 6, offset: Offset(0, 2))],
       ),
       child: isProcessing
           ? _buildUploadingProgressView(state)
           : (state.pickedImagePath != null &&
-                  state.uploadStep != PrescriptionUploadStep.fileSizeExceeded)
-              ? _buildSelectedPreviewView(state, cubit)
-              : _buildEmptyDropView(),
+                state.uploadStep != PrescriptionUploadStep.fileSizeExceeded)
+          ? _buildSelectedPreviewView(state, cubit)
+          : _buildEmptyDropView(),
     );
   }
 
@@ -448,11 +414,7 @@ class _UploadPrescriptionViewState extends State<_UploadPrescriptionView> {
             const CircleAvatar(
               radius: 30,
               backgroundColor: AppColors.brandMintSurface,
-              child: Icon(
-                Icons.cloud_upload_outlined,
-                size: 32,
-                color: AppColors.primary,
-              ),
+              child: Icon(Icons.cloud_upload_outlined, size: 32, color: AppColors.primary),
             ),
             const SizedBox(height: AppSpacing.spaceSm),
             Text(
@@ -467,10 +429,7 @@ class _UploadPrescriptionViewState extends State<_UploadPrescriptionView> {
             const SizedBox(height: 4),
             Text(
               AppLocaleKeys.prescriptionsDropSubhint.tr(),
-              style: const TextStyle(
-                fontSize: 12,
-                color: AppColors.neutral,
-              ),
+              style: const TextStyle(fontSize: 12, color: AppColors.neutral),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: AppSpacing.spaceMd),
@@ -482,9 +441,7 @@ class _UploadPrescriptionViewState extends State<_UploadPrescriptionView> {
                 backgroundColor: AppColors.canvasPure,
                 foregroundColor: AppColors.primary,
                 elevation: 1,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
               ),
             ),
           ],
@@ -493,10 +450,7 @@ class _UploadPrescriptionViewState extends State<_UploadPrescriptionView> {
     );
   }
 
-  Widget _buildSelectedPreviewView(
-    PrescriptionState state,
-    PrescriptionCubit cubit,
-  ) {
+  Widget _buildSelectedPreviewView(PrescriptionState state, PrescriptionCubit cubit) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -552,10 +506,7 @@ class _UploadPrescriptionViewState extends State<_UploadPrescriptionView> {
                 borderRadius: BorderRadius.circular(12),
                 child: AspectRatio(
                   aspectRatio: 4 / 3,
-                  child: Image.file(
-                    File(state.pickedImagePath!),
-                    fit: BoxFit.cover,
-                  ),
+                  child: Image.file(File(state.pickedImagePath!), fit: BoxFit.cover),
                 ),
               ),
 
@@ -568,21 +519,12 @@ class _UploadPrescriptionViewState extends State<_UploadPrescriptionView> {
                   decoration: BoxDecoration(
                     color: Colors.white.withValues(alpha: 0.9),
                     borderRadius: BorderRadius.circular(9999),
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Colors.black12,
-                        blurRadius: 4,
-                      ),
-                    ],
+                    boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 4)],
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Icon(
-                        Icons.check_circle,
-                        size: 14,
-                        color: AppColors.brandEmeraldDark,
-                      ),
+                      const Icon(Icons.check_circle, size: 14, color: AppColors.brandEmeraldDark),
                       const SizedBox(width: 4),
                       Text(
                         AppLocaleKeys.prescriptionsQualityExcellent.tr(),
@@ -614,10 +556,7 @@ class _UploadPrescriptionViewState extends State<_UploadPrescriptionView> {
                       const SizedBox(width: 4),
                       Text(
                         AppLocaleKeys.prescriptionsTapToZoom.tr(),
-                        style: const TextStyle(
-                          fontSize: 11,
-                          color: Colors.white,
-                        ),
+                        style: const TextStyle(fontSize: 11, color: Colors.white),
                       ),
                     ],
                   ),
@@ -636,17 +575,13 @@ class _UploadPrescriptionViewState extends State<_UploadPrescriptionView> {
               onPressed: _showImageSourceModal,
               icon: const Icon(Icons.swap_horiz, size: 18),
               label: Text(AppLocaleKeys.prescriptionsReplaceImage.tr()),
-              style: TextButton.styleFrom(
-                foregroundColor: AppColors.primary,
-              ),
+              style: TextButton.styleFrom(foregroundColor: AppColors.primary),
             ),
             TextButton.icon(
               onPressed: () => cubit.clearPickedImage(),
               icon: const Icon(Icons.delete_outline, size: 18),
               label: Text(AppLocaleKeys.prescriptionsDeleteImage.tr()),
-              style: TextButton.styleFrom(
-                foregroundColor: AppColors.error,
-              ),
+              style: TextButton.styleFrom(foregroundColor: AppColors.error),
             ),
           ],
         ),
@@ -669,10 +604,7 @@ class _UploadPrescriptionViewState extends State<_UploadPrescriptionView> {
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: const Center(
-                  child: CircularProgressIndicator(
-                    strokeWidth: 2.5,
-                    color: AppColors.primary,
-                  ),
+                  child: CircularProgressIndicator(strokeWidth: 2.5, color: AppColors.primary),
                 ),
               ),
               const SizedBox(width: AppSpacing.spaceSm),
@@ -693,10 +625,7 @@ class _UploadPrescriptionViewState extends State<_UploadPrescriptionView> {
                     const SizedBox(height: 2),
                     Text(
                       '${state.pickedImageName ?? 'prescription.jpg'} (${state.formattedPickedFileSize})',
-                      style: const TextStyle(
-                        fontSize: 12,
-                        color: AppColors.neutral,
-                      ),
+                      style: const TextStyle(fontSize: 12, color: AppColors.neutral),
                     ),
                   ],
                 ),
@@ -717,18 +646,11 @@ class _UploadPrescriptionViewState extends State<_UploadPrescriptionView> {
             alignment: AlignmentDirectional.centerStart,
             child: Row(
               children: [
-                const Icon(
-                  Icons.security,
-                  size: 14,
-                  color: AppColors.brandEmeraldDark,
-                ),
+                const Icon(Icons.security, size: 14, color: AppColors.brandEmeraldDark),
                 const SizedBox(width: 4),
                 Text(
                   AppLocaleKeys.prescriptionsPrivacyNotice.tr(),
-                  style: const TextStyle(
-                    fontSize: 11,
-                    color: AppColors.neutral,
-                  ),
+                  style: const TextStyle(fontSize: 11, color: AppColors.neutral),
                 ),
               ],
             ),
@@ -746,13 +668,7 @@ class _UploadPrescriptionViewState extends State<_UploadPrescriptionView> {
       decoration: BoxDecoration(
         color: AppColors.canvasPure,
         borderRadius: BorderRadius.circular(16),
-        boxShadow: const [
-          BoxShadow(
-            color: Color(0x0A0F172A),
-            blurRadius: 6,
-            offset: Offset(0, 2),
-          ),
-        ],
+        boxShadow: const [BoxShadow(color: Color(0x0A0F172A), blurRadius: 6, offset: Offset(0, 2))],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -762,11 +678,7 @@ class _UploadPrescriptionViewState extends State<_UploadPrescriptionView> {
             children: [
               Row(
                 children: [
-                  const Icon(
-                    Icons.edit_note,
-                    size: 20,
-                    color: AppColors.primary,
-                  ),
+                  const Icon(Icons.edit_note, size: 20, color: AppColors.primary),
                   const SizedBox(width: 6),
                   Text(
                     AppLocaleKeys.prescriptionsNotesLabel.tr(),
@@ -791,10 +703,7 @@ class _UploadPrescriptionViewState extends State<_UploadPrescriptionView> {
           const SizedBox(height: 4),
           Text(
             AppLocaleKeys.prescriptionsNotesDesc.tr(),
-            style: const TextStyle(
-              fontSize: 12,
-              color: AppColors.neutral,
-            ),
+            style: const TextStyle(fontSize: 12, color: AppColors.neutral),
           ),
           const SizedBox(height: AppSpacing.spaceSm),
           TextField(
@@ -810,10 +719,7 @@ class _UploadPrescriptionViewState extends State<_UploadPrescriptionView> {
             },
             decoration: InputDecoration(
               hintText: AppLocaleKeys.prescriptionsNotesHint.tr(),
-              hintStyle: const TextStyle(
-                fontSize: 13,
-                color: AppColors.neutral,
-              ),
+              hintStyle: const TextStyle(fontSize: 13, color: AppColors.neutral),
               fillColor: AppColors.surfaceSubtle,
               filled: true,
               border: OutlineInputBorder(
@@ -851,18 +757,10 @@ class _UploadPrescriptionViewState extends State<_UploadPrescriptionView> {
 
   Widget _buildSuggestionChip(String label, String value) {
     return ActionChip(
-      label: Text(
-        label,
-        style: const TextStyle(
-          fontSize: 11,
-          color: AppColors.onSurfaceVariant,
-        ),
-      ),
+      label: Text(label, style: const TextStyle(fontSize: 11, color: AppColors.onSurfaceVariant)),
       backgroundColor: AppColors.surfaceContainerLow,
       side: BorderSide.none,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(9999),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(9999)),
       onPressed: () => _appendNote(value),
     );
   }
@@ -879,11 +777,7 @@ class _UploadPrescriptionViewState extends State<_UploadPrescriptionView> {
         children: [
           Row(
             children: [
-              const Icon(
-                Icons.assignment_outlined,
-                size: 20,
-                color: AppColors.primary,
-              ),
+              const Icon(Icons.assignment_outlined, size: 20, color: AppColors.primary),
               const SizedBox(width: 6),
               Text(
                 AppLocaleKeys.prescriptionsStepsTitle.tr(),
@@ -897,17 +791,17 @@ class _UploadPrescriptionViewState extends State<_UploadPrescriptionView> {
           ),
           const SizedBox(height: AppSpacing.spaceSm),
           _buildStepRow(
-            stepNumber: '١',
+            stepNumber: AppLocaleKeys.prescriptionsStepNum1.tr(),
             text: AppLocaleKeys.prescriptionsStep1.tr(),
           ),
           const SizedBox(height: 8),
           _buildStepRow(
-            stepNumber: '٢',
+            stepNumber: AppLocaleKeys.prescriptionsStepNum2.tr(),
             text: AppLocaleKeys.prescriptionsStep2.tr(),
           ),
           const SizedBox(height: 8),
           _buildStepRow(
-            stepNumber: '٣',
+            stepNumber: AppLocaleKeys.prescriptionsStepNum3.tr(),
             text: AppLocaleKeys.prescriptionsStep3.tr(),
           ),
         ],
@@ -924,22 +818,14 @@ class _UploadPrescriptionViewState extends State<_UploadPrescriptionView> {
           backgroundColor: AppColors.primary,
           child: Text(
             stepNumber,
-            style: const TextStyle(
-              fontSize: 11,
-              fontWeight: FontWeight.w700,
-              color: Colors.white,
-            ),
+            style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w700, color: Colors.white),
           ),
         ),
         const SizedBox(width: 8),
         Expanded(
           child: Text(
             text,
-            style: const TextStyle(
-              fontSize: 12,
-              color: AppColors.onSurface,
-              height: 1.4,
-            ),
+            style: const TextStyle(fontSize: 12, color: AppColors.onSurface, height: 1.4),
           ),
         ),
       ],
@@ -985,10 +871,7 @@ class _UploadPrescriptionViewState extends State<_UploadPrescriptionView> {
                 const SizedBox(height: 2),
                 Text(
                   description,
-                  style: const TextStyle(
-                    fontSize: 12,
-                    color: AppColors.onErrorContainer,
-                  ),
+                  style: const TextStyle(fontSize: 12, color: AppColors.onErrorContainer),
                 ),
                 const SizedBox(height: 8),
                 Row(
@@ -998,36 +881,24 @@ class _UploadPrescriptionViewState extends State<_UploadPrescriptionView> {
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.error,
                         foregroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 14,
-                          vertical: 6,
-                        ),
+                        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
                         minimumSize: Size.zero,
                         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(6),
-                        ),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(6)),
                       ),
                       child: Text(actionText, style: const TextStyle(fontSize: 12)),
                     ),
-                    if (secondaryActionText != null &&
-                        onSecondaryAction != null) ...[
+                    if (secondaryActionText != null && onSecondaryAction != null) ...[
                       const SizedBox(width: 8),
                       TextButton(
                         onPressed: onSecondaryAction,
                         style: TextButton.styleFrom(
                           foregroundColor: AppColors.onSurface,
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 10,
-                            vertical: 6,
-                          ),
+                          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                           minimumSize: Size.zero,
                           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                         ),
-                        child: Text(
-                          secondaryActionText,
-                          style: const TextStyle(fontSize: 12),
-                        ),
+                        child: Text(secondaryActionText, style: const TextStyle(fontSize: 12)),
                       ),
                     ],
                   ],

@@ -36,26 +36,8 @@ enum PrescriptionStatus {
     }
   }
 
-  /// Returns the default Arabic label for this status.
-  String toArabicLabel([String? fallbackRaw]) {
-    switch (this) {
-      case PrescriptionStatus.pending:
-        return 'قيد الانتظار';
-      case PrescriptionStatus.preparing:
-        return 'جاري التحضير';
-      case PrescriptionStatus.completed:
-        return 'تم التوصيل';
-      case PrescriptionStatus.rejected:
-        return 'مرفوضة';
-      case PrescriptionStatus.unknown:
-        return (fallbackRaw != null && fallbackRaw.trim().isNotEmpty)
-            ? fallbackRaw
-            : 'غير معروف';
-    }
-  }
-
-  /// Returns the localization key for easy_localization.
-  String get localizationKey {
+  /// Translation key in ar.json / en.json.
+  String get translationKey {
     switch (this) {
       case PrescriptionStatus.pending:
         return 'prescriptions.status_pending';
@@ -69,4 +51,7 @@ enum PrescriptionStatus {
         return 'prescriptions.status_unknown';
     }
   }
+
+  /// Backwards-compatible alias for [translationKey].
+  String get localizationKey => translationKey;
 }

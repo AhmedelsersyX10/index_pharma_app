@@ -312,7 +312,7 @@ class _MyPrescriptionsViewState extends State<_MyPrescriptionsView> {
             ),
             const SizedBox(height: AppSpacing.spaceSm),
             Text(
-              state.listErrorMessage ?? 'حدث خطأ في تحميل الروشتات',
+              state.listErrorMessage ?? AppLocaleKeys.prescriptionsErrorLoadingList.tr(),
               style: const TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w600,

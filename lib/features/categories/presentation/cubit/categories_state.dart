@@ -1,4 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:index_pharma/core/errors/failure.dart';
+import 'package:index_pharma/core/errors/failure_mapper.dart';
+import 'package:index_pharma/core/localization/app_locale_keys.dart';
 import '../../domain/entities/category.dart';
 
 /// Sealed hierarchy representing UI states for store categories.
@@ -89,8 +92,11 @@ final class CategoriesFailure extends CategoriesState {
 
   final Failure failure;
 
-  /// User-facing message derived from serverMessage or default fallback.
-  String get message => failure.serverMessage ?? 'فشل في تحميل التصنيفات';
+  /// User-facing message mapped from domain failure.
+  String get message => FailureMapper.toMessage(
+        failure,
+        defaultFallback: AppLocaleKeys.errorCategoriesLoadFailed.tr(),
+      );
 
   @override
   bool operator ==(Object other) =>

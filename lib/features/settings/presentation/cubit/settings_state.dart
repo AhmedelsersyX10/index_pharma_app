@@ -1,4 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:index_pharma/core/errors/failure.dart';
+import 'package:index_pharma/core/errors/failure_mapper.dart';
+import 'package:index_pharma/core/localization/app_locale_keys.dart';
 import '../../domain/entities/public_settings.dart';
 
 /// Sealed hierarchy representing UI states for public store settings.
@@ -64,8 +67,11 @@ final class SettingsFailure extends SettingsState {
 
   final Failure failure;
 
-  /// User-facing message derived from serverMessage or default.
-  String get message => failure.serverMessage ?? 'فشل في تحميل الإعدادات';
+  /// User-facing message mapped from domain failure.
+  String get message => FailureMapper.toMessage(
+        failure,
+        defaultFallback: AppLocaleKeys.errorSettingsLoadFailed.tr(),
+      );
 
   @override
   bool operator ==(Object other) =>

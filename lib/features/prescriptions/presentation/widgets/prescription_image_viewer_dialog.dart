@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:index_pharma/core/localization/app_locale_keys.dart';
 import 'package:index_pharma/core/theme/app_colors.dart';
 
 /// Full-screen dialog providing pinch-to-zoom and pan inspection of prescription images.
@@ -9,18 +11,18 @@ class PrescriptionImageViewerDialog extends StatelessWidget {
     super.key,
     this.imageUrl,
     this.localFilePath,
-    this.title = 'معاينة الروشتة',
+    this.title,
   }) : assert(imageUrl != null || localFilePath != null);
 
   final String? imageUrl;
   final String? localFilePath;
-  final String title;
+  final String? title;
 
   static Future<void> show(
     BuildContext context, {
     String? imageUrl,
     String? localFilePath,
-    String title = 'معاينة الروشتة',
+    String? title,
   }) {
     return showDialog<void>(
       context: context,
@@ -46,7 +48,7 @@ class PrescriptionImageViewerDialog extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                title,
+                title ?? AppLocaleKeys.prescriptionsPreviewTitle.tr(),
                 style: const TextStyle(
                   color: Colors.white,
                   fontSize: 16,

@@ -1,4 +1,6 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:index_pharma/core/localization/app_locale_keys.dart';
 import 'package:index_pharma/core/theme/theme.dart';
 
 /// Minimal placeholder screen for the public customer store.
@@ -94,7 +96,7 @@ class BrowsePlaceholderScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
-        title: const Text('تصفح الأدوية'),
+        title: Text(AppLocaleKeys.navBrowse.tr()),
         backgroundColor: Colors.transparent,
       ),
       body: const Center(
@@ -120,7 +122,7 @@ class PrescriptionPlaceholderScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
-        title: const Text('صرف الروشتة'),
+        title: Text(AppLocaleKeys.navPrescription.tr()),
         backgroundColor: Colors.transparent,
       ),
       body: const Center(
@@ -146,7 +148,7 @@ class MyOrdersPlaceholderScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
-        title: const Text('طلباتي'),
+        title: Text(AppLocaleKeys.navOrders.tr()),
         backgroundColor: Colors.transparent,
       ),
       body: const Center(
@@ -172,7 +174,7 @@ class AccountPlaceholderScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
-        title: const Text('حسابي'),
+        title: Text(AppLocaleKeys.navAccount.tr()),
         backgroundColor: Colors.transparent,
       ),
       body: const Center(
@@ -198,7 +200,7 @@ class CartPlaceholderScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
-        title: const Text('سلة المشتريات'),
+        title: Text(AppLocaleKeys.cartTitle.tr()),
         backgroundColor: Colors.transparent,
       ),
       body: const Center(
@@ -224,7 +226,7 @@ class CheckoutPlaceholderScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
-        title: const Text('إتمام الطلب'),
+        title: Text(AppLocaleKeys.checkoutTitle.tr()),
         backgroundColor: Colors.transparent,
       ),
       body: const Center(

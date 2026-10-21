@@ -46,7 +46,7 @@ class ProductsCubit extends Cubit<ProductsState> {
       emit(
         const ProductsFailure(
           Validation(
-            serverMessage: 'يرجى اختيار الفرع لعرض مخزون المتجر',
+            serverMessage: 'branch_required',
           ),
         ),
       );

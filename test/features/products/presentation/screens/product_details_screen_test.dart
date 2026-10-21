@@ -6,6 +6,7 @@ import 'package:easy_localization/easy_localization.dart' hide TextDirection;
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:index_pharma/core/errors/failure.dart';
+import 'package:index_pharma/core/localization/app_locale_keys.dart';
 import 'package:index_pharma/core/network/api_result.dart';
 import 'package:index_pharma/core/theme/theme.dart';
 import 'package:index_pharma/core/widgets/app_error_view.dart';
@@ -163,7 +164,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.byType(AppErrorView), findsOneWidget);
-      expect(find.text('خطأ في جلب بيانات الدواء'), findsOneWidget);
+      expect(find.text(AppLocaleKeys.errorServer.tr()), findsOneWidget);
 
       // Tap retry
       fakeRepo.stubProductDetailsResult = const Success(testProductOtc);

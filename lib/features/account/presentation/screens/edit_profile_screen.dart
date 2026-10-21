@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart' hide TextDirection;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
+import 'package:index_pharma/core/errors/failure_mapper.dart';
 import 'package:index_pharma/core/localization/app_locale_keys.dart';
 import 'package:index_pharma/core/network/api_result.dart';
 import 'package:index_pharma/core/theme/theme.dart';
@@ -36,27 +36,11 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   bool _isSaving = false;
 
   AuthCubit _resolveAuthCubit() {
-    if (widget.authCubit != null) return widget.authCubit!;
-    try {
-      return context.read<AuthCubit>();
-    } catch (_) {
-      if (GetIt.instance.isRegistered<AuthCubit>()) {
-        return GetIt.instance<AuthCubit>();
-      }
-      rethrow;
-    }
+    return widget.authCubit ?? context.read<AuthCubit>();
   }
 
   BranchCubit? _resolveBranchCubit() {
-    if (widget.branchCubit != null) return widget.branchCubit;
-    try {
-      return context.read<BranchCubit>();
-    } catch (_) {
-      if (GetIt.instance.isRegistered<BranchCubit>()) {
-        return GetIt.instance<BranchCubit>();
-      }
-      return null;
-    }
+    return widget.branchCubit;
   }
 
   @override
@@ -113,7 +97,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-              failure.serverMessage ?? AppLocaleKeys.authErrorServer.tr(),
+              FailureMapper.toMessage(
+                failure,
+                defaultFallback: AppLocaleKeys.authErrorServer.tr(),
+              ),
             ),
             backgroundColor: AppColors.error,
             behavior: SnackBarBehavior.floating,

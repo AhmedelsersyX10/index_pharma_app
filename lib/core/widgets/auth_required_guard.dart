@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:index_pharma/core/theme/theme.dart';
 import 'package:index_pharma/core/utils/app_router.dart';
@@ -37,22 +36,14 @@ class AuthRequiredGuard extends StatelessWidget {
   /// Optional fallback widget rendered when unauthenticated.
   final Widget? fallback;
 
-  AuthCubit? _resolveCubit(BuildContext context) {
-    if (authCubit != null) return authCubit;
-    try {
-      return context.read<AuthCubit>();
-    } catch (_) {
-      if (GetIt.instance.isRegistered<AuthCubit>()) {
-        return GetIt.instance<AuthCubit>();
-      }
-      return null;
-    }
+  AuthCubit _resolveCubit(BuildContext context) {
+    return authCubit ?? context.read<AuthCubit>();
   }
 
   @override
   Widget build(BuildContext context) {
     final cubit = _resolveCubit(context);
-    final authState = cubit?.state ?? const AuthGuest();
+    final authState = cubit.state;
 
     if (authState is AuthAuthenticated) {
       return child;

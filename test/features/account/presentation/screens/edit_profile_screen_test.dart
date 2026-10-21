@@ -5,6 +5,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:index_pharma/core/errors/failure.dart';
+import 'package:index_pharma/core/localization/app_locale_keys.dart';
 import 'package:index_pharma/core/network/api_result.dart';
 import 'package:index_pharma/features/account/presentation/screens/edit_profile_screen.dart';
 import 'package:index_pharma/features/auth/domain/entities/user.dart';
@@ -236,7 +237,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(fakeAuthRepository.updateProfileCalls, 1);
-      expect(find.text('الاسم لا يمكن أن يكون فارغاً'), findsOneWidget);
+      expect(find.text(AppLocaleKeys.errorValidation.tr()), findsOneWidget);
       // Session is preserved
       expect(authCubit.state, const AuthAuthenticated(initialUser));
     });

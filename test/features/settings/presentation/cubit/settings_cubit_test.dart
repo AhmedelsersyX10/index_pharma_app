@@ -1,5 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:index_pharma/core/errors/failure.dart';
+import 'package:index_pharma/core/localization/app_locale_keys.dart';
 import 'package:index_pharma/core/network/api_result.dart';
 import 'package:index_pharma/features/settings/domain/entities/public_settings.dart';
 import 'package:index_pharma/features/settings/domain/repositories/settings_repository.dart';
@@ -84,14 +86,17 @@ void main() {
         const SettingsLoading(),
         const SettingsFailure(failure),
       ]);
-      expect((cubit.state as SettingsFailure).message, equals('تعذر الاتصال بالخادم'));
+      expect(
+        (cubit.state as SettingsFailure).message,
+        equals(AppLocaleKeys.errorServer.tr()),
+      );
     });
 
     test('SettingsFailure provides fallback message when serverMessage is null', () {
       const failure = Network();
       const state = SettingsFailure(failure);
 
-      expect(state.message, equals('فشل في تحميل الإعدادات'));
+      expect(state.message, equals(AppLocaleKeys.errorNetwork.tr()));
     });
 
     test('works for guest context without requiring authentication', () async {

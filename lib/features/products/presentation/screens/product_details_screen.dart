@@ -31,11 +31,15 @@ class ProductDetailsScreen extends StatefulWidget {
     required this.productId,
     this.branchId,
     this.cubit,
+    this.branchCubit,
+    this.cartCubit,
   });
 
   final String productId;
   final String? branchId;
   final ProductDetailsCubit? cubit;
+  final BranchCubit? branchCubit;
+  final CartCubit? cartCubit;
 
   @override
   State<ProductDetailsScreen> createState() => _ProductDetailsScreenState();
@@ -66,13 +70,11 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   void _loadDetails() {
     String? effectiveBranchId = widget.branchId;
     if (effectiveBranchId == null || effectiveBranchId.trim().isEmpty) {
-      try {
-        final branchState = context.read<BranchCubit>().state;
-        if (branchState is BranchLoaded) {
-          effectiveBranchId = branchState.selectedBranchId;
-        }
-      } catch (_) {
-        // In isolated test environments where BranchCubit is not in context
+      final activeBranchCubit = widget.branchCubit ??
+          (getIt.isRegistered<BranchCubit>() ? getIt<BranchCubit>() : null);
+      final branchState = activeBranchCubit?.state;
+      if (branchState is BranchLoaded) {
+        effectiveBranchId = branchState.selectedBranchId;
       }
     }
 
@@ -91,15 +93,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   }
 
   void _handleAddToCart(Product product) {
-    CartCubit? cartCubit;
-    try {
-      cartCubit = context.read<CartCubit>();
-    } catch (_) {
-      if (getIt.isRegistered<CartCubit>()) {
-        cartCubit = getIt<CartCubit>();
-      }
-    }
-    cartCubit?.addToCart(product, quantity: _selectedQuantity);
+    final activeCartCubit = widget.cartCubit ??
+        (getIt.isRegistered<CartCubit>() ? getIt<CartCubit>() : null);
+    activeCartCubit?.addToCart(product, quantity: _selectedQuantity);
 
     final unitLabel = (product.unit != null && product.unit!.trim().isNotEmpty)
         ? product.unit!.trim()

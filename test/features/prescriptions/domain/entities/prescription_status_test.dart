@@ -37,21 +37,14 @@ void main() {
       expect(PrescriptionStatus.fromRaw('dispatched'), PrescriptionStatus.unknown);
     });
 
-    test('returns correct Arabic labels for customer view', () {
-      expect(PrescriptionStatus.pending.toArabicLabel(), 'قيد الانتظار');
-      expect(PrescriptionStatus.preparing.toArabicLabel(), 'جاري التحضير');
-      expect(PrescriptionStatus.completed.toArabicLabel(), 'تم التوصيل');
-      expect(PrescriptionStatus.rejected.toArabicLabel(), 'مرفوضة');
-      expect(PrescriptionStatus.unknown.toArabicLabel('معالجة خاصة'), 'معالجة خاصة');
-      expect(PrescriptionStatus.unknown.toArabicLabel(), 'غير معروف');
-    });
-
-    test('returns correct localization keys', () {
+    test('returns correct translation keys matching OrderStatus pattern', () {
+      expect(PrescriptionStatus.pending.translationKey, 'prescriptions.status_pending');
+      expect(PrescriptionStatus.preparing.translationKey, 'prescriptions.status_preparing');
+      expect(PrescriptionStatus.completed.translationKey, 'prescriptions.status_completed');
+      expect(PrescriptionStatus.rejected.translationKey, 'prescriptions.status_rejected');
+      expect(PrescriptionStatus.unknown.translationKey, 'prescriptions.status_unknown');
+      // Backwards-compatible localizationKey
       expect(PrescriptionStatus.pending.localizationKey, 'prescriptions.status_pending');
-      expect(PrescriptionStatus.preparing.localizationKey, 'prescriptions.status_preparing');
-      expect(PrescriptionStatus.completed.localizationKey, 'prescriptions.status_completed');
-      expect(PrescriptionStatus.rejected.localizationKey, 'prescriptions.status_rejected');
-      expect(PrescriptionStatus.unknown.localizationKey, 'prescriptions.status_unknown');
     });
   });
 }

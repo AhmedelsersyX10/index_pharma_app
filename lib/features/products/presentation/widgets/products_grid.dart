@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:index_pharma/core/errors/failure.dart';
+import 'package:index_pharma/core/errors/failure_mapper.dart';
 import 'package:index_pharma/core/localization/app_locale_keys.dart';
 import 'package:index_pharma/core/theme/theme.dart';
 import '../../domain/entities/product.dart';
@@ -94,8 +95,10 @@ class ProductsGrid extends StatelessWidget {
               onPressed: onRetryMore,
               icon: const Icon(Icons.refresh_rounded, size: 16),
               label: Text(
-                loadingMoreError?.serverMessage ??
-                    AppLocaleKeys.commonRetry.tr(),
+                FailureMapper.toMessage(
+                  loadingMoreError!,
+                  defaultFallback: AppLocaleKeys.commonRetry.tr(),
+                ),
                 style: AppTypography.bodySm(
                   color: AppColors.error,
                 ).copyWith(

@@ -6,11 +6,7 @@ import 'order_status_badge.dart';
 
 /// Card widget representing a single order in the customer orders stream (Stitch C4).
 class OrderCard extends StatelessWidget {
-  const OrderCard({
-    super.key,
-    required this.order,
-    required this.onTap,
-  });
+  const OrderCard({super.key, required this.order, required this.onTap});
 
   final CustomerOrder order;
   final VoidCallback onTap;
@@ -18,8 +14,7 @@ class OrderCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dateFormat = DateFormat('d MMMM yyyy, hh:mm a', context.locale.languageCode);
-    final formattedDate = dateFormat.format(order.createdAt);
-    final itemsSummary = order.items.map((i) => i.productName).join('، ');
+    final itemsSummary = order.items.map((i) => i.productName).join('common.list_separator'.tr());
 
     final itemsCountText = order.totalItemCount == 1
         ? 'orders.single_item_count'.tr()
@@ -48,11 +43,7 @@ class OrderCard extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        const Icon(
-                          Icons.receipt_rounded,
-                          size: 18,
-                          color: AppColors.primary,
-                        ),
+                        const Icon(Icons.receipt_rounded, size: 18, color: AppColors.primary),
                         const SizedBox(width: AppSpacing.spaceXs),
                         Text(
                           order.orderNumber,
@@ -80,11 +71,8 @@ class OrderCard extends StatelessWidget {
                     ),
                     const SizedBox(width: AppSpacing.spaceXs),
                     Text(
-                      formattedDate,
-                      style: const TextStyle(
-                        fontSize: 12,
-                        color: AppColors.onSurfaceVariant,
-                      ),
+                      '$dateFormat',
+                      style: const TextStyle(fontSize: 12, color: AppColors.onSurfaceVariant),
                     ),
                   ],
                 ),
@@ -116,18 +104,11 @@ class OrderCard extends StatelessWidget {
                       ],
                       Row(
                         children: [
-                          const Icon(
-                            Icons.medication_rounded,
-                            size: 14,
-                            color: AppColors.primary,
-                          ),
+                          const Icon(Icons.medication_rounded, size: 14, color: AppColors.primary),
                           const SizedBox(width: 4),
                           Text(
                             itemsCountText,
-                            style: const TextStyle(
-                              fontSize: 11,
-                              color: AppColors.onSurfaceVariant,
-                            ),
+                            style: const TextStyle(fontSize: 11, color: AppColors.onSurfaceVariant),
                           ),
                         ],
                       ),
@@ -146,10 +127,7 @@ class OrderCard extends StatelessWidget {
                       children: [
                         Text(
                           'orders.total_amount'.tr(),
-                          style: const TextStyle(
-                            fontSize: 11,
-                            color: AppColors.onSurfaceVariant,
-                          ),
+                          style: const TextStyle(fontSize: 11, color: AppColors.onSurfaceVariant),
                         ),
                         const SizedBox(height: 2),
                         Row(
@@ -191,16 +169,10 @@ class OrderCard extends StatelessWidget {
                         ),
                       ),
                       iconAlignment: IconAlignment.end,
-                      icon: const Icon(
-                        Icons.arrow_forward_ios_rounded,
-                        size: 13,
-                      ),
+                      icon: const Icon(Icons.arrow_forward_ios_rounded, size: 13),
                       label: Text(
                         'orders.view_details_btn'.tr(),
-                        style: const TextStyle(
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
                       ),
                     ),
                   ],

@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:index_pharma/core/errors/failure.dart';
+import 'package:index_pharma/core/errors/failure_mapper.dart';
 import 'package:index_pharma/core/theme/theme.dart';
 
 /// Loading shimmer/indicator view for branch list.
@@ -162,14 +163,10 @@ class BranchErrorView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final errorMessage = failure.serverMessage?.trim().isNotEmpty == true
-        ? failure.serverMessage!
-        : switch (failure) {
-            Network() => 'auth.error.network'.tr(),
-            Timeout() => 'auth.error.timeout'.tr(),
-            Server() => 'auth.error.server'.tr(),
-            _ => 'branch_selection.fetch_error_desc'.tr(),
-          };
+    final errorMessage = FailureMapper.toMessage(
+      failure,
+      defaultFallback: 'branch_selection.fetch_error_desc'.tr(),
+    );
 
     return Center(
       child: Padding(

@@ -41,15 +41,7 @@ class AccountScreen extends StatelessWidget {
   final BranchCubit? branchCubit;
 
   AuthCubit _resolveAuthCubit(BuildContext context) {
-    if (authCubit != null) return authCubit!;
-    try {
-      return context.read<AuthCubit>();
-    } catch (_) {
-      if (GetIt.instance.isRegistered<AuthCubit>()) {
-        return GetIt.instance<AuthCubit>();
-      }
-      rethrow;
-    }
+    return authCubit ?? context.read<AuthCubit>();
   }
 
   StorageService _resolveStorageService() {
@@ -61,15 +53,7 @@ class AccountScreen extends StatelessWidget {
   }
 
   BranchCubit? _resolveBranchCubit(BuildContext context) {
-    if (branchCubit != null) return branchCubit;
-    try {
-      return context.read<BranchCubit>();
-    } catch (_) {
-      if (GetIt.instance.isRegistered<BranchCubit>()) {
-        return GetIt.instance<BranchCubit>();
-      }
-      return null;
-    }
+    return branchCubit;
   }
 
   Future<void> _handleLogout(BuildContext context, AuthCubit cubit) async {

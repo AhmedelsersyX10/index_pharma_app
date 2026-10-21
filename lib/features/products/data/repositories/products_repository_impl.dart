@@ -48,7 +48,7 @@ class ProductsRepositoryImpl implements ProductsRepository {
     if (cleanBranchId.isEmpty) {
       return const Err(
         Validation(
-          serverMessage: 'معرّف الفرع مطلوب لعرض تفاصيل المنتج',
+          serverMessage: 'branch_id_required',
         ),
       );
     }
@@ -57,7 +57,7 @@ class ProductsRepositoryImpl implements ProductsRepository {
     if (cleanProductId.isEmpty) {
       return const Err(
         Validation(
-          serverMessage: 'معرّف المنتج مطلوب',
+          serverMessage: 'product_id_required',
         ),
       );
     }

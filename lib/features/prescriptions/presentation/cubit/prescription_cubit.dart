@@ -1,5 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:index_pharma/core/errors/failure_mapper.dart';
+import 'package:index_pharma/core/localization/app_locale_keys.dart';
 import 'package:index_pharma/core/network/api_result.dart';
 import '../../domain/repositories/prescriptions_repository.dart';
 import 'prescription_state.dart';
@@ -120,7 +123,7 @@ class PrescriptionCubit extends Cubit<PrescriptionState> {
       emit(
         state.copyWith(
           uploadStep: PrescriptionUploadStep.failure,
-          uploadErrorMessage: 'يرجى اختيار صورة الروشتة أولاً',
+          uploadErrorMessage: AppLocaleKeys.prescriptionsSelectImageFirst.tr(),
         ),
       );
       return;
@@ -153,7 +156,10 @@ class PrescriptionCubit extends Cubit<PrescriptionState> {
         emit(
           state.copyWith(
             uploadStep: PrescriptionUploadStep.failure,
-            uploadErrorMessage: failure.serverMessage ?? 'تعذر رفع صورة الروشتة',
+            uploadErrorMessage: FailureMapper.toMessage(
+              failure,
+              defaultFallback: AppLocaleKeys.prescriptionsUploadError.tr(),
+            ),
           ),
         );
         return;
@@ -176,7 +182,10 @@ class PrescriptionCubit extends Cubit<PrescriptionState> {
             emit(
               state.copyWith(
                 uploadStep: PrescriptionUploadStep.failure,
-                uploadErrorMessage: failure.serverMessage ?? 'تعذر إرسال الروشتة للمراجعة',
+                uploadErrorMessage: FailureMapper.toMessage(
+                  failure,
+                  defaultFallback: AppLocaleKeys.prescriptionsSubmitError.tr(),
+                ),
               ),
             );
           case Success(:final data):
@@ -211,7 +220,10 @@ class PrescriptionCubit extends Cubit<PrescriptionState> {
         emit(
           state.copyWith(
             listStep: PrescriptionListStep.failure,
-            listErrorMessage: failure.serverMessage ?? 'تعذر تحميل قائمة الروشتات',
+            listErrorMessage: FailureMapper.toMessage(
+              failure,
+              defaultFallback: AppLocaleKeys.prescriptionsErrorLoadingList.tr(),
+            ),
           ),
         );
       case Success(:final data):

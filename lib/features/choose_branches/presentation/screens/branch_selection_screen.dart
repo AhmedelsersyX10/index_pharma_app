@@ -13,7 +13,6 @@ import 'package:index_pharma/features/choose_branches/presentation/widgets/branc
 import 'package:index_pharma/features/choose_branches/presentation/widgets/branch_header.dart';
 import 'package:index_pharma/features/choose_branches/presentation/widgets/branch_intro_section.dart';
 import 'package:index_pharma/features/choose_branches/presentation/widgets/branch_state_views.dart';
-import 'package:index_pharma/features/choose_branches/presentation/widgets/cold_chain_banner.dart';
 
 /// Full screen branch selection experience conforming to Stitch design specifications.
 ///
@@ -26,10 +25,12 @@ class BranchSelectionScreen extends StatelessWidget {
   const BranchSelectionScreen({
     super.key,
     this.branchCubit,
+    this.cartCubit,
     this.onBranchConfirmed,
   });
 
   final BranchCubit? branchCubit;
+  final CartCubit? cartCubit;
   final VoidCallback? onBranchConfirmed;
 
   @override
@@ -39,6 +40,7 @@ class BranchSelectionScreen extends StatelessWidget {
         value: branchCubit!,
         child: _BranchSelectionView(
           onBranchConfirmed: onBranchConfirmed,
+          cartCubit: cartCubit,
         ),
       );
     }
@@ -47,6 +49,7 @@ class BranchSelectionScreen extends StatelessWidget {
       create: (context) => getIt<BranchCubit>()..fetchBranches(),
       child: _BranchSelectionView(
         onBranchConfirmed: onBranchConfirmed,
+        cartCubit: cartCubit,
       ),
     );
   }
@@ -55,9 +58,11 @@ class BranchSelectionScreen extends StatelessWidget {
 class _BranchSelectionView extends StatefulWidget {
   const _BranchSelectionView({
     this.onBranchConfirmed,
+    this.cartCubit,
   });
 
   final VoidCallback? onBranchConfirmed;
+  final CartCubit? cartCubit;
 
   @override
   State<_BranchSelectionView> createState() => _BranchSelectionViewState();
@@ -75,14 +80,8 @@ class _BranchSelectionViewState extends State<_BranchSelectionView> {
 
   Future<void> _handleBranchSelection(String targetBranchId) async {
     final branchCubit = context.read<BranchCubit>();
-    CartCubit? cartCubit;
-    try {
-      cartCubit = context.read<CartCubit>();
-    } catch (_) {
-      if (getIt.isRegistered<CartCubit>()) {
-        cartCubit = getIt<CartCubit>();
-      }
-    }
+    final cartCubit = widget.cartCubit ??
+        (getIt.isRegistered<CartCubit>() ? getIt<CartCubit>() : null);
 
     if (cartCubit != null && cartCubit.hasConflictWithBranch(targetBranchId)) {
       final shouldClear = await CartBranchConflictDialog.show(context);
@@ -170,11 +169,6 @@ class _BranchSelectionViewState extends State<_BranchSelectionView> {
                         );
                       },
                     ),
-
-                    AppSpacing.vSpaceXl,
-
-                    // Cold Chain Quality Assurance Banner
-                    const ColdChainBanner(),
 
                     const SizedBox(height: 100),
                   ],

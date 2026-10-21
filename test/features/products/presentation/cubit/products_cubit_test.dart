@@ -1,5 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:index_pharma/core/errors/failure.dart';
+import 'package:index_pharma/core/localization/app_locale_keys.dart';
 import 'package:index_pharma/core/network/api_result.dart';
 import 'package:index_pharma/features/categories/domain/entities/category.dart';
 import 'package:index_pharma/features/products/domain/entities/product.dart';
@@ -165,7 +167,10 @@ void main() {
         const ProductsLoading(),
         const ProductsFailure(failure, branchId: 'b01'),
       ]);
-      expect((cubit.state as ProductsFailure).message, equals('خطأ في السيرفر'));
+      expect(
+        (cubit.state as ProductsFailure).message,
+        equals(AppLocaleKeys.errorServer.tr()),
+      );
     });
 
     test('loadFirstPage emits ProductsFailure if branchId is empty', () async {
@@ -177,8 +182,10 @@ void main() {
 
       expect(states.length, equals(1));
       expect(states[0], isA<ProductsFailure>());
-      expect((states[0] as ProductsFailure).message,
-          equals('يرجى اختيار الفرع لعرض مخزون المتجر'));
+      expect(
+        (states[0] as ProductsFailure).message,
+        equals(AppLocaleKeys.errorBranchRequired.tr()),
+      );
     });
 
     test('loadMore appends subsequent page products when hasReachedMax is false',

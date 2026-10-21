@@ -1,5 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:index_pharma/core/errors/failure.dart';
+import 'package:index_pharma/core/localization/app_locale_keys.dart';
 import 'package:index_pharma/core/network/api_result.dart';
 import 'package:index_pharma/features/orders/domain/entities/customer_order.dart';
 import 'package:index_pharma/features/orders/domain/entities/customer_order_item.dart';
@@ -158,7 +160,10 @@ void main() {
       expect(states.length, 2);
       expect(states[0], const MyOrdersLoading());
       expect(states[1], isA<MyOrdersFailure>());
-      expect((states[1] as MyOrdersFailure).message, 'انتهت الجلسة');
+      expect(
+        (states[1] as MyOrdersFailure).message,
+        AppLocaleKeys.errorUnauthorized.tr(),
+      );
     });
 
     test('loadMore appends orders on successful pagination call', () async {

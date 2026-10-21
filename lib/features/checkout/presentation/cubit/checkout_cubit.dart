@@ -1,5 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:index_pharma/core/errors/failure.dart';
+import 'package:index_pharma/core/errors/failure_mapper.dart';
+import 'package:index_pharma/core/localization/app_locale_keys.dart';
 import 'package:index_pharma/core/network/api_result.dart';
 import 'package:index_pharma/features/cart/domain/entities/cart_item.dart';
 import 'package:index_pharma/features/cart/presentation/cubit/cart_cubit.dart';
@@ -88,16 +91,16 @@ class CheckoutCubit extends Cubit<CheckoutState> {
 
     final trimmedAddress = state.deliveryAddress.trim();
     if (trimmedAddress.isEmpty) {
-      addressError = 'يرجى إدخال عنوان التسليم بالتفصيل.';
+      addressError = AppLocaleKeys.checkoutErrorAddressRequired.tr();
     } else if (trimmedAddress.length < 5) {
-      addressError = 'عنوان التسليم قصير جداً. يرجى توضيح اسم الشارع ورقم العقار.';
+      addressError = AppLocaleKeys.checkoutErrorAddressTooShort.tr();
     }
 
     final trimmedPhone = state.customerPhone.trim();
     if (trimmedPhone.isEmpty) {
-      phoneError = 'رقم الهاتف مطلوب للتواصل.';
+      phoneError = AppLocaleKeys.checkoutErrorPhoneRequired.tr();
     } else if (!_egyptianPhoneRegex.hasMatch(trimmedPhone)) {
-      phoneError = 'يرجى إدخال رقم هاتف مصري صحيح مكون من 11 رقماً (مثال: 01012345678).';
+      phoneError = AppLocaleKeys.checkoutErrorPhoneInvalid.tr();
     }
 
     if (addressError != null || phoneError != null) {
@@ -113,7 +116,7 @@ class CheckoutCubit extends Cubit<CheckoutState> {
 
     if (isCartEmpty) {
       emit(CheckoutFailure(
-        message: 'السلة فارغة. يرجى إضافة أدوية قبل إتمام الطلب.',
+        message: AppLocaleKeys.checkoutErrorEmptyCart.tr(),
         deliveryAddress: state.deliveryAddress,
         customerPhone: state.customerPhone,
         notes: state.notes,
@@ -186,10 +189,10 @@ class CheckoutCubit extends Cubit<CheckoutState> {
 
           final serverMsg = failure.serverMessage;
           final conflictMessage = (serverMsg != null && serverMsg.trim().isNotEmpty)
-              ? serverMsg
+              ? serverMsg.trim()
               : (failure is NotFound
-                  ? 'أحد المنتجات غير متاح حالياً بالفرع.'
-                  : 'تغير المخزون المتاح، يرجى مراجعة السلة.');
+                  ? AppLocaleKeys.checkoutConflictItemUnavailable.tr()
+                  : AppLocaleKeys.checkoutConflictStockChanged.tr());
 
           emit(CheckoutConflict(
             message: conflictMessage,
@@ -201,12 +204,10 @@ class CheckoutCubit extends Cubit<CheckoutState> {
           return false;
         }
 
-        final errorMsg = failure.serverMessage ??
-            (failure is Validation
-                ? 'بيانات الطلب غير صالحة، يرجى المراجعة.'
-                : failure is Unauthorized
-                    ? 'انتهت صلاحية الجلسة، يرجى تسجيل الدخول مجدداً.'
-                    : 'تعذر إرسال الطلب، يرجى المحاولة لاحقاً.');
+        final errorMsg = FailureMapper.toMessage(
+          failure,
+          defaultFallback: AppLocaleKeys.checkoutErrorSubmitFailed.tr(),
+        );
 
         emit(CheckoutFailure(
           message: errorMsg,

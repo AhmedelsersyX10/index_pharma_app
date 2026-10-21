@@ -10,11 +10,6 @@ abstract final class AuthFailureMapper {
   /// Never displays raw exception or stack trace strings.
   /// If the server returned a custom business error message, that message is preferred.
   static String toMessage(Failure failure) {
-    final serverMsg = failure.serverMessage?.trim();
-    if (serverMsg != null && serverMsg.isNotEmpty) {
-      return serverMsg;
-    }
-
     return switch (failure) {
       Network() => AppLocaleKeys.authErrorNetwork.tr(),
       Timeout() => AppLocaleKeys.authErrorTimeout.tr(),

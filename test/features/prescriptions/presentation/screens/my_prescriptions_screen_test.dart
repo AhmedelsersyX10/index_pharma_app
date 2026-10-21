@@ -6,6 +6,7 @@ import 'package:easy_localization/easy_localization.dart' hide TextDirection;
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:index_pharma/core/errors/failure.dart';
+import 'package:index_pharma/core/localization/app_locale_keys.dart';
 import 'package:index_pharma/core/network/api_result.dart';
 import 'package:index_pharma/features/prescriptions/domain/entities/prescription_entity.dart';
 import 'package:index_pharma/features/prescriptions/domain/entities/prescription_status.dart';
@@ -163,7 +164,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byIcon(Icons.error_outline), findsOneWidget);
-    expect(find.text('انقطع الاتصال بالإنترنت'), findsOneWidget);
+    expect(find.text(AppLocaleKeys.errorNetwork.tr()), findsOneWidget);
 
     // Update repository to return success on retry
     fakeRepo.listResult = const Success([testPrescription1]);

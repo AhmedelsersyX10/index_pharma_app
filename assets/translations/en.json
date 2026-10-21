@@ -23,7 +23,8 @@
     "upload_prescription": "Upload Prescription",
     "search_hint": "Search medicines, vitamins, pharmacy items...",
     "filter": "Filter",
-    "retry": "Retry"
+    "retry": "Retry",
+    "list_separator": ", "
   },
   "error": {
     "title": "Something Went Wrong",
@@ -32,7 +33,21 @@
     "offline_message": "Unable to connect to the server. Your actions have been cached locally.",
     "offline_badge": "Offline",
     "data_safe_title": "Your Data is Safe",
-    "data_safe_desc": "Local records are saved safely and will sync automatically once reconnected."
+    "data_safe_desc": "Local records are saved safely and will sync automatically once reconnected.",
+    "network": "Unable to connect to server. Please check your internet connection.",
+    "timeout": "Request timed out. Please try again.",
+    "validation": "Invalid request details. Please check and try again.",
+    "unauthorized": "Session expired. Please sign in again.",
+    "forbidden": "You are not authorized to perform this action.",
+    "not_found": "The requested item is currently unavailable.",
+    "conflict": "Stock availability conflict. Please refresh.",
+    "rate_limit": "Too many requests. Please wait a moment.",
+    "server": "A server error occurred. Please try again later.",
+    "unexpected": "An unexpected error occurred. Please try again later.",
+    "categories_load_failed": "Failed to load categories",
+    "settings_load_failed": "Failed to load settings",
+    "products_load_failed": "Failed to load medications list",
+    "branch_required": "Please select a branch to view store inventory"
   },
   "empty_state": {
     "title": "No Items Found",
@@ -148,8 +163,6 @@
     "open_24_hours": "Open 24/7 • All week",
     "stock_ready": "Full medication stock • Delivery active",
     "delivery_time": "Delivery: 30-45 mins",
-    "cold_chain_title": "Guaranteed Cold Chain Delivery",
-    "cold_chain_desc": "All insulin and vaccines are transported in specialized temperature-controlled bags (2-8°C) from the branch to your door.",
     "approved_branch": "Selected Branch:",
     "available_now": "Available Now",
     "confirm_and_continue": "Confirm Branch & Continue Shopping",
@@ -320,7 +333,15 @@
     "stock_conflict_title": "Stock Changed, Review Cart",
     "stock_conflict_desc": "Available branch stock changed for some items during clinical order processing.",
     "return_to_cart_btn": "Return to Cart to Update Quantities",
-    "cart_empty_error": "Your cart is empty. Please add medications before checking out."
+    "cart_empty_error": "Your cart is empty. Please add medications before checking out.",
+    "conflict_item_unavailable": "One of the items is currently unavailable at this branch.",
+    "conflict_stock_changed": "Available stock has changed. Please review your cart.",
+    "error_empty_cart": "Cart is empty. Please add items before placing order.",
+    "error_address_required": "Please enter detailed delivery address.",
+    "error_address_too_short": "Delivery address is too short. Please include street and building.",
+    "error_phone_required": "Phone number is required.",
+    "error_phone_invalid": "Please enter a valid 11-digit Egyptian phone number (e.g. 01012345678).",
+    "error_submit_failed": "Unable to submit order. Please try again later."
   },
   "order_confirmation": {
     "title": "Order Confirmation",
@@ -387,7 +408,9 @@
     "empty_title": "No orders yet",
     "empty_desc": "You haven't placed any pharmaceutical orders yet. Browse our verified products and add them to your cart.",
     "empty_browse_btn": "Browse Medications",
-    "load_more_error": "Could not load more orders. Tap to retry."
+    "load_more_error": "Could not load more orders. Tap to retry.",
+    "items_count_single": "{} item",
+    "items_count_multiple": "{} items"
   },
   "prescriptions": {
     "status_pending": "Waiting",
@@ -424,7 +447,7 @@
     "steps_title": "What happens after submitting?",
     "step_1": "A licensed pharmacist reviews medications, calculates dosages, and checks drug interactions.",
     "step_2": "Approved medications available at the assigned branch are prepared with high safety standards.",
-    "step_3": "Safe delivery in temperature-controlled, sealed packages directly to your door.",
+    "step_3": "Safe delivery in secure, sealed packages directly to your door.",
     "submit_btn": "Submit Prescription for Review",
     "confirmation_title": "Prescription Received Successfully!",
     "confirmation_badge": "New Prescription Order",
@@ -461,7 +484,17 @@
     "chip_alternatives_text": "Provide generic alternatives if original is unavailable",
     "chip_dosage_text": "Clarify dosage schedules in detail",
     "chip_urgent_text": "Urgent medicine delivery",
-    "default_rejection_reason": "The prescription date has expired or the doctor's stamp and signature are unclear."
+    "default_rejection_reason": "The prescription date has expired or the doctor's stamp and signature are unclear.",
+    "submitted_step1_title": "Review Items & Calculate Dosages",
+    "submitted_step2_title": "Approve & Prepare Medications",
+    "submitted_step3_title": "Order Confirmation & Delivery",
+    "step_num_1": "1",
+    "step_num_2": "2",
+    "step_num_3": "3",
+    "select_image_first": "Please select a prescription image first",
+    "error_loading_list": "An error occurred while loading prescriptions",
+    "upload_error": "Could not upload prescription image",
+    "submit_error": "Could not submit prescription for review"
   },
   "account": {
     "title": "My Account",
@@ -551,7 +584,7 @@
     "continue_arabic": "Continue in Arabic",
     "continue_english": "Continue in English",
     "footer_trust": "Index Pharma Egypt • Ministry of Health",
-    "footer_copyright": "All Rights Reserved © 2025"
+    "footer_copyright": "All Rights Reserved © 2025",
+    "arabic_icon": "Ar"
   }
 }
-

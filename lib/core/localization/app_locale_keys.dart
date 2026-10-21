@@ -26,6 +26,7 @@ abstract class AppLocaleKeys {
   static const commonSearchHint = 'common.search_hint';
   static const commonFilter = 'common.filter';
   static const commonRetry = 'common.retry';
+  static const commonListSeparator = 'common.list_separator';
 
   // Error & Offline
   static const errorTitle = 'error.title';
@@ -35,6 +36,20 @@ abstract class AppLocaleKeys {
   static const errorOfflineBadge = 'error.offline_badge';
   static const errorDataSafeTitle = 'error.data_safe_title';
   static const errorDataSafeDesc = 'error.data_safe_desc';
+  static const errorNetwork = 'error.network';
+  static const errorTimeout = 'error.timeout';
+  static const errorValidation = 'error.validation';
+  static const errorUnauthorized = 'error.unauthorized';
+  static const errorForbidden = 'error.forbidden';
+  static const errorNotFound = 'error.not_found';
+  static const errorConflict = 'error.conflict';
+  static const errorRateLimit = 'error.rate_limit';
+  static const errorServer = 'error.server';
+  static const errorUnexpected = 'error.unexpected';
+  static const errorCategoriesLoadFailed = 'error.categories_load_failed';
+  static const errorSettingsLoadFailed = 'error.settings_load_failed';
+  static const errorProductsLoadFailed = 'error.products_load_failed';
+  static const errorBranchRequired = 'error.branch_required';
 
   // Empty State
   static const emptyStateTitle = 'empty_state.title';
@@ -432,5 +447,33 @@ abstract class AppLocaleKeys {
   static const languageContinueEnglish = 'language.continue_english';
   static const languageFooterTrust = 'language.footer_trust';
   static const languageFooterCopyright = 'language.footer_copyright';
+  static const languageArabicIcon = 'language.arabic_icon';
+
+  // Prescriptions Extensions
+  static const prescriptionsSubmittedStep1Title = 'prescriptions.submitted_step1_title';
+  static const prescriptionsSubmittedStep2Title = 'prescriptions.submitted_step2_title';
+  static const prescriptionsSubmittedStep3Title = 'prescriptions.submitted_step3_title';
+  static const prescriptionsStepNum1 = 'prescriptions.step_num_1';
+  static const prescriptionsStepNum2 = 'prescriptions.step_num_2';
+  static const prescriptionsStepNum3 = 'prescriptions.step_num_3';
+  static const prescriptionsSelectImageFirst = 'prescriptions.select_image_first';
+  static const prescriptionsErrorLoadingList = 'prescriptions.error_loading_list';
+  static const prescriptionsUploadError = 'prescriptions.upload_error';
+  static const prescriptionsSubmitError = 'prescriptions.submit_error';
+
+  // Orders Extensions
+  static const ordersItemsCountSingle = 'orders.items_count_single';
+  static const ordersItemsCountMultiple = 'orders.items_count_multiple';
+
+  // Checkout Extensions
+  static const checkoutTitle = 'checkout.title';
+  static const checkoutConflictItemUnavailable = 'checkout.conflict_item_unavailable';
+  static const checkoutConflictStockChanged = 'checkout.conflict_stock_changed';
+  static const checkoutErrorEmptyCart = 'checkout.error_empty_cart';
+  static const checkoutErrorAddressRequired = 'checkout.error_address_required';
+  static const checkoutErrorAddressTooShort = 'checkout.error_address_too_short';
+  static const checkoutErrorPhoneRequired = 'checkout.error_phone_required';
+  static const checkoutErrorPhoneInvalid = 'checkout.error_phone_invalid';
+  static const checkoutErrorSubmitFailed = 'checkout.error_submit_failed';
 }
 

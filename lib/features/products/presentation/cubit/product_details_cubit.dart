@@ -37,7 +37,7 @@ class ProductDetailsCubit extends Cubit<ProductDetailsState> {
       emit(
         const ProductDetailsFailure(
           Validation(
-            serverMessage: 'يرجى اختيار الفرع أولاً لعرض تفاصيل المنتج',
+            serverMessage: 'branch_required',
           ),
         ),
       );
@@ -48,7 +48,7 @@ class ProductDetailsCubit extends Cubit<ProductDetailsState> {
       emit(
         const ProductDetailsFailure(
           Validation(
-            serverMessage: 'معرّف المنتج غير صالح',
+            serverMessage: 'product_id_invalid',
           ),
         ),
       );

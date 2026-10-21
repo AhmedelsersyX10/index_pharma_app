@@ -146,7 +146,7 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
                       languageCode: 'ar',
                       isSelected: isArabicSelected,
                       onTap: () => _cubit.selectLanguage('ar'),
-                      iconText: 'ع',
+                      iconText: AppLocaleKeys.languageArabicIcon.tr(),
                       title: AppLocaleKeys.languageArabicTitle.tr(),
                       badge: AppLocaleKeys.languageArabicBadge.tr(),
                       slogan: AppLocaleKeys.languageArabicSlogan.tr(),

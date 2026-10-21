@@ -5,6 +5,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:index_pharma/core/errors/failure.dart';
+import 'package:index_pharma/core/localization/app_locale_keys.dart';
 import 'package:index_pharma/core/network/api_result.dart';
 import 'package:index_pharma/core/storage/storage_service.dart';
 import 'package:index_pharma/core/theme/theme.dart';
@@ -376,7 +377,7 @@ void main() {
 
       // Product section displays isolated error view
       expect(find.byType(AppErrorView), findsOneWidget);
-      expect(find.text('تعذر تحميل المنتجات'), findsOneWidget);
+      expect(find.text(AppLocaleKeys.errorNetwork.tr()), findsOneWidget);
       expect(find.byType(HomeStorageGuaranteeFooter), findsOneWidget);
     });
 

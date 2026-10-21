@@ -1,7 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
 import 'package:index_pharma/core/errors/failure.dart';
 import 'package:index_pharma/core/localization/app_locale_keys.dart';
 import 'package:index_pharma/core/theme/theme.dart';
@@ -34,8 +33,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final cubit = widget.authCubit ??
-        (context.readOrNull<AuthCubit>() ?? GetIt.instance<AuthCubit>());
+    final cubit = widget.authCubit ?? context.read<AuthCubit>();
 
     return BlocProvider.value(
       value: cubit,
@@ -174,15 +172,5 @@ class _RegisterScreenState extends State<RegisterScreen> {
         ),
       ),
     );
-  }
-}
-
-extension _BuildContextReadOrNull on BuildContext {
-  T? readOrNull<T>() {
-    try {
-      return read<T>();
-    } catch (_) {
-      return null;
-    }
   }
 }

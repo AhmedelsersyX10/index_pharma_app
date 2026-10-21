@@ -93,22 +93,33 @@ class _CategoryIconBadge extends StatelessWidget {
 
   IconData _resolveCategoryIcon(String name) {
     final lower = name.toLowerCase();
-    if (lower.contains('skin') || lower.contains('بشرة') || lower.contains('جلد')) {
+    if (lower.contains('skin') ||
+        lower.contains('\u0628\u0634\u0631\u0629') ||
+        lower.contains('\u062c\u0644\u062f')) {
       return Icons.spa_outlined;
     }
-    if (lower.contains('vitamin') || lower.contains('فيتامين') || lower.contains('مكمل')) {
+    if (lower.contains('vitamin') ||
+        lower.contains('\u0641\u064a\u062a\u0627\u0645\u064a\u0646') ||
+        lower.contains('\u0645\u0643\u0645\u0644')) {
       return Icons.health_and_safety_outlined;
     }
-    if (lower.contains('cardio') || lower.contains('heart') || lower.contains('قلب')) {
+    if (lower.contains('cardio') ||
+        lower.contains('heart') ||
+        lower.contains('\u0642\u0644\u0628')) {
       return Icons.favorite_outline;
     }
-    if (lower.contains('pain') || lower.contains('ألم') || lower.contains('مسكن')) {
+    if (lower.contains('pain') ||
+        lower.contains('\u0623\u0644\u0645') ||
+        lower.contains('\u0645\u0633\u0643\u0646')) {
       return Icons.healing_outlined;
     }
-    if (lower.contains('diabetes') || lower.contains('سكر')) {
+    if (lower.contains('diabetes') ||
+        lower.contains('\u0633\u0643\u0631')) {
       return Icons.monitor_heart_outlined;
     }
-    if (lower.contains('digest') || lower.contains('معدة') || lower.contains('هضم')) {
+    if (lower.contains('digest') ||
+        lower.contains('\u0645\u0639\u062f\u0629') ||
+        lower.contains('\u0647\u0636\u0645')) {
       return Icons.medication_liquid_outlined;
     }
     return Icons.medication_outlined;

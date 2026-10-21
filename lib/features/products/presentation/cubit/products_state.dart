@@ -1,4 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:index_pharma/core/errors/failure.dart';
+import 'package:index_pharma/core/errors/failure_mapper.dart';
+import 'package:index_pharma/core/localization/app_locale_keys.dart';
 import '../../domain/entities/product.dart';
 
 /// Sealed hierarchy representing UI states for store products.
@@ -202,8 +205,11 @@ final class ProductsFailure extends ProductsState {
   final String? keyword;
   final String? selectedCategory;
 
-  /// User-facing message derived from serverMessage or default Arabic fallback.
-  String get message => failure.serverMessage ?? 'فشل في تحميل قائمة الأدوية';
+  /// User-facing message mapped from domain failure.
+  String get message => FailureMapper.toMessage(
+        failure,
+        defaultFallback: AppLocaleKeys.errorProductsLoadFailed.tr(),
+      );
 
   @override
   bool operator ==(Object other) =>

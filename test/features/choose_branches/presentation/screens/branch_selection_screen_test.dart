@@ -6,6 +6,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:index_pharma/core/errors/failure.dart';
+import 'package:index_pharma/core/localization/app_locale_keys.dart';
 import 'package:index_pharma/core/network/api_result.dart';
 import 'package:index_pharma/core/storage/storage_service.dart';
 import 'package:index_pharma/features/choose_branches/domain/entities/branch_entity.dart';
@@ -182,7 +183,7 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(find.byType(BranchErrorView), findsOneWidget);
-    expect(find.text('فشل في الاتصال'), findsOneWidget);
+    expect(find.text(AppLocaleKeys.errorServer.tr()), findsOneWidget);
 
     // Now change to success and retry
     fakeRepository.getBranchesResult = const Success([branch1, branch2]);

@@ -18,21 +18,17 @@ class CartBadgeButton extends StatelessWidget {
     super.key,
     this.color,
     this.onTap,
+    this.cartCubit,
   });
 
   final Color? color;
   final VoidCallback? onTap;
+  final CartCubit? cartCubit;
 
   @override
   Widget build(BuildContext context) {
-    CartCubit? cubit;
-    try {
-      cubit = context.read<CartCubit>();
-    } catch (_) {
-      if (getIt.isRegistered<CartCubit>()) {
-        cubit = getIt<CartCubit>();
-      }
-    }
+    final cubit = cartCubit ??
+        (getIt.isRegistered<CartCubit>() ? getIt<CartCubit>() : null);
 
     if (cubit == null) {
       return _buildButton(context, 0);

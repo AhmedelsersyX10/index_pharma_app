@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:index_pharma/core/theme/app_colors.dart';
 import '../../domain/entities/prescription_status.dart';
@@ -23,6 +24,11 @@ class PrescriptionStatusBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final (bgColor, textColor, dotColor, icon) = _getBadgeStyle();
+    final label = (status == PrescriptionStatus.unknown &&
+            rawStatus != null &&
+            rawStatus!.trim().isNotEmpty)
+        ? rawStatus!
+        : status.translationKey.tr();
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
@@ -48,7 +54,7 @@ class PrescriptionStatusBadge extends StatelessWidget {
             const SizedBox(width: 6),
           ],
           Text(
-            status.toArabicLabel(rawStatus),
+            label,
             style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w600,

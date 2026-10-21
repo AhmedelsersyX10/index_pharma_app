@@ -1,5 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:index_pharma/core/errors/failure.dart';
+import 'package:index_pharma/core/localization/app_locale_keys.dart';
 import 'package:index_pharma/core/network/api_result.dart';
 import 'package:index_pharma/core/storage/storage_service.dart';
 import 'package:index_pharma/features/products/domain/entities/product.dart';
@@ -122,7 +124,10 @@ void main() {
       );
 
       expect(cubit.state, isA<ProductDetailsFailure>());
-      expect((cubit.state as ProductDetailsFailure).message, equals('المنتج غير موجود'));
+      expect(
+        (cubit.state as ProductDetailsFailure).message,
+        equals(AppLocaleKeys.errorNotFound.tr()),
+      );
     });
 
     test('emits ProductDetailsFailure immediately if branchId is empty and no stored branch', () async {

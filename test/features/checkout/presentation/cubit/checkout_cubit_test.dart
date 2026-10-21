@@ -1,5 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:index_pharma/core/errors/failure.dart';
+import 'package:index_pharma/core/errors/failure_mapper.dart';
+import 'package:index_pharma/core/localization/app_locale_keys.dart';
 import 'package:index_pharma/core/network/api_result.dart';
 import 'package:index_pharma/features/cart/domain/entities/cart_item.dart';
 import 'package:index_pharma/features/cart/domain/repositories/cart_repository.dart';
@@ -291,7 +294,7 @@ void main() {
       expect(success, isFalse);
       expect(checkoutCubit.state, isA<CheckoutConflict>());
       final conflictState = checkoutCubit.state as CheckoutConflict;
-      expect(conflictState.message, 'تغير المخزون المتاح، يرجى مراجعة السلة.');
+      expect(conflictState.message, AppLocaleKeys.checkoutConflictStockChanged.tr());
     });
 
     test('on 400 Bad Request: emits CheckoutFailure', () async {
@@ -307,7 +310,13 @@ void main() {
 
       expect(success, isFalse);
       expect(checkoutCubit.state, isA<CheckoutFailure>());
-      expect((checkoutCubit.state as CheckoutFailure).message, 'السلة فارغة');
+      expect(
+        (checkoutCubit.state as CheckoutFailure).message,
+        FailureMapper.toMessage(
+          const Validation(),
+          defaultFallback: AppLocaleKeys.checkoutErrorSubmitFailed.tr(),
+        ),
+      );
     });
 
     test('on 401 Unauthorized: emits CheckoutFailure with session message', () async {

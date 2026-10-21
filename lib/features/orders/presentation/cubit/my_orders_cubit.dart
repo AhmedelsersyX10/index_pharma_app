@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:index_pharma/core/errors/failure_mapper.dart';
 import 'package:index_pharma/core/network/api_result.dart';
 import '../../domain/usecases/get_my_orders_use_case.dart';
 import 'my_orders_state.dart';
@@ -48,7 +49,7 @@ class MyOrdersCubit extends Cubit<MyOrdersState> {
         emit(
           MyOrdersFailure(
             failure: failure,
-            message: failure.serverMessage,
+            message: FailureMapper.toMessage(failure),
           ),
         );
     }

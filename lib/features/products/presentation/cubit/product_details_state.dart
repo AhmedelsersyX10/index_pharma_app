@@ -1,4 +1,5 @@
 import 'package:index_pharma/core/errors/failure.dart';
+import 'package:index_pharma/core/errors/failure_mapper.dart';
 import '../../domain/entities/product.dart';
 
 /// Sealed hierarchy representing UI states for product details.
@@ -64,24 +65,8 @@ final class ProductDetailsFailure extends ProductDetailsState {
 
   final Failure failure;
 
-  /// User-facing message derived from serverMessage or default Arabic fallback.
-  String get message {
-    final serverMsg = failure.serverMessage;
-    if (serverMsg != null && serverMsg.trim().isNotEmpty) {
-      return serverMsg.trim();
-    }
-    return switch (failure) {
-      Network() => 'تعذر الاتصال بالخادم، يرجى التحقق من اتصالك بالإنترنت.',
-      Timeout() => 'انتهت مهلة الطلب، يرجى إعادة المحاولة.',
-      NotFound() => 'المنتج المطلوب غير متوفر حالياً.',
-      Unauthorized() => 'يرجى تسجيل الدخول أولاً.',
-      Forbidden() => 'غير مصرح لك بالوصول لهذا المنتج.',
-      Validation() => 'بيانات الطلب غير صالحة.',
-      Conflict() => 'تعارض في بيانات المنتج بالمخزون.',
-      RateLimit() => 'تم تجاوز حد الطلبات المسموح، يرجى الانتظار قليلاً.',
-      Server() || Unexpected() => 'حدث خطأ في الخادم، يرجى المحاولة لاحقاً.',
-    };
-  }
+  /// User-facing message mapped from domain failure.
+  String get message => FailureMapper.toMessage(failure);
 
   @override
   bool operator ==(Object other) =>

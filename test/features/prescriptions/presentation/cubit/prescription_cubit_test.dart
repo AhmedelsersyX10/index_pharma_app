@@ -1,5 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_test/flutter_test.dart' hide Timeout;
 import 'package:index_pharma/core/errors/failure.dart';
+import 'package:index_pharma/core/localization/app_locale_keys.dart';
 import 'package:index_pharma/core/network/api_result.dart';
 import 'package:index_pharma/features/prescriptions/domain/entities/prescription_entity.dart';
 import 'package:index_pharma/features/prescriptions/domain/entities/prescription_status.dart';
@@ -167,7 +169,7 @@ void main() {
       await cubit.uploadAndSubmit();
 
       expect(cubit.state.uploadStep, PrescriptionUploadStep.failure);
-      expect(cubit.state.uploadErrorMessage, 'تعذر الاتصال بالخادم');
+      expect(cubit.state.uploadErrorMessage, AppLocaleKeys.errorNetwork.tr());
     });
 
     test('uploadAndSubmit handles submit error properly after upload succeeds', () async {
@@ -183,7 +185,7 @@ void main() {
       await cubit.uploadAndSubmit();
 
       expect(cubit.state.uploadStep, PrescriptionUploadStep.failure);
-      expect(cubit.state.uploadErrorMessage, 'خطأ داخلي في الخادم');
+      expect(cubit.state.uploadErrorMessage, AppLocaleKeys.errorServer.tr());
     });
 
     test('loadMyPrescriptions loads list successfully', () async {
@@ -211,7 +213,7 @@ void main() {
       await cubit.loadMyPrescriptions();
 
       expect(cubit.state.listStep, PrescriptionListStep.failure);
-      expect(cubit.state.listErrorMessage, 'انتهت مهلة الطلب');
+      expect(cubit.state.listErrorMessage, AppLocaleKeys.errorTimeout.tr());
     });
   });
 }

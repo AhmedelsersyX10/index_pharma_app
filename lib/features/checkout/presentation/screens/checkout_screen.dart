@@ -62,16 +62,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
   @override
   Widget build(BuildContext context) {
-    CartCubit? effectiveCartCubit = widget.cartCubit;
-    if (effectiveCartCubit == null) {
-      try {
-        effectiveCartCubit = context.read<CartCubit>();
-      } catch (_) {
-        if (GetIt.instance.isRegistered<CartCubit>()) {
-          effectiveCartCubit = GetIt.instance<CartCubit>();
-        }
-      }
-    }
+    final effectiveCartCubit = widget.cartCubit ??
+        (GetIt.instance.isRegistered<CartCubit>()
+            ? GetIt.instance<CartCubit>()
+            : null);
 
     final providers = [
       BlocProvider<CheckoutCubit>.value(value: _cubit),

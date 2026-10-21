@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:index_pharma/core/errors/failure.dart';
+import 'package:index_pharma/core/localization/app_locale_keys.dart';
 import 'package:index_pharma/core/network/api_result.dart';
 import 'package:index_pharma/core/theme/theme.dart';
 import 'package:index_pharma/core/widgets/app_empty_state.dart';
@@ -158,7 +159,7 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(find.byType(AppErrorView), findsOneWidget);
-      expect(find.text('خطأ في الخادم'), findsOneWidget);
+      expect(find.text(AppLocaleKeys.errorServer.tr()), findsOneWidget);
 
       fakeRepository.result = const Success([
         Category(id: '1', name: 'Skincare'),

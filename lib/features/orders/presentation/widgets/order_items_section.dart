@@ -57,7 +57,9 @@ class OrderItemsSection extends StatelessWidget {
                   borderRadius: BorderRadius.circular(AppRadii.full),
                 ),
                 child: Text(
-                  '${items.length} ${items.length == 1 ? 'صنف' : 'أصناف'}',
+                  items.length == 1
+                      ? 'orders.items_count_single'.tr(args: ['${items.length}'])
+                      : 'orders.items_count_multiple'.tr(args: ['${items.length}']),
                   style: const TextStyle(
                     fontSize: 11,
                     fontWeight: FontWeight.bold,

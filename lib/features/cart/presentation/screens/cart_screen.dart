@@ -39,16 +39,7 @@ class CartScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final effectiveCubit = cartCubit ??
-        (context.mounted
-            ? () {
-                try {
-                  return context.read<CartCubit>();
-                } catch (_) {
-                  return getIt<CartCubit>();
-                }
-              }()
-            : getIt<CartCubit>());
+    final effectiveCubit = cartCubit ?? getIt<CartCubit>();
 
     return BlocProvider.value(
       value: effectiveCubit,

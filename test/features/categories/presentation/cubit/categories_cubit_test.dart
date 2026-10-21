@@ -1,5 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:index_pharma/core/errors/failure.dart';
+import 'package:index_pharma/core/localization/app_locale_keys.dart';
 import 'package:index_pharma/core/network/api_result.dart';
 import 'package:index_pharma/features/categories/domain/entities/category.dart';
 import 'package:index_pharma/features/categories/domain/repositories/categories_repository.dart';
@@ -100,14 +102,17 @@ void main() {
         const CategoriesLoading(),
         const CategoriesFailure(failure),
       ]);
-      expect((cubit.state as CategoriesFailure).message, equals('تعذر الاتصال بالخادم'));
+      expect(
+        (cubit.state as CategoriesFailure).message,
+        equals(AppLocaleKeys.errorServer.tr()),
+      );
     });
 
     test('CategoriesFailure provides fallback message when serverMessage is null', () {
       const failure = Network();
       const state = CategoriesFailure(failure);
 
-      expect(state.message, equals('فشل في تحميل التصنيفات'));
+      expect(state.message, equals(AppLocaleKeys.errorNetwork.tr()));
     });
   });
 }
