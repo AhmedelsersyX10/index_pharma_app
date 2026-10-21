@@ -29,10 +29,7 @@ class SynchronousDiskAssetLoader extends AssetLoader {
   }
 }
 
-Widget createTestLocalizedApp({
-  required Locale locale,
-  required Widget child,
-}) {
+Widget createTestLocalizedApp({required Locale locale, required Widget child}) {
   return EasyLocalization(
     key: ValueKey('EasyLocalization_${locale.languageCode}'),
     supportedLocales: const [Locale('ar'), Locale('en')],
@@ -60,31 +57,28 @@ void main() {
   setUpAll(() async {
     TestWidgetsFlutterBinding.ensureInitialized();
     SharedPreferences.setMockInitialValues({});
-    _arTranslations = json.decode(File('assets/translations/ar.json').readAsStringSync()) as Map<String, dynamic>;
-    _enTranslations = json.decode(File('assets/translations/en.json').readAsStringSync()) as Map<String, dynamic>;
+    _arTranslations =
+        json.decode(File('assets/translations/ar.json').readAsStringSync()) as Map<String, dynamic>;
+    _enTranslations =
+        json.decode(File('assets/translations/en.json').readAsStringSync()) as Map<String, dynamic>;
     await EasyLocalization.ensureInitialized();
   });
 
   group('EasyLocalization & RTL/LTR Tests', () {
-    testWidgets('Arabic Locale (ar) sets RTL directionality and renders Arabic strings',
-        (tester) async {
+    testWidgets('Arabic Locale (ar) sets RTL directionality and renders Arabic strings', (
+      tester,
+    ) async {
       await tester.pumpWidget(
         createTestLocalizedApp(
           locale: const Locale('ar'),
           child: Column(
             children: [
-              SplashBrandText(
-                textFade: const AlwaysStoppedAnimation(1.0),
-                textSlide: const AlwaysStoppedAnimation(0.0),
+              const SplashBrandText(
+                textFade: AlwaysStoppedAnimation(1.0),
+                textSlide: AlwaysStoppedAnimation(0.0),
               ),
-              SplashFooter(
-                footerFade: const AlwaysStoppedAnimation(1.0),
-              ),
-              OnboardingTopBar(
-                currentPage: 0,
-                totalPages: 3,
-                onSkip: () {},
-              ),
+              const SplashFooter(footerFade: AlwaysStoppedAnimation(1.0)),
+              OnboardingTopBar(currentPage: 0, totalPages: 3, onSkip: () {}),
               OnboardingBottomSection(
                 currentPage: 0,
                 totalPages: 3,
@@ -127,25 +121,20 @@ void main() {
       expect(transformWidget.transform.storage[0], -1.0);
     });
 
-    testWidgets('English Locale (en) sets LTR directionality and renders English strings',
-        (tester) async {
+    testWidgets('English Locale (en) sets LTR directionality and renders English strings', (
+      tester,
+    ) async {
       await tester.pumpWidget(
         createTestLocalizedApp(
           locale: const Locale('en'),
           child: Column(
             children: [
-              SplashBrandText(
-                textFade: const AlwaysStoppedAnimation(1.0),
-                textSlide: const AlwaysStoppedAnimation(0.0),
+              const SplashBrandText(
+                textFade: AlwaysStoppedAnimation(1.0),
+                textSlide: AlwaysStoppedAnimation(0.0),
               ),
-              SplashFooter(
-                footerFade: const AlwaysStoppedAnimation(1.0),
-              ),
-              OnboardingTopBar(
-                currentPage: 0,
-                totalPages: 3,
-                onSkip: () {},
-              ),
+              const SplashFooter(footerFade: AlwaysStoppedAnimation(1.0)),
+              OnboardingTopBar(currentPage: 0, totalPages: 3, onSkip: () {}),
               OnboardingBottomSection(
                 currentPage: 0,
                 totalPages: 3,
@@ -182,8 +171,7 @@ void main() {
       expect(transformWidget.transform.storage[0], 1.0);
     });
 
-    testWidgets('OnboardingPageItem renders correct translations in Arabic',
-        (tester) async {
+    testWidgets('OnboardingPageItem renders correct translations in Arabic', (tester) async {
       final page1 = OnboardingModel.defaultPages[0];
 
       await tester.pumpWidget(
@@ -200,8 +188,7 @@ void main() {
       expect(find.text('✓ +10,000 منتج أصلي  •  ✓ دعم صيدلي مرخص'), findsOneWidget);
     });
 
-    testWidgets('OnboardingPageItem renders correct translations in English',
-        (tester) async {
+    testWidgets('OnboardingPageItem renders correct translations in English', (tester) async {
       final page1 = OnboardingModel.defaultPages[0];
 
       await tester.pumpWidget(
@@ -218,8 +205,7 @@ void main() {
       expect(find.text('✓ 10,000+ Genuine Products  •  ✓ Licensed Support'), findsOneWidget);
     });
 
-    testWidgets('Dynamic locale switching updates text and Directionality',
-        (tester) async {
+    testWidgets('Dynamic locale switching updates text and Directionality', (tester) async {
       late BuildContext capturedContext;
 
       await tester.pumpWidget(

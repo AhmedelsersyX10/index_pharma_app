@@ -11,11 +11,7 @@ import 'package:index_pharma/core/theme/theme.dart';
 /// - Estimated total amount (strictly computed from selling prices, with no unverified fees).
 /// - Official Egyptian Drug Authority (EDA) pricing compliance notice.
 class CartOrderSummaryCard extends StatelessWidget {
-  const CartOrderSummaryCard({
-    super.key,
-    required this.subtotal,
-    required this.totalUnitsCount,
-  });
+  const CartOrderSummaryCard({super.key, required this.subtotal, required this.totalUnitsCount});
 
   final double subtotal;
   final int totalUnitsCount;
@@ -28,10 +24,7 @@ class CartOrderSummaryCard extends StatelessWidget {
         color: AppColors.surfaceContainerLowest,
         borderRadius: AppRadii.roundedXl,
         boxShadow: AppShadows.level1,
-        border: Border.all(
-          color: AppColors.outlineVariant.withValues(alpha: 0.3),
-          width: 0.5,
-        ),
+        border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3), width: 0.5),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -46,11 +39,7 @@ class CartOrderSummaryCard extends StatelessWidget {
                   color: AppColors.onSurface,
                 ).copyWith(fontWeight: FontWeight.bold),
               ),
-              const Icon(
-                Icons.receipt_long_outlined,
-                size: 20,
-                color: AppColors.secondary,
-              ),
+              const Icon(Icons.receipt_long_outlined, size: 20, color: AppColors.secondary),
             ],
           ),
 
@@ -63,9 +52,7 @@ class CartOrderSummaryCard extends StatelessWidget {
               Text(
                 AppLocaleKeys.cartSubtotalLabel.tr(
                   args: [
-                    AppLocaleKeys.cartItemsCount.tr(
-                      args: [totalUnitsCount.toString()],
-                    ),
+                    AppLocaleKeys.cartItemsCount.tr(args: [totalUnitsCount.toString()]),
                   ],
                 ),
                 style: AppTypography.bodyMd(color: AppColors.onSurfaceVariant),
@@ -81,11 +68,7 @@ class CartOrderSummaryCard extends StatelessWidget {
 
           const Padding(
             padding: EdgeInsets.symmetric(vertical: AppSpacing.spaceSm),
-            child: Divider(
-              color: AppColors.surfaceContainerLow,
-              height: 1,
-              thickness: 1,
-            ),
+            child: Divider(color: AppColors.surfaceContainerLow, height: 1, thickness: 1),
           ),
 
           // Estimated Total Row
@@ -118,10 +101,7 @@ class CartOrderSummaryCard extends StatelessWidget {
                     subtotal.toStringAsFixed(2),
                     style: AppTypography.headlineLg(
                       color: AppColors.primary,
-                    ).copyWith(
-                      fontWeight: FontWeight.w800,
-                      fontSize: 22,
-                    ),
+                    ).copyWith(fontWeight: FontWeight.w800, fontSize: 22),
                   ),
                   const SizedBox(width: AppSpacing.space2xs),
                   Text(
@@ -140,25 +120,19 @@ class CartOrderSummaryCard extends StatelessWidget {
           // EDA Pricing Compliance Notice
           Container(
             padding: const EdgeInsets.all(AppSpacing.spaceSm),
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: AppColors.surfaceContainerLow,
               borderRadius: AppRadii.roundedLg,
             ),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Icon(
-                  Icons.verified_outlined,
-                  size: 18,
-                  color: AppColors.brandEmeraldDark,
-                ),
+                const Icon(Icons.verified_outlined, size: 18, color: AppColors.brandEmeraldDark),
                 const SizedBox(width: AppSpacing.spaceSm),
                 Expanded(
                   child: Text(
                     AppLocaleKeys.cartEdaCompliance.tr(),
-                    style: AppTypography.bodySm(
-                      color: AppColors.onSurfaceVariant,
-                    ),
+                    style: AppTypography.bodySm(color: AppColors.onSurfaceVariant),
                   ),
                 ),
               ],

@@ -29,7 +29,7 @@ class AuthFailureBanner extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(bottom: AppSpacing.spaceMd),
       padding: const EdgeInsets.all(AppSpacing.spaceMd),
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: AppColors.errorContainer,
         borderRadius: AppRadii.roundedXl,
         boxShadow: AppShadows.level1,
@@ -43,25 +43,15 @@ class AuthFailureBanner extends StatelessWidget {
               Container(
                 width: 28,
                 height: 28,
-                decoration: const BoxDecoration(
-                  color: AppColors.error,
-                  shape: BoxShape.circle,
-                ),
-                child: const Icon(
-                  Icons.error_outline_rounded,
-                  color: Colors.white,
-                  size: 18,
-                ),
+                decoration: const BoxDecoration(color: AppColors.error, shape: BoxShape.circle),
+                child: const Icon(Icons.error_outline_rounded, color: Colors.white, size: 18),
               ),
               const SizedBox(width: AppSpacing.spaceSm),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      title,
-                      style: AppTypography.titleMd(color: AppColors.onErrorContainer),
-                    ),
+                    Text(title, style: AppTypography.titleMd(color: AppColors.onErrorContainer)),
                     const SizedBox(height: AppSpacing.space2xs),
                     Text(
                       message,
@@ -75,11 +65,7 @@ class AuthFailureBanner extends StatelessWidget {
               IconButton(
                 padding: EdgeInsets.zero,
                 constraints: const BoxConstraints(minWidth: 24, minHeight: 24),
-                icon: const Icon(
-                  Icons.close_rounded,
-                  size: 18,
-                  color: AppColors.onErrorContainer,
-                ),
+                icon: const Icon(Icons.close_rounded, size: 18, color: AppColors.onErrorContainer),
                 onPressed: onDismiss,
               ),
             ],
@@ -91,7 +77,7 @@ class AuthFailureBanner extends StatelessWidget {
               borderRadius: AppRadii.roundedSm,
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: AppColors.canvasPure,
                   borderRadius: AppRadii.roundedSm,
                   boxShadow: AppShadows.level1,

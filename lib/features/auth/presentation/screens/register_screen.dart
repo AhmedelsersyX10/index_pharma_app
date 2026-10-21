@@ -17,12 +17,7 @@ class RegisterScreen extends StatefulWidget {
   final VoidCallback? onNavigateToLogin;
   final ValueChanged<UserEntity>? onRegisterSuccess;
 
-  const RegisterScreen({
-    super.key,
-    this.authCubit,
-    this.onNavigateToLogin,
-    this.onRegisterSuccess,
-  });
+  const RegisterScreen({super.key, this.authCubit, this.onNavigateToLogin, this.onRegisterSuccess});
 
   @override
   State<RegisterScreen> createState() => _RegisterScreenState();
@@ -73,7 +68,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     // Header Badge & Clinical Portal Title
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         color: AppColors.brandMintSurface,
                         borderRadius: AppRadii.roundedFull,
                       ),

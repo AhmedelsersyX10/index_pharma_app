@@ -14,10 +14,7 @@ import '../../../domain/entities/product.dart';
 /// - Active Pharmaceutical Ingredient ([product.scientificName])
 /// - Scannable Barcode & Registry Box ([product.barcode])
 class ProductDetailsIdentityCard extends StatelessWidget {
-  const ProductDetailsIdentityCard({
-    super.key,
-    required this.product,
-  });
+  const ProductDetailsIdentityCard({super.key, required this.product});
 
   final Product product;
 
@@ -25,8 +22,7 @@ class ProductDetailsIdentityCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final hasScientificName =
         product.scientificName != null && product.scientificName!.trim().isNotEmpty;
-    final hasBarcode =
-        product.barcode != null && product.barcode!.trim().isNotEmpty;
+    final hasBarcode = product.barcode != null && product.barcode!.trim().isNotEmpty;
 
     return AppCard(
       padding: const EdgeInsets.all(AppSpacing.spaceMd),
@@ -37,10 +33,7 @@ class ProductDetailsIdentityCard extends StatelessWidget {
           if (product.category != null && product.category!.name.trim().isNotEmpty) ...[
             Align(
               alignment: AlignmentDirectional.centerStart,
-              child: AppBadge.tone(
-                label: product.category!.name.trim(),
-                tone: AppBadgeTone.info,
-              ),
+              child: AppBadge.tone(label: product.category!.name.trim(), tone: AppBadgeTone.info),
             ),
             const SizedBox(height: AppSpacing.spaceXs),
           ],
@@ -61,9 +54,7 @@ class ProductDetailsIdentityCard extends StatelessWidget {
               decoration: BoxDecoration(
                 color: AppColors.surfaceSubtle,
                 borderRadius: AppRadii.roundedMd,
-                border: Border.all(
-                  color: AppColors.slate200.withValues(alpha: 0.6),
-                ),
+                border: Border.all(color: AppColors.slate200.withValues(alpha: 0.6)),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -97,7 +88,7 @@ class ProductDetailsIdentityCard extends StatelessWidget {
                 horizontal: AppSpacing.spaceSm,
                 vertical: AppSpacing.spaceXs + 2,
               ),
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: AppColors.surfaceContainerLow,
                 borderRadius: AppRadii.roundedMd,
               ),
@@ -110,18 +101,14 @@ class ProductDetailsIdentityCard extends StatelessWidget {
                       children: [
                         Text(
                           AppLocaleKeys.productDetailsBarcodeGtinLabel.tr(),
-                          style: AppTypography.labelSm(
-                            color: AppColors.slate500,
-                          ),
+                          style: AppTypography.labelSm(color: AppColors.slate500),
                         ),
                         const SizedBox(height: 2),
                         Directionality(
                           textDirection: TextDirection.ltr,
                           child: Text(
                             product.barcode!.trim(),
-                            style: AppTypography.bodySm(
-                              color: AppColors.onSurface,
-                            ).copyWith(
+                            style: AppTypography.bodySm(color: AppColors.onSurface).copyWith(
                               fontFamily: 'monospace',
                               fontWeight: FontWeight.w700,
                               letterSpacing: 1.2,
@@ -131,11 +118,7 @@ class ProductDetailsIdentityCard extends StatelessWidget {
                       ],
                     ),
                   ),
-                  const Icon(
-                    Icons.qr_code_scanner_rounded,
-                    size: 26,
-                    color: AppColors.slate500,
-                  ),
+                  const Icon(Icons.qr_code_scanner_rounded, size: 26, color: AppColors.slate500),
                 ],
               ),
             ),

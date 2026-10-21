@@ -7,43 +7,43 @@ import 'package:index_pharma/features/orders/domain/entities/order_status.dart';
 void main() {
   group('Customer Order Models Tests', () {
     const realSampleJson = {
-      "success": true,
-      "count": 1,
-      "total": 1,
-      "page": 1,
-      "limit": 3,
-      "totalPages": 1,
-      "data": [
+      'success': true,
+      'count': 1,
+      'total': 1,
+      'page': 1,
+      'limit': 3,
+      'totalPages': 1,
+      'data': [
         {
-          "id": "ord-887123aa-9912-4f81-81b3-4412398fa101",
-          "orderNumber": "ONL-20261018-001",
-          "subtotal": 170,
-          "discountType": "fixed",
-          "discountValue": 0,
-          "totalAmount": 170,
-          "paidAmount": 0,
-          "dueAmount": 170,
-          "changeAmount": 0,
-          "orderType": "ONLINE",
-          "status": "pending",
-          "paymentMethod": "cash",
-          "deliveryAddress": "Nasr City, Cairo, Building 4",
-          "customerPhone": "01012345678",
-          "notes": "يرجى الاتصال قبل الوصول",
-          "createdAt": "2026-10-18T12:30:00.000Z",
-          "updatedAt": "2026-10-18T12:30:00.000Z",
-          "items": [
+          'id': 'ord-887123aa-9912-4f81-81b3-4412398fa101',
+          'orderNumber': 'ONL-20261018-001',
+          'subtotal': 170,
+          'discountType': 'fixed',
+          'discountValue': 0,
+          'totalAmount': 170,
+          'paidAmount': 0,
+          'dueAmount': 170,
+          'changeAmount': 0,
+          'orderType': 'ONLINE',
+          'status': 'pending',
+          'paymentMethod': 'cash',
+          'deliveryAddress': 'Nasr City, Cairo, Building 4',
+          'customerPhone': '01012345678',
+          'notes': 'يرجى الاتصال قبل الوصول',
+          'createdAt': '2026-10-18T12:30:00.000Z',
+          'updatedAt': '2026-10-18T12:30:00.000Z',
+          'items': [
             {
-              "id": "item-01",
-              "productId": "p02f8a22-2228-4089-9e8c-669a6e118988",
-              "productName": "Vitamin C 1000mg",
-              "quantity": 2,
-              "priceAtPurchase": 85,
-              "isUnit": false
-            }
-          ]
-        }
-      ]
+              'id': 'item-01',
+              'productId': 'p02f8a22-2228-4089-9e8c-669a6e118988',
+              'productName': 'Vitamin C 1000mg',
+              'quantity': 2,
+              'priceAtPurchase': 85,
+              'isUnit': false,
+            },
+          ],
+        },
+      ],
     };
 
     test('MyOrdersResponseModel parses real API response sample correctly', () {
@@ -103,11 +103,7 @@ void main() {
     });
 
     test('CustomerOrderModel handles null/missing optional fields safely', () {
-      final minimalJson = {
-        "id": "ord-min",
-        "orderNumber": "ONL-MIN",
-        "totalAmount": 50,
-      };
+      final minimalJson = {'id': 'ord-min', 'orderNumber': 'ONL-MIN', 'totalAmount': 50};
 
       final order = CustomerOrderModel.fromJson(minimalJson);
       expect(order.id, 'ord-min');
@@ -134,10 +130,10 @@ void main() {
 
     test('CustomerOrderModel safely maps unknown status string to OrderStatus.unknown', () {
       final orderWithUnknownStatus = {
-        "id": "ord-unknown",
-        "orderNumber": "ONL-UNK",
-        "totalAmount": 100,
-        "status": "some_future_status_shipped",
+        'id': 'ord-unknown',
+        'orderNumber': 'ONL-UNK',
+        'totalAmount': 100,
+        'status': 'some_future_status_shipped',
       };
 
       final order = CustomerOrderModel.fromJson(orderWithUnknownStatus);

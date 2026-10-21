@@ -15,11 +15,7 @@ void main() {
   });
 
   Widget createTestApp(Widget child) {
-    return MaterialApp(
-      home: Scaffold(
-        body: child,
-      ),
-    );
+    return MaterialApp(home: Scaffold(body: child));
   }
 
   group('PermissionGuard Widget - Constructor Injected Service', () {
@@ -35,11 +31,11 @@ void main() {
 
       await tester.pumpWidget(
         createTestApp(
-          PermissionGuard.withService(
+          const PermissionGuard.withService(
             permission: AppPermissions.editPrice,
             permissionService: service,
-            fallback: const Text('Access Denied Fallback'),
-            child: const Text('Edit Price Button'),
+            fallback: Text('Access Denied Fallback'),
+            child: Text('Edit Price Button'),
           ),
         ),
       );
@@ -48,7 +44,9 @@ void main() {
       expect(find.text('Access Denied Fallback'), findsNothing);
     });
 
-    testWidgets('hides child and renders fallback when service.can() returns false', (tester) async {
+    testWidgets('hides child and renders fallback when service.can() returns false', (
+      tester,
+    ) async {
       const unauthorizedUser = UserEntity(
         id: 'usr_2',
         name: 'Customer',
@@ -59,11 +57,11 @@ void main() {
 
       await tester.pumpWidget(
         createTestApp(
-          PermissionGuard.withService(
+          const PermissionGuard.withService(
             permission: AppPermissions.editPrice,
             permissionService: service,
-            fallback: const Text('Access Denied Fallback'),
-            child: const Text('Edit Price Button'),
+            fallback: Text('Access Denied Fallback'),
+            child: Text('Edit Price Button'),
           ),
         ),
       );
@@ -72,35 +70,38 @@ void main() {
       expect(find.text('Access Denied Fallback'), findsOneWidget);
     });
 
-    testWidgets('hides child and renders SizedBox.shrink when fallback is omitted and can() is false', (tester) async {
-      const service = PermissionService(null);
+    testWidgets(
+      'hides child and renders SizedBox.shrink when fallback is omitted and can() is false',
+      (tester) async {
+        const service = PermissionService(null);
 
-      await tester.pumpWidget(
-        createTestApp(
-          PermissionGuard.withService(
-            permission: AppPermissions.viewReports,
-            permissionService: service,
-            child: const Text('Secret Reports'),
+        await tester.pumpWidget(
+          createTestApp(
+            const PermissionGuard.withService(
+              permission: AppPermissions.viewReports,
+              permissionService: service,
+              child: Text('Secret Reports'),
+            ),
           ),
-        ),
-      );
+        );
 
-      expect(find.text('Secret Reports'), findsNothing);
-      expect(find.byType(SizedBox), findsWidgets);
-    });
+        expect(find.text('Secret Reports'), findsNothing);
+        expect(find.byType(SizedBox), findsWidgets);
+      },
+    );
   });
 
   group('PermissionGuard Widget - GetIt Service Resolution', () {
-    testWidgets('reads PermissionService from GetIt when constructor argument is omitted', (tester) async {
+    testWidgets('reads PermissionService from GetIt when constructor argument is omitted', (
+      tester,
+    ) async {
       const superadminUser = UserEntity(
         id: 'usr_super',
         name: 'SuperAdmin',
         email: 'super@test.com',
         role: UserRole.superadmin,
       );
-      testGetIt.registerSingleton<PermissionService>(
-        const PermissionService(superadminUser),
-      );
+      testGetIt.registerSingleton<PermissionService>(const PermissionService(superadminUser));
 
       await tester.pumpWidget(
         createTestApp(
@@ -121,9 +122,7 @@ void main() {
         email: 'super@test.com',
         role: UserRole.superadmin,
       );
-      testGetIt.registerSingleton<PermissionService>(
-        const PermissionService(superadminUser),
-      );
+      testGetIt.registerSingleton<PermissionService>(const PermissionService(superadminUser));
 
       // Explicitly pass a guest service that denies permissions
       const guestService = PermissionService(null);

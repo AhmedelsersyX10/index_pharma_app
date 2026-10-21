@@ -76,12 +76,12 @@ abstract class AppTheme {
       ),
 
       // Card Theme
-      cardTheme: CardThemeData(
+      cardTheme: const CardThemeData(
         color: AppColors.canvasPure,
         elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: AppRadii.roundedLg,
-          side: const BorderSide(color: AppColors.borderSubtle, width: 1),
+          side: BorderSide(color: AppColors.borderSubtle, width: 1),
         ),
         margin: EdgeInsets.zero,
         clipBehavior: Clip.antiAlias,
@@ -135,25 +135,25 @@ abstract class AppTheme {
         labelStyle: AppTypography.bodyMd(color: AppColors.slate600),
         prefixIconColor: AppColors.primaryBrand,
         suffixIconColor: AppColors.slate400,
-        border: OutlineInputBorder(
+        border: const OutlineInputBorder(
           borderRadius: AppRadii.roundedBase,
-          borderSide: const BorderSide(color: AppColors.borderSubtle, width: 1),
+          borderSide: BorderSide(color: AppColors.borderSubtle, width: 1),
         ),
-        enabledBorder: OutlineInputBorder(
+        enabledBorder: const OutlineInputBorder(
           borderRadius: AppRadii.roundedBase,
-          borderSide: const BorderSide(color: AppColors.borderSubtle, width: 1),
+          borderSide: BorderSide(color: AppColors.borderSubtle, width: 1),
         ),
-        focusedBorder: OutlineInputBorder(
+        focusedBorder: const OutlineInputBorder(
           borderRadius: AppRadii.roundedBase,
-          borderSide: const BorderSide(color: AppColors.primaryBrand, width: 2),
+          borderSide: BorderSide(color: AppColors.primaryBrand, width: 2),
         ),
-        errorBorder: OutlineInputBorder(
+        errorBorder: const OutlineInputBorder(
           borderRadius: AppRadii.roundedBase,
-          borderSide: const BorderSide(color: AppColors.error, width: 1.5),
+          borderSide: BorderSide(color: AppColors.error, width: 1.5),
         ),
-        focusedErrorBorder: OutlineInputBorder(
+        focusedErrorBorder: const OutlineInputBorder(
           borderRadius: AppRadii.roundedBase,
-          borderSide: const BorderSide(color: AppColors.error, width: 2),
+          borderSide: BorderSide(color: AppColors.error, width: 2),
         ),
       ),
 
@@ -205,7 +205,7 @@ abstract class AppTheme {
       // Dialog Theme
       dialogTheme: DialogThemeData(
         backgroundColor: AppColors.canvasPure,
-        shape: RoundedRectangleBorder(borderRadius: AppRadii.roundedXl),
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.roundedXl),
         elevation: 12,
         titleTextStyle: AppTypography.headlineMd(color: AppColors.onSurface),
         contentTextStyle: AppTypography.bodyMd(color: AppColors.onSurfaceVariant),
@@ -215,11 +215,11 @@ abstract class AppTheme {
       dividerTheme: const DividerThemeData(color: AppColors.borderSubtle, thickness: 1, space: 1),
 
       // Floating Action Button
-      floatingActionButtonTheme: FloatingActionButtonThemeData(
+      floatingActionButtonTheme: const FloatingActionButtonThemeData(
         backgroundColor: AppColors.primaryBrand,
         foregroundColor: AppColors.onPrimary,
         elevation: 4,
-        shape: const CircleBorder(),
+        shape: CircleBorder(),
       ),
 
       // Extensions
@@ -292,12 +292,12 @@ abstract class AppTheme {
       ),
 
       // Card Theme
-      cardTheme: CardThemeData(
+      cardTheme: const CardThemeData(
         color: AppColors.darkSurface,
         elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: AppRadii.roundedLg,
-          side: const BorderSide(color: AppColors.darkOutline, width: 1),
+          side: BorderSide(color: AppColors.darkOutline, width: 1),
         ),
         margin: EdgeInsets.zero,
         clipBehavior: Clip.antiAlias,
@@ -351,25 +351,25 @@ abstract class AppTheme {
         labelStyle: AppTypography.bodyMd(color: AppColors.slate400),
         prefixIconColor: AppColors.inversePrimary,
         suffixIconColor: AppColors.slate400,
-        border: OutlineInputBorder(
+        border: const OutlineInputBorder(
           borderRadius: AppRadii.roundedBase,
-          borderSide: const BorderSide(color: AppColors.darkOutline, width: 1),
+          borderSide: BorderSide(color: AppColors.darkOutline, width: 1),
         ),
-        enabledBorder: OutlineInputBorder(
+        enabledBorder: const OutlineInputBorder(
           borderRadius: AppRadii.roundedBase,
-          borderSide: const BorderSide(color: AppColors.darkOutline, width: 1),
+          borderSide: BorderSide(color: AppColors.darkOutline, width: 1),
         ),
-        focusedBorder: OutlineInputBorder(
+        focusedBorder: const OutlineInputBorder(
           borderRadius: AppRadii.roundedBase,
-          borderSide: const BorderSide(color: AppColors.inversePrimary, width: 2),
+          borderSide: BorderSide(color: AppColors.inversePrimary, width: 2),
         ),
-        errorBorder: OutlineInputBorder(
+        errorBorder: const OutlineInputBorder(
           borderRadius: AppRadii.roundedBase,
-          borderSide: const BorderSide(color: AppColors.medicalRed, width: 1.5),
+          borderSide: BorderSide(color: AppColors.medicalRed, width: 1.5),
         ),
-        focusedErrorBorder: OutlineInputBorder(
+        focusedErrorBorder: const OutlineInputBorder(
           borderRadius: AppRadii.roundedBase,
-          borderSide: const BorderSide(color: AppColors.medicalRed, width: 2),
+          borderSide: BorderSide(color: AppColors.medicalRed, width: 2),
         ),
       ),
 
@@ -394,7 +394,7 @@ abstract class AppTheme {
       // Dialog Theme
       dialogTheme: DialogThemeData(
         backgroundColor: AppColors.darkSurface,
-        shape: RoundedRectangleBorder(borderRadius: AppRadii.roundedXl),
+        shape: const RoundedRectangleBorder(borderRadius: AppRadii.roundedXl),
         elevation: 12,
         titleTextStyle: AppTypography.headlineMd(color: AppColors.darkOnSurface),
         contentTextStyle: AppTypography.bodyMd(color: AppColors.darkOnSurfaceVariant),

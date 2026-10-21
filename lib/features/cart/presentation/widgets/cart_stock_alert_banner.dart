@@ -8,11 +8,7 @@ import 'package:index_pharma/core/theme/theme.dart';
 /// Displayed when a user requests a quantity exceeding current branch inventory,
 /// and the quantity has been clamped to the maximum available stock.
 class CartStockAlertBanner extends StatelessWidget {
-  const CartStockAlertBanner({
-    super.key,
-    required this.productName,
-    required this.onDismiss,
-  });
+  const CartStockAlertBanner({super.key, required this.productName, required this.onDismiss});
 
   final String productName;
   final VoidCallback onDismiss;
@@ -21,7 +17,7 @@ class CartStockAlertBanner extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(AppSpacing.spaceMd),
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: AppColors.errorContainer,
         borderRadius: AppRadii.roundedXl,
         boxShadow: AppShadows.level1,
@@ -32,11 +28,7 @@ class CartStockAlertBanner extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Icon(
-                Icons.warning_amber_rounded,
-                color: AppColors.medicalRed,
-                size: 24,
-              ),
+              const Icon(Icons.warning_amber_rounded, color: AppColors.medicalRed, size: 24),
               const SizedBox(width: AppSpacing.spaceSm),
               Expanded(
                 child: Column(
@@ -51,9 +43,7 @@ class CartStockAlertBanner extends StatelessWidget {
                     const SizedBox(height: AppSpacing.space2xs),
                     Text(
                       AppLocaleKeys.cartStockAlertDesc.tr(args: [productName]),
-                      style: AppTypography.bodySm(
-                        color: AppColors.onErrorContainer,
-                      ),
+                      style: AppTypography.bodySm(color: AppColors.onErrorContainer),
                     ),
                   ],
                 ),
@@ -68,9 +58,7 @@ class CartStockAlertBanner extends StatelessWidget {
               style: TextButton.styleFrom(
                 backgroundColor: AppColors.surfaceContainerLowest,
                 foregroundColor: AppColors.onErrorContainer,
-                shape: const RoundedRectangleBorder(
-                  borderRadius: AppRadii.roundedFull,
-                ),
+                shape: const RoundedRectangleBorder(borderRadius: AppRadii.roundedFull),
                 padding: const EdgeInsets.symmetric(
                   horizontal: AppSpacing.spaceMd,
                   vertical: AppSpacing.space2xs,

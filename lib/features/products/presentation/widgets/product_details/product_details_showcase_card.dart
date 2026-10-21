@@ -15,10 +15,7 @@ import '../../../domain/entities/product.dart';
 /// - 4:3 product image with clinical placeholder fallback.
 /// - 2-column clinical indicators bar: Expiry Date and Branch Available Stock.
 class ProductDetailsShowcaseCard extends StatelessWidget {
-  const ProductDetailsShowcaseCard({
-    super.key,
-    required this.product,
-  });
+  const ProductDetailsShowcaseCard({super.key, required this.product});
 
   final Product product;
 
@@ -35,8 +32,7 @@ class ProductDetailsShowcaseCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final hasImage = product.image != null && product.image!.trim().isNotEmpty;
-    final resolvedImageUrl =
-        hasImage ? AppConfig.mediaUrl(product.image!.trim()) : '';
+    final resolvedImageUrl = hasImage ? AppConfig.mediaUrl(product.image!.trim()) : '';
 
     final unitLabel = (product.unit != null && product.unit!.trim().isNotEmpty)
         ? product.unit!.trim()
@@ -62,13 +58,9 @@ class ProductDetailsShowcaseCard extends StatelessWidget {
                   ),
                 ),
               ),
-              if (product.category != null &&
-                  product.category!.name.trim().isNotEmpty) ...[
+              if (product.category != null && product.category!.name.trim().isNotEmpty) ...[
                 const SizedBox(width: AppSpacing.spaceXs),
-                AppBadge.tone(
-                  label: product.category!.name.trim(),
-                  tone: AppBadgeTone.neutral,
-                ),
+                AppBadge.tone(label: product.category!.name.trim(), tone: AppBadgeTone.neutral),
               ],
             ],
           ),
@@ -81,9 +73,7 @@ class ProductDetailsShowcaseCard extends StatelessWidget {
               decoration: BoxDecoration(
                 color: AppColors.surfaceSubtle,
                 borderRadius: AppRadii.roundedLg,
-                border: Border.all(
-                  color: AppColors.slate200.withValues(alpha: 0.5),
-                ),
+                border: Border.all(color: AppColors.slate200.withValues(alpha: 0.5)),
               ),
               clipBehavior: Clip.antiAlias,
               child: hasImage
@@ -117,17 +107,13 @@ class ProductDetailsShowcaseCard extends StatelessWidget {
                     horizontal: AppSpacing.spaceSm,
                     vertical: AppSpacing.spaceXs + 2,
                   ),
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: AppColors.surfaceContainerLow,
                     borderRadius: AppRadii.roundedMd,
                   ),
                   child: Row(
                     children: [
-                      const Icon(
-                        Icons.calendar_today_outlined,
-                        size: 18,
-                        color: AppColors.primary,
-                      ),
+                      const Icon(Icons.calendar_today_outlined, size: 18, color: AppColors.primary),
                       const SizedBox(width: AppSpacing.spaceXs),
                       Expanded(
                         child: Column(
@@ -135,9 +121,7 @@ class ProductDetailsShowcaseCard extends StatelessWidget {
                           children: [
                             Text(
                               AppLocaleKeys.productDetailsExpiryDateLabel.tr(),
-                              style: AppTypography.labelSm(
-                                color: AppColors.slate500,
-                              ),
+                              style: AppTypography.labelSm(color: AppColors.slate500),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),
@@ -165,17 +149,13 @@ class ProductDetailsShowcaseCard extends StatelessWidget {
                     horizontal: AppSpacing.spaceSm,
                     vertical: AppSpacing.spaceXs + 2,
                   ),
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: AppColors.surfaceContainerLow,
                     borderRadius: AppRadii.roundedMd,
                   ),
                   child: Row(
                     children: [
-                      const Icon(
-                        Icons.inventory_2_outlined,
-                        size: 18,
-                        color: AppColors.primary,
-                      ),
+                      const Icon(Icons.inventory_2_outlined, size: 18, color: AppColors.primary),
                       const SizedBox(width: AppSpacing.spaceXs),
                       Expanded(
                         child: Column(
@@ -183,19 +163,14 @@ class ProductDetailsShowcaseCard extends StatelessWidget {
                           children: [
                             Text(
                               AppLocaleKeys.productDetailsDispensingBranch.tr(),
-                              style: AppTypography.labelSm(
-                                color: AppColors.slate500,
-                              ),
+                              style: AppTypography.labelSm(color: AppColors.slate500),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),
                             Text(
                               product.stockQuantity > 0
                                   ? AppLocaleKeys.productDetailsAvailableUnits.tr(
-                                      args: [
-                                        product.stockQuantity.toString(),
-                                        unitLabel,
-                                      ],
+                                      args: [product.stockQuantity.toString(), unitLabel],
                                     )
                                   : AppLocaleKeys.productDetailsOutOfStock.tr(),
                               style: AppTypography.labelMd(
@@ -232,11 +207,7 @@ class ProductDetailsShowcaseCard extends StatelessWidget {
               color: AppColors.surfaceContainer,
               shape: BoxShape.circle,
             ),
-            child: const Icon(
-              Icons.medication_rounded,
-              size: 32,
-              color: AppColors.primary,
-            ),
+            child: const Icon(Icons.medication_rounded, size: 32, color: AppColors.primary),
           ),
           const SizedBox(height: AppSpacing.spaceXs),
           Text(

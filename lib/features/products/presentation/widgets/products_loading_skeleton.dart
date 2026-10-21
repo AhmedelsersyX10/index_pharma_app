@@ -9,8 +9,7 @@ class ProductsLoadingSkeleton extends StatefulWidget {
   final int itemCount;
 
   @override
-  State<ProductsLoadingSkeleton> createState() =>
-      _ProductsLoadingSkeletonState();
+  State<ProductsLoadingSkeleton> createState() => _ProductsLoadingSkeletonState();
 }
 
 class _ProductsLoadingSkeletonState extends State<ProductsLoadingSkeleton>
@@ -21,14 +20,13 @@ class _ProductsLoadingSkeletonState extends State<ProductsLoadingSkeleton>
   @override
   void initState() {
     super.initState();
-    _animController = AnimationController(
-      vsync: this,
-      duration: const Duration(milliseconds: 900),
-    )..repeat(reverse: true);
+    _animController = AnimationController(vsync: this, duration: const Duration(milliseconds: 900))
+      ..repeat(reverse: true);
 
-    _opacityAnim = Tween<double>(begin: 0.35, end: 0.85).animate(
-      CurvedAnimation(parent: _animController, curve: Curves.easeInOut),
-    );
+    _opacityAnim = Tween<double>(
+      begin: 0.35,
+      end: 0.85,
+    ).animate(CurvedAnimation(parent: _animController, curve: Curves.easeInOut));
   }
 
   @override
@@ -74,7 +72,7 @@ class _ProductsLoadingSkeletonState extends State<ProductsLoadingSkeleton>
             child: Stack(
               children: [
                 Container(
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     color: AppColors.surfaceContainerLow,
                     borderRadius: AppRadii.roundedLg,
                   ),
@@ -85,7 +83,7 @@ class _ProductsLoadingSkeletonState extends State<ProductsLoadingSkeleton>
                   child: Container(
                     width: 55,
                     height: 18,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: AppColors.slate200,
                       borderRadius: AppRadii.roundedFull,
                     ),
@@ -97,7 +95,7 @@ class _ProductsLoadingSkeletonState extends State<ProductsLoadingSkeleton>
           const SizedBox(height: AppSpacing.spaceSm),
           Container(
             height: 16,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: AppColors.slate200,
               borderRadius: AppRadii.roundedSm,
             ),
@@ -106,7 +104,7 @@ class _ProductsLoadingSkeletonState extends State<ProductsLoadingSkeleton>
           Container(
             height: 12,
             width: 80,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: AppColors.slate100,
               borderRadius: AppRadii.roundedSm,
             ),
@@ -115,7 +113,7 @@ class _ProductsLoadingSkeletonState extends State<ProductsLoadingSkeleton>
           Container(
             height: 12,
             width: 100,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: AppColors.slate100,
               borderRadius: AppRadii.roundedSm,
             ),
@@ -124,7 +122,7 @@ class _ProductsLoadingSkeletonState extends State<ProductsLoadingSkeleton>
           Container(
             height: 20,
             width: 60,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: AppColors.slate200,
               borderRadius: AppRadii.roundedSm,
             ),
@@ -132,7 +130,7 @@ class _ProductsLoadingSkeletonState extends State<ProductsLoadingSkeleton>
           const SizedBox(height: AppSpacing.spaceXs),
           Container(
             height: 36,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: AppColors.slate200,
               borderRadius: AppRadii.roundedLg,
             ),

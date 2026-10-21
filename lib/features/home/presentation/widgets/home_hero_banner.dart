@@ -16,10 +16,7 @@ import 'package:index_pharma/features/settings/presentation/cubit/settings_state
 /// - "Shop Medications Now" CTA button with navigation to `/browse`.
 /// - Nationwide delivery coverage reassurance text.
 class HomeHeroBanner extends StatelessWidget {
-  const HomeHeroBanner({
-    super.key,
-    this.onShopNow,
-  });
+  const HomeHeroBanner({super.key, this.onShopNow});
 
   final VoidCallback? onShopNow;
 
@@ -42,13 +39,9 @@ class HomeHeroBanner extends StatelessWidget {
         }
 
         return Container(
-          decoration: BoxDecoration(
-            gradient: const LinearGradient(
-              colors: [
-                AppColors.primary,
-                AppColors.primaryContainer,
-                AppColors.brandEmeraldDark,
-              ],
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [AppColors.primary, AppColors.primaryContainer, AppColors.brandEmeraldDark],
               begin: AlignmentDirectional.topStart,
               end: AlignmentDirectional.bottomEnd,
             ),
@@ -68,11 +61,7 @@ class HomeHeroBanner extends StatelessWidget {
                     width: 140,
                     height: 140,
                     alignment: Alignment.center,
-                    child: const Icon(
-                      Icons.add_rounded,
-                      size: 160,
-                      color: Colors.white,
-                    ),
+                    child: const Icon(Icons.add_rounded, size: 160, color: Colors.white),
                   ),
                 ),
               ),
@@ -85,10 +74,7 @@ class HomeHeroBanner extends StatelessWidget {
                   children: [
                     // Regulatory Badge
                     Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 3,
-                      ),
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                       decoration: BoxDecoration(
                         color: Colors.white.withValues(alpha: 0.15),
                         borderRadius: AppRadii.roundedFull,
@@ -106,9 +92,7 @@ class HomeHeroBanner extends StatelessWidget {
                             AppLocaleKeys.homeHeroBadge.tr(),
                             style: AppTypography.labelSm(
                               color: AppColors.brandTealBright,
-                            ).copyWith(
-                              fontWeight: FontWeight.w600,
-                            ),
+                            ).copyWith(fontWeight: FontWeight.w600),
                           ),
                         ],
                       ),
@@ -120,10 +104,7 @@ class HomeHeroBanner extends StatelessWidget {
                       title,
                       style: AppTypography.headlineLgMobile(
                         color: Colors.white,
-                      ).copyWith(
-                        fontWeight: FontWeight.bold,
-                        height: 1.25,
-                      ),
+                      ).copyWith(fontWeight: FontWeight.bold, height: 1.25),
                     ),
                     const SizedBox(height: AppSpacing.spaceXs),
 
@@ -132,9 +113,7 @@ class HomeHeroBanner extends StatelessWidget {
                       desc,
                       style: AppTypography.bodySm(
                         color: AppColors.surfaceContainerLow,
-                      ).copyWith(
-                        height: 1.4,
-                      ),
+                      ).copyWith(height: 1.4),
                     ),
                     const SizedBox(height: AppSpacing.spaceMd),
 
@@ -150,9 +129,7 @@ class HomeHeroBanner extends StatelessWidget {
                             backgroundColor: AppColors.surfaceContainerLowest,
                             foregroundColor: AppColors.primary,
                             elevation: 0,
-                            shape: const RoundedRectangleBorder(
-                              borderRadius: AppRadii.roundedFull,
-                            ),
+                            shape: const RoundedRectangleBorder(borderRadius: AppRadii.roundedFull),
                             padding: const EdgeInsets.symmetric(
                               horizontal: AppSpacing.spaceMd,
                               vertical: 10,
@@ -165,9 +142,7 @@ class HomeHeroBanner extends StatelessWidget {
                                 AppLocaleKeys.homeHeroCta.tr(),
                                 style: AppTypography.labelMd(
                                   color: AppColors.primary,
-                                ).copyWith(
-                                  fontWeight: FontWeight.bold,
-                                ),
+                                ).copyWith(fontWeight: FontWeight.bold),
                               ),
                               const SizedBox(width: AppSpacing.space2xs),
                               const Icon(
@@ -182,9 +157,7 @@ class HomeHeroBanner extends StatelessWidget {
                           AppLocaleKeys.homeHeroCoverage.tr(),
                           style: AppTypography.labelSm(
                             color: AppColors.tertiaryFixed,
-                          ).copyWith(
-                            fontWeight: FontWeight.w500,
-                          ),
+                          ).copyWith(fontWeight: FontWeight.w500),
                         ),
                       ],
                     ),

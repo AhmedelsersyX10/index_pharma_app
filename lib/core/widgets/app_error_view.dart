@@ -60,17 +60,17 @@ class AppErrorView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final effectiveTitle = title ??
-        (isOffline
-            ? AppLocaleKeys.errorOfflineTitle.tr()
-            : AppLocaleKeys.errorTitle.tr());
-    final effectiveMessage = message ??
+    final effectiveTitle =
+        title ?? (isOffline ? AppLocaleKeys.errorOfflineTitle.tr() : AppLocaleKeys.errorTitle.tr());
+    final effectiveMessage =
+        message ??
         (isOffline
             ? AppLocaleKeys.errorOfflineMessage.tr()
             : AppLocaleKeys.errorDefaultMessage.tr());
     final effectiveRetryText = retryText ?? AppLocaleKeys.commonRetry.tr();
 
-    final Widget? effectiveBadge = badge ??
+    final Widget? effectiveBadge =
+        badge ??
         (isOffline
             ? AppBadge.error(
                 label: AppLocaleKeys.errorOfflineBadge.tr(),
@@ -92,10 +92,7 @@ class AppErrorView extends StatelessWidget {
               effectiveBadge,
               const SizedBox(height: AppSpacing.spaceSm),
             ],
-            _ErrorContent(
-              title: effectiveTitle,
-              message: effectiveMessage,
-            ),
+            _ErrorContent(title: effectiveTitle, message: effectiveMessage),
             if (errorCode != null && errorCode!.isNotEmpty) ...[
               const SizedBox(height: AppSpacing.spaceMd),
               _ErrorDiagnosticCode(code: errorCode!),
@@ -124,10 +121,7 @@ class _ErrorIconBadge extends StatelessWidget {
   final Widget? icon;
   final bool isOffline;
 
-  const _ErrorIconBadge({
-    this.icon,
-    required this.isOffline,
-  });
+  const _ErrorIconBadge({this.icon, required this.isOffline});
 
   @override
   Widget build(BuildContext context) {
@@ -138,15 +132,10 @@ class _ErrorIconBadge extends StatelessWidget {
       decoration: const BoxDecoration(
         color: AppColors.errorContainer,
         shape: BoxShape.circle,
-        boxShadow: [
-          BoxShadow(
-            color: Color(0x14BA1A1A),
-            blurRadius: 16,
-            offset: Offset(0, 4),
-          ),
-        ],
+        boxShadow: [BoxShadow(color: Color(0x14BA1A1A), blurRadius: 16, offset: Offset(0, 4))],
       ),
-      child: icon ??
+      child:
+          icon ??
           Icon(
             isOffline ? Icons.wifi_off_rounded : Icons.error_outline_rounded,
             size: 42,
@@ -160,10 +149,7 @@ class _ErrorContent extends StatelessWidget {
   final String title;
   final String message;
 
-  const _ErrorContent({
-    required this.title,
-    required this.message,
-  });
+  const _ErrorContent({required this.title, required this.message});
 
   @override
   Widget build(BuildContext context) {
@@ -174,9 +160,9 @@ class _ErrorContent extends StatelessWidget {
         Text(
           title,
           textAlign: TextAlign.center,
-          style: AppTypography.headlineMd(color: AppColors.onSurface).copyWith(
-            fontWeight: FontWeight.w700,
-          ),
+          style: AppTypography.headlineMd(
+            color: AppColors.onSurface,
+          ).copyWith(fontWeight: FontWeight.w700),
         ),
         if (message.isNotEmpty) ...[
           const SizedBox(height: AppSpacing.spaceSm),
@@ -203,24 +189,20 @@ class _ErrorDiagnosticCode extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: AppColors.surfaceContainer,
         borderRadius: AppRadii.roundedMd,
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Icon(
-            Icons.terminal_rounded,
-            size: 16,
-            color: AppColors.slate500,
-          ),
+          const Icon(Icons.terminal_rounded, size: 16, color: AppColors.slate500),
           const SizedBox(width: AppSpacing.spaceXs),
           Text(
             code,
-            style: AppTypography.labelSm(color: AppColors.slate700).copyWith(
-              fontFamily: 'monospace',
-            ),
+            style: AppTypography.labelSm(
+              color: AppColors.slate700,
+            ).copyWith(fontFamily: 'monospace'),
           ),
         ],
       ),
@@ -246,11 +228,7 @@ class _ErrorDataSafeNotice extends StatelessWidget {
         children: [
           const Padding(
             padding: EdgeInsets.only(top: 2),
-            child: Icon(
-              Icons.shield_rounded,
-              size: 20,
-              color: AppColors.medicalAmber,
-            ),
+            child: Icon(Icons.shield_rounded, size: 20, color: AppColors.medicalAmber),
           ),
           const SizedBox(width: AppSpacing.spaceSm),
           Expanded(
@@ -300,13 +278,9 @@ class _ErrorActions extends StatelessWidget {
             onPressed: onRetry,
             isFullWidth: false,
             height: 48,
-            icon: Icon(
-              isOffline ? Icons.sync_rounded : Icons.refresh_rounded,
-              size: 20,
-            ),
+            icon: Icon(isOffline ? Icons.sync_rounded : Icons.refresh_rounded, size: 20),
           ),
-        if (onRetry != null && secondaryAction != null)
-          const SizedBox(height: AppSpacing.spaceSm),
+        if (onRetry != null && secondaryAction != null) const SizedBox(height: AppSpacing.spaceSm),
         ?secondaryAction,
       ],
     );

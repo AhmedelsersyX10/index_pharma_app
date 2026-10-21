@@ -29,7 +29,7 @@ class TrackingFakeAuthRepository implements AuthRepository {
   int loginCallCount = 0;
   String? lastEmail;
   String? lastPassword;
-  ApiResult<UserEntity> loginResult = Err(const Unauthorized());
+  ApiResult<UserEntity> loginResult = const Err(Unauthorized());
 
   @override
   Future<ApiResult<UserEntity>> login({required String email, required String password}) async {
@@ -47,11 +47,11 @@ class TrackingFakeAuthRepository implements AuthRepository {
     String? phone,
     String? address,
   }) async {
-    return Err(const Unauthorized());
+    return const Err(Unauthorized());
   }
 
   @override
-  Future<ApiResult<UserEntity>> getMe() async => Err(const Unauthorized());
+  Future<ApiResult<UserEntity>> getMe() async => const Err(Unauthorized());
 
   @override
   Future<ApiResult<void>> logout() async => const Success(null);
@@ -61,8 +61,7 @@ class TrackingFakeAuthRepository implements AuthRepository {
     String? name,
     String? phone,
     String? address,
-  }) async =>
-      Err(const Unauthorized());
+  }) async => const Err(Unauthorized());
 }
 
 Widget createTestApp({required Widget child}) {
@@ -111,11 +110,10 @@ void main() {
       cubit.close();
     });
 
-    testWidgets('Typing into email and password fields does NOT trigger auto-submission',
-        (tester) async {
-      await tester.pumpWidget(
-        createTestApp(child: LoginScreen(authCubit: cubit)),
-      );
+    testWidgets('Typing into email and password fields does NOT trigger auto-submission', (
+      tester,
+    ) async {
+      await tester.pumpWidget(createTestApp(child: LoginScreen(authCubit: cubit)));
       await tester.pumpAndSettle();
 
       final emailField = find.byType(TextFormField).at(0);
@@ -147,9 +145,7 @@ void main() {
     });
 
     testWidgets('Tapping submit button triggers login with entered credentials', (tester) async {
-      await tester.pumpWidget(
-        createTestApp(child: LoginScreen(authCubit: cubit)),
-      );
+      await tester.pumpWidget(createTestApp(child: LoginScreen(authCubit: cubit)));
       await tester.pumpAndSettle();
 
       final emailField = find.byType(TextFormField).at(0);
@@ -169,9 +165,7 @@ void main() {
     });
 
     testWidgets('Submitting via keyboard Done action triggers login', (tester) async {
-      await tester.pumpWidget(
-        createTestApp(child: LoginScreen(authCubit: cubit)),
-      );
+      await tester.pumpWidget(createTestApp(child: LoginScreen(authCubit: cubit)));
       await tester.pumpAndSettle();
 
       final emailField = find.byType(TextFormField).at(0);
@@ -188,44 +182,42 @@ void main() {
       expect(fakeRepo.loginCallCount, equals(1));
     });
 
-    testWidgets('401 error shows message on password field, suppresses banner, and editing email clears it',
-        (tester) async {
-      fakeRepo.loginResult = Err(const Unauthorized());
+    testWidgets(
+      '401 error shows message on password field, suppresses banner, and editing email clears it',
+      (tester) async {
+        fakeRepo.loginResult = const Err(Unauthorized());
 
-      await tester.pumpWidget(
-        createTestApp(child: LoginScreen(authCubit: cubit)),
-      );
-      await tester.pumpAndSettle();
+        await tester.pumpWidget(createTestApp(child: LoginScreen(authCubit: cubit)));
+        await tester.pumpAndSettle();
 
-      final emailField = find.byType(TextFormField).at(0);
-      final passwordField = find.byType(TextFormField).at(1);
+        final emailField = find.byType(TextFormField).at(0);
+        final passwordField = find.byType(TextFormField).at(1);
 
-      await tester.enterText(emailField, 'wrong@user.com');
-      await tester.enterText(passwordField, 'wrongpass');
-      await tester.pumpAndSettle();
+        await tester.enterText(emailField, 'wrong@user.com');
+        await tester.enterText(passwordField, 'wrongpass');
+        await tester.pumpAndSettle();
 
-      await tester.tap(find.text('تسجيل الدخول'));
-      await tester.pumpAndSettle();
+        await tester.tap(find.text('تسجيل الدخول'));
+        await tester.pumpAndSettle();
 
-      // Banner is suppressed
-      expect(find.byType(AuthFailureBanner), findsNothing);
+        // Banner is suppressed
+        expect(find.byType(AuthFailureBanner), findsNothing);
 
-      // Error message shown on field
-      const expectedError = 'البريد أو كلمة المرور غير صحيحة، يرجى إعادة المحاولة.';
-      expect(find.text(expectedError), findsOneWidget);
+        // Error message shown on field
+        const expectedError = 'البريد أو كلمة المرور غير صحيحة، يرجى إعادة المحاولة.';
+        expect(find.text(expectedError), findsOneWidget);
 
-      // Editing email field clears the error
-      await tester.enterText(emailField, 'fixed@user.com');
-      await tester.pumpAndSettle();
-      expect(find.text(expectedError), findsNothing);
-    });
+        // Editing email field clears the error
+        await tester.enterText(emailField, 'fixed@user.com');
+        await tester.pumpAndSettle();
+        expect(find.text(expectedError), findsNothing);
+      },
+    );
 
     testWidgets('Editing password field clears field error message', (tester) async {
-      fakeRepo.loginResult = Err(const Unauthorized());
+      fakeRepo.loginResult = const Err(Unauthorized());
 
-      await tester.pumpWidget(
-        createTestApp(child: LoginScreen(authCubit: cubit)),
-      );
+      await tester.pumpWidget(createTestApp(child: LoginScreen(authCubit: cubit)));
       await tester.pumpAndSettle();
 
       final emailField = find.byType(TextFormField).at(0);

@@ -59,7 +59,7 @@ class ProductDetailsQuantitySelector extends StatelessWidget {
           // Stepper
           Container(
             padding: const EdgeInsets.all(4),
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: AppColors.surfaceContainerLow,
               borderRadius: AppRadii.roundedMd,
             ),

@@ -16,17 +16,13 @@ class CartRxReminderCard extends StatelessWidget {
         horizontal: AppSpacing.spaceMd,
         vertical: AppSpacing.spaceSm,
       ),
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: AppColors.secondaryContainer,
         borderRadius: AppRadii.roundedXl,
       ),
       child: Row(
         children: [
-          const Icon(
-            Icons.receipt_long_outlined,
-            size: 20,
-            color: AppColors.primary,
-          ),
+          const Icon(Icons.receipt_long_outlined, size: 20, color: AppColors.primary),
           const SizedBox(width: AppSpacing.spaceSm),
           Expanded(
             child: Text(

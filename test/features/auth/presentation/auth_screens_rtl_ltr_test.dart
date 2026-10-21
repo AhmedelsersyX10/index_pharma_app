@@ -31,8 +31,8 @@ class SynchronousDiskAssetLoader extends AssetLoader {
 }
 
 class FakeAuthRepository implements AuthRepository {
-  ApiResult<UserEntity> loginResult = Err(const Unauthorized());
-  ApiResult<UserEntity> registerResult = Err(const Conflict());
+  ApiResult<UserEntity> loginResult = const Err(Unauthorized());
+  ApiResult<UserEntity> registerResult = const Err(Conflict());
 
   @override
   Future<ApiResult<UserEntity>> login({required String email, required String password}) async {
@@ -52,7 +52,7 @@ class FakeAuthRepository implements AuthRepository {
 
   @override
   Future<ApiResult<UserEntity>> getMe() async {
-    return Err(const Unauthorized());
+    return const Err(Unauthorized());
   }
 
   @override
@@ -66,14 +66,11 @@ class FakeAuthRepository implements AuthRepository {
     String? phone,
     String? address,
   }) async {
-    return Err(const Unauthorized());
+    return const Err(Unauthorized());
   }
 }
 
-Widget createTestLocalizedApp({
-  required Locale locale,
-  required Widget child,
-}) {
+Widget createTestLocalizedApp({required Locale locale, required Widget child}) {
   return EasyLocalization(
     key: ValueKey('EasyLocalization_${locale.languageCode}'),
     supportedLocales: const [Locale('ar'), Locale('en')],
@@ -184,43 +181,44 @@ void main() {
     });
 
     testWidgets(
-        'Invalid credentials failure displays error on text fields instead of AuthFailureBanner, and typing clears it',
-        (tester) async {
-      fakeRepo.loginResult = Err(const Unauthorized());
+      'Invalid credentials failure displays error on text fields instead of AuthFailureBanner, and typing clears it',
+      (tester) async {
+        fakeRepo.loginResult = const Err(Unauthorized());
 
-      await tester.pumpWidget(
-        createTestLocalizedApp(
-          locale: const Locale('ar'),
-          child: LoginScreen(authCubit: cubit),
-        ),
-      );
-      await tester.pumpAndSettle();
+        await tester.pumpWidget(
+          createTestLocalizedApp(
+            locale: const Locale('ar'),
+            child: LoginScreen(authCubit: cubit),
+          ),
+        );
+        await tester.pumpAndSettle();
 
-      // Enter valid format credentials
-      await tester.enterText(find.byType(TextFormField).at(0), 'user@example.com');
-      await tester.enterText(find.byType(TextFormField).at(1), 'password123');
+        // Enter valid format credentials
+        await tester.enterText(find.byType(TextFormField).at(0), 'user@example.com');
+        await tester.enterText(find.byType(TextFormField).at(1), 'password123');
 
-      // Submit
-      await tester.tap(find.text('تسجيل الدخول'));
-      await tester.pumpAndSettle();
+        // Submit
+        await tester.tap(find.text('تسجيل الدخول'));
+        await tester.pumpAndSettle();
 
-      // AuthFailureBanner must NOT be shown for credential errors
-      expect(find.byType(AuthFailureBanner), findsNothing);
-      expect(find.text('تعذر تسجيل الدخول'), findsNothing);
+        // AuthFailureBanner must NOT be shown for credential errors
+        expect(find.byType(AuthFailureBanner), findsNothing);
+        expect(find.text('تعذر تسجيل الدخول'), findsNothing);
 
-      // Error message is displayed on the password field
-      expect(find.text('البريد أو كلمة المرور غير صحيحة، يرجى إعادة المحاولة.'), findsOneWidget);
-      // Ensure no raw Exception text is ever shown
-      expect(find.textContaining('Exception'), findsNothing);
+        // Error message is displayed on the password field
+        expect(find.text('البريد أو كلمة المرور غير صحيحة، يرجى إعادة المحاولة.'), findsOneWidget);
+        // Ensure no raw Exception text is ever shown
+        expect(find.textContaining('Exception'), findsNothing);
 
-      // Typing in password field immediately clears the error
-      await tester.enterText(find.byType(TextFormField).at(1), 'password1234');
-      await tester.pumpAndSettle();
-      expect(find.text('البريد أو كلمة المرور غير صحيحة، يرجى إعادة المحاولة.'), findsNothing);
-    });
+        // Typing in password field immediately clears the error
+        await tester.enterText(find.byType(TextFormField).at(1), 'password1234');
+        await tester.pumpAndSettle();
+        expect(find.text('البريد أو كلمة المرور غير صحيحة، يرجى إعادة المحاولة.'), findsNothing);
+      },
+    );
 
     testWidgets('Network failure displays localized AuthFailureBanner', (tester) async {
-      fakeRepo.loginResult = Err(const Network());
+      fakeRepo.loginResult = const Err(Network());
 
       await tester.pumpWidget(
         createTestLocalizedApp(
@@ -258,7 +256,9 @@ void main() {
       cubit.close();
     });
 
-    testWidgets('RegisterScreen renders customer registration fields in Arabic (RTL)', (tester) async {
+    testWidgets('RegisterScreen renders customer registration fields in Arabic (RTL)', (
+      tester,
+    ) async {
       await tester.pumpWidget(
         createTestLocalizedApp(
           locale: const Locale('ar'),
@@ -282,7 +282,9 @@ void main() {
       expect(find.text('يجب ألا تقل عن 8 أحرف'), findsOneWidget);
     });
 
-    testWidgets('RegisterScreen renders customer registration fields in English (LTR)', (tester) async {
+    testWidgets('RegisterScreen renders customer registration fields in English (LTR)', (
+      tester,
+    ) async {
       await tester.pumpWidget(
         createTestLocalizedApp(
           locale: const Locale('en'),
@@ -304,7 +306,7 @@ void main() {
     });
 
     testWidgets('Registering with already used email displays conflict alert', (tester) async {
-      fakeRepo.registerResult = Err(const Conflict());
+      fakeRepo.registerResult = const Err(Conflict());
 
       await tester.pumpWidget(
         createTestLocalizedApp(
@@ -328,7 +330,9 @@ void main() {
       // Check conflict banner
       expect(find.text('البريد الإلكتروني مستخدم بالفعل'), findsOneWidget);
       expect(
-        find.text('هذا الحساب مسجل لدينا مسبقاً في شبكة إندكس فارما. يمكنك تسجيل الدخول مباشرة أو استعادة كلمة المرور.'),
+        find.text(
+          'هذا الحساب مسجل لدينا مسبقاً في شبكة إندكس فارما. يمكنك تسجيل الدخول مباشرة أو استعادة كلمة المرور.',
+        ),
         findsOneWidget,
       );
     });

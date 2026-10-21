@@ -21,15 +21,12 @@ class AuthBrandHeader extends StatelessWidget {
               width: 64,
               height: 64,
               padding: const EdgeInsets.all(AppSpacing.spaceSm),
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: AppColors.canvasPure,
                 borderRadius: AppRadii.roundedXl,
                 boxShadow: AppShadows.level1,
               ),
-              child: Image.asset(
-                AppImages.logo,
-                fit: BoxFit.contain,
-              ),
+              child: Image.asset(AppImages.logo, fit: BoxFit.contain),
             ),
             PositionedDirectional(
               top: -2,
@@ -70,11 +67,7 @@ class AuthBrandHeader extends StatelessWidget {
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Icon(
-                Icons.verified_rounded,
-                size: 16,
-                color: AppColors.brandEmeraldDark,
-              ),
+              const Icon(Icons.verified_rounded, size: 16, color: AppColors.brandEmeraldDark),
               const SizedBox(width: AppSpacing.space2xs),
               Text(
                 AppLocaleKeys.authClinicalBadge.tr(),

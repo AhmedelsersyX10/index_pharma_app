@@ -11,14 +11,14 @@ class SplashBackground extends StatelessWidget {
     return Stack(
       children: [
         // Ambient clinical background illumination
-        Positioned.fill(
+        const Positioned.fill(
           child: DecoratedBox(
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: [AppColors.brandMintSurface, AppColors.background, AppColors.surfaceSubtle],
-                stops: const [0.0, 0.55, 1.0],
+                stops: [0.0, 0.55, 1.0],
               ),
             ),
           ),

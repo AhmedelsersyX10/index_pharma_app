@@ -264,7 +264,7 @@ class _UploadPrescriptionViewState extends State<_UploadPrescriptionView> {
                         ? Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              SizedBox(
+                              const SizedBox(
                                 width: 20,
                                 height: 20,
                                 child: CircularProgressIndicator(
@@ -272,10 +272,10 @@ class _UploadPrescriptionViewState extends State<_UploadPrescriptionView> {
                                   color: Colors.white,
                                 ),
                               ),
-                              SizedBox(width: 10),
+                              const SizedBox(width: 10),
                               Text(
                                 AppLocaleKeys.prescriptionsSubmittingTitle.tr(),
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 15,
                                   fontWeight: FontWeight.w700,
@@ -300,7 +300,7 @@ class _UploadPrescriptionViewState extends State<_UploadPrescriptionView> {
                           ),
                   ),
                 ),
-                SizedBox(height: AppSpacing.spaceXl),
+                const SizedBox(height: AppSpacing.spaceXl),
               ],
             ),
           ),

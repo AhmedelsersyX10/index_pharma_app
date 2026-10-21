@@ -8,8 +8,8 @@ class ProductDetailsSkeleton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.symmetric(
+    return const SingleChildScrollView(
+      padding: EdgeInsets.symmetric(
         horizontal: AppSpacing.marginMobile,
         vertical: AppSpacing.spaceSm,
       ),
@@ -17,16 +17,12 @@ class ProductDetailsSkeleton extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           // Trust strip skeleton
-          _SkeletonBox(
-            height: 32,
-            width: 180,
-            borderRadius: AppRadii.roundedFull,
-          ),
-          const SizedBox(height: AppSpacing.spaceSm),
+          _SkeletonBox(height: 32, width: 180, borderRadius: AppRadii.roundedFull),
+          SizedBox(height: AppSpacing.spaceSm),
 
           // Showcase Card skeleton
           AppCard(
-            padding: const EdgeInsets.all(AppSpacing.spaceMd),
+            padding: EdgeInsets.all(AppSpacing.spaceMd),
             child: Column(
               children: [
                 Row(
@@ -36,46 +32,43 @@ class ProductDetailsSkeleton extends StatelessWidget {
                     _SkeletonBox(height: 24, width: 80),
                   ],
                 ),
-                const SizedBox(height: AppSpacing.spaceSm),
-                const AspectRatio(
+                SizedBox(height: AppSpacing.spaceSm),
+                AspectRatio(
                   aspectRatio: 4 / 3,
-                  child: _SkeletonBox(
-                    height: double.infinity,
-                    borderRadius: AppRadii.roundedLg,
-                  ),
+                  child: _SkeletonBox(height: double.infinity, borderRadius: AppRadii.roundedLg),
                 ),
-                const SizedBox(height: AppSpacing.spaceSm),
+                SizedBox(height: AppSpacing.spaceSm),
                 Row(
                   children: [
                     Expanded(child: _SkeletonBox(height: 48)),
-                    const SizedBox(width: AppSpacing.spaceXs),
+                    SizedBox(width: AppSpacing.spaceXs),
                     Expanded(child: _SkeletonBox(height: 48)),
                   ],
                 ),
               ],
             ),
           ),
-          const SizedBox(height: AppSpacing.spaceMd),
+          SizedBox(height: AppSpacing.spaceMd),
 
           // Identity Card skeleton
           AppCard(
-            padding: const EdgeInsets.all(AppSpacing.spaceMd),
+            padding: EdgeInsets.all(AppSpacing.spaceMd),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 _SkeletonBox(height: 20, width: 100),
-                const SizedBox(height: AppSpacing.spaceSm),
+                SizedBox(height: AppSpacing.spaceSm),
                 _SkeletonBox(height: 28, width: 220),
-                const SizedBox(height: AppSpacing.spaceSm),
+                SizedBox(height: AppSpacing.spaceSm),
                 _SkeletonBox(height: 44, width: double.infinity),
               ],
             ),
           ),
-          const SizedBox(height: AppSpacing.spaceMd),
+          SizedBox(height: AppSpacing.spaceMd),
 
           // Quantity Stepper skeleton
           AppCard(
-            padding: const EdgeInsets.all(AppSpacing.spaceMd),
+            padding: EdgeInsets.all(AppSpacing.spaceMd),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -91,11 +84,7 @@ class ProductDetailsSkeleton extends StatelessWidget {
 }
 
 class _SkeletonBox extends StatelessWidget {
-  const _SkeletonBox({
-    required this.height,
-    this.width,
-    this.borderRadius = AppRadii.roundedMd,
-  });
+  const _SkeletonBox({required this.height, this.width, this.borderRadius = AppRadii.roundedMd});
 
   final double height;
   final double? width;
@@ -106,10 +95,7 @@ class _SkeletonBox extends StatelessWidget {
     return Container(
       height: height,
       width: width,
-      decoration: BoxDecoration(
-        color: AppColors.surfaceContainer,
-        borderRadius: borderRadius,
-      ),
+      decoration: BoxDecoration(color: AppColors.surfaceContainer, borderRadius: borderRadius),
     );
   }
 }

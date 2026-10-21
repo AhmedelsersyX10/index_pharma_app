@@ -16,10 +16,7 @@ import '../widgets/product_search_bar.dart';
 
 /// Full products catalog screen strictly adhering to Stitch Frame B3.
 class ProductsPage extends StatelessWidget {
-  const ProductsPage({
-    super.key,
-    this.branchId,
-  });
+  const ProductsPage({super.key, this.branchId});
 
   final String? branchId;
 
@@ -103,9 +100,7 @@ class _ProductsViewState extends State<_ProductsView> {
                       // Search Bar
                       ProductSearchBar(
                         onChanged: (keyword) {
-                          context
-                              .read<ProductsCubit>()
-                              .onKeywordChanged(keyword);
+                          context.read<ProductsCubit>().onKeywordChanged(keyword);
                         },
                       ),
                       const SizedBox(height: AppSpacing.spaceSm),
@@ -127,17 +122,11 @@ class _ProductsViewState extends State<_ProductsView> {
 
               // Products Content (Grid, Skeleton, Empty, or Error)
               SliverPadding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: AppSpacing.marginMobile,
-                ),
-                sliver: SliverToBoxAdapter(
-                  child: _buildBody(),
-                ),
+                padding: const EdgeInsets.symmetric(horizontal: AppSpacing.marginMobile),
+                sliver: SliverToBoxAdapter(child: _buildBody()),
               ),
 
-              const SliverToBoxAdapter(
-                child: SizedBox(height: AppSpacing.space2xl),
-              ),
+              const SliverToBoxAdapter(child: SizedBox(height: AppSpacing.space2xl)),
             ],
           ),
         ),
@@ -167,17 +156,13 @@ class _ProductsViewState extends State<_ProductsView> {
                 AppLocaleKeys.productsLiveStock.tr(),
                 style: AppTypography.labelSm(
                   color: AppColors.brandEmeraldDark,
-                ).copyWith(
-                  fontWeight: FontWeight.w600,
-                ),
+                ).copyWith(fontWeight: FontWeight.w600),
               ),
             ],
           ),
           Text(
             AppLocaleKeys.productsAvailableOnly.tr(),
-            style: AppTypography.labelSm(
-              color: AppColors.slate500,
-            ),
+            style: AppTypography.labelSm(color: AppColors.slate500),
           ),
         ],
       ),
@@ -200,9 +185,7 @@ class _ProductsViewState extends State<_ProductsView> {
           return BlocBuilder<CategoriesCubit, CategoriesState>(
             bloc: GetIt.instance<CategoriesCubit>()..loadCategories(),
             builder: (context, catState) {
-              final categories = catState is CategoriesLoaded
-                  ? catState.categories
-                  : const [];
+              final categories = catState is CategoriesLoaded ? catState.categories : const [];
 
               return CategoryFilterChips(
                 categories: categories.cast(),
@@ -234,9 +217,9 @@ class _ProductsViewState extends State<_ProductsView> {
           children: [
             Text(
               AppLocaleKeys.productsTitle.tr(),
-              style: AppTypography.titleMd(color: AppColors.onSurface).copyWith(
-                fontWeight: FontWeight.bold,
-              ),
+              style: AppTypography.titleMd(
+                color: AppColors.onSurface,
+              ).copyWith(fontWeight: FontWeight.bold),
             ),
             if (totalCount != null)
               Container(
@@ -244,18 +227,15 @@ class _ProductsViewState extends State<_ProductsView> {
                   horizontal: AppSpacing.spaceSm,
                   vertical: AppSpacing.space2xs,
                 ),
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: AppColors.surfaceContainerLow,
                   borderRadius: AppRadii.roundedFull,
                 ),
                 child: Text(
-                  AppLocaleKeys.productsTotalCount
-                      .tr(args: [totalCount.toString()]),
+                  AppLocaleKeys.productsTotalCount.tr(args: [totalCount.toString()]),
                   style: AppTypography.labelSm(
                     color: AppColors.onSurfaceVariant,
-                  ).copyWith(
-                    fontWeight: FontWeight.w600,
-                  ),
+                  ).copyWith(fontWeight: FontWeight.w600),
                 ),
               ),
           ],
@@ -277,14 +257,13 @@ class _ProductsViewState extends State<_ProductsView> {
       },
       builder: (context, state) {
         return switch (state) {
-          ProductsInitial() || ProductsLoading() =>
-            const ProductsLoadingSkeleton(),
+          ProductsInitial() || ProductsLoading() => const ProductsLoadingSkeleton(),
           ProductsLoaded() => ProductsGrid(
-              products: state.products,
-              isLoadingMore: state.isLoadingMore,
-              loadingMoreError: state.loadingMoreError,
-              onRetryMore: () => context.read<ProductsCubit>().loadMore(),
-            ),
+            products: state.products,
+            isLoadingMore: state.isLoadingMore,
+            loadingMoreError: state.loadingMoreError,
+            onRetryMore: () => context.read<ProductsCubit>().loadMore(),
+          ),
           ProductsEmpty() => _buildEmptyState(),
           ProductsFailure() => _buildFailureState(state),
         };
@@ -309,19 +288,15 @@ class _ProductsViewState extends State<_ProductsView> {
               shape: BoxShape.circle,
             ),
             child: const Center(
-              child: Icon(
-                Icons.inventory_2_outlined,
-                size: 36,
-                color: AppColors.primary,
-              ),
+              child: Icon(Icons.inventory_2_outlined, size: 36, color: AppColors.primary),
             ),
           ),
           const SizedBox(height: AppSpacing.spaceMd),
           Text(
             AppLocaleKeys.productsEmptyTitle.tr(),
-            style: AppTypography.headlineMd(color: AppColors.onSurface).copyWith(
-              fontWeight: FontWeight.bold,
-            ),
+            style: AppTypography.headlineMd(
+              color: AppColors.onSurface,
+            ).copyWith(fontWeight: FontWeight.bold),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: AppSpacing.spaceXs),
@@ -339,10 +314,7 @@ class _ProductsViewState extends State<_ProductsView> {
             decoration: BoxDecoration(
               color: AppColors.brandMintSurface,
               borderRadius: AppRadii.roundedXl,
-              border: Border.all(
-                color: AppColors.brandMintBorder,
-                width: 1,
-              ),
+              border: Border.all(color: AppColors.brandMintBorder, width: 1),
             ),
             child: Column(
               children: [
@@ -359,9 +331,7 @@ class _ProductsViewState extends State<_ProductsView> {
                       AppLocaleKeys.productsPrescriptionHelpTitle.tr(),
                       style: AppTypography.titleMd(
                         color: AppColors.brandEmeraldDark,
-                      ).copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
+                      ).copyWith(fontWeight: FontWeight.bold),
                     ),
                   ],
                 ),
@@ -380,9 +350,9 @@ class _ProductsViewState extends State<_ProductsView> {
             icon: const Icon(Icons.refresh_rounded, size: 18),
             label: Text(
               AppLocaleKeys.commonRetry.tr(),
-              style: AppTypography.labelMd(color: AppColors.primary).copyWith(
-                fontWeight: FontWeight.w600,
-              ),
+              style: AppTypography.labelMd(
+                color: AppColors.primary,
+              ).copyWith(fontWeight: FontWeight.w600),
             ),
           ),
         ],
@@ -407,19 +377,15 @@ class _ProductsViewState extends State<_ProductsView> {
               shape: BoxShape.circle,
             ),
             child: const Center(
-              child: Icon(
-                Icons.cloud_off_rounded,
-                size: 36,
-                color: AppColors.onErrorContainer,
-              ),
+              child: Icon(Icons.cloud_off_rounded, size: 36, color: AppColors.onErrorContainer),
             ),
           ),
           const SizedBox(height: AppSpacing.spaceMd),
           Text(
             AppLocaleKeys.productsErrorTitle.tr(),
-            style: AppTypography.headlineMd(color: AppColors.onSurface).copyWith(
-              fontWeight: FontWeight.bold,
-            ),
+            style: AppTypography.headlineMd(
+              color: AppColors.onSurface,
+            ).copyWith(fontWeight: FontWeight.bold),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: AppSpacing.spaceXs),
@@ -433,11 +399,7 @@ class _ProductsViewState extends State<_ProductsView> {
             width: 180,
             child: AppButton.primary(
               text: AppLocaleKeys.commonRetry.tr(),
-              icon: const Icon(
-                Icons.refresh_rounded,
-                size: 18,
-                color: Colors.white,
-              ),
+              icon: const Icon(Icons.refresh_rounded, size: 18, color: Colors.white),
               onPressed: () => context.read<ProductsCubit>().retry(),
               height: 42,
             ),

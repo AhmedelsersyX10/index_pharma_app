@@ -15,10 +15,7 @@ class FakeOrdersRemoteDataSource implements OrdersRemoteDataSource {
   int? lastLimit;
 
   @override
-  Future<MyOrdersResponseModel> getMyOrders({
-    int page = 1,
-    int limit = 20,
-  }) async {
+  Future<MyOrdersResponseModel> getMyOrders({int page = 1, int limit = 20}) async {
     lastPage = page;
     lastLimit = limit;
     if (errorToThrow != null) {
@@ -73,8 +70,7 @@ void main() {
       ],
     );
 
-    test('getMyOrders returns Success<MyOrdersPage> on successful data source call',
-        () async {
+    test('getMyOrders returns Success<MyOrdersPage> on successful data source call', () async {
       fakeDataSource.modelToReturn = testResponseModel;
 
       final result = await repository.getMyOrders(page: 1, limit: 20);
@@ -89,14 +85,14 @@ void main() {
     });
 
     test('getMyOrders correctly maps empty page on final pagination boundary', () async {
-      fakeDataSource.modelToReturn = MyOrdersResponseModel(
+      fakeDataSource.modelToReturn = const MyOrdersResponseModel(
         success: true,
         count: 0,
         total: 10,
         page: 2,
         limit: 10,
         totalPages: 1,
-        data: const [],
+        data: [],
       );
 
       final result = await repository.getMyOrders(page: 2, limit: 10);

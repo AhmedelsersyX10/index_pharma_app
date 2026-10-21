@@ -46,8 +46,7 @@ class ProductsGrid extends StatelessWidget {
             return ProductCard(
               product: product,
               onTap: onProductTap != null ? () => onProductTap!(product) : null,
-              onAddToCart:
-                  onAddToCart != null ? () => onAddToCart!(product) : null,
+              onAddToCart: onAddToCart != null ? () => onAddToCart!(product) : null,
             );
           },
         ),
@@ -61,7 +60,7 @@ class ProductsGrid extends StatelessWidget {
               horizontal: AppSpacing.spaceMd,
               vertical: AppSpacing.spaceSm,
             ),
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: AppColors.surfaceContainer,
               borderRadius: AppRadii.roundedXl,
             ),
@@ -71,19 +70,14 @@ class ProductsGrid extends StatelessWidget {
                 const SizedBox(
                   width: 16,
                   height: 16,
-                  child: CircularProgressIndicator(
-                    strokeWidth: 2,
-                    color: AppColors.primary,
-                  ),
+                  child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.primary),
                 ),
                 const SizedBox(width: AppSpacing.spaceXs),
                 Text(
                   AppLocaleKeys.productsLoadingMore.tr(),
                   style: AppTypography.labelMd(
                     color: AppColors.primary,
-                  ).copyWith(
-                    fontWeight: FontWeight.w600,
-                  ),
+                  ).copyWith(fontWeight: FontWeight.w600),
                 ),
               ],
             ),
@@ -101,9 +95,7 @@ class ProductsGrid extends StatelessWidget {
                 ),
                 style: AppTypography.bodySm(
                   color: AppColors.error,
-                ).copyWith(
-                  fontWeight: FontWeight.w600,
-                ),
+                ).copyWith(fontWeight: FontWeight.w600),
               ),
             ),
           ),

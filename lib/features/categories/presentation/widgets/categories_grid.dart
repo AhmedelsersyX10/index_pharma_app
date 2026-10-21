@@ -53,35 +53,29 @@ class CategoriesGrid extends StatelessWidget {
                 const SizedBox(height: AppSpacing.spaceMd),
               ],
               switch (state) {
-                CategoriesInitial() || CategoriesLoading() =>
-                  _CategoriesSkeletonGrid(
-                    crossAxisCount: crossAxisCount,
-                    physics: physics,
-                    shrinkWrap: shrinkWrap,
-                  ),
+                CategoriesInitial() || CategoriesLoading() => _CategoriesSkeletonGrid(
+                  crossAxisCount: crossAxisCount,
+                  physics: physics,
+                  shrinkWrap: shrinkWrap,
+                ),
                 CategoriesEmpty() => AppEmptyState(
-                    title: AppLocaleKeys.categoriesEmptyTitle.tr(),
-                    message: AppLocaleKeys.categoriesEmptyDesc.tr(),
-                    icon: const Icon(
-                      Icons.category_outlined,
-                      size: 36,
-                      color: AppColors.slate400,
-                    ),
-                  ),
+                  title: AppLocaleKeys.categoriesEmptyTitle.tr(),
+                  message: AppLocaleKeys.categoriesEmptyDesc.tr(),
+                  icon: const Icon(Icons.category_outlined, size: 36, color: AppColors.slate400),
+                ),
                 CategoriesFailure(:final message) => AppErrorView(
-                    title: AppLocaleKeys.categoriesErrorTitle.tr(),
-                    message: message,
-                    onRetry: () =>
-                        context.read<CategoriesCubit>().fetchCategories(),
-                  ),
+                  title: AppLocaleKeys.categoriesErrorTitle.tr(),
+                  message: message,
+                  onRetry: () => context.read<CategoriesCubit>().fetchCategories(),
+                ),
                 CategoriesLoaded(:final categories) => _CategoriesGridView(
-                    categories: categories,
-                    crossAxisCount: crossAxisCount,
-                    selectedCategoryId: selectedCategoryId,
-                    onCategorySelected: onCategorySelected,
-                    physics: physics,
-                    shrinkWrap: shrinkWrap,
-                  ),
+                  categories: categories,
+                  crossAxisCount: crossAxisCount,
+                  selectedCategoryId: selectedCategoryId,
+                  onCategorySelected: onCategorySelected,
+                  physics: physics,
+                  shrinkWrap: shrinkWrap,
+                ),
               },
             ],
           ),
@@ -107,7 +101,7 @@ class _CategoriesSectionHeader extends StatelessWidget {
             Container(
               width: 4,
               height: 18,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: AppColors.primary,
                 borderRadius: AppRadii.roundedFull,
               ),
@@ -135,11 +129,7 @@ class _CategoriesSectionHeader extends StatelessWidget {
                   style: AppTypography.labelMd(color: AppColors.primary),
                 ),
                 const SizedBox(width: AppSpacing.space2xs),
-                const Icon(
-                  Icons.arrow_forward_ios_rounded,
-                  size: 12,
-                  color: AppColors.primary,
-                ),
+                const Icon(Icons.arrow_forward_ios_rounded, size: 12, color: AppColors.primary),
               ],
             ),
           ),
@@ -226,16 +216,13 @@ class _CategoriesSkeletonGrid extends StatelessWidget {
               Container(
                 width: 44,
                 height: 44,
-                decoration: const BoxDecoration(
-                  color: AppColors.slate200,
-                  shape: BoxShape.circle,
-                ),
+                decoration: const BoxDecoration(color: AppColors.slate200, shape: BoxShape.circle),
               ),
               const SizedBox(height: AppSpacing.spaceSm),
               Container(
                 width: 50,
                 height: 12,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: AppColors.slate200,
                   borderRadius: AppRadii.roundedSm,
                 ),

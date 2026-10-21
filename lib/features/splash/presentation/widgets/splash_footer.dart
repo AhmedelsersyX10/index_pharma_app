@@ -20,12 +20,12 @@ class SplashFooter extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           // Sleek clinical loading progress capsule
-          SizedBox(
+          const SizedBox(
             width: 90,
             height: 4,
             child: ClipRRect(
               borderRadius: AppRadii.roundedFull,
-              child: const LinearProgressIndicator(
+              child: LinearProgressIndicator(
                 backgroundColor: AppColors.slate200,
                 valueColor: AlwaysStoppedAnimation<Color>(AppColors.primaryBrand),
               ),
@@ -37,7 +37,11 @@ class SplashFooter extends StatelessWidget {
           // Trust Badge
           AppBadge.trust(
             label: AppLocaleKeys.splashCertifiedPlatform.tr(),
-            icon: const Icon(Icons.verified_user_rounded, size: 14, color: AppColors.brandEmeraldDark),
+            icon: const Icon(
+              Icons.verified_user_rounded,
+              size: 14,
+              color: AppColors.brandEmeraldDark,
+            ),
           ),
         ],
       ),

@@ -81,7 +81,7 @@ class HomePrescriptionUploadCard extends StatelessWidget {
               // Micro Badge
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: AppColors.surfaceContainerLowest,
                   borderRadius: AppRadii.roundedFull,
                   boxShadow: AppShadows.level1,

@@ -11,10 +11,7 @@ class LoginRequiredBottomSheet {
   const LoginRequiredBottomSheet._();
 
   /// Displays the [LoginRequiredPrompt] as a modal bottom sheet adhering to Stitch A4.
-  static Future<T?> show<T>(
-    BuildContext context, {
-    required String returnRoute,
-  }) {
+  static Future<T?> show<T>(BuildContext context, {required String returnRoute}) {
     return showModalBottomSheet<T>(
       context: context,
       isScrollControlled: true,
@@ -108,9 +105,7 @@ class LoginRequiredPrompt extends StatelessWidget {
             const _TactileDragHandle(),
             const SizedBox(height: AppSpacing.spaceXs),
           ],
-          _TopHeaderArea(
-            onDismiss: () => _handleDismiss(context),
-          ),
+          _TopHeaderArea(onDismiss: () => _handleDismiss(context)),
           const SizedBox(height: AppSpacing.spaceSm),
           const _HealthcareContextBadge(),
           const SizedBox(height: AppSpacing.spaceSm),
@@ -158,10 +153,7 @@ class LoginRequiredPrompt extends StatelessWidget {
           AppSpacing.spaceLg,
           AppSpacing.spaceLg,
         ),
-        child: SafeArea(
-          top: false,
-          child: content,
-        ),
+        child: SafeArea(top: false, child: content),
       );
     }
 
@@ -261,11 +253,7 @@ class _ClinicalShieldBadge extends StatelessWidget {
               ],
             ),
             alignment: Alignment.center,
-            child: const Icon(
-              Icons.verified_user_rounded,
-              color: AppColors.primaryBrand,
-              size: 34,
-            ),
+            child: const Icon(Icons.verified_user_rounded, color: AppColors.primaryBrand, size: 34),
           ),
           Positioned(
             bottom: 0,
@@ -277,11 +265,7 @@ class _ClinicalShieldBadge extends StatelessWidget {
                 color: AppColors.canvasPure,
                 shape: BoxShape.circle,
                 boxShadow: [
-                  BoxShadow(
-                    color: Color(0x1A0F172A),
-                    blurRadius: 4,
-                    offset: Offset(0, 1),
-                  ),
+                  BoxShadow(color: Color(0x1A0F172A), blurRadius: 4, offset: Offset(0, 1)),
                 ],
               ),
               alignment: Alignment.center,
@@ -293,11 +277,7 @@ class _ClinicalShieldBadge extends StatelessWidget {
                   shape: BoxShape.circle,
                 ),
                 alignment: Alignment.center,
-                child: const Icon(
-                  Icons.lock_rounded,
-                  color: AppColors.onPrimary,
-                  size: 11,
-                ),
+                child: const Icon(Icons.lock_rounded, color: AppColors.onPrimary, size: 11),
               ),
             ),
           ),
@@ -316,18 +296,14 @@ class _HealthcareContextBadge extends StatelessWidget {
     return Center(
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: AppColors.brandMintSurface,
           borderRadius: AppRadii.roundedFull,
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(
-              Icons.shield_outlined,
-              size: 14,
-              color: AppColors.brandEmeraldDark,
-            ),
+            const Icon(Icons.shield_outlined, size: 14, color: AppColors.brandEmeraldDark),
             const SizedBox(width: AppSpacing.space2xs),
             Text(
               AppLocaleKeys.authLoginRequiredBadge.tr(),
@@ -349,7 +325,7 @@ class _ValuePropsGrid extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: AppColors.surfaceContainerLow,
         borderRadius: AppRadii.roundedLg,
       ),
@@ -386,10 +362,7 @@ class _ValuePropsGrid extends StatelessWidget {
 }
 
 class _ValuePropItem extends StatelessWidget {
-  const _ValuePropItem({
-    required this.icon,
-    required this.title,
-  });
+  const _ValuePropItem({required this.icon, required this.title});
 
   final IconData icon;
   final String title;
@@ -407,11 +380,7 @@ class _ValuePropItem extends StatelessWidget {
             shape: BoxShape.circle,
           ),
           alignment: Alignment.center,
-          child: Icon(
-            icon,
-            color: AppColors.primaryBrand,
-            size: 18,
-          ),
+          child: Icon(icon, color: AppColors.primaryBrand, size: 18),
         ),
         const SizedBox(height: 6),
         Text(
@@ -503,18 +472,14 @@ class _PrivacyAndSecurityPill extends StatelessWidget {
     return Center(
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: AppColors.surfaceContainerLow,
           borderRadius: AppRadii.roundedFull,
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(
-              Icons.lock_rounded,
-              size: 13,
-              color: AppColors.brandEmeraldDark,
-            ),
+            const Icon(Icons.lock_rounded, size: 13, color: AppColors.brandEmeraldDark),
             const SizedBox(width: AppSpacing.space2xs),
             Flexible(
               child: Text(

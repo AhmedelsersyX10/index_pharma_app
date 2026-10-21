@@ -55,19 +55,19 @@ class _RegisterFormState extends State<RegisterForm> {
       final address = _addressController.text.trim();
 
       context.read<AuthCubit>().register(
-            name: _nameController.text.trim(),
-            email: _emailController.text.trim(),
-            password: _passwordController.text,
-            phone: phone.isNotEmpty ? phone : null,
-            address: address.isNotEmpty ? address : null,
-          );
+        name: _nameController.text.trim(),
+        email: _emailController.text.trim(),
+        password: _passwordController.text,
+        phone: phone.isNotEmpty ? phone : null,
+        address: address.isNotEmpty ? address : null,
+      );
     }
   }
 
   Widget _buildOptionalBadge() {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: AppColors.surfaceContainerLow,
         borderRadius: AppRadii.roundedFull,
       ),
@@ -82,7 +82,7 @@ class _RegisterFormState extends State<RegisterForm> {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(AppSpacing.spaceLg),
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: AppColors.canvasPure,
         borderRadius: AppRadii.roundedXl,
         boxShadow: AppShadows.level1,
@@ -177,11 +177,7 @@ class _RegisterFormState extends State<RegisterForm> {
               validator: (val) => AuthValidators.validatePassword(val)?.tr(),
               helper: Row(
                 children: [
-                  const Icon(
-                    Icons.lock_clock_outlined,
-                    size: 14,
-                    color: AppColors.primaryBrand,
-                  ),
+                  const Icon(Icons.lock_clock_outlined, size: 14, color: AppColors.primaryBrand),
                   const SizedBox(width: AppSpacing.space2xs),
                   Text(
                     AppLocaleKeys.authPasswordRequirement.tr(),

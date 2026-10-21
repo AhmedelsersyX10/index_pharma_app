@@ -7,10 +7,7 @@ import 'package:index_pharma/core/utils/app_router.dart';
 
 /// Clinical empty cart view (Stitch C1).
 class CartEmptyView extends StatelessWidget {
-  const CartEmptyView({
-    super.key,
-    this.onBrowseTap,
-  });
+  const CartEmptyView({super.key, this.onBrowseTap});
 
   final VoidCallback? onBrowseTap;
 
@@ -37,7 +34,7 @@ class CartEmptyView extends StatelessWidget {
               child: Container(
                 width: 90,
                 height: 90,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: AppColors.surfaceContainerLowest,
                   shape: BoxShape.circle,
                   boxShadow: AppShadows.level2,
@@ -81,7 +78,8 @@ class CartEmptyView extends StatelessWidget {
               width: double.infinity,
               height: 48,
               child: ElevatedButton.icon(
-                onPressed: onBrowseTap ??
+                onPressed:
+                    onBrowseTap ??
                     () {
                       if (context.canPop()) {
                         context.pop();
@@ -100,9 +98,7 @@ class CartEmptyView extends StatelessWidget {
                   backgroundColor: AppColors.primary,
                   foregroundColor: Colors.white,
                   elevation: 0,
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: AppRadii.roundedLg,
-                  ),
+                  shape: const RoundedRectangleBorder(borderRadius: AppRadii.roundedLg),
                 ),
               ),
             ),

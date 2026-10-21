@@ -25,9 +25,7 @@ class CheckoutPhoneCard extends StatelessWidget {
         color: AppColors.canvasPure,
         borderRadius: BorderRadius.circular(AppRadii.xl),
         boxShadow: AppShadows.level1,
-        border: Border.all(
-          color: hasError ? AppColors.error : AppColors.borderSubtle,
-        ),
+        border: Border.all(color: hasError ? AppColors.error : AppColors.borderSubtle),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -44,11 +42,7 @@ class CheckoutPhoneCard extends StatelessWidget {
                       color: AppColors.secondaryContainer,
                       shape: BoxShape.circle,
                     ),
-                    child: const Icon(
-                      Icons.call_rounded,
-                      color: AppColors.primary,
-                      size: 16,
-                    ),
+                    child: const Icon(Icons.call_rounded, color: AppColors.primary, size: 16),
                   ),
                   const SizedBox(width: AppSpacing.spaceSm),
                   Text(
@@ -84,13 +78,9 @@ class CheckoutPhoneCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.spaceSm),
           Container(
             decoration: BoxDecoration(
-              color: hasError
-                  ? AppColors.errorContainer.withAlpha(77)
-                  : AppColors.surfaceSubtle,
+              color: hasError ? AppColors.errorContainer.withAlpha(77) : AppColors.surfaceSubtle,
               borderRadius: BorderRadius.circular(AppRadii.md),
-              border: Border.all(
-                color: hasError ? AppColors.error : Colors.transparent,
-              ),
+              border: Border.all(color: hasError ? AppColors.error : Colors.transparent),
             ),
             child: Row(
               children: [
@@ -106,11 +96,11 @@ class CheckoutPhoneCard extends StatelessWidget {
                       bottomRight: Radius.circular(AppRadii.md),
                     ),
                   ),
-                  child: Row(
+                  child: const Row(
                     children: [
-                      const Text('🇪🇬', style: TextStyle(fontSize: 16)),
-                      const SizedBox(width: 4),
-                      const Text(
+                      Text('🇪🇬', style: TextStyle(fontSize: 16)),
+                      SizedBox(width: 4),
+                      Text(
                         '+20',
                         style: TextStyle(
                           fontSize: 13,
@@ -156,11 +146,7 @@ class CheckoutPhoneCard extends StatelessWidget {
             const SizedBox(height: 6),
             Row(
               children: [
-                const Icon(
-                  Icons.error_outline_rounded,
-                  color: AppColors.error,
-                  size: 15,
-                ),
+                const Icon(Icons.error_outline_rounded, color: AppColors.error, size: 15),
                 const SizedBox(width: 4),
                 Expanded(
                   child: Text(
@@ -178,11 +164,7 @@ class CheckoutPhoneCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.spaceSm),
           Text(
             'checkout.phone_helper'.tr(),
-            style: const TextStyle(
-              fontSize: 12,
-              color: AppColors.secondaryMuted,
-              height: 1.35,
-            ),
+            style: const TextStyle(fontSize: 12, color: AppColors.secondaryMuted, height: 1.35),
           ),
         ],
       ),

@@ -13,7 +13,7 @@ class GuestAccessCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(AppSpacing.spaceMd),
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: AppColors.surfaceContainerLow,
         borderRadius: AppRadii.roundedXl,
         boxShadow: AppShadows.level1,
@@ -23,16 +23,12 @@ class GuestAccessCard extends StatelessWidget {
           Container(
             width: 44,
             height: 44,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: AppColors.canvasPure,
               borderRadius: AppRadii.roundedXl,
               boxShadow: AppShadows.level1,
             ),
-            child: const Icon(
-              Icons.explore_outlined,
-              color: AppColors.primaryBrand,
-              size: 24,
-            ),
+            child: const Icon(Icons.explore_outlined, color: AppColors.primaryBrand, size: 24),
           ),
           const SizedBox(width: AppSpacing.spaceSm),
           Expanded(

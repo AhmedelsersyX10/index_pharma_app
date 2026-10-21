@@ -88,8 +88,7 @@ class CartItemCard extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                                errorWidget: (context, url, error) =>
-                                    _buildFallbackImage(),
+                                errorWidget: (context, url, error) => _buildFallbackImage(),
                               )
                             : _buildFallbackImage(),
                       ),
@@ -101,15 +100,10 @@ class CartItemCard extends StatelessWidget {
                         bottom: 0,
                         end: 0,
                         child: Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 4,
-                            vertical: 1,
-                          ),
+                          padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
                           decoration: const BoxDecoration(
                             color: AppColors.brandEmeraldDark,
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(4),
-                            ),
+                            borderRadius: BorderRadius.only(topLeft: Radius.circular(4)),
                           ),
                           child: const Text(
                             'Rx',
@@ -128,15 +122,10 @@ class CartItemCard extends StatelessWidget {
                         top: 0,
                         start: 0,
                         child: Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 4,
-                            vertical: 1,
-                          ),
+                          padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
                           decoration: const BoxDecoration(
                             color: AppColors.medicalAmber,
-                            borderRadius: BorderRadius.only(
-                              bottomRight: Radius.circular(4),
-                            ),
+                            borderRadius: BorderRadius.only(bottomRight: Radius.circular(4)),
                           ),
                           child: Text(
                             AppLocaleKeys.cartLimitedStockBadge.tr(),
@@ -177,14 +166,11 @@ class CartItemCard extends StatelessWidget {
                         overflow: TextOverflow.ellipsis,
                       ),
                     ],
-                    if (product.unit != null &&
-                        product.unit!.trim().isNotEmpty) ...[
+                    if (product.unit != null && product.unit!.trim().isNotEmpty) ...[
                       const SizedBox(height: AppSpacing.space2xs),
                       Text(
                         product.unit!,
-                        style: AppTypography.labelSm(
-                          color: AppColors.onSurfaceVariant,
-                        ),
+                        style: AppTypography.labelSm(color: AppColors.onSurfaceVariant),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -235,9 +221,7 @@ class CartItemCard extends StatelessWidget {
                       const SizedBox(width: AppSpacing.space2xs),
                       Text(
                         AppLocaleKeys.cartCurrency.tr(),
-                        style: AppTypography.labelSm(
-                          color: AppColors.onSurfaceVariant,
-                        ),
+                        style: AppTypography.labelSm(color: AppColors.onSurfaceVariant),
                       ),
                     ],
                   ),
@@ -246,7 +230,7 @@ class CartItemCard extends StatelessWidget {
 
               // Stepper: [-] [qty] [+]
               Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: AppColors.surfaceContainerLow,
                   borderRadius: AppRadii.roundedLg,
                 ),
@@ -257,14 +241,10 @@ class CartItemCard extends StatelessWidget {
                     // Decrement Button
                     _StepperButton(
                       icon: Icons.remove,
-                      tooltip: isMinQty
-                          ? AppLocaleKeys.cartMinQtyReached.tr()
-                          : null,
+                      tooltip: isMinQty ? AppLocaleKeys.cartMinQtyReached.tr() : null,
                       isEnabled: !isMinQty,
                       isPrimary: false,
-                      onTap: isMinQty
-                          ? null
-                          : () => onQuantityChanged(item.quantity - 1),
+                      onTap: isMinQty ? null : () => onQuantityChanged(item.quantity - 1),
                     ),
 
                     // Quantity Display
@@ -282,14 +262,10 @@ class CartItemCard extends StatelessWidget {
                     // Increment Button
                     _StepperButton(
                       icon: Icons.add,
-                      tooltip: isMaxStock
-                          ? AppLocaleKeys.cartMaxStockReached.tr()
-                          : null,
+                      tooltip: isMaxStock ? AppLocaleKeys.cartMaxStockReached.tr() : null,
                       isEnabled: !isMaxStock,
                       isPrimary: true,
-                      onTap: isMaxStock
-                          ? null
-                          : () => onQuantityChanged(item.quantity + 1),
+                      onTap: isMaxStock ? null : () => onQuantityChanged(item.quantity + 1),
                     ),
                   ],
                 ),
@@ -303,11 +279,7 @@ class CartItemCard extends StatelessWidget {
 
   Widget _buildFallbackImage() {
     return const Center(
-      child: Icon(
-        Icons.medication_outlined,
-        size: 32,
-        color: AppColors.slate300,
-      ),
+      child: Icon(Icons.medication_outlined, size: 32, color: AppColors.slate300),
     );
   }
 
@@ -373,9 +345,7 @@ class _StepperButton extends StatelessWidget {
           decoration: BoxDecoration(
             color: !isEnabled
                 ? AppColors.surfaceDim.withValues(alpha: 0.4)
-                : (isPrimary
-                    ? AppColors.primary
-                    : AppColors.surfaceContainerLowest),
+                : (isPrimary ? AppColors.primary : AppColors.surfaceContainerLowest),
             borderRadius: AppRadii.roundedMd,
             boxShadow: isEnabled && !isPrimary ? AppShadows.level1 : null,
           ),

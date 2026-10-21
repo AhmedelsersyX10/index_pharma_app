@@ -26,7 +26,7 @@ class LanguageTopBar extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          SizedBox(),
+          const SizedBox(),
           if (isFromAccount)
             IconButton(
               key: const ValueKey('language_back_button'),

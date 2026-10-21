@@ -17,12 +17,7 @@ import '../../domain/entities/product.dart';
 /// - Server-provided selling price (strictly uncomputed)
 /// - Add-to-cart clinical CTA button
 class ProductCard extends StatelessWidget {
-  const ProductCard({
-    super.key,
-    required this.product,
-    this.onTap,
-    this.onAddToCart,
-  });
+  const ProductCard({super.key, required this.product, this.onTap, this.onAddToCart});
 
   final Product product;
   final VoidCallback? onTap;
@@ -31,8 +26,7 @@ class ProductCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final hasImage = product.image != null && product.image!.trim().isNotEmpty;
-    final resolvedImageUrl =
-        hasImage ? AppConfig.mediaUrl(product.image!.trim()) : '';
+    final resolvedImageUrl = hasImage ? AppConfig.mediaUrl(product.image!.trim()) : '';
 
     return AppCard(
       isInteractive: true,
@@ -49,7 +43,7 @@ class ProductCard extends StatelessWidget {
               children: [
                 Positioned.fill(
                   child: Container(
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: AppColors.surfaceContainerLow,
                       borderRadius: AppRadii.roundedLg,
                     ),
@@ -61,8 +55,7 @@ class ProductCard extends StatelessWidget {
                             ? Image.network(
                                 resolvedImageUrl,
                                 fit: BoxFit.contain,
-                                errorBuilder: (context, error, stackTrace) =>
-                                    _buildFallbackImage(),
+                                errorBuilder: (context, error, stackTrace) => _buildFallbackImage(),
                                 loadingBuilder: (context, child, progress) {
                                   if (progress == null) return child;
                                   return const Center(
@@ -113,16 +106,15 @@ class ProductCard extends StatelessWidget {
           // Product Commercial Name
           Text(
             product.name,
-            style: AppTypography.titleMd(color: AppColors.onSurface).copyWith(
-              fontWeight: FontWeight.bold,
-            ),
+            style: AppTypography.titleMd(
+              color: AppColors.onSurface,
+            ).copyWith(fontWeight: FontWeight.bold),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
 
           // Scientific / Active Ingredient Name
-          if (product.scientificName != null &&
-              product.scientificName!.trim().isNotEmpty) ...[
+          if (product.scientificName != null && product.scientificName!.trim().isNotEmpty) ...[
             const SizedBox(height: 2),
             Text(
               product.scientificName!,
@@ -136,22 +128,14 @@ class ProductCard extends StatelessWidget {
           // Available Stock Indicator with inventory_2 icon
           Row(
             children: [
-              const Icon(
-                Icons.inventory_2_outlined,
-                size: 14,
-                color: AppColors.brandEmeraldDark,
-              ),
+              const Icon(Icons.inventory_2_outlined, size: 14, color: AppColors.brandEmeraldDark),
               const SizedBox(width: AppSpacing.space2xs),
               Expanded(
                 child: Text(
-                  AppLocaleKeys.productsInStock.tr(
-                    args: [product.stockQuantity.toString()],
-                  ),
+                  AppLocaleKeys.productsInStock.tr(args: [product.stockQuantity.toString()]),
                   style: AppTypography.labelSm(
                     color: AppColors.brandEmeraldDark,
-                  ).copyWith(
-                    fontWeight: FontWeight.w600,
-                  ),
+                  ).copyWith(fontWeight: FontWeight.w600),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -169,18 +153,14 @@ class ProductCard extends StatelessWidget {
                 product.sellingPrice.toStringAsFixed(2),
                 style: AppTypography.titleLg(
                   color: AppColors.primary,
-                ).copyWith(
-                  fontWeight: FontWeight.w800,
-                ),
+                ).copyWith(fontWeight: FontWeight.w800),
               ),
               const SizedBox(width: AppSpacing.space2xs),
               Text(
                 AppLocaleKeys.productsCurrency.tr(),
                 style: AppTypography.labelSm(
                   color: AppColors.slate600,
-                ).copyWith(
-                  fontWeight: FontWeight.w600,
-                ),
+                ).copyWith(fontWeight: FontWeight.w600),
               ),
             ],
           ),
@@ -191,24 +171,18 @@ class ProductCard extends StatelessWidget {
             height: 36,
             child: ElevatedButton.icon(
               onPressed: onAddToCart ?? () {},
-              icon: const Icon(
-                Icons.add_shopping_cart_rounded,
-                size: 16,
-                color: Colors.white,
-              ),
+              icon: const Icon(Icons.add_shopping_cart_rounded, size: 16, color: Colors.white),
               label: Text(
                 AppLocaleKeys.productsAddToCart.tr(),
-                style: AppTypography.labelMd(color: Colors.white).copyWith(
-                  fontWeight: FontWeight.w700,
-                ),
+                style: AppTypography.labelMd(
+                  color: Colors.white,
+                ).copyWith(fontWeight: FontWeight.w700),
               ),
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.primary,
                 foregroundColor: Colors.white,
                 elevation: 0,
-                shape: const RoundedRectangleBorder(
-                  borderRadius: AppRadii.roundedLg,
-                ),
+                shape: const RoundedRectangleBorder(borderRadius: AppRadii.roundedLg),
                 padding: const EdgeInsets.symmetric(horizontal: 10),
               ),
             ),
@@ -219,10 +193,6 @@ class ProductCard extends StatelessWidget {
   }
 
   Widget _buildFallbackImage() {
-    return const Icon(
-      Icons.medication_outlined,
-      size: 48,
-      color: AppColors.slate300,
-    );
+    return const Icon(Icons.medication_outlined, size: 48, color: AppColors.slate300);
   }
 }

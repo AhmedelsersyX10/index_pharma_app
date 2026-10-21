@@ -18,10 +18,7 @@ import 'password_text_field.dart';
 class LoginForm extends StatefulWidget {
   final VoidCallback? onNavigateToRegister;
 
-  const LoginForm({
-    super.key,
-    this.onNavigateToRegister,
-  });
+  const LoginForm({super.key, this.onNavigateToRegister});
 
   @override
   State<LoginForm> createState() => _LoginFormState();
@@ -63,9 +60,9 @@ class _LoginFormState extends State<LoginForm> {
     }
     if (_formKey.currentState?.validate() ?? false) {
       context.read<AuthCubit>().login(
-            email: _emailController.text.trim(),
-            password: _passwordController.text,
-          );
+        email: _emailController.text.trim(),
+        password: _passwordController.text,
+      );
     }
   }
 
@@ -81,7 +78,7 @@ class _LoginFormState extends State<LoginForm> {
       },
       child: Container(
         padding: const EdgeInsets.all(AppSpacing.spaceLg),
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: AppColors.canvasPure,
           borderRadius: AppRadii.roundedXl,
           boxShadow: AppShadows.level1,
@@ -110,11 +107,7 @@ class _LoginFormState extends State<LoginForm> {
                       ],
                     ),
                   ),
-                  const Icon(
-                    Icons.lock_outline_rounded,
-                    color: AppColors.primaryBrand,
-                    size: 24,
-                  ),
+                  const Icon(Icons.lock_outline_rounded, color: AppColors.primaryBrand, size: 24),
                 ],
               ),
               const SizedBox(height: AppSpacing.spaceLg),
@@ -157,68 +150,68 @@ class _LoginFormState extends State<LoginForm> {
               ),
               const SizedBox(height: AppSpacing.spaceLg),
 
-            // Submit Button - BlocBuilder scoped tightly here
-            BlocBuilder<AuthCubit, AuthState>(
-              buildWhen: (previous, current) =>
-                  (previous is AuthLoading) != (current is AuthLoading),
-              builder: (context, state) {
-                final isLoading = state is AuthLoading;
-                return AppButton.primary(
-                  text: AppLocaleKeys.authSignInButton.tr(),
-                  icon: const Icon(Icons.arrow_forward_rounded, size: 18),
-                  isLoading: isLoading,
-                  onPressed: _submit,
-                );
-              },
-            ),
-            const SizedBox(height: AppSpacing.spaceLg),
+              // Submit Button - BlocBuilder scoped tightly here
+              BlocBuilder<AuthCubit, AuthState>(
+                buildWhen: (previous, current) =>
+                    (previous is AuthLoading) != (current is AuthLoading),
+                builder: (context, state) {
+                  final isLoading = state is AuthLoading;
+                  return AppButton.primary(
+                    text: AppLocaleKeys.authSignInButton.tr(),
+                    icon: const Icon(Icons.arrow_forward_rounded, size: 18),
+                    isLoading: isLoading,
+                    onPressed: _submit,
+                  );
+                },
+              ),
+              const SizedBox(height: AppSpacing.spaceLg),
 
-            // Secondary Link to Registration
-            Container(
-              padding: const EdgeInsets.symmetric(
-                horizontal: AppSpacing.spaceMd,
-                vertical: AppSpacing.spaceSm,
-              ),
-              decoration: BoxDecoration(
-                color: AppColors.surfaceContainerLow,
-                borderRadius: AppRadii.roundedXl,
-              ),
-              child: Column(
-                children: [
-                  Text(
-                    AppLocaleKeys.authNoAccountPrompt.tr(),
-                    style: AppTypography.bodySm(color: AppColors.secondary),
-                  ),
-                  const SizedBox(height: AppSpacing.space2xs),
-                  InkWell(
-                    onTap: widget.onNavigateToRegister,
-                    borderRadius: AppRadii.roundedSm,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            AppLocaleKeys.authCreateAccountLink.tr(),
-                            style: AppTypography.labelMd(color: AppColors.primaryBrand),
-                          ),
-                          const SizedBox(width: AppSpacing.space2xs),
-                          const Icon(
-                            Icons.person_add_alt_1_outlined,
-                            size: 16,
-                            color: AppColors.primaryBrand,
-                          ),
-                        ],
+              // Secondary Link to Registration
+              Container(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: AppSpacing.spaceMd,
+                  vertical: AppSpacing.spaceSm,
+                ),
+                decoration: const BoxDecoration(
+                  color: AppColors.surfaceContainerLow,
+                  borderRadius: AppRadii.roundedXl,
+                ),
+                child: Column(
+                  children: [
+                    Text(
+                      AppLocaleKeys.authNoAccountPrompt.tr(),
+                      style: AppTypography.bodySm(color: AppColors.secondary),
+                    ),
+                    const SizedBox(height: AppSpacing.space2xs),
+                    InkWell(
+                      onTap: widget.onNavigateToRegister,
+                      borderRadius: AppRadii.roundedSm,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              AppLocaleKeys.authCreateAccountLink.tr(),
+                              style: AppTypography.labelMd(color: AppColors.primaryBrand),
+                            ),
+                            const SizedBox(width: AppSpacing.space2xs),
+                            const Icon(
+                              Icons.person_add_alt_1_outlined,
+                              size: 16,
+                              color: AppColors.primaryBrand,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
-    ),
-  );
-}
+    );
+  }
 }

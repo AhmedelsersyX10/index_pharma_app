@@ -19,11 +19,7 @@ import '../widgets/stock_conflict_banner.dart';
 
 /// Customer checkout screen conforming to Stitch design `C2_Checkout_عربي`.
 class CheckoutScreen extends StatefulWidget {
-  const CheckoutScreen({
-    super.key,
-    this.checkoutCubit,
-    this.cartCubit,
-  });
+  const CheckoutScreen({super.key, this.checkoutCubit, this.cartCubit});
 
   final CheckoutCubit? checkoutCubit;
   final CartCubit? cartCubit;
@@ -42,10 +38,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   void initState() {
     super.initState();
     _cubit = widget.checkoutCubit ?? GetIt.instance<CheckoutCubit>();
-    _addressController =
-        TextEditingController(text: _cubit.state.deliveryAddress);
-    _phoneController =
-        TextEditingController(text: _cubit.state.customerPhone);
+    _addressController = TextEditingController(text: _cubit.state.deliveryAddress);
+    _phoneController = TextEditingController(text: _cubit.state.customerPhone);
     _notesController = TextEditingController(text: _cubit.state.notes);
   }
 
@@ -62,15 +56,13 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final effectiveCartCubit = widget.cartCubit ??
-        (GetIt.instance.isRegistered<CartCubit>()
-            ? GetIt.instance<CartCubit>()
-            : null);
+    final effectiveCartCubit =
+        widget.cartCubit ??
+        (GetIt.instance.isRegistered<CartCubit>() ? GetIt.instance<CartCubit>() : null);
 
     final providers = [
       BlocProvider<CheckoutCubit>.value(value: _cubit),
-      if (effectiveCartCubit != null)
-        BlocProvider<CartCubit>.value(value: effectiveCartCubit),
+      if (effectiveCartCubit != null) BlocProvider<CartCubit>.value(value: effectiveCartCubit),
     ];
 
     return MultiBlocProvider(
@@ -82,10 +74,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
           elevation: 0,
           scrolledUnderElevation: 1,
           leading: IconButton(
-            icon: const Icon(
-              Icons.arrow_back_rounded,
-              color: AppColors.onSurface,
-            ),
+            icon: const Icon(Icons.arrow_back_rounded, color: AppColors.onSurface),
             onPressed: () {
               if (Navigator.of(context).canPop()) {
                 Navigator.of(context).pop();
@@ -106,10 +95,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         body: BlocConsumer<CheckoutCubit, CheckoutState>(
           listener: (context, state) {
             if (state is CheckoutSuccess) {
-              context.go(
-                AppRouter.kOrderConfirmationView,
-                extra: state.order,
-              );
+              context.go(AppRouter.kOrderConfirmationView, extra: state.order);
             } else if (state is CheckoutFailure) {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
@@ -125,15 +111,12 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               bloc: effectiveCartCubit,
               builder: (context, cartState) {
                 final isSubmitting = state is CheckoutSubmitting;
-                final cartItems =
-                    cartState is CartHasItems ? cartState.items : const <CartItem>[];
+                final cartItems = cartState is CartHasItems ? cartState.items : const <CartItem>[];
                 final cartBranchId = cartState is CartHasItems
                     ? cartState.branchId
                     : (cartState is CartEmpty ? cartState.branchId ?? '' : '');
-                final totalItems =
-                    cartState is CartHasItems ? cartState.totalItemsCount : 0;
-                final subtotal =
-                    cartState is CartHasItems ? cartState.subtotal : 0.0;
+                final totalItems = cartState is CartHasItems ? cartState.totalItemsCount : 0;
+                final subtotal = cartState is CartHasItems ? cartState.subtotal : 0.0;
                 final currency = 'cart.currency'.tr();
 
                 return Column(
@@ -177,10 +160,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                             const SizedBox(height: AppSpacing.spaceMd),
                             const CheckoutPaymentCard(),
                             const SizedBox(height: AppSpacing.spaceMd),
-                            CheckoutSummaryCard(
-                              totalItemsCount: totalItems,
-                              subtotal: subtotal,
-                            ),
+                            CheckoutSummaryCard(totalItemsCount: totalItems, subtotal: subtotal),
                             const SizedBox(height: AppSpacing.spaceXl),
                           ],
                         ),
@@ -194,10 +174,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       onConfirm: isSubmitting
                           ? null
                           : () {
-                              _cubit.submitOrder(
-                                branchId: cartBranchId,
-                                cartItems: cartItems,
-                              );
+                              _cubit.submitOrder(branchId: cartBranchId, cartItems: cartItems);
                             },
                     ),
                   ],
@@ -219,12 +196,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   }) {
     return Container(
       padding: const EdgeInsets.all(AppSpacing.spaceMd),
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         color: AppColors.canvasPure,
         boxShadow: AppShadows.level3,
-        border: const Border(
-          top: BorderSide(color: AppColors.borderSubtle),
-        ),
+        border: Border(top: BorderSide(color: AppColors.borderSubtle)),
       ),
       child: SafeArea(
         top: false,
@@ -242,9 +217,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                   horizontal: AppSpacing.spaceMd,
                   vertical: AppSpacing.spaceSm,
                 ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(AppRadii.lg),
-                ),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppRadii.lg)),
                 elevation: 2,
               ),
               child: Row(
@@ -269,13 +242,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                         ),
                       const SizedBox(width: AppSpacing.spaceSm),
                       Text(
-                        isSubmitting
-                            ? 'checkout.submitting_btn'.tr()
-                            : 'checkout.confirm_btn'.tr(),
-                        style: const TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        isSubmitting ? 'checkout.submitting_btn'.tr() : 'checkout.confirm_btn'.tr(),
+                        style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),
@@ -313,10 +281,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 Flexible(
                   child: Text(
                     'checkout.disclaimer'.tr(),
-                    style: const TextStyle(
-                      fontSize: 11,
-                      color: AppColors.secondaryMuted,
-                    ),
+                    style: const TextStyle(fontSize: 11, color: AppColors.secondaryMuted),
                     textAlign: TextAlign.center,
                   ),
                 ),

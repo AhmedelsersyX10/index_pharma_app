@@ -14,7 +14,7 @@ class ClinicalTrustFooter extends StatelessWidget {
     if (isDetailed) {
       return Container(
         padding: const EdgeInsets.all(AppSpacing.spaceSm),
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: AppColors.surfaceContainerLow,
           borderRadius: AppRadii.roundedXl,
         ),
@@ -23,7 +23,7 @@ class ClinicalTrustFooter extends StatelessWidget {
             Container(
               width: 38,
               height: 38,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: AppColors.brandMintSurface,
                 borderRadius: AppRadii.roundedLg,
               ),
@@ -60,11 +60,7 @@ class ClinicalTrustFooter extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Icon(
-            Icons.shield_outlined,
-            size: 16,
-            color: AppColors.slate500,
-          ),
+          const Icon(Icons.shield_outlined, size: 16, color: AppColors.slate500),
           const SizedBox(width: AppSpacing.space2xs),
           Flexible(
             child: Text(
