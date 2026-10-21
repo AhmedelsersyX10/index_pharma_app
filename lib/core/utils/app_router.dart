@@ -16,6 +16,7 @@ import 'package:index_pharma/features/account/presentation/screens/edit_profile_
 import 'package:index_pharma/features/cart/presentation/screens/cart_screen.dart';
 import 'package:index_pharma/features/choose_branches/presentation/screens/branch_selection_screen.dart';
 import 'package:index_pharma/features/home/presentation/screens/home_screen.dart';
+import 'package:index_pharma/features/language/presentation/screens/language_selection_screen.dart';
 import 'package:index_pharma/features/onboarding/presentation/view/onboarding_view.dart';
 import 'package:index_pharma/features/products/presentation/screens/product_details_screen.dart';
 import 'package:index_pharma/features/splash/presentation/view/splash_view.dart';
@@ -51,6 +52,7 @@ class AppRouter {
   final String? _initialLocation;
 
   static const kSplashView = '/';
+  static const kLanguageSelectionView = '/language';
   static const kOnboardingView = '/onboardingView';
   static const kStoreView = '/store';
   static const kProductDetailsView = '/store/products/:id';
@@ -218,6 +220,13 @@ class AppRouter {
         builder: (context, state) => SplashView(
           authCubit: _activeAuthCubit,
           storageService: _activeStorageService,
+        ),
+      ),
+      GoRoute(
+        path: kLanguageSelectionView,
+        builder: (context, state) => LanguageSelectionScreen(
+          storageService: _activeStorageService,
+          from: state.uri.queryParameters['from'],
         ),
       ),
       GoRoute(

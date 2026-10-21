@@ -15,12 +15,16 @@ class AccountGuestView extends StatelessWidget {
 
   final StorageService storageService;
 
-  Future<void> _toggleLanguage(BuildContext context) async {
-    final currentCode = context.locale.languageCode;
-    final targetLocale =
-        currentCode == 'ar' ? const Locale('en') : const Locale('ar');
-    await context.setLocale(targetLocale);
-    await storageService.setLocale(targetLocale.languageCode);
+  Future<void> _openLanguageSelection(BuildContext context) async {
+    try {
+      context.push('${AppRouter.kLanguageSelectionView}?from=account');
+    } catch (_) {
+      final currentCode = context.locale.languageCode;
+      final targetLocale =
+          currentCode == 'ar' ? const Locale('en') : const Locale('ar');
+      await context.setLocale(targetLocale);
+      await storageService.setLocale(targetLocale.languageCode);
+    }
   }
 
   @override
@@ -192,7 +196,7 @@ class AccountGuestView extends StatelessWidget {
               // Language Switcher Tile for Guests
               InkWell(
                 key: const ValueKey('guest_language_switch_tile'),
-                onTap: () => _toggleLanguage(context),
+                onTap: () => _openLanguageSelection(context),
                 borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
                 child: Padding(
                   padding: const EdgeInsets.all(14),

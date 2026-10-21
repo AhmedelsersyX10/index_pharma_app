@@ -118,6 +118,11 @@ class _SplashViewBodyState extends State<SplashViewBody>
 
     final bool onboardingSeen = storage?.onboardingSeen ?? false;
     if (!onboardingSeen) {
+      final bool hasSelectedLocale = storage?.locale != null;
+      if (!hasSelectedLocale) {
+        context.go(AppRouter.kLanguageSelectionView);
+        return;
+      }
       context.go(AppRouter.kOnboardingView);
       return;
     }

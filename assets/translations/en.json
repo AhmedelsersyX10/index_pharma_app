@@ -527,6 +527,31 @@
     "edit_saving_btn": "Saving changes...",
     "edit_cancel_btn": "Cancel",
     "edit_success": "Profile updated successfully"
+  },
+  "language": {
+    "title": "Select App Language",
+    "subtitle": "You can switch language anytime in Settings",
+    "bilingual_badge": "Bilingual Experience",
+    "version_badge": "Certified Release v2.4",
+    "skip": "Skip",
+    "arabic_title": "العربية",
+    "arabic_badge": "Default",
+    "arabic_slogan": "Your Certified Digital Pharmacy in Egypt",
+    "arabic_desc": "Browse medical products, instant prescriptions, and consultations in Arabic.",
+    "arabic_tag": "Full Right-to-Left layout (RTL)",
+    "arabic_recommended": "Recommended",
+    "english_title": "English",
+    "english_badge": "Standard",
+    "english_slogan": "Certified Egyptian Digital Pharmacy",
+    "english_desc": "Order medications, upload prescriptions & track licensed clinical deliveries.",
+    "english_tag": "Standard Left-to-Right layout (LTR)",
+    "english_universal": "Universal",
+    "assurance_title": "Certified & Unified Pharmacy Coverage",
+    "assurance_desc": "Same verified medical database, pricing & dosage guidance in both languages.",
+    "continue_arabic": "Continue in Arabic",
+    "continue_english": "Continue in English",
+    "footer_trust": "Index Pharma Egypt • Ministry of Health",
+    "footer_copyright": "All Rights Reserved © 2025"
   }
 }
 

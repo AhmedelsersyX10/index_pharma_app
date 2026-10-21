@@ -1,8 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:index_pharma/core/localization/app_locale_keys.dart';
 import 'package:index_pharma/core/storage/storage_service.dart';
 import 'package:index_pharma/core/theme/theme.dart';
+import 'package:index_pharma/core/utils/app_router.dart';
 
 /// App preferences & medical compliance section (Stitch D5).
 ///
@@ -16,11 +18,16 @@ class AccountPreferencesSection extends StatelessWidget {
 
   final StorageService storageService;
 
-  Future<void> _toggleLanguage(BuildContext context) async {
-    final currentCode = context.locale.languageCode;
-    final targetLocale = currentCode == 'ar' ? const Locale('en') : const Locale('ar');
-    await context.setLocale(targetLocale);
-    await storageService.setLocale(targetLocale.languageCode);
+  Future<void> _openLanguageSelection(BuildContext context) async {
+    try {
+      context.push('${AppRouter.kLanguageSelectionView}?from=account');
+    } catch (_) {
+      final currentCode = context.locale.languageCode;
+      final targetLocale =
+          currentCode == 'ar' ? const Locale('en') : const Locale('ar');
+      await context.setLocale(targetLocale);
+      await storageService.setLocale(targetLocale.languageCode);
+    }
   }
 
   @override
@@ -64,7 +71,7 @@ class AccountPreferencesSection extends StatelessWidget {
               // Language Switcher Tile
               InkWell(
                 key: const ValueKey('account_language_switch_tile'),
-                onTap: () => _toggleLanguage(context),
+                onTap: () => _openLanguageSelection(context),
                 borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
                 child: Padding(
                   padding: const EdgeInsets.all(14),

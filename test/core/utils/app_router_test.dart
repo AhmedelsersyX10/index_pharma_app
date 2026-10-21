@@ -25,15 +25,17 @@ void main() {
       expect(AppRouter.kRegisterView, equals('/register'));
       expect(AppRouter.kStaffDashboardView, equals('/staff'));
       expect(AppRouter.kBranchManagementView, equals('/admin/branches'));
+      expect(AppRouter.kLanguageSelectionView, equals('/language'));
     });
 
     test('creates GoRouter with existing routes and required role routes', () {
       final appRouter = AppRouter();
       final routes = appRouter.router.configuration.routes;
 
-      expect(routes.length, equals(21));
+      expect(routes.length, equals(22));
       final routePaths = routes.whereType<GoRoute>().map((r) => r.path).toList();
       expect(routePaths, contains('/'));
+      expect(routePaths, contains(AppRouter.kLanguageSelectionView));
       expect(routePaths, contains(AppRouter.kOnboardingView));
       expect(routePaths, contains(AppRouter.kStoreView));
       expect(routePaths, contains(AppRouter.kProductDetailsView));

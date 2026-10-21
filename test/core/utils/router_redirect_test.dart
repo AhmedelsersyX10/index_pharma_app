@@ -35,7 +35,7 @@ class SynchronousDiskAssetLoader extends AssetLoader {
 }
 
 class FakeStorageService implements StorageService {
-  FakeStorageService({this.onboardingSeen = false});
+  FakeStorageService({this.onboardingSeen = false, this.locale});
 
   @override
   bool onboardingSeen;
@@ -676,7 +676,7 @@ void main() {
     });
 
     testWidgets(
-        'when onboardingSeen is false, restores session and routes to onboarding',
+        'when onboardingSeen is false and locale is null, restores session and routes to language selection',
         (tester) async {
       tester.view.physicalSize = const Size(1080, 2400);
       tester.view.devicePixelRatio = 2.0;
@@ -686,6 +686,36 @@ void main() {
       });
 
       final storage = FakeStorageService(onboardingSeen: false);
+
+      final appRouter = AppRouter(
+        authCubit: authCubit,
+        storageService: storage,
+        initialLocation: AppRouter.kSplashView,
+      );
+
+      await tester.pumpWidget(createTestApp(appRouter.router));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 2500));
+      await tester.pumpAndSettle();
+
+      expect(authRepo.restoreSessionCalls, equals(1));
+      expect(
+        appRouter.router.state.matchedLocation,
+        equals(AppRouter.kLanguageSelectionView),
+      );
+    });
+
+    testWidgets(
+        'when onboardingSeen is false and locale is set, restores session and routes to onboarding',
+        (tester) async {
+      tester.view.physicalSize = const Size(1080, 2400);
+      tester.view.devicePixelRatio = 2.0;
+      addTearDown(() {
+        tester.view.resetPhysicalSize();
+        tester.view.resetDevicePixelRatio();
+      });
+
+      final storage = FakeStorageService(onboardingSeen: false, locale: 'ar');
 
       final appRouter = AppRouter(
         authCubit: authCubit,

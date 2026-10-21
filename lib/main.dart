@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:index_pharma/core/di/service_locator.dart';
 import 'package:index_pharma/core/localization/app_locale_keys.dart';
+import 'package:index_pharma/core/storage/storage_service.dart';
 import 'package:index_pharma/core/theme/theme.dart';
 import 'package:index_pharma/core/utils/app_router.dart';
 
@@ -11,12 +12,21 @@ void main() async {
   await setupServiceLocator();
   await getIt.allReady();
 
+  // Restore persisted locale from StorageService on startup
+  Locale startLocale = const Locale('ar');
+  if (getIt.isRegistered<StorageService>()) {
+    final savedCode = getIt<StorageService>().locale;
+    if (savedCode != null && (savedCode == 'en' || savedCode == 'ar')) {
+      startLocale = Locale(savedCode);
+    }
+  }
+
   runApp(
     EasyLocalization(
       supportedLocales: const [Locale('ar'), Locale('en')],
       path: 'assets/translations',
       fallbackLocale: const Locale('ar'),
-      startLocale: const Locale('ar'),
+      startLocale: startLocale,
       child: const IndexPharmaApp(),
     ),
   );

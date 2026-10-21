@@ -407,5 +407,30 @@ abstract class AppLocaleKeys {
   static const editProfileSavingBtn = 'account.edit_saving_btn';
   static const editProfileCancelBtn = 'account.edit_cancel_btn';
   static const editProfileSuccess = 'account.edit_success';
+
+  // Language Selection (A3)
+  static const languageTitle = 'language.title';
+  static const languageSubtitle = 'language.subtitle';
+  static const languageBilingualBadge = 'language.bilingual_badge';
+  static const languageVersionBadge = 'language.version_badge';
+  static const languageSkip = 'language.skip';
+  static const languageArabicTitle = 'language.arabic_title';
+  static const languageArabicBadge = 'language.arabic_badge';
+  static const languageArabicSlogan = 'language.arabic_slogan';
+  static const languageArabicDesc = 'language.arabic_desc';
+  static const languageArabicTag = 'language.arabic_tag';
+  static const languageArabicRecommended = 'language.arabic_recommended';
+  static const languageEnglishTitle = 'language.english_title';
+  static const languageEnglishBadge = 'language.english_badge';
+  static const languageEnglishSlogan = 'language.english_slogan';
+  static const languageEnglishDesc = 'language.english_desc';
+  static const languageEnglishTag = 'language.english_tag';
+  static const languageEnglishUniversal = 'language.english_universal';
+  static const languageAssuranceTitle = 'language.assurance_title';
+  static const languageAssuranceDesc = 'language.assurance_desc';
+  static const languageContinueArabic = 'language.continue_arabic';
+  static const languageContinueEnglish = 'language.continue_english';
+  static const languageFooterTrust = 'language.footer_trust';
+  static const languageFooterCopyright = 'language.footer_copyright';
 }
 
