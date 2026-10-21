@@ -4,6 +4,10 @@
 <dict>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
+	<key>NSCameraUsageDescription</key>
+	<string>نحتاج إلى إذن استخدام الكاميرا لالتقاط صورة الروشتة الطبية.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>نحتاج إلى إذن الوصول إلى مكتبة الصور لاختيار صورة الروشتة الطبية.</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>

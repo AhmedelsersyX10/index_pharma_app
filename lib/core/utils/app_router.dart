@@ -23,6 +23,11 @@ import 'package:index_pharma/features/checkout/presentation/screens/order_confir
 import 'package:index_pharma/features/orders/domain/entities/customer_order.dart';
 import 'package:index_pharma/features/orders/presentation/screens/my_orders_screen.dart';
 import 'package:index_pharma/features/orders/presentation/screens/order_details_screen.dart';
+import 'package:index_pharma/features/prescriptions/domain/entities/prescription_entity.dart';
+import 'package:index_pharma/features/prescriptions/presentation/screens/my_prescriptions_screen.dart';
+import 'package:index_pharma/features/prescriptions/presentation/screens/prescription_details_screen.dart';
+import 'package:index_pharma/features/prescriptions/presentation/screens/prescription_submitted_screen.dart';
+import 'package:index_pharma/features/prescriptions/presentation/screens/upload_prescription_screen.dart';
 
 class AppRouter {
   AppRouter({
@@ -49,6 +54,9 @@ class AppRouter {
   static const kProductDetailsView = '/store/products/:id';
   static const kBrowseView = '/browse';
   static const kPrescriptionView = '/prescription';
+  static const kPrescriptionUploadView = '/prescription/upload';
+  static const kPrescriptionConfirmationView = '/prescription/confirmation';
+  static const kPrescriptionDetailsView = '/prescription/:id';
   static const kOrdersView = '/orders';
   static const kOrderDetailsView = '/orders/:id';
   static const kAccountView = '/account';
@@ -66,6 +74,10 @@ class AppRouter {
 
   /// Generates the order details path for a specific [orderId].
   static String orderDetailsPath(String orderId) => '/orders/$orderId';
+
+  /// Generates the prescription details path for a specific [prescriptionId].
+  static String prescriptionDetailsPath(String prescriptionId) =>
+      '/prescription/$prescriptionId';
 
   AuthCubit? get _activeAuthCubit {
     if (_authCubit != null) return _authCubit;
@@ -270,8 +282,52 @@ class AppRouter {
         builder: (context, state) => AuthRequiredGuard(
           routePath: kPrescriptionView,
           authCubit: _activeAuthCubit,
-          child: const PrescriptionPlaceholderScreen(),
+          child: const MyPrescriptionsScreen(),
         ),
+      ),
+      GoRoute(
+        path: kPrescriptionUploadView,
+        builder: (context, state) => AuthRequiredGuard(
+          routePath: kPrescriptionUploadView,
+          authCubit: _activeAuthCubit,
+          child: const UploadPrescriptionScreen(),
+        ),
+      ),
+      GoRoute(
+        path: kPrescriptionConfirmationView,
+        builder: (context, state) {
+          final extra = state.extra;
+          if (extra is PrescriptionEntity) {
+            return AuthRequiredGuard(
+              routePath: kPrescriptionView,
+              authCubit: _activeAuthCubit,
+              child: PrescriptionSubmittedScreen(prescription: extra),
+            );
+          }
+          return AuthRequiredGuard(
+            routePath: kPrescriptionView,
+            authCubit: _activeAuthCubit,
+            child: const MyPrescriptionsScreen(),
+          );
+        },
+      ),
+      GoRoute(
+        path: kPrescriptionDetailsView,
+        builder: (context, state) {
+          final extra = state.extra;
+          if (extra is PrescriptionEntity) {
+            return AuthRequiredGuard(
+              routePath: kPrescriptionView,
+              authCubit: _activeAuthCubit,
+              child: PrescriptionDetailsScreen(prescription: extra),
+            );
+          }
+          return AuthRequiredGuard(
+            routePath: kPrescriptionView,
+            authCubit: _activeAuthCubit,
+            child: const MyPrescriptionsScreen(),
+          );
+        },
       ),
       GoRoute(
         path: kOrdersView,
