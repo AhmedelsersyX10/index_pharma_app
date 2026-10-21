@@ -25,4 +25,11 @@ abstract interface class AuthRemoteDataSource {
 
   /// Calls `POST /auth/logout` to end the session and invalidate cookies.
   Future<void> logout();
+
+  /// Calls `PUT /auth/profile` to partially update customer profile fields.
+  Future<UserModel> updateProfile({
+    String? name,
+    String? phone,
+    String? address,
+  });
 }

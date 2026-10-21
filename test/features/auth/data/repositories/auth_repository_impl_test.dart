@@ -50,6 +50,18 @@ class FakeAuthRemoteDataSource implements AuthRemoteDataSource {
       throw errorToThrow!;
     }
   }
+
+  @override
+  Future<UserModel> updateProfile({
+    String? name,
+    String? phone,
+    String? address,
+  }) async {
+    if (errorToThrow != null) {
+      throw errorToThrow!;
+    }
+    return mockUser!;
+  }
 }
 
 void main() {
@@ -355,6 +367,85 @@ void main() {
       expect(result, isA<Err<void>>());
       final err = result as Err<void>;
       expect(err.failure, isA<Unexpected>());
+    });
+  });
+
+  group('AuthRepositoryImpl - updateProfile', () {
+    test('returns Success<UserEntity> when data source succeeds', () async {
+      fakeRemoteDataSource.mockUser = const UserModel(
+        id: 'u-123',
+        name: 'Updated Name',
+        email: 'user@test.com',
+        role: 'customer',
+        phone: '01012345678',
+        address: 'Nasr City',
+      );
+
+      final result = await repository.updateProfile(
+        name: 'Updated Name',
+        phone: '01012345678',
+        address: 'Nasr City',
+      );
+
+      expect(result, isA<Success<UserEntity>>());
+      final success = result as Success<UserEntity>;
+      expect(success.data.name, 'Updated Name');
+      expect(success.data.phone, '01012345678');
+      expect(success.data.address, 'Nasr City');
+    });
+
+    test('returns Err<UserEntity> with Validation on HTTP 400', () async {
+      fakeRemoteDataSource.errorToThrow = createDioResponseException(
+        statusCode: 400,
+        data: {'success': false, 'message': 'الاسم لا يمكن أن يكون فارغاً'},
+      );
+
+      final result = await repository.updateProfile(name: '');
+
+      expect(result, isA<Err<UserEntity>>());
+      final err = result as Err<UserEntity>;
+      expect(err.failure, isA<Validation>());
+      expect(err.failure.serverMessage, 'الاسم لا يمكن أن يكون فارغاً');
+    });
+
+    test('returns Err<UserEntity> with NotFound on HTTP 404', () async {
+      fakeRemoteDataSource.errorToThrow = createDioResponseException(
+        statusCode: 404,
+        data: {'success': false, 'message': 'المستخدم غير موجود'},
+      );
+
+      final result = await repository.updateProfile(name: 'Does Not Exist');
+
+      expect(result, isA<Err<UserEntity>>());
+      final err = result as Err<UserEntity>;
+      expect(err.failure, isA<NotFound>());
+      expect(err.failure.serverMessage, 'المستخدم غير موجود');
+    });
+
+    test('returns Err<UserEntity> with Server on HTTP 500', () async {
+      fakeRemoteDataSource.errorToThrow = createDioResponseException(
+        statusCode: 500,
+        data: {'message': 'Database error occurred'},
+      );
+
+      final result = await repository.updateProfile(name: 'Test');
+
+      expect(result, isA<Err<UserEntity>>());
+      final err = result as Err<UserEntity>;
+      expect(err.failure, isA<Server>());
+    });
+
+    test('returns Err<UserEntity> with Network on connection error', () async {
+      fakeRemoteDataSource.errorToThrow = DioException(
+        requestOptions: testRequestOptions,
+        type: DioExceptionType.connectionError,
+      );
+
+      final result = await repository.updateProfile(name: 'Test');
+
+      expect(result, isA<Err<UserEntity>>());
+      final err = result as Err<UserEntity>;
+      expect(err.failure, isA<Network>());
     });
   });
 }

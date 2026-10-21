@@ -120,6 +120,9 @@ abstract class AppLocaleKeys {
   static const authValidationPasswordRequired = 'auth.validation.password_required';
   static const authValidationPasswordTooShort = 'auth.validation.password_too_short';
   static const authValidationNameRequired = 'auth.validation.name_required';
+  static const authValidationPhoneRequired = 'auth.validation.phone_required';
+  static const authValidationPhoneInvalid = 'auth.validation.phone_invalid';
+  static const authValidationAddressRequired = 'auth.validation.address_required';
 
   // Auth - Errors & Failures
   static const authErrorLoginFailedTitle = 'auth.error.login_failed_title';
@@ -335,5 +338,74 @@ abstract class AppLocaleKeys {
   static const prescriptionsChipDosageText = 'prescriptions.chip_dosage_text';
   static const prescriptionsChipUrgentText = 'prescriptions.chip_urgent_text';
   static const prescriptionsDefaultRejectionReason = 'prescriptions.default_rejection_reason';
+
+  // Account & Profile
+  static const accountTitle = 'account.title';
+  static const accountVerifiedBadge = 'account.verified_badge';
+  static const accountEmailLabel = 'account.email_label';
+  static const accountPhoneLabel = 'account.phone_label';
+  static const accountAddressLabel = 'account.address_label';
+  static const accountNotSet = 'account.not_set';
+  static const accountEditProfileBtn = 'account.edit_profile_btn';
+  static const accountSectionRecords = 'account.section_records';
+  static const accountMyOrdersTitle = 'account.my_orders_title';
+  static const accountMyOrdersDesc = 'account.my_orders_desc';
+  static const accountPrescriptionsTitle = 'account.prescriptions_title';
+  static const accountPrescriptionsDesc = 'account.prescriptions_desc';
+  static const accountPreferredBranchTitle = 'account.preferred_branch_title';
+  static const accountPreferredBranchDesc = 'account.preferred_branch_desc';
+  static const accountChangeBranch = 'account.change_branch';
+  static const accountOpen247 = 'account.open_24_7';
+  static const accountSectionPreferences = 'account.section_preferences';
+  static const accountLanguageTitle = 'account.language_title';
+  static const accountLanguageDesc = 'account.language_desc';
+  static const accountLangArabic = 'account.lang_arabic';
+  static const accountLangEnglish = 'account.lang_english';
+  static const accountPrivacyPolicyTitle = 'account.privacy_policy_title';
+  static const accountPrivacyPolicyDesc = 'account.privacy_policy_desc';
+  static const accountEdaBadge = 'account.eda_badge';
+  static const accountLicensingTitle = 'account.licensing_title';
+  static const accountLicensingDesc = 'account.licensing_desc';
+  static const accountLogoutBtn = 'account.logout_btn';
+  static const accountLogoutModalTitle = 'account.logout_modal_title';
+  static const accountLogoutModalDesc = 'account.logout_modal_desc';
+  static const accountLogoutConfirm = 'account.logout_confirm';
+  static const accountLogoutCancel = 'account.logout_cancel';
+  static const accountHotlineFooter = 'account.hotline_footer';
+  static const accountVersionFooter = 'account.version_footer';
+
+  // Account Guest Mode
+  static const accountGuestWelcomeTitle = 'account.guest_welcome_title';
+  static const accountGuestWelcomeDesc = 'account.guest_welcome_desc';
+  static const accountGuestLoginBtn = 'account.guest_login_btn';
+  static const accountGuestRegisterBtn = 'account.guest_register_btn';
+  static const accountGuestBenefitRemindersTitle = 'account.guest_benefit_reminders_title';
+  static const accountGuestBenefitRemindersDesc = 'account.guest_benefit_reminders_desc';
+  static const accountGuestBenefitArchiveTitle = 'account.guest_benefit_archive_title';
+  static const accountGuestBenefitArchiveDesc = 'account.guest_benefit_archive_desc';
+  static const accountGuestSectionInfo = 'account.guest_section_info';
+  static const accountGuestAboutTitle = 'account.guest_about_title';
+  static const accountGuestAboutDesc = 'account.guest_about_desc';
+  static const accountGuestSupportFooter = 'account.guest_support_footer';
+
+  // Edit Profile (D6)
+  static const editProfileTitle = 'account.edit_profile_title';
+  static const editProfileReassuranceTitle = 'account.edit_reassurance_title';
+  static const editProfileReassuranceDesc = 'account.edit_reassurance_desc';
+  static const editProfileNameLabel = 'account.edit_name_label';
+  static const editProfileNameHint = 'account.edit_name_hint';
+  static const editProfileNameSub = 'account.edit_name_sub';
+  static const editProfilePhoneLabel = 'account.edit_phone_label';
+  static const editProfilePhoneSub = 'account.edit_phone_sub';
+  static const editProfilePhoneHint = 'account.edit_phone_hint';
+  static const editProfileAddressLabel = 'account.edit_address_label';
+  static const editProfileAddressHint = 'account.edit_address_hint';
+  static const editProfilePrivacyShield = 'account.edit_privacy_shield';
+  static const editProfileBranchCardTitle = 'account.edit_branch_card_title';
+  static const editProfileBranchVerified = 'account.edit_branch_verified';
+  static const editProfileSaveBtn = 'account.edit_save_btn';
+  static const editProfileSavingBtn = 'account.edit_saving_btn';
+  static const editProfileCancelBtn = 'account.edit_cancel_btn';
+  static const editProfileSuccess = 'account.edit_success';
 }
 

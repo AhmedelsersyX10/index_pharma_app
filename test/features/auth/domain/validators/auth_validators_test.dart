@@ -155,4 +155,101 @@ void main() {
       );
     });
   });
+
+  group('AuthValidators - Egyptian Phone', () {
+    test('isValidPhone returns false for null, empty, and whitespace', () {
+      expect(AuthValidators.isValidPhone(null), isFalse);
+      expect(AuthValidators.isValidPhone(''), isFalse);
+      expect(AuthValidators.isValidPhone('   '), isFalse);
+    });
+
+    test('isValidPhone returns false for non-11 digits or non-Egyptian prefixes', () {
+      expect(AuthValidators.isValidPhone('0101234567'), isFalse); // 10 digits
+      expect(AuthValidators.isValidPhone('010123456789'), isFalse); // 12 digits
+      expect(AuthValidators.isValidPhone('01912345678'), isFalse); // invalid prefix 019
+      expect(AuthValidators.isValidPhone('02212345678'), isFalse); // landline prefix
+      expect(AuthValidators.isValidPhone('abcdefghijk'), isFalse);
+      expect(AuthValidators.isValidPhone('0101234abcd'), isFalse);
+    });
+
+    test('isValidPhone returns true for valid Egyptian mobile prefixes', () {
+      expect(AuthValidators.isValidPhone('01012345678'), isTrue); // Vodafone
+      expect(AuthValidators.isValidPhone('01112345678'), isTrue); // Etisalat
+      expect(AuthValidators.isValidPhone('01212345678'), isTrue); // Orange
+      expect(AuthValidators.isValidPhone('01512345678'), isTrue); // WE
+      expect(AuthValidators.isValidPhone('  01098765432  '), isTrue); // trimmed
+    });
+
+    test('validatePhone when required returns empty key on null or empty', () {
+      expect(
+        AuthValidators.validatePhone(null, isRequired: true),
+        equals('auth.validation.phone_required'),
+      );
+      expect(
+        AuthValidators.validatePhone('', isRequired: true),
+        equals('auth.validation.phone_required'),
+      );
+      expect(
+        AuthValidators.validatePhone('   ', isRequired: true),
+        equals('auth.validation.phone_required'),
+      );
+    });
+
+    test('validatePhone when optional returns null on null or empty', () {
+      expect(AuthValidators.validatePhone(null, isRequired: false), isNull);
+      expect(AuthValidators.validatePhone('', isRequired: false), isNull);
+      expect(AuthValidators.validatePhone('   ', isRequired: false), isNull);
+    });
+
+    test('validatePhone returns invalid key on malformed Egyptian numbers', () {
+      expect(
+        AuthValidators.validatePhone('012345', isRequired: true),
+        equals('auth.validation.phone_invalid'),
+      );
+      expect(
+        AuthValidators.validatePhone('012345', isRequired: false),
+        equals('auth.validation.phone_invalid'),
+      );
+    });
+
+    test('validatePhone returns null on valid Egyptian numbers', () {
+      expect(
+        AuthValidators.validatePhone('01012345678', isRequired: true),
+        isNull,
+      );
+      expect(
+        AuthValidators.validatePhone('01198765432', isRequired: false),
+        isNull,
+      );
+    });
+  });
+
+  group('AuthValidators - Address', () {
+    test('validateAddress returns required key on null or empty when required', () {
+      expect(
+        AuthValidators.validateAddress(null, isRequired: true),
+        equals('auth.validation.address_required'),
+      );
+      expect(
+        AuthValidators.validateAddress('', isRequired: true),
+        equals('auth.validation.address_required'),
+      );
+      expect(
+        AuthValidators.validateAddress('   ', isRequired: true),
+        equals('auth.validation.address_required'),
+      );
+    });
+
+    test('validateAddress returns null on null or empty when optional', () {
+      expect(AuthValidators.validateAddress(null, isRequired: false), isNull);
+      expect(AuthValidators.validateAddress('', isRequired: false), isNull);
+    });
+
+    test('validateAddress returns null for valid address strings', () {
+      expect(
+        AuthValidators.validateAddress('شارع عباس العقاد، مدينة نصر'),
+        isNull,
+      );
+    });
+  });
 }

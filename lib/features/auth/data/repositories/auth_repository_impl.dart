@@ -82,4 +82,24 @@ class AuthRepositoryImpl implements AuthRepository {
       return Err(Unexpected(serverMessage: e.toString()));
     }
   }
+
+  @override
+  Future<ApiResult<UserEntity>> updateProfile({
+    String? name,
+    String? phone,
+    String? address,
+  }) async {
+    try {
+      final userModel = await _remoteDataSource.updateProfile(
+        name: name,
+        phone: phone,
+        address: address,
+      );
+      return Success(userModel.toEntity());
+    } on DioException catch (e) {
+      return Err(e.toFailure());
+    } catch (e) {
+      return Err(Unexpected(serverMessage: e.toString()));
+    }
+  }
 }

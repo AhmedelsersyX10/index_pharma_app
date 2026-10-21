@@ -27,10 +27,7 @@ class FakeAuthRepository implements AuthRepository {
   int logoutCallCount = 0;
 
   @override
-  Future<ApiResult<UserEntity>> login({
-    required String email,
-    required String password,
-  }) async {
+  Future<ApiResult<UserEntity>> login({required String email, required String password}) async {
     lastLoginEmail = email;
     lastLoginPassword = password;
     return loginResult!;
@@ -62,6 +59,23 @@ class FakeAuthRepository implements AuthRepository {
     logoutCallCount++;
     return logoutResult!;
   }
+
+  ApiResult<UserEntity>? updateProfileResult;
+  String? lastUpdateName;
+  String? lastUpdatePhone;
+  String? lastUpdateAddress;
+
+  @override
+  Future<ApiResult<UserEntity>> updateProfile({
+    String? name,
+    String? phone,
+    String? address,
+  }) async {
+    lastUpdateName = name;
+    lastUpdatePhone = phone;
+    lastUpdateAddress = address;
+    return updateProfileResult!;
+  }
 }
 
 void main() {
@@ -80,15 +94,8 @@ void main() {
 
   setUp(() {
     fakeRepository = FakeAuthRepository();
-    fakeApiClient = ApiClient(
-      dio: Dio(),
-      cookieJar: CookieJar(),
-      enableLogging: false,
-    );
-    cubit = AuthCubit(
-      authRepository: fakeRepository,
-      apiClient: fakeApiClient,
-    );
+    fakeApiClient = ApiClient(dio: Dio(), cookieJar: CookieJar(), enableLogging: false);
+    cubit = AuthCubit(authRepository: fakeRepository, apiClient: fakeApiClient);
   });
 
   tearDown(() async {
@@ -111,13 +118,7 @@ void main() {
       await cubit.restoreSession();
       await pumpEventQueue();
 
-      expect(
-        states,
-        [
-          const AuthLoading(),
-          const AuthAuthenticated(testUser),
-        ],
-      );
+      expect(states, [const AuthLoading(), const AuthAuthenticated(testUser)]);
     });
 
     test('emits [AuthLoading, AuthGuest] when getMe fails with Unauthorized (HTTP 401)', () async {
@@ -130,33 +131,24 @@ void main() {
       await cubit.restoreSession();
       await pumpEventQueue();
 
-      expect(
-        states,
-        [
-          const AuthLoading(),
-          const AuthGuest(),
-        ],
-      );
+      expect(states, [const AuthLoading(), const AuthGuest()]);
     });
 
-    test('emits [AuthLoading, AuthFailure] when getMe fails with Server error (HTTP 500)', () async {
-      const serverFailure = Server(serverMessage: 'خطأ في السيرفر');
-      fakeRepository.getMeResult = const Err(serverFailure);
+    test(
+      'emits [AuthLoading, AuthFailure] when getMe fails with Server error (HTTP 500)',
+      () async {
+        const serverFailure = Server(serverMessage: 'خطأ في السيرفر');
+        fakeRepository.getMeResult = const Err(serverFailure);
 
-      final states = <AuthState>[];
-      cubit.stream.listen(states.add);
+        final states = <AuthState>[];
+        cubit.stream.listen(states.add);
 
-      await cubit.restoreSession();
-      await pumpEventQueue();
+        await cubit.restoreSession();
+        await pumpEventQueue();
 
-      expect(
-        states,
-        [
-          const AuthLoading(),
-          const AuthFailure(serverFailure),
-        ],
-      );
-    });
+        expect(states, [const AuthLoading(), const AuthFailure(serverFailure)]);
+      },
+    );
 
     test('emits [AuthLoading, AuthFailure] when getMe fails with Network error', () async {
       const networkFailure = Network(serverMessage: 'لا يوجد اتصال بالإنترنت');
@@ -168,13 +160,7 @@ void main() {
       await cubit.restoreSession();
       await pumpEventQueue();
 
-      expect(
-        states,
-        [
-          const AuthLoading(),
-          const AuthFailure(networkFailure),
-        ],
-      );
+      expect(states, [const AuthLoading(), const AuthFailure(networkFailure)]);
     });
   });
 
@@ -185,19 +171,10 @@ void main() {
       final states = <AuthState>[];
       cubit.stream.listen(states.add);
 
-      await cubit.login(
-        email: 'ahmed@indexpharma.com',
-        password: 'Password123',
-      );
+      await cubit.login(email: 'ahmed@indexpharma.com', password: 'Password123');
       await pumpEventQueue();
 
-      expect(
-        states,
-        [
-          const AuthLoading(),
-          const AuthAuthenticated(testUser),
-        ],
-      );
+      expect(states, [const AuthLoading(), const AuthAuthenticated(testUser)]);
       expect(fakeRepository.lastLoginEmail, 'ahmed@indexpharma.com');
       expect(fakeRepository.lastLoginPassword, 'Password123');
     });
@@ -209,19 +186,10 @@ void main() {
       final states = <AuthState>[];
       cubit.stream.listen(states.add);
 
-      await cubit.login(
-        email: 'ahmed@indexpharma.com',
-        password: 'WrongPassword',
-      );
+      await cubit.login(email: 'ahmed@indexpharma.com', password: 'WrongPassword');
       await pumpEventQueue();
 
-      expect(
-        states,
-        [
-          const AuthLoading(),
-          const AuthFailure(authFailure),
-        ],
-      );
+      expect(states, [const AuthLoading(), const AuthFailure(authFailure)]);
     });
 
     test('emits [AuthLoading, AuthFailure] when login fails with Validation', () async {
@@ -231,19 +199,10 @@ void main() {
       final states = <AuthState>[];
       cubit.stream.listen(states.add);
 
-      await cubit.login(
-        email: '',
-        password: '123',
-      );
+      await cubit.login(email: '', password: '123');
       await pumpEventQueue();
 
-      expect(
-        states,
-        [
-          const AuthLoading(),
-          const AuthFailure(valFailure),
-        ],
-      );
+      expect(states, [const AuthLoading(), const AuthFailure(valFailure)]);
     });
 
     test('emits [AuthLoading, AuthFailure] when login fails with Network', () async {
@@ -253,19 +212,10 @@ void main() {
       final states = <AuthState>[];
       cubit.stream.listen(states.add);
 
-      await cubit.login(
-        email: 'ahmed@indexpharma.com',
-        password: 'Password123',
-      );
+      await cubit.login(email: 'ahmed@indexpharma.com', password: 'Password123');
       await pumpEventQueue();
 
-      expect(
-        states,
-        [
-          const AuthLoading(),
-          const AuthFailure(netFailure),
-        ],
-      );
+      expect(states, [const AuthLoading(), const AuthFailure(netFailure)]);
     });
   });
 
@@ -285,13 +235,7 @@ void main() {
       );
       await pumpEventQueue();
 
-      expect(
-        states,
-        [
-          const AuthLoading(),
-          const AuthAuthenticated(testUser),
-        ],
-      );
+      expect(states, [const AuthLoading(), const AuthAuthenticated(testUser)]);
       expect(fakeRepository.lastRegisterName, 'Ahmed Elsherbiny');
       expect(fakeRepository.lastRegisterEmail, 'ahmed@indexpharma.com');
       expect(fakeRepository.lastRegisterPassword, 'Password123');
@@ -313,13 +257,7 @@ void main() {
       );
       await pumpEventQueue();
 
-      expect(
-        states,
-        [
-          const AuthLoading(),
-          const AuthFailure(conflictFailure),
-        ],
-      );
+      expect(states, [const AuthLoading(), const AuthFailure(conflictFailure)]);
     });
   });
 
@@ -333,13 +271,7 @@ void main() {
       await cubit.logout();
       await pumpEventQueue();
 
-      expect(
-        states,
-        [
-          const AuthLoading(),
-          const AuthGuest(),
-        ],
-      );
+      expect(states, [const AuthLoading(), const AuthGuest()]);
       expect(fakeRepository.logoutCallCount, 1);
     });
 
@@ -353,13 +285,7 @@ void main() {
       await cubit.logout();
       await pumpEventQueue();
 
-      expect(
-        states,
-        [
-          const AuthLoading(),
-          const AuthFailure(serverFailure),
-        ],
-      );
+      expect(states, [const AuthLoading(), const AuthFailure(serverFailure)]);
       expect(fakeRepository.logoutCallCount, 1);
     });
 
@@ -373,13 +299,7 @@ void main() {
       await cubit.logout();
       await pumpEventQueue();
 
-      expect(
-        states,
-        [
-          const AuthLoading(),
-          const AuthFailure(netFailure),
-        ],
-      );
+      expect(states, [const AuthLoading(), const AuthFailure(netFailure)]);
       expect(fakeRepository.logoutCallCount, 1);
     });
   });
@@ -411,50 +331,103 @@ void main() {
       await cubit.close();
       expect(fakeApiClient.onSessionExpired, isNull);
     });
-  });
 
-  group('AuthState - Sealed Hierarchy & Exhaustiveness', () {
-    test('exhaustive switch pattern matching covers all sealed cases', () {
-      const states = <AuthState>[
-        AuthInitial(),
-        AuthLoading(),
-        AuthAuthenticated(testUser),
-        AuthGuest(),
-        AuthFailure(Network()),
-      ];
+    group('AuthCubit - updateProfile', () {
+      test('emits AuthAuthenticated with updated user on success and returns Success', () async {
+        const updatedUser = UserEntity(
+          id: 'u-1',
+          name: 'Updated Name',
+          email: 'user@test.com',
+          role: UserRole.customer,
+          phone: '01012345678',
+          address: 'Nasr City',
+        );
+        fakeRepository.updateProfileResult = const Success(updatedUser);
 
-      for (final state in states) {
-        final description = switch (state) {
-          AuthInitial() => 'initial',
-          AuthLoading() => 'loading',
-          AuthAuthenticated(:final user) => 'authenticated: ${user.name}',
-          AuthGuest() => 'guest',
-          AuthFailure(:final failure) => 'failure: ${failure.runtimeType}',
-        };
-        expect(description, isNotEmpty);
-      }
+        final states = <AuthState>[];
+        cubit.stream.listen(states.add);
+
+        final result = await cubit.updateProfile(
+          name: 'Updated Name',
+          phone: '01012345678',
+          address: 'Nasr City',
+        );
+        await pumpEventQueue();
+
+        expect(result, isA<Success<UserEntity>>());
+        expect(states, [const AuthAuthenticated(updatedUser)]);
+        expect(fakeRepository.lastUpdateName, 'Updated Name');
+        expect(fakeRepository.lastUpdatePhone, '01012345678');
+        expect(fakeRepository.lastUpdateAddress, 'Nasr City');
+      });
+
+      test('returns Err and preserves state on failure without emitting AuthFailure', () async {
+        const initialUser = UserEntity(
+          id: 'u-1',
+          name: 'Initial User',
+          email: 'user@test.com',
+          role: UserRole.customer,
+        );
+        cubit.emit(const AuthAuthenticated(initialUser));
+
+        const failure = Validation(serverMessage: 'الاسم لا يمكن أن يكون فارغاً');
+        fakeRepository.updateProfileResult = const Err(failure);
+
+        final states = <AuthState>[];
+        cubit.stream.listen(states.add);
+
+        final result = await cubit.updateProfile(name: '');
+        await pumpEventQueue();
+
+        expect(result, isA<Err<UserEntity>>());
+        final err = result as Err<UserEntity>;
+        expect(err.failure, equals(failure));
+        // State must NOT transition to AuthFailure or AuthGuest
+        expect(states, isEmpty);
+        expect(cubit.state, const AuthAuthenticated(initialUser));
+      });
     });
 
-    test('equality and hashCode work as expected across state instances', () {
-      expect(const AuthInitial(), const AuthInitial());
-      expect(const AuthLoading(), const AuthLoading());
-      expect(const AuthGuest(), const AuthGuest());
+    group('AuthState - Sealed Hierarchy & Exhaustiveness', () {
+      test('exhaustive switch pattern matching covers all sealed cases', () {
+        const states = <AuthState>[
+          AuthInitial(),
+          AuthLoading(),
+          AuthAuthenticated(testUser),
+          AuthGuest(),
+          AuthFailure(Network()),
+        ];
 
-      expect(
-        const AuthAuthenticated(testUser),
-        const AuthAuthenticated(testUser),
-      );
+        for (final state in states) {
+          final description = switch (state) {
+            AuthInitial() => 'initial',
+            AuthLoading() => 'loading',
+            AuthAuthenticated(:final user) => 'authenticated: ${user.name}',
+            AuthGuest() => 'guest',
+            AuthFailure(:final failure) => 'failure: ${failure.runtimeType}',
+          };
+          expect(description, isNotEmpty);
+        }
+      });
 
-      const fail1 = AuthFailure(Network(serverMessage: 'Net Err'));
-      const fail2 = AuthFailure(Network(serverMessage: 'Net Err'));
-      expect(fail1, fail2);
-      expect(fail1.hashCode, fail2.hashCode);
+      test('equality and hashCode work as expected across state instances', () {
+        expect(const AuthInitial(), const AuthInitial());
+        expect(const AuthLoading(), const AuthLoading());
+        expect(const AuthGuest(), const AuthGuest());
 
-      expect(const AuthInitial().toString(), 'AuthInitial()');
-      expect(const AuthLoading().toString(), 'AuthLoading()');
-      expect(const AuthGuest().toString(), 'AuthGuest()');
-      expect(const AuthAuthenticated(testUser).toString(), contains('user-001'));
-      expect(fail1.toString(), contains('AuthFailure'));
+        expect(const AuthAuthenticated(testUser), const AuthAuthenticated(testUser));
+
+        const fail1 = AuthFailure(Network(serverMessage: 'Net Err'));
+        const fail2 = AuthFailure(Network(serverMessage: 'Net Err'));
+        expect(fail1, fail2);
+        expect(fail1.hashCode, fail2.hashCode);
+
+        expect(const AuthInitial().toString(), 'AuthInitial()');
+        expect(const AuthLoading().toString(), 'AuthLoading()');
+        expect(const AuthGuest().toString(), 'AuthGuest()');
+        expect(const AuthAuthenticated(testUser).toString(), contains('user-001'));
+        expect(fail1.toString(), contains('AuthFailure'));
+      });
     });
   });
 }

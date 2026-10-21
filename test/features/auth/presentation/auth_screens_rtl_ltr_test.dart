@@ -58,6 +58,15 @@ class FakeAuthRepository implements AuthRepository {
   Future<ApiResult<void>> logout() async {
     return const Success(null);
   }
+
+  @override
+  Future<ApiResult<UserEntity>> updateProfile({
+    String? name,
+    String? phone,
+    String? address,
+  }) async {
+    return Err(const Unauthorized());
+  }
 }
 
 Widget createTestLocalizedApp({

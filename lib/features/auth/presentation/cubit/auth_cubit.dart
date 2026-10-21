@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:index_pharma/core/errors/failure.dart';
 import 'package:index_pharma/core/network/api_client.dart';
 import 'package:index_pharma/core/network/api_result.dart';
+import '../../domain/entities/user.dart';
 import '../../domain/repositories/auth_repository.dart';
 import 'auth_state.dart';
 
@@ -96,6 +97,30 @@ class AuthCubit extends Cubit<AuthState> {
       case Err(:final failure):
         emit(AuthFailure(failure));
     }
+  }
+
+  /// Partially updates the profile of the currently authenticated customer.
+  ///
+  /// On [Success]: emits [AuthAuthenticated] with the updated user data.
+  /// On [Err]: returns the failure so callers can display localized feedback
+  /// without invalidating the active session.
+  Future<ApiResult<UserEntity>> updateProfile({
+    String? name,
+    String? phone,
+    String? address,
+  }) async {
+    final result = await _authRepository.updateProfile(
+      name: name,
+      phone: phone,
+      address: address,
+    );
+    switch (result) {
+      case Success(:final data):
+        emit(AuthAuthenticated(data));
+      case Err():
+        break;
+    }
+    return result;
   }
 
   /// Invoked when the HTTP layer detects an unrecoverable 401 session expiration.

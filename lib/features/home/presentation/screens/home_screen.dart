@@ -198,7 +198,7 @@ class _HomeViewState extends State<_HomeView> {
       case 3:
         _handleProtectedNav(AppRouter.kOrdersView);
       case 4:
-        _handleProtectedNav(AppRouter.kAccountView);
+        context.go(AppRouter.kAccountView);
     }
   }
 
@@ -225,7 +225,7 @@ class _HomeViewState extends State<_HomeView> {
         backgroundColor: AppColors.background,
         appBar: HomeHeaderBar(
           onCartTap: () => context.push('/cart'),
-          onAccountTap: () => _handleProtectedNav(AppRouter.kAccountView),
+          onAccountTap: () => context.go(AppRouter.kAccountView),
         ),
         body: RefreshIndicator(
           onRefresh: _onRefresh,

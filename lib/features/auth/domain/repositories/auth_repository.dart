@@ -33,4 +33,13 @@ abstract interface class AuthRepository {
 
   /// Logs out the current user session and clears authentication cookies.
   Future<ApiResult<void>> logout();
+
+  /// Updates profile data (name, phone, address) for the currently authenticated customer.
+  ///
+  /// On success, returns the updated [UserEntity].
+  Future<ApiResult<UserEntity>> updateProfile({
+    String? name,
+    String? phone,
+    String? address,
+  });
 }

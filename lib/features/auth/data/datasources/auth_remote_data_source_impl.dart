@@ -66,6 +66,25 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     );
   }
 
+  @override
+  Future<UserModel> updateProfile({
+    String? name,
+    String? phone,
+    String? address,
+  }) async {
+    final body = <String, dynamic>{};
+    if (name != null) body['name'] = name;
+    if (phone != null) body['phone'] = phone;
+    if (address != null) body['address'] = address;
+
+    final response = await _dio.put<dynamic>(
+      '/auth/profile',
+      data: body,
+    );
+
+    return _extractUser(response.data, 'data');
+  }
+
   UserModel _extractUser(dynamic data, String key) {
     if (data is Map) {
       final userJson = data[key];

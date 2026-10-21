@@ -69,4 +69,45 @@ abstract final class AuthValidators {
     }
     return null;
   }
+
+  // Egyptian mobile regex pattern (010, 011, 012, 015 followed by 8 digits)
+  static final RegExp _egyptianPhoneRegExp = RegExp(r'^01[0125][0-9]{8}$');
+
+  /// Checks if [phone] is a valid 11-digit Egyptian mobile number.
+  static bool isValidPhone(String? phone) {
+    if (phone == null) return false;
+    final trimmed = phone.trim();
+    if (trimmed.isEmpty) return false;
+    return _egyptianPhoneRegExp.hasMatch(trimmed);
+  }
+
+  /// Validates a phone input.
+  /// If [isRequired] is false and input is empty/null, it returns `null` (valid).
+  /// Otherwise checks format and returns the error localization key.
+  static String? validatePhone(
+    String? value, {
+    bool isRequired = true,
+    String emptyErrorKey = 'auth.validation.phone_required',
+    String invalidErrorKey = 'auth.validation.phone_invalid',
+  }) {
+    if (value == null || value.trim().isEmpty) {
+      return isRequired ? emptyErrorKey : null;
+    }
+    if (!isValidPhone(value)) {
+      return invalidErrorKey;
+    }
+    return null;
+  }
+
+  /// Validates a delivery address.
+  static String? validateAddress(
+    String? value, {
+    bool isRequired = true,
+    String emptyErrorKey = 'auth.validation.address_required',
+  }) {
+    if (value == null || value.trim().isEmpty) {
+      return isRequired ? emptyErrorKey : null;
+    }
+    return null;
+  }
 }

@@ -11,6 +11,8 @@ import 'package:index_pharma/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:index_pharma/features/auth/presentation/cubit/auth_state.dart';
 import 'package:index_pharma/features/auth/presentation/screens/login_screen.dart';
 import 'package:index_pharma/features/auth/presentation/screens/register_screen.dart';
+import 'package:index_pharma/features/account/presentation/screens/account_screen.dart';
+import 'package:index_pharma/features/account/presentation/screens/edit_profile_screen.dart';
 import 'package:index_pharma/features/cart/presentation/screens/cart_screen.dart';
 import 'package:index_pharma/features/choose_branches/presentation/screens/branch_selection_screen.dart';
 import 'package:index_pharma/features/home/presentation/screens/home_screen.dart';
@@ -60,6 +62,7 @@ class AppRouter {
   static const kOrdersView = '/orders';
   static const kOrderDetailsView = '/orders/:id';
   static const kAccountView = '/account';
+  static const kEditProfileView = '/account/edit';
   static const kCartView = '/cart';
   static const kCheckoutView = '/checkout';
   static const kOrderConfirmationView = '/checkout/confirmation';
@@ -357,10 +360,19 @@ class AppRouter {
       ),
       GoRoute(
         path: kAccountView,
-        builder: (context, state) => AuthRequiredGuard(
-          routePath: kAccountView,
+        builder: (context, state) => AccountScreen(
           authCubit: _activeAuthCubit,
-          child: const AccountPlaceholderScreen(),
+          storageService: _activeStorageService,
+        ),
+      ),
+      GoRoute(
+        path: kEditProfileView,
+        builder: (context, state) => AuthRequiredGuard(
+          routePath: kEditProfileView,
+          authCubit: _activeAuthCubit,
+          child: EditProfileScreen(
+            authCubit: _activeAuthCubit,
+          ),
         ),
       ),
       GoRoute(

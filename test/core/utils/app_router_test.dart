@@ -17,6 +17,7 @@ void main() {
       expect(AppRouter.kOrderDetailsView, equals('/orders/:id'));
       expect(AppRouter.orderDetailsPath('456'), equals('/orders/456'));
       expect(AppRouter.kAccountView, equals('/account'));
+      expect(AppRouter.kEditProfileView, equals('/account/edit'));
       expect(AppRouter.kCartView, equals('/cart'));
       expect(AppRouter.kCheckoutView, equals('/checkout'));
       expect(AppRouter.kOrderConfirmationView, equals('/checkout/confirmation'));
@@ -30,7 +31,7 @@ void main() {
       final appRouter = AppRouter();
       final routes = appRouter.router.configuration.routes;
 
-      expect(routes.length, equals(20));
+      expect(routes.length, equals(21));
       final routePaths = routes.whereType<GoRoute>().map((r) => r.path).toList();
       expect(routePaths, contains('/'));
       expect(routePaths, contains(AppRouter.kOnboardingView));
@@ -44,6 +45,7 @@ void main() {
       expect(routePaths, contains(AppRouter.kOrdersView));
       expect(routePaths, contains(AppRouter.kOrderDetailsView));
       expect(routePaths, contains(AppRouter.kAccountView));
+      expect(routePaths, contains(AppRouter.kEditProfileView));
       expect(routePaths, contains(AppRouter.kCartView));
       expect(routePaths, contains(AppRouter.kCheckoutView));
       expect(routePaths, contains(AppRouter.kOrderConfirmationView));

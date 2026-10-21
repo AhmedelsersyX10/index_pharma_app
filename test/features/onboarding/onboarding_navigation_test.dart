@@ -54,6 +54,14 @@ class FakeAuthRepository implements AuthRepository {
     String? address,
   }) async =>
       const Err(Unauthorized());
+
+  @override
+  Future<ApiResult<UserEntity>> updateProfile({
+    String? name,
+    String? phone,
+    String? address,
+  }) async =>
+      const Err(Unauthorized());
 }
 
 class FakeStorageService implements StorageService {

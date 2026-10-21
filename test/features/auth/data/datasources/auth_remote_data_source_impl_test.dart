@@ -258,5 +258,82 @@ void main() {
       );
     });
   });
+
+  group('AuthRemoteDataSourceImpl - updateProfile', () {
+    test('sends PUT /auth/profile with partial body and parses data key', () async {
+      dio.httpClientAdapter = _FakeHttpClientAdapter((options) async {
+        capturedOptions = options;
+        return jsonResponse(
+          {
+            'success': true,
+            'data': {
+              'id': 'e98df12a-3312-40bb-97dc-712891bcfa10',
+              'name': 'Updated Name',
+              'email': 'customer@test.com',
+              'role': 'customer',
+              'phone': '01012345678',
+              'address': 'Cairo, Egypt',
+            },
+          },
+          200,
+        );
+      });
+
+      final user = await dataSource.updateProfile(
+        name: 'Updated Name',
+        phone: '01012345678',
+        address: 'Cairo, Egypt',
+      );
+
+      expect(capturedOptions.method, 'PUT');
+      expect(capturedOptions.path, '/auth/profile');
+      expect(capturedOptions.data, {
+        'name': 'Updated Name',
+        'phone': '01012345678',
+        'address': 'Cairo, Egypt',
+      });
+      expect(user.id, 'e98df12a-3312-40bb-97dc-712891bcfa10');
+      expect(user.name, 'Updated Name');
+      expect(user.phone, '01012345678');
+      expect(user.address, 'Cairo, Egypt');
+    });
+
+    test('omits null fields from body in updateProfile', () async {
+      dio.httpClientAdapter = _FakeHttpClientAdapter((options) async {
+        capturedOptions = options;
+        return jsonResponse(
+          {
+            'success': true,
+            'data': {
+              'id': 'e98df12a-3312-40bb-97dc-712891bcfa10',
+              'name': 'Only Name Updated',
+              'email': 'customer@test.com',
+              'role': 'customer',
+            },
+          },
+          200,
+        );
+      });
+
+      await dataSource.updateProfile(name: 'Only Name Updated');
+
+      expect(capturedOptions.method, 'PUT');
+      expect(capturedOptions.path, '/auth/profile');
+      expect(capturedOptions.data, {'name': 'Only Name Updated'});
+      expect(capturedOptions.data.containsKey('phone'), isFalse);
+      expect(capturedOptions.data.containsKey('address'), isFalse);
+    });
+
+    test('throws FormatException if data key is missing in updateProfile response', () async {
+      dio.httpClientAdapter = _FakeHttpClientAdapter((options) async {
+        return jsonResponse({'success': true}, 200);
+      });
+
+      expect(
+        () => dataSource.updateProfile(name: 'Test'),
+        throwsA(isA<FormatException>()),
+      );
+    });
+  });
 }
 
