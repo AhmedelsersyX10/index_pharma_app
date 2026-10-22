@@ -7,27 +7,32 @@
 
 ## 1. نظرة عامة على المشروع
 
-| البند | التفاصيل |
-|---|---|
-| **اسم المشروع** | `index_pharma` (Flutter Store App) |
-| **الهدف** | تطبيق عميل (Customer-facing Store) لصيدلية Index Pharma |
-| **Backend** | Node.js REST API — نسخة `main` |
-| **Base URL (محلي)** | `http://localhost:5000/api` |
-| **Base URL (Android Emulator)** | `http://10.0.2.2:5000/api` |
-| **Server Origin (للصور)** | `http://localhost:5000` (بدون `/api`) |
-| **نظام المصادقة** | HttpOnly Cookie (`token`) — لا يُعاد الـ JWT داخل JSON |
-| **SDK** | Dart `^3.11.4` |
+| البند                           | التفاصيل                                                |
+| ------------------------------- | ------------------------------------------------------- |
+| **اسم المشروع**                 | `index_pharma` (Flutter Store App)                      |
+| **الهدف**                       | تطبيق عميل (Customer-facing Store) لصيدلية Index Pharma |
+| **Backend**                     | Node.js REST API — نسخة `main`                          |
+| **Base URL (محلي)**             | `http://localhost:5000/api`                             |
+| **Base URL (Android Emulator)** | `http://10.0.2.2:5000/api`                              |
+| **Server Origin (للصور)**       | `http://localhost:5000` (بدون `/api`)                   |
+| **نظام المصادقة**               | HttpOnly Cookie (`token`) — لا يُعاد الـ JWT داخل JSON  |
+| **SDK**                         | Dart `^3.11.4`                                          |
 
 ---
 
 ## 2. الملفات المرجعية (اقرأها عند الحاجة)
 
-| الملف | الغرض |
-|---|---|
-| `REAL_API_SAMPLES_REFERENCE.md` | عينات JSON حقيقية ومحققة من السيرفر — **المصدر الأول للنماذج والحقول** |
-| `INDEX_PHARMA_API_REFERENCE.md` | قائمة جميع الـ 108 endpoints + تفاصيل الصلاحيات |
-| `FLUTTER_STORE_QUICK_GUIDE.md` | أمثلة Dart جاهزة: إعداد Dio، تسلسل التدفق، mapping الحالات |
-| `Flutter_Rules.md` | قواعد المعمارية والأسلوب الإلزامية لصاحب المشروع |
+| الملف                                        | الغرض                                                                  |
+| -------------------------------------------- | ---------------------------------------------------------------------- |
+| `REAL_API_SAMPLES_REFERENCE.md`              | عينات JSON حقيقية ومحققة من السيرفر — **المصدر الأول للنماذج والحقول** |
+| `INDEX_PHARMA_API_REFERENCE.md`              | قائمة جميع الـ 108 endpoints + تفاصيل الصلاحيات                        |
+| `FLUTTER_STORE_QUICK_GUIDE.md`               | أمثلة Dart جاهزة: إعداد Dio، تسلسل التدفق، mapping الحالات             |
+| `Flutter_Rules.md`                           | قواعد المعمارية والأسلوب الإلزامية لصاحب المشروع                       |
+| `stitch_designs/docs/DESIGN_SYSTEM.md`       | نظام التصميم (ألوان، خطوط، مسافات) — اقرأه قبل أي شاشة                 |
+| `stitch_designs/docs/SCREEN_DIRECTORY.md`    | دليل الشاشات وأسماء ملفات `code/` و`images/` لكل شاشة                  |
+| `stitch_designs/docs/COMPONENT_INVENTORY.md` | قائمة المكونات المشتركة في التصميم                                     |
+
+> ترتيب الأولوية عند التعارض: **(1)** عينات الـ API الحقيقية ← **(2)** قرارات صاحب المشروع المسجلة في Notion ← **(3)** التصميم. انظر §17 لسياسة التصميم.
 
 ---
 
@@ -35,27 +40,37 @@
 
 ```
 lib/
-  main.dart
-  app.dart
+  main.dart                  ← نقطة الدخول + IndexPharmaApp
   core/
-    api/            ← Dio client + interceptors
-    constants/      ← ثوابت المشروع
-    di/             ← GetIt dependency injection
-    errors/         ← Failure types
-    localization/   ← easy_localization setup
-    network/        ← network info / connectivity
-    router/         ← GoRouter definitions
-    storage/        ← SharedPreferences / Hive helpers
-    theme/          ← App theme
-    utils/          ← Helpers عامة
-    widgets/        ← Shared widgets
+    constants/      ← ثوابت المشروع (app_config)
+    di/             ← GetIt (service_locator)
+    errors/         ← Failure types + failure_mapper
+    localization/   ← مفاتيح الترجمة (app_locale_keys)
+    network/        ← ApiClient (Dio + Cookie) + ApiResult + error_mapper
+    storage/        ← StorageService (SharedPreferences)
+    theme/          ← الألوان والخطوط والمسافات (tokens)
+    utils/          ← app_router (GoRouter) + go_router_refresh_stream
+    widgets/        ← Shared widgets (badges, buttons, empty/error/loading, guards…)
   features/
-    auth/           ← تسجيل الدخول والتسجيل
+    account/        ← حساب العميل وتعديل الملف
+    auth/           ← تسجيل الدخول والتسجيل والجلسة
+    cart/           ← السلة (محلية)
+    categories/     ← التصنيفات
+    checkout/       ← إتمام الطلب وتأكيده
     choose_branches/ ← اختيار الفرع
-    home/           ← الصفحة الرئيسية والمنتجات
+    home/           ← الصفحة الرئيسية
+    language/       ← اختيار اللغة
     onboarding/     ← شاشة الترحيب
+    orders/         ← طلباتي وتفاصيل الطلب
+    prescriptions/  ← رفع الروشتات ومتابعتها
+    products/       ← المنتجات وتفاصيل المنتج
+    settings/       ← الإعدادات
     splash/         ← Splash screen
+stitch_designs/     ← التصميم الرسمي (code/ images/ docs/)
+test/               ← مرآة لهيكل lib/
 ```
+
+> الهيكل أعلاه يعكس المشروع الفعلي بتاريخ آخر تحديث. لو أضفت feature جديدة حدّث هذا القسم.
 
 ---
 
@@ -102,7 +117,7 @@ feature_name/
     usecases/        ← (عند وجود منطق يستحق)
   presentation/
     cubit/           ← State management (Cubit)
-    pages/           ← شاشات
+    screens/         ← شاشات (المسمى المستخدم فعلياً في المشروع)
     widgets/         ← Widgets خاصة بالـ feature
 ```
 
@@ -116,27 +131,29 @@ Model/Entity → DataSource → Repository → UseCase → Cubit → UI
 
 - **UI** لا تستدعي Dio أو DataSource مباشرة.
 - **Cubit** لا يستدعي Dio مباشرة — يمر عبر Repository.
-- **Domain** لا تستورد Flutter packages.
+- **Domain** لا تستورد Flutter packages ولا تحتوي نصوصاً للعرض (استخدم `translationKey` بدل نص عربي).
 - Business logic **لا تُكتب** داخل `build()` أو event handlers.
 - `setState` مسموح للحالات المحلية الصغيرة فقط (password visibility، expand).
+- لا تستخدم `GetIt` داخل الـ Widgets كـ fallback: مرّر الـ Cubit عبر `BlocProvider` أو الـ constructor.
+- لا تبتلع الأخطاء بـ `catch (_)` فارغ.
 
 ---
 
 ## 6. التقنيات الإلزامية
 
-| الغرض | التقنية |
-|---|---|
-| State Management | `flutter_bloc` — Cubit بشكل افتراضي |
-| Routing | `go_router` |
-| Dependency Injection | `get_it` — registrations في `core/di/` |
-| HTTP / API | `Dio` + `CookieManager` |
-| Session / Auth | `cookie_jar` + `dio_cookie_manager` (PersistCookieJar) |
-| Local Storage (Simple) | `SharedPreferences` |
-| Local Storage (Structured) | `Hive` |
-| Localization | `easy_localization` |
-| Image Loading | `cached_network_image` |
-| Image Picking | `image_picker` |
-| Barcode Scanning | `mobile_scanner` |
+| الغرض                      | التقنية                                                |
+| -------------------------- | ------------------------------------------------------ |
+| State Management           | `flutter_bloc` — Cubit بشكل افتراضي                    |
+| Routing                    | `go_router`                                            |
+| Dependency Injection       | `get_it` — registrations في `core/di/`                 |
+| HTTP / API                 | `Dio` + `CookieManager`                                |
+| Session / Auth             | `cookie_jar` + `dio_cookie_manager` (PersistCookieJar) |
+| Local Storage (Simple)     | `SharedPreferences`                                    |
+| Local Storage (Structured) | `Hive`                                                 |
+| Localization               | `easy_localization`                                    |
+| Image Loading              | `cached_network_image`                                 |
+| Image Picking              | `image_picker`                                         |
+| Barcode Scanning           | `mobile_scanner`                                       |
 
 ---
 
@@ -164,15 +181,18 @@ dio.interceptors.add(CookieManager(cookieJar));
 - للحصول على `role` المستخدم: استدعِ `GET /auth/me`.
 - `GET /auth/me` يرجع المستخدم في مفتاح **`data`** (وليس `user`).
 - `POST /auth/login` يرجع المستخدم في مفتاح **`user`**.
+- لا تسجّل (log) بيانات الدخول أو الكوكي أو التوكن أبداً.
 
 ### 7.3 أنواع المستخدمين وسياق الفرع
 
-| الدور | تحديد الفرع |
-|---|---|
-| `customer` | يرسل `branchId` في الـ query أو الـ body |
-| `pharmacist` | يُحدد تلقائياً من `user.branchId` |
-| `admin` | يُحدد تلقائياً من `user.branchId` |
-| `superadmin` | يرسل header: `X-Branch-Id: <branchId>` |
+| الدور        | تحديد الفرع                                                        |
+| ------------ | ------------------------------------------------------------------ |
+| `customer`   | يرسل `branchId` في الـ query أو الـ body                           |
+| `pharmacist` | يُحدد تلقائياً من `user.branchId` (الهيدر متجاهل)                  |
+| `admin`      | يُحدد تلقائياً من `user.branchId` (الهيدر متجاهل)                  |
+| `superadmin` | يرسل header: `X-Branch-Id: <branchId>` — بدونه يرى تجميع كل الفروع |
+
+> موظف غير مربوط بفرع يحصل على `403` برسالة «يجب ربط المستخدم بفرع أولاً».
 
 ---
 
@@ -202,18 +222,21 @@ GET /prescriptions/my
 ### 8.3 نقاط مهمة لكل Endpoint
 
 #### `GET /store/products`
+
 - `branchId` **إجباري** — بدونه يرجع `400`.
 - يعرض فقط المنتجات `isAvailableOnline=true` والمتوفرة فعلياً.
 - Query: `branchId`, `page`, `limit` (default 20, max 100), `keyword`, `category`.
 - Pagination: `total`, `totalPages`, `page`, `limit`.
 
 #### `POST /store/orders`
+
 - لا ترسل `isUnit=true` أو `isSecondaryUnit=true` (علب فقط حالياً).
 - السعر يُحسب من الـ Backend — لا ترسل سعراً.
 - `paymentMethod` الافتراضي: `cash`.
 - الحالة تبدأ: `pending`.
 
 #### `POST /prescriptions/upload-image`
+
 - `multipart/form-data` — field name: **`image`**.
 - الحجم الأقصى: **5 MB**.
 - timeout >= 60 seconds.
@@ -223,6 +246,7 @@ GET /prescriptions/my
 ## 9. نماذج البيانات (DTOs) الأساسية
 
 ### 9.1 User (Login Response — مفتاح `user`)
+
 ```dart
 class UserModel {
   final String id;
@@ -237,6 +261,7 @@ class UserModel {
 ```
 
 ### 9.2 User (GET /auth/me — مفتاح `data`)
+
 ```dart
 // نفس الحقول أعلاه + هذه الحقول الإضافية:
 final bool isActive;
@@ -245,6 +270,7 @@ final String createdAt;
 ```
 
 ### 9.3 Branch
+
 ```dart
 class BranchModel {
   final String id;
@@ -255,6 +281,7 @@ class BranchModel {
 ```
 
 ### 9.4 StoreProduct
+
 ```dart
 class StoreProductModel {
   final String id;
@@ -275,6 +302,7 @@ class StoreProductModel {
 ```
 
 ### 9.5 Order Item (في طلب الإنشاء)
+
 ```dart
 class OrderItemRequest {
   final String productId;
@@ -284,6 +312,7 @@ class OrderItemRequest {
 ```
 
 ### 9.6 Prescription
+
 ```dart
 class PrescriptionModel {
   final String id;
@@ -304,14 +333,14 @@ class PrescriptionModel {
 
 > **تحذير:** الـ Pagination غير موحد في الـ API — ابنِ DTOs منفصلة.
 
-| الـ Endpoint | حقول الـ Pagination |
-|---|---|
-| `/store/products` | `total`, `totalPages`, `page`, `limit` |
-| `/store/orders/my` | `total`, `totalPages`, `page`, `limit` |
+| الـ Endpoint                  | حقول الـ Pagination                      |
+| ----------------------------- | ---------------------------------------- |
+| `/store/products`             | `total`, `totalPages`, `page`, `limit`   |
+| `/store/orders/my`            | `total`, `totalPages`, `page`, `limit`   |
 | المنتجات الداخلية `/products` | `totalCount`, `hasMore`, `page`, `limit` |
-| `/orders` (داخلي) | **لا يوجد Pagination** |
-| `/orders/online` | **لا يوجد Pagination** |
-| `/prescriptions` | **لا يوجد Pagination** |
+| `/orders` (داخلي)             | **لا يوجد Pagination**                   |
+| `/orders/online`              | **لا يوجد Pagination**                   |
+| `/prescriptions`              | **لا يوجد Pagination**                   |
 
 ---
 
@@ -327,20 +356,23 @@ class PrescriptionModel {
 { "message": "رسالة بالعربي" }
 ```
 
-> رسائل الخطأ من السيرفر دائماً **بالعربية**.  
-> لا تعرض `Exception.toString()` للمستخدم مباشرة.
+> رسائل الخطأ من السيرفر دائماً **بالعربية**، لذلك:
+>
+> - لا تعرض `Exception.toString()` للمستخدم مباشرة.
+> - لا تعرض نص السيرفر الخام في الواجهة الإنجليزية؛ حوّل الخطأ إلى Failure محدد وأظهر رسالة مترجمة من `ar.json`/`en.json`.
+> - لا تستخرج أرقاماً من نص الرسالة (مثل الكمية المتاحة)؛ اعتمد على كود الـ HTTP.
 
 ### 11.2 جدول أكواد الخطأ
 
-| الكود | الحالة | الإجراء في Flutter |
-|---|---|---|
-| `400` | Validation / branchId ناقص | اعرض رسالة الخطأ من `message` |
-| `401` | غير مسجل دخول / كوكي منتهية | أعد التوجيه لشاشة Login |
-| `403` | صلاحية غير كافية / حساب معطل | اعرض رسالة الخطأ من `message` |
-| `404` | مورد غير موجود | اعرض "غير موجود" |
-| `409` | تعارض في المخزون / duplicate | أعد تحميل المنتجات واعرض رسالة |
-| `429` | Rate limit | انتظر وأعد المحاولة |
-| `500` | Server error | اعرض "خطأ في السيرفر، حاول لاحقاً" |
+| الكود | الحالة                                 | الإجراء في Flutter                                               |
+| ----- | -------------------------------------- | ---------------------------------------------------------------- |
+| `400` | Validation / branchId ناقص / سلة فارغة | اعرض رسالة مترجمة مناسبة                                         |
+| `401` | غير مسجل دخول / كوكي منتهية            | أعد التوجيه لشاشة Login (ما عدا `/auth/login` و`/auth/register`) |
+| `403` | صلاحية غير كافية / حساب معطل           | اعرض رسالة مترجمة مناسبة                                         |
+| `404` | مورد غير موجود / منتج غير متاح         | اعرض "غير موجود" / "المنتج غير متاح"                             |
+| `409` | تعارض في المخزون / duplicate           | أعد تحميل المنتجات واعرض رسالة للمستخدم                          |
+| `429` | Rate limit                             | انتظر وأعد المحاولة                                              |
+| `500` | Server error                           | اعرض "خطأ في السيرفر، حاول لاحقاً" (لا تعرض رسالة السيرفر الخام) |
 
 ---
 
@@ -358,7 +390,10 @@ const orderLabels = {
 };
 ```
 
+> هذه التسميات للعميل. في الكود استخدم `translationKey` من ملفات الترجمة وليس النصوص مباشرة.
+
 **دورة الحياة:**
+
 ```
 pending → processing → completed → delivered (نهائي)
 pending / processing → cancelled (نهائي)
@@ -386,6 +421,7 @@ String prescriptionLabel(String status) {
 }
 ```
 
+> المثال أعلاه توضيحي للـ mapping فقط. التنفيذ الفعلي يمر عبر `translationKey` (نفس نمط `OrderStatus`).
 > **لا تستخدم** `/api/prescriptions/:id/respond` — هذا endpoint Legacy ومهجور في التطبيق الجديد.
 
 ---
@@ -409,16 +445,19 @@ String mediaUrl(String path) {
 
 ## 14. تنبيهات وفروق دقيقة حرجة
 
-| التنبيه | التفاصيل |
-|---|---|
-| **`user` vs `data`** | `login`/`register` → مفتاح `user` — `GET /auth/me` → مفتاح `data` |
-| **تكرار الكائنات** | ردود POS تكرر البيانات في `data` و `order` — اعتمد `data` دائماً |
-| **السعر** | لا تُرسل السعر من Flutter — Backend يحسبه من DB |
-| **branchId** | احفظه محلياً بعد اختيار الفرع وأرسله في كل طلبات المنتجات والـ checkout |
-| **Cart قبل Checkout** | أعد تحميل availability قبل إتمام الطلب |
-| **409 Stock Conflict** | عند `409`، أعد تحميل المنتجات واعرض رسالة للمستخدم |
-| **تسريب `costAtSale`** | استجابة `POST /store/orders` تعيد `costAtSale` — لا تعرضه للمستخدم |
-| **Reviews** | `GET/POST /products/:id/reviews` ترجع `404` في الـ `main` حالياً — مؤجلة |
+| التنبيه                    | التفاصيل                                                                                                                           |
+| -------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| **`user` vs `data`**       | `login`/`register` → مفتاح `user` — `GET /auth/me` → مفتاح `data`                                                                  |
+| **تكرار الكائنات**         | ردود POS تكرر البيانات في `data` و `order` — اعتمد `data` دائماً                                                                   |
+| **السعر**                  | لا تُرسل السعر من Flutter — Backend يحسبه من DB                                                                                    |
+| **رسوم التوصيل**           | لا يوجد `deliveryFee` في الـ API: `totalAmount` = `subtotal`. لا تعرض رسوم توصيل                                                   |
+| **branchId**               | احفظه محلياً بعد اختيار الفرع وأرسله في كل طلبات المنتجات والـ checkout                                                            |
+| **Cart قبل Checkout**      | أعد تحميل availability قبل إتمام الطلب                                                                                             |
+| **409 Stock Conflict**     | عند `409`، أعد تحميل المنتجات واعرض رسالة للمستخدم                                                                                 |
+| **تسريب `costAtSale`**     | استجابة `POST /store/orders` تعيد `costAtSale` — لا تعرضه للمستخدم                                                                 |
+| **حقول التكلفة والربح**    | `purchasingPrice` و`costAtSale` و`COGS` والأرباح حساسة: لا تُعرض إلا للأدوار/الصلاحيات المؤكدة من صاحب المشروع                     |
+| **Reviews**                | `GET/POST /products/:id/reviews` ترجع `404` في الـ `main` حالياً — مؤجلة                                                           |
+| **منتجات منتهية الصلاحية** | الـ Backend قد يرجّع منتجاً منتهي الصلاحية في `/store/products` (مهمة D.11). لا تضف منعاً على جهة Flutter دون قرار من صاحب المشروع |
 
 ---
 
@@ -439,6 +478,7 @@ String mediaUrl(String path) {
 - استخدم `const` حيثما أمكن في الـ Widgets.
 - لا تكرر إعداد Dio في كل Repository — استخدم الـ instance المركزي.
 - ضع كل registrations في `core/di/`.
+- كل نص يراه المستخدم يأتي من `ar.json`/`en.json` عبر `easy_localization`؛ لا نصوص ثابتة في الكود. تحقق من RTL للعربي وLTR للإنجليزي.
 
 ### 15.3 تغيير الكود الموجود
 
@@ -450,11 +490,13 @@ String mediaUrl(String path) {
 ### 15.4 التقرير النهائي
 
 وضح دائماً:
+
 1. ما الذي تغير؟
 2. أي الملفات أُنشئت أو عُدّلت؟
 3. القرارات التقنية المهمة.
-4. الأوامر التي نُفّذت فعلاً ونتائجها.
+4. الأوامر التي نُفّذت فعلاً ونتائجها (لا تقل إن أمراً نجح إلا إذا شغّلته فعلاً).
 5. ما يحتاج متابعة أو لم يُختبر.
+6. **الاختلافات عن التصميم:** قائمة مختصرة بما غيّرته أو حذفته مقارنة بتصميم Stitch وسبب كل تغيير (انظر §17).
 
 ---
 
@@ -467,10 +509,49 @@ String mediaUrl(String path) {
 - [ ] Loading، Success، Empty، Failure states مُعالجة.
 - [ ] الصور تمر عبر `mediaUrl()`.
 - [ ] `branchId` يُرسل في كل طلبات المنتجات والـ checkout.
-- [ ] `flutter analyze` يعمل بدون أخطاء.
+- [ ] لا نصوص عربية ثابتة في الكود (كلها في ملفات الترجمة، والمفاتيح متطابقة في `ar.json` و`en.json`).
+- [ ] لا ادعاءات تسويقية أو طبية بدون مصدر (راجع §17).
+- [ ] `flutter analyze` يعمل بدون أخطاء و`flutter test` يكمل للآخر.
 - [ ] لم تُضف حزمة جديدة دون ضرورة واضحة.
 - [ ] الأوامر المُنفّذة موثقة ونتائجها حقيقية.
+- [ ] التقرير يحتوي قائمة الاختلافات عن التصميم.
 
 ---
 
-*آخر تحديث: 2026-10-18 — استناداً إلى نسخة `main` من الـ Backend.*
+## 17. سياسة التصميم (قرار صاحب المشروع — 2026-10-21)
+
+التصميم الرسمي في `stitch_designs/` **دليل وليس مواصفات**. هذه القاعدة تعلو أي عبارة في مهمة أو prompt تقول «اتبع التصميم».
+
+### 17.1 ما يجب تنفيذه
+
+أي عنصر أو حقل أو إجراء أو حالة **تعتمد على الـ Backend** في التصميم: البيانات المعروضة، الطلبات، التحققات، والحالات والأخطاء التي ينتجها الـ API.
+
+### 17.2 ما يملك الـ Agent حرية تغييره
+
+- **النصوص والعبارات:** اكتب نصاً واضحاً ومختصراً عبر ملفات الترجمة.
+- **الودجتس المكررة أو الزائدة:** احذف ما لا يضيف قيمة.
+- **شكل الـ UI وتجربة المستخدم:** إن لم يكن التصميم أفضل حل، نفّذ الأفضل لواجهة احترافية وتجربة سلسة، باستخدام الـ theme tokens والودجتس المشتركة (`AppPageBar` بعد مهمة 3.18).
+- لا تنسخ Tailwind/CSS من ملفات HTML ولا تثبّت ألواناً؛ استخدم `core/theme`.
+
+### 17.3 ما يظل ممنوعاً (قائمة الاستبعاد)
+
+عناصر ظهرت في التصميم لكن لا يدعمها الـ API أو تأجلت. لا تنفذها ولا تضع بدائل وهمية لها:
+
+- وقت التوصيل المتوقع / ETA ورسوم التوصيل و«شحن مبرد» و«فاتورة ضريبية».
+- التأمين الطبي بكل أشكاله.
+- جرس الإشعارات ووعود «ستتلقى إشعاراً».
+- الدعم الفني / الشات.
+- الدفع بالبطاقة عند الاستلام (الدفع نقداً فقط).
+- المفضلة والتقييمات والعروض والخصومات والطباعة.
+- كود الفرع وساعات العمل (الفرع: `id` و`name` و`address` و`phone` فقط).
+- مسح الباركود للعميل (مؤجل؛ باركود الموظف ضمن مهام المرحلة 4).
+- أي نص إنجليزي ظاهر في الواجهة العربية.
+- **أي ادعاء بلا مصدر:** مثل «بإشراف نقابة الصيادلة» أو «مجاني 100%». لا تخترع ادعاءات تسويقية أو طبية أو قانونية؛ اسأل صاحب المشروع.
+
+### 17.4 عند التعارض
+
+ترتيب الأولوية: **(1)** عينات الـ API الحقيقية ← **(2)** قرارات صاحب المشروع في Notion ← **(3)** التصميم. وضّح في التقرير النهائي (§15.4 البند 6) كل اختلاف عن التصميم وسببه.
+
+---
+
+_آخر تحديث: 2026-10-22 — يعكس الهيكل الفعلي للمشروع وقرارات صاحب المشروع حتى هذا التاريخ._

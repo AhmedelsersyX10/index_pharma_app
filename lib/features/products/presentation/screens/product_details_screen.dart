@@ -12,6 +12,7 @@ import 'package:index_pharma/core/widgets/app_error_view.dart';
 import 'package:index_pharma/features/choose_branches/presentation/cubit/branch_cubit.dart';
 import 'package:index_pharma/features/choose_branches/presentation/cubit/branch_state.dart';
 import 'package:index_pharma/features/cart/presentation/cubit/cart_cubit.dart';
+import 'package:index_pharma/features/cart/presentation/helpers/cart_action_helper.dart';
 import '../../domain/entities/product.dart';
 import '../cubit/product_details_cubit.dart';
 import '../cubit/product_details_state.dart';
@@ -92,46 +93,24 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     super.dispose();
   }
 
+  CartCubit? _resolveCartCubit() {
+    if (widget.cartCubit != null) return widget.cartCubit;
+    try {
+      return context.read<CartCubit>();
+    } catch (_) {
+      return null;
+    }
+  }
+
   void _handleAddToCart(Product product) {
-    final activeCartCubit = widget.cartCubit ??
-        (getIt.isRegistered<CartCubit>() ? getIt<CartCubit>() : null);
-    activeCartCubit?.addToCart(product, quantity: _selectedQuantity);
+    final activeCartCubit = _resolveCartCubit();
+    if (activeCartCubit == null) return;
 
-    final unitLabel = (product.unit != null && product.unit!.trim().isNotEmpty)
-        ? product.unit!.trim()
-        : AppLocaleKeys.productDetailsUnitDefault.tr();
-
-    ScaffoldMessenger.of(context).hideCurrentSnackBar();
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Row(
-          children: [
-            const Icon(
-              Icons.check_circle_rounded,
-              color: AppColors.primaryFixed,
-              size: 20,
-            ),
-            const SizedBox(width: AppSpacing.spaceSm),
-            Expanded(
-              child: Text(
-                AppLocaleKeys.productDetailsAddedToCartSuccess.tr(
-                  args: [_selectedQuantity.toString(), unitLabel],
-                ),
-                style: AppTypography.bodyMd(color: AppColors.inverseOnSurface),
-              ),
-            ),
-          ],
-        ),
-        action: SnackBarAction(
-          label: AppLocaleKeys.productDetailsViewCart.tr(),
-          textColor: AppColors.primaryFixed,
-          onPressed: () => context.push(AppRouter.kCartView),
-        ),
-        duration: const Duration(seconds: 3),
-        behavior: SnackBarBehavior.floating,
-        backgroundColor: AppColors.inverseSurface,
-        shape: const RoundedRectangleBorder(borderRadius: AppRadii.roundedMd),
-      ),
+    CartActionHelper.addProductToCart(
+      context: context,
+      cartCubit: activeCartCubit,
+      product: product,
+      quantity: _selectedQuantity,
     );
   }
 

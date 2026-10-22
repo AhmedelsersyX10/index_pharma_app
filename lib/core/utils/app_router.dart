@@ -13,6 +13,7 @@ import 'package:index_pharma/features/auth/presentation/screens/login_screen.dar
 import 'package:index_pharma/features/auth/presentation/screens/register_screen.dart';
 import 'package:index_pharma/features/account/presentation/screens/account_screen.dart';
 import 'package:index_pharma/features/account/presentation/screens/edit_profile_screen.dart';
+import 'package:index_pharma/features/cart/presentation/cubit/cart_cubit.dart';
 import 'package:index_pharma/features/cart/presentation/screens/cart_screen.dart';
 import 'package:index_pharma/features/choose_branches/presentation/screens/branch_selection_screen.dart';
 import 'package:index_pharma/features/home/presentation/screens/home_screen.dart';
@@ -282,6 +283,8 @@ class AppRouter {
           return ProductDetailsScreen(
             productId: productId,
             branchId: branchId,
+            cartCubit:
+                getIt.isRegistered<CartCubit>() ? getIt<CartCubit>() : null,
           );
         },
       ),

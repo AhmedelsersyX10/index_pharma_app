@@ -217,6 +217,17 @@ class CartCubit extends Cubit<CartState> {
     }
   }
 
+  /// Clears the existing cart from any prior branch and adds [product].
+  ///
+  /// Used when resolving a branch conflict.
+  Future<AddToCartResult> clearAndAddToCart(
+    Product product, {
+    int quantity = 1,
+  }) async {
+    await clearCart();
+    return addToCart(product, quantity: quantity);
+  }
+
   /// Dismisses the active stock alert banner.
   void dismissStockAlert() {
     final currentState = state;

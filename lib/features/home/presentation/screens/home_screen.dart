@@ -16,6 +16,7 @@ import 'package:index_pharma/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:index_pharma/features/auth/presentation/cubit/auth_state.dart';
 import 'package:index_pharma/features/auth/presentation/widgets/login_required_prompt.dart';
 import 'package:index_pharma/features/cart/presentation/cubit/cart_cubit.dart';
+import 'package:index_pharma/features/cart/presentation/helpers/cart_action_helper.dart';
 import '../widgets/customer_bottom_nav.dart';
 import '../widgets/home_branch_selector_strip.dart';
 import '../widgets/home_categories_section.dart';
@@ -264,7 +265,15 @@ class _HomeViewState extends State<_HomeView> {
                 const SizedBox(height: AppSpacing.spaceLg),
 
                 // 6. Featured Products Section
-                const HomeFeaturedProductsSection(),
+                HomeFeaturedProductsSection(
+                  onAddToCart: (product) {
+                    CartActionHelper.addProductToCart(
+                      context: context,
+                      cartCubit: context.read<CartCubit>(),
+                      product: product,
+                    );
+                  },
+                ),
                 const SizedBox(height: AppSpacing.spaceLg),
 
                 // 7. Clinical Quality & Storage Guarantee Footer

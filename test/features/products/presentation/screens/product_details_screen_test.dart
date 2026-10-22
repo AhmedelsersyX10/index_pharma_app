@@ -12,6 +12,10 @@ import 'package:index_pharma/core/theme/theme.dart';
 import 'package:index_pharma/core/widgets/app_error_view.dart';
 import 'package:index_pharma/features/categories/domain/entities/category.dart';
 import 'package:index_pharma/features/products/domain/entities/product.dart';
+import 'package:index_pharma/features/cart/domain/entities/cart_item.dart';
+import 'package:index_pharma/features/cart/domain/repositories/cart_repository.dart';
+import 'package:index_pharma/features/cart/presentation/cubit/cart_cubit.dart';
+import 'package:index_pharma/features/cart/presentation/cubit/cart_state.dart';
 import 'package:index_pharma/features/products/domain/entities/products_page.dart';
 import 'package:index_pharma/features/products/domain/repositories/products_repository.dart';
 import 'package:index_pharma/features/products/presentation/cubit/product_details_cubit.dart';
@@ -64,6 +68,35 @@ class FakeProductsRepository implements ProductsRepository {
   }
 }
 
+class FakeCartRepository implements CartRepository {
+  final Map<String, List<CartItem>> storage = {};
+  String? activeBranchId;
+
+  @override
+  Future<List<CartItem>> getCartItems(String branchId) async =>
+      storage[branchId] ?? [];
+
+  @override
+  Future<void> saveCartItems(String branchId, List<CartItem> items) async {
+    storage[branchId] = List<CartItem>.from(items);
+    activeBranchId = branchId;
+  }
+
+  @override
+  Future<void> clearCart(String branchId) async {
+    storage.remove(branchId);
+    if (activeBranchId == branchId) activeBranchId = null;
+  }
+
+  @override
+  Future<String?> getActiveCartBranchId() async => activeBranchId;
+
+  @override
+  Future<void> setActiveCartBranchId(String? branchId) async {
+    activeBranchId = branchId;
+  }
+}
+
 void main() {
   setUpAll(() async {
     WidgetsFlutterBinding.ensureInitialized();
@@ -108,6 +141,7 @@ void main() {
 
   Widget createTestWidget({
     required ProductDetailsCubit cubit,
+    CartCubit? cartCubit,
     Locale locale = const Locale('ar'),
   }) {
     return EasyLocalization(
@@ -127,6 +161,7 @@ void main() {
               productId: 'p01',
               branchId: 'b01',
               cubit: cubit,
+              cartCubit: cartCubit,
             ),
           );
         },
@@ -258,25 +293,145 @@ void main() {
       cubit.close();
     });
 
-    testWidgets('tapping add to cart shows confirmation snackbar', (tester) async {
+    testWidgets(
+        'tapping add to cart with available product adds to CartCubit and shows confirmation snackbar',
+        (tester) async {
       final fakeRepo = FakeProductsRepository();
       fakeRepo.stubProductDetailsResult = const Success(testProductOtc);
 
       final cubit = ProductDetailsCubit(productsRepository: fakeRepo);
+      final fakeCartRepo = FakeCartRepository();
+      final cartCubit = CartCubit(cartRepository: fakeCartRepo);
 
-      await tester.pumpWidget(createTestWidget(cubit: cubit));
+      await tester.pumpWidget(
+        createTestWidget(cubit: cubit, cartCubit: cartCubit),
+      );
       await tester.pumpAndSettle();
 
-      final addToCartFinder = find.widgetWithText(ElevatedButton, 'أضف إلى السلة');
+      final addToCartFinder =
+          find.widgetWithText(ElevatedButton, 'أضف إلى السلة');
       expect(addToCartFinder, findsOneWidget);
 
       await tester.tap(addToCartFinder);
-      await tester.pump();
+      await tester.pumpAndSettle();
+
+      // Product really added to CartCubit
+      expect(cartCubit.state, isA<CartHasItems>());
+      final cartState = cartCubit.state as CartHasItems;
+      expect(cartState.totalItemsCount, equals(1));
+      expect(cartState.items.first.product.name, equals('Hydrating Cream 50ml'));
 
       // Floating snackbar should appear
       expect(find.byType(SnackBar), findsOneWidget);
-      expect(find.text('مراجعة السلة'), findsOneWidget);
+      expect(
+        find.text(
+          AppLocaleKeys.cartItemAddedSuccess
+              .tr(args: ['Hydrating Cream 50ml']),
+        ),
+        findsOneWidget,
+      );
+      expect(find.text(AppLocaleKeys.cartViewCartAction.tr()), findsOneWidget);
 
+      cartCubit.close();
+      cubit.close();
+    });
+
+    testWidgets(
+        'out-of-stock product disables add to cart button and displays out of stock label',
+        (tester) async {
+      const outOfStockProduct = Product(
+        id: 'p03',
+        name: 'Out of Stock Serum',
+        sellingPrice: 50.0,
+        stockQuantity: 0,
+        branchId: 'b01',
+      );
+      final fakeRepo = FakeProductsRepository();
+      fakeRepo.stubProductDetailsResult = const Success(outOfStockProduct);
+
+      final cubit = ProductDetailsCubit(productsRepository: fakeRepo);
+      final fakeCartRepo = FakeCartRepository();
+      final cartCubit = CartCubit(cartRepository: fakeCartRepo);
+
+      await tester.pumpWidget(
+        createTestWidget(cubit: cubit, cartCubit: cartCubit),
+      );
+      await tester.pumpAndSettle();
+
+      // Button has out-of-stock label and is disabled
+      final buttonFinder = find.widgetWithText(
+        ElevatedButton,
+        AppLocaleKeys.productDetailsOutOfStock.tr(),
+      );
+      expect(buttonFinder, findsOneWidget);
+
+      final button = tester.widget<ElevatedButton>(buttonFinder);
+      expect(button.onPressed, isNull);
+
+      // CartCubit remains empty
+      expect(cartCubit.state, isA<CartEmpty>());
+
+      cartCubit.close();
+      cubit.close();
+    });
+
+    testWidgets(
+        'branch conflict on product details screen shows dialog and switches branch on confirm',
+        (tester) async {
+      final fakeRepo = FakeProductsRepository();
+      fakeRepo.stubProductDetailsResult = const Success(testProductOtc);
+
+      final cubit = ProductDetailsCubit(productsRepository: fakeRepo);
+      final fakeCartRepo = FakeCartRepository();
+      final cartCubit = CartCubit(cartRepository: fakeCartRepo);
+
+      // Seed cart with an item from another branch ('different-branch')
+      const existingProduct = Product(
+        id: 'p99',
+        name: 'Existing Med',
+        sellingPrice: 80.0,
+        stockQuantity: 5,
+        branchId: 'different-branch',
+      );
+      await cartCubit.addToCart(existingProduct, quantity: 1);
+      expect((cartCubit.state as CartHasItems).branchId, equals('different-branch'));
+
+      await tester.pumpWidget(
+        createTestWidget(cubit: cubit, cartCubit: cartCubit),
+      );
+      await tester.pumpAndSettle();
+
+      final addToCartFinder =
+          find.widgetWithText(ElevatedButton, 'أضف إلى السلة');
+      expect(addToCartFinder, findsOneWidget);
+
+      await tester.tap(addToCartFinder);
+      await tester.pumpAndSettle();
+
+      // Dialog is shown
+      expect(find.byType(AlertDialog), findsOneWidget);
+      expect(
+        find.text(AppLocaleKeys.cartBranchConflictTitle.tr()),
+        findsOneWidget,
+      );
+
+      // Tap confirm button
+      final confirmBtn =
+          find.text(AppLocaleKeys.cartBranchConflictConfirm.tr());
+      expect(confirmBtn, findsOneWidget);
+      await tester.tap(confirmBtn);
+      await tester.pumpAndSettle();
+
+      // Cart now has testProductOtc from b01
+      expect(cartCubit.state, isA<CartHasItems>());
+      final cartState = cartCubit.state as CartHasItems;
+      expect(cartState.branchId, equals('b01'));
+      expect(cartState.items.first.product.id, equals('p01'));
+
+      // Success SnackBar is displayed
+      expect(find.byType(SnackBar), findsOneWidget);
+
+      cartCubit.close();
       cubit.close();
     });
   });

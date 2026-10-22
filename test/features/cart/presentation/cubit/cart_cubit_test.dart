@@ -339,4 +339,28 @@ void main() {
       expect(state.items[1].quantity, equals(3));
     });
   });
+
+  group('CartCubit clearAndAddToCart', () {
+    test('clears previous branch cart and adds product from new branch', () async {
+      await cubit.addToCart(sampleProductA, quantity: 2);
+      expect(cubit.state, isA<CartHasItems>());
+      expect((cubit.state as CartHasItems).branchId, equals('branch-cairo'));
+
+      // Resolve branch conflict by clearing previous branch and adding alex product
+      final result = await cubit.clearAndAddToCart(
+        sampleProductDifferentBranch,
+        quantity: 1,
+      );
+
+      expect(result.isSuccess, isTrue);
+      expect(cubit.state, isA<CartHasItems>());
+      final state = cubit.state as CartHasItems;
+      expect(state.branchId, equals('branch-alex'));
+      expect(state.items.length, equals(1));
+      expect(state.items.first.product.id, equals('prod-3'));
+      expect(fakeRepository.storage['branch-cairo'], isNull);
+      expect(fakeRepository.storage['branch-alex'], isNotNull);
+      expect(fakeRepository.activeBranchId, equals('branch-alex'));
+    });
+  });
 }

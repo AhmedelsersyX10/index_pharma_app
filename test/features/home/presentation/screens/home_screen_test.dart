@@ -11,6 +11,10 @@ import 'package:index_pharma/core/storage/storage_service.dart';
 import 'package:index_pharma/core/theme/theme.dart';
 import 'package:index_pharma/core/widgets/app_empty_state.dart';
 import 'package:index_pharma/core/widgets/app_error_view.dart';
+import 'package:index_pharma/features/cart/domain/entities/cart_item.dart';
+import 'package:index_pharma/features/cart/domain/repositories/cart_repository.dart';
+import 'package:index_pharma/features/cart/presentation/cubit/cart_cubit.dart';
+import 'package:index_pharma/features/cart/presentation/cubit/cart_state.dart';
 import 'package:index_pharma/features/categories/domain/entities/category.dart';
 import 'package:index_pharma/features/categories/domain/repositories/categories_repository.dart';
 import 'package:index_pharma/features/categories/presentation/cubit/categories_cubit.dart';
@@ -192,17 +196,48 @@ class FakeStorageService implements StorageService {
   }
 }
 
+class FakeCartRepository implements CartRepository {
+  final Map<String, List<CartItem>> storage = {};
+  String? activeBranchId;
+
+  @override
+  Future<List<CartItem>> getCartItems(String branchId) async =>
+      storage[branchId] ?? [];
+
+  @override
+  Future<void> saveCartItems(String branchId, List<CartItem> items) async {
+    storage[branchId] = List<CartItem>.from(items);
+    activeBranchId = branchId;
+  }
+
+  @override
+  Future<void> clearCart(String branchId) async {
+    storage.remove(branchId);
+    if (activeBranchId == branchId) activeBranchId = null;
+  }
+
+  @override
+  Future<String?> getActiveCartBranchId() async => activeBranchId;
+
+  @override
+  Future<void> setActiveCartBranchId(String? branchId) async {
+    activeBranchId = branchId;
+  }
+}
+
 void main() {
   late FakeBranchRepository fakeBranchRepo;
   late FakeSettingsRepository fakeSettingsRepo;
   late FakeCategoriesRepository fakeCategoriesRepo;
   late FakeProductsRepository fakeProductsRepo;
   late FakeStorageService fakeStorageService;
+  late FakeCartRepository fakeCartRepo;
 
   late BranchCubit branchCubit;
   late SettingsCubit settingsCubit;
   late CategoriesCubit categoriesCubit;
   late ProductsCubit productsCubit;
+  late CartCubit cartCubit;
 
   setUpAll(() async {
     WidgetsFlutterBinding.ensureInitialized();
@@ -223,6 +258,7 @@ void main() {
     fakeCategoriesRepo = FakeCategoriesRepository();
     fakeProductsRepo = FakeProductsRepository();
     fakeStorageService = FakeStorageService();
+    fakeCartRepo = FakeCartRepository();
 
     branchCubit = BranchCubit(
       branchRepository: fakeBranchRepo,
@@ -235,6 +271,10 @@ void main() {
       productsRepository: fakeProductsRepo,
       storageService: fakeStorageService,
     );
+    cartCubit = CartCubit(
+      cartRepository: fakeCartRepo,
+      storageService: fakeStorageService,
+    );
   });
 
   tearDown(() {
@@ -242,6 +282,7 @@ void main() {
     settingsCubit.close();
     categoriesCubit.close();
     productsCubit.close();
+    cartCubit.close();
   });
 
   Widget createTestWidget({
@@ -265,6 +306,7 @@ void main() {
               settingsCubit: settingsCubit,
               categoriesCubit: categoriesCubit,
               productsCubit: productsCubit,
+              cartCubit: cartCubit,
             ),
           );
         },
@@ -403,6 +445,51 @@ void main() {
       expect(find.byType(HomeFeaturedProductsSection), findsOneWidget);
       expect(find.byType(AppEmptyState), findsOneWidget);
       expect(find.text('لم يتم العثور على أدوية'), findsOneWidget);
+    });
+
+    testWidgets(
+        'tapping add to cart on featured product puts product in CartCubit state, updates badge, and shows success SnackBar',
+        (tester) async {
+      await tester.pumpWidget(createTestWidget(locale: const Locale('ar')));
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 500));
+      await tester.pumpAndSettle();
+
+      expect(cartCubit.state, isA<CartEmpty>());
+
+      final addToCartFinder = find.widgetWithText(
+        ElevatedButton,
+        AppLocaleKeys.productsAddToCart.tr(),
+      );
+
+      // Scroll down until the add-to-cart button itself is visible on screen
+      await tester.scrollUntilVisible(
+        addToCartFinder.first,
+        200,
+        scrollable: find.byType(Scrollable).first,
+      );
+      await tester.pumpAndSettle();
+
+      await tester.tap(addToCartFinder.first);
+      await tester.pumpAndSettle();
+
+      // Product is really added to CartCubit
+      expect(cartCubit.state, isA<CartHasItems>());
+      final cartState = cartCubit.state as CartHasItems;
+      expect(cartState.totalItemsCount, equals(1));
+      expect(cartState.items.first.product.name, equals('بنادول إكسترا ٥٠٠ مجم'));
+
+      // Cart badge in HomeHeaderBar is updated to 1
+      expect(find.text('1'), findsOneWidget);
+
+      // Success SnackBar is displayed
+      expect(find.byType(SnackBar), findsOneWidget);
+      expect(
+        find.text(
+          AppLocaleKeys.cartItemAddedSuccess.tr(args: ['بنادول إكسترا ٥٠٠ مجم']),
+        ),
+        findsOneWidget,
+      );
     });
   });
 }
