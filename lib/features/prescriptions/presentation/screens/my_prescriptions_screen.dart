@@ -13,10 +13,7 @@ import '../widgets/prescription_card.dart';
 
 /// Screen displaying the authenticated customer's prescriptions list (Stitch D3).
 class MyPrescriptionsScreen extends StatelessWidget {
-  const MyPrescriptionsScreen({
-    super.key,
-    this.cubit,
-  });
+  const MyPrescriptionsScreen({super.key, this.cubit});
 
   final PrescriptionCubit? cubit;
 
@@ -104,21 +101,10 @@ class _MyPrescriptionsViewState extends State<_MyPrescriptionsView> {
                       children: [
                         Row(
                           children: [
-                            Text(
-                              AppLocaleKeys.prescriptionsMyPrescriptionsTitle.tr(),
-                              style: const TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w800,
-                                color: AppColors.onSurface,
-                              ),
-                            ),
                             const SizedBox(width: 8),
                             if (state.prescriptions.isNotEmpty)
                               Container(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 8,
-                                  vertical: 2,
-                                ),
+                                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                                 decoration: BoxDecoration(
                                   color: AppColors.brandMintSurface,
                                   borderRadius: BorderRadius.circular(9999),
@@ -126,8 +112,9 @@ class _MyPrescriptionsViewState extends State<_MyPrescriptionsView> {
                                 child: Text(
                                   state.prescriptions.length == 1
                                       ? AppLocaleKeys.prescriptionsSingleCountBadge.tr()
-                                      : AppLocaleKeys.prescriptionsCountBadge
-                                          .tr(args: [state.prescriptions.length.toString()]),
+                                      : AppLocaleKeys.prescriptionsCountBadge.tr(
+                                          args: [state.prescriptions.length.toString()],
+                                        ),
                                   style: const TextStyle(
                                     fontSize: 11,
                                     fontWeight: FontWeight.w600,
@@ -136,32 +123,6 @@ class _MyPrescriptionsViewState extends State<_MyPrescriptionsView> {
                                 ),
                               ),
                           ],
-                        ),
-                        ElevatedButton.icon(
-                          onPressed: () {
-                            context.read<PrescriptionCubit>().resetUploadFlow();
-                            context.push(AppRouter.kPrescriptionUploadView);
-                          },
-                          icon: const Icon(Icons.add_photo_alternate, size: 16),
-                          label: Text(
-                            AppLocaleKeys.prescriptionsUploadNewBtn.tr(),
-                            style: const TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.primary,
-                            foregroundColor: Colors.white,
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 12,
-                              vertical: 8,
-                            ),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(9999),
-                            ),
-                            elevation: 0,
-                          ),
                         ),
                       ],
                     ),
@@ -172,21 +133,13 @@ class _MyPrescriptionsViewState extends State<_MyPrescriptionsView> {
                 if (state.listStep == PrescriptionListStep.loading)
                   const SliverFillRemaining(
                     hasScrollBody: false,
-                    child: Center(
-                      child: CircularProgressIndicator(color: AppColors.primary),
-                    ),
+                    child: Center(child: CircularProgressIndicator(color: AppColors.primary)),
                   )
                 else if (state.listStep == PrescriptionListStep.failure)
-                  SliverFillRemaining(
-                    hasScrollBody: false,
-                    child: _buildErrorState(state),
-                  )
+                  SliverFillRemaining(hasScrollBody: false, child: _buildErrorState(state))
                 else if (state.listStep == PrescriptionListStep.empty ||
                     state.prescriptions.isEmpty)
-                  SliverFillRemaining(
-                    hasScrollBody: false,
-                    child: _buildEmptyState(),
-                  )
+                  SliverFillRemaining(hasScrollBody: false, child: _buildEmptyState())
                 else
                   SliverPadding(
                     padding: const EdgeInsets.symmetric(
@@ -194,27 +147,19 @@ class _MyPrescriptionsViewState extends State<_MyPrescriptionsView> {
                       vertical: AppSpacing.spaceXs,
                     ),
                     sliver: SliverList(
-                      delegate: SliverChildBuilderDelegate(
-                        (context, index) {
-                          final item = state.prescriptions[index];
-                          return PrescriptionCard(
-                            prescription: item,
-                            onTap: () {
-                              context.push(
-                                AppRouter.prescriptionDetailsPath(item.id),
-                                extra: item,
-                              );
-                            },
-                          );
-                        },
-                        childCount: state.prescriptions.length,
-                      ),
+                      delegate: SliverChildBuilderDelegate((context, index) {
+                        final item = state.prescriptions[index];
+                        return PrescriptionCard(
+                          prescription: item,
+                          onTap: () {
+                            context.push(AppRouter.prescriptionDetailsPath(item.id), extra: item);
+                          },
+                        );
+                      }, childCount: state.prescriptions.length),
                     ),
                   ),
 
-                const SliverToBoxAdapter(
-                  child: SizedBox(height: AppSpacing.spaceXl),
-                ),
+                const SliverToBoxAdapter(child: SizedBox(height: AppSpacing.spaceXl)),
               ],
             ),
           );
@@ -237,11 +182,7 @@ class _MyPrescriptionsViewState extends State<_MyPrescriptionsView> {
                 color: AppColors.surfaceContainerLow,
                 shape: BoxShape.circle,
               ),
-              child: const Icon(
-                Icons.assignment_outlined,
-                size: 44,
-                color: AppColors.neutral,
-              ),
+              child: const Icon(Icons.assignment_outlined, size: 44, color: AppColors.neutral),
             ),
             const SizedBox(height: AppSpacing.spaceMd),
             Text(
@@ -258,11 +199,7 @@ class _MyPrescriptionsViewState extends State<_MyPrescriptionsView> {
               padding: const EdgeInsets.symmetric(horizontal: 24),
               child: Text(
                 AppLocaleKeys.prescriptionsEmptyDesc.tr(),
-                style: const TextStyle(
-                  fontSize: 13,
-                  color: AppColors.neutral,
-                  height: 1.4,
-                ),
+                style: const TextStyle(fontSize: 13, color: AppColors.neutral, height: 1.4),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -275,21 +212,13 @@ class _MyPrescriptionsViewState extends State<_MyPrescriptionsView> {
               icon: const Icon(Icons.file_upload_outlined, size: 18),
               label: Text(
                 AppLocaleKeys.prescriptionsEmptyAction.tr(),
-                style: const TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w700,
-                ),
+                style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
               ),
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.primary,
                 foregroundColor: Colors.white,
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 24,
-                  vertical: 12,
-                ),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(9999),
-                ),
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(9999)),
               ),
             ),
           ],
@@ -305,11 +234,7 @@ class _MyPrescriptionsViewState extends State<_MyPrescriptionsView> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(
-              Icons.error_outline,
-              size: 48,
-              color: AppColors.error,
-            ),
+            const Icon(Icons.error_outline, size: 48, color: AppColors.error),
             const SizedBox(height: AppSpacing.spaceSm),
             Text(
               state.listErrorMessage ?? AppLocaleKeys.prescriptionsErrorLoadingList.tr(),
@@ -330,9 +255,7 @@ class _MyPrescriptionsViewState extends State<_MyPrescriptionsView> {
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.primary,
                 foregroundColor: Colors.white,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
               ),
             ),
           ],

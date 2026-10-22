@@ -209,41 +209,15 @@ class _UploadPrescriptionViewState extends State<_UploadPrescriptionView> {
                   const SizedBox(height: AppSpacing.spaceMd),
                 ],
 
-                // 3. Action Picker (Camera or Gallery cards)
-                Row(
-                  children: [
-                    Expanded(
-                      child: _buildPickerCard(
-                        icon: Icons.add_a_photo,
-                        title: AppLocaleKeys.prescriptionsCameraBtn.tr(),
-                        subtitle: AppLocaleKeys.prescriptionsCameraDesc.tr(),
-                        isPrimary: true,
-                        onTap: isProcessing ? null : () => cubit.pickImage(ImageSource.camera),
-                      ),
-                    ),
-                    const SizedBox(width: AppSpacing.spaceSm),
-                    Expanded(
-                      child: _buildPickerCard(
-                        icon: Icons.photo_library,
-                        title: AppLocaleKeys.prescriptionsGalleryBtn.tr(),
-                        subtitle: AppLocaleKeys.prescriptionsGalleryDesc.tr(),
-                        isPrimary: false,
-                        onTap: isProcessing ? null : () => cubit.pickImage(ImageSource.gallery),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: AppSpacing.spaceMd),
-
-                // 4. Preview & Drop / Uploading Container
+                // 3. Preview & Drop / Uploading Container
                 _buildPreviewContainer(state, cubit, isProcessing),
                 const SizedBox(height: AppSpacing.spaceMd),
 
-                // 5. Optional Notes Field
+                // 4. Optional Notes Field
                 _buildNotesField(cubit, isProcessing),
                 const SizedBox(height: AppSpacing.spaceMd),
 
-                // 6. Assurance & Steps Mini-Card
+                // 5. Assurance & Steps Mini-Card
                 _buildAssuranceStepsCard(),
                 const SizedBox(height: AppSpacing.spaceLg),
 
@@ -300,73 +274,12 @@ class _UploadPrescriptionViewState extends State<_UploadPrescriptionView> {
                           ),
                   ),
                 ),
-                const SizedBox(height: AppSpacing.spaceXl),
+                const SizedBox(height: 48),
               ],
             ),
           ),
         );
       },
-    );
-  }
-
-  Widget _buildPickerCard({
-    required IconData icon,
-    required String title,
-    required String subtitle,
-    required bool isPrimary,
-    required VoidCallback? onTap,
-  }) {
-    return Container(
-      decoration: BoxDecoration(
-        color: AppColors.canvasPure,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: const [BoxShadow(color: Color(0x0A0F172A), blurRadius: 6, offset: Offset(0, 2))],
-      ),
-      child: Material(
-        color: Colors.transparent,
-        borderRadius: BorderRadius.circular(16),
-        child: InkWell(
-          onTap: onTap,
-          borderRadius: BorderRadius.circular(16),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: AppSpacing.spaceSm,
-              vertical: AppSpacing.spaceMd,
-            ),
-            child: Column(
-              children: [
-                CircleAvatar(
-                  radius: 24,
-                  backgroundColor: isPrimary
-                      ? AppColors.brandMintSurface
-                      : AppColors.surfaceContainerLow,
-                  child: Icon(
-                    icon,
-                    size: 24,
-                    color: isPrimary ? AppColors.brandEmeraldDark : AppColors.onSurface,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Text(
-                  title,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w700,
-                    color: AppColors.onSurface,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 2),
-                Text(
-                  subtitle,
-                  style: const TextStyle(fontSize: 11, color: AppColors.neutral),
-                  textAlign: TextAlign.center,
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
     );
   }
 
