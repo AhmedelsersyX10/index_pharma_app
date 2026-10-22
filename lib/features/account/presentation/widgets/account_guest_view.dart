@@ -94,7 +94,9 @@ class AccountGuestView extends StatelessWidget {
                 height: 46,
                 child: ElevatedButton.icon(
                   key: const ValueKey('guest_login_button'),
-                  onPressed: () => context.push(AppRouter.kLoginView),
+                  onPressed: () => context.push(
+                    '${AppRouter.kLoginView}?from=${AppRouter.kAccountView}',
+                  ),
                   icon: const Icon(Icons.login_rounded, size: 20),
                   label: Text(
                     AppLocaleKeys.accountGuestLoginBtn.tr(),
@@ -116,7 +118,9 @@ class AccountGuestView extends StatelessWidget {
                 height: 46,
                 child: OutlinedButton.icon(
                   key: const ValueKey('guest_register_button'),
-                  onPressed: () => context.push(AppRouter.kRegisterView),
+                  onPressed: () => context.push(
+                    '${AppRouter.kRegisterView}?from=${AppRouter.kAccountView}',
+                  ),
                   icon: const Icon(Icons.person_add_outlined, size: 20),
                   label: Text(
                     AppLocaleKeys.accountGuestRegisterBtn.tr(),

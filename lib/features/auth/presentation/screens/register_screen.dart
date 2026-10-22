@@ -1,9 +1,11 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:index_pharma/core/errors/failure.dart';
 import 'package:index_pharma/core/localization/app_locale_keys.dart';
 import 'package:index_pharma/core/theme/theme.dart';
+import 'package:index_pharma/core/utils/app_router.dart';
 import 'package:index_pharma/features/auth/domain/entities/user.dart';
 import 'package:index_pharma/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:index_pharma/features/auth/presentation/cubit/auth_state.dart';
@@ -16,8 +18,15 @@ class RegisterScreen extends StatefulWidget {
   final AuthCubit? authCubit;
   final VoidCallback? onNavigateToLogin;
   final ValueChanged<UserEntity>? onRegisterSuccess;
+  final String? from;
 
-  const RegisterScreen({super.key, this.authCubit, this.onNavigateToLogin, this.onRegisterSuccess});
+  const RegisterScreen({
+    super.key,
+    this.authCubit,
+    this.onNavigateToLogin,
+    this.onRegisterSuccess,
+    this.from,
+  });
 
   @override
   State<RegisterScreen> createState() => _RegisterScreenState();
@@ -50,6 +59,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
             listener: (context, state) {
               if (state is AuthAuthenticated) {
                 widget.onRegisterSuccess?.call(state.user);
+                final role = state.user.role;
+                final isStaff = role == UserRole.pharmacist ||
+                    role == UserRole.admin ||
+                    role == UserRole.superadmin;
+                final safeFrom = widget.from != null
+                    ? AppRouter.sanitizeReturnRoute(widget.from!, role)
+                    : null;
+                final target = safeFrom ??
+                    (isStaff
+                        ? AppRouter.kStaffDashboardView
+                        : AppRouter.kStoreView);
+                context.go(target);
               }
             },
             builder: (context, state) {

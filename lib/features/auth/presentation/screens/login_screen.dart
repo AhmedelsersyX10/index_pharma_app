@@ -1,9 +1,11 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:index_pharma/core/errors/failure.dart';
 import 'package:index_pharma/core/localization/app_locale_keys.dart';
 import 'package:index_pharma/core/theme/theme.dart';
+import 'package:index_pharma/core/utils/app_router.dart';
 import 'package:index_pharma/features/auth/domain/entities/user.dart';
 import 'package:index_pharma/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:index_pharma/features/auth/presentation/cubit/auth_state.dart';
@@ -19,6 +21,7 @@ class LoginScreen extends StatefulWidget {
   final VoidCallback? onNavigateToRegister;
   final VoidCallback? onNavigateToGuest;
   final ValueChanged<UserEntity>? onLoginSuccess;
+  final String? from;
 
   const LoginScreen({
     super.key,
@@ -26,6 +29,7 @@ class LoginScreen extends StatefulWidget {
     this.onNavigateToRegister,
     this.onNavigateToGuest,
     this.onLoginSuccess,
+    this.from,
   });
 
   @override
@@ -59,6 +63,18 @@ class _LoginScreenState extends State<LoginScreen> {
             listener: (context, state) {
               if (state is AuthAuthenticated) {
                 widget.onLoginSuccess?.call(state.user);
+                final role = state.user.role;
+                final isStaff = role == UserRole.pharmacist ||
+                    role == UserRole.admin ||
+                    role == UserRole.superadmin;
+                final safeFrom = widget.from != null
+                    ? AppRouter.sanitizeReturnRoute(widget.from!, role)
+                    : null;
+                final target = safeFrom ??
+                    (isStaff
+                        ? AppRouter.kStaffDashboardView
+                        : AppRouter.kStoreView);
+                context.go(target);
               }
             },
             builder: (context, state) {

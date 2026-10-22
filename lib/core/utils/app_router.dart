@@ -121,15 +121,19 @@ class AppRouter {
     final bool isBranchManagementRoute = pathOnly == kBranchManagementView ||
         pathOnly.startsWith('$kBranchManagementView/');
 
-    if (isBranchManagementRoute) {
-      return role == UserRole.superadmin ? trimmed : null;
+    final isStaff = role == UserRole.pharmacist ||
+        role == UserRole.admin ||
+        role == UserRole.superadmin;
+
+    if (isStaff) {
+      if (isBranchManagementRoute) {
+        return role == UserRole.superadmin ? trimmed : null;
+      }
+      return isStaffRoute ? trimmed : null;
     }
 
-    if (isStaffRoute) {
-      final isStaff = role == UserRole.pharmacist ||
-          role == UserRole.admin ||
-          role == UserRole.superadmin;
-      return isStaff ? trimmed : null;
+    if (isStaffRoute || isBranchManagementRoute) {
+      return null;
     }
 
     return trimmed;
@@ -242,6 +246,7 @@ class AppRouter {
           final from = state.uri.queryParameters['from'];
           return LoginScreen(
             authCubit: _activeAuthCubit,
+            from: from,
             onNavigateToRegister: () {
               final uri = from != null && from.isNotEmpty
                   ? Uri(path: kRegisterView, queryParameters: {'from': from}).toString()
@@ -258,6 +263,7 @@ class AppRouter {
           final from = state.uri.queryParameters['from'];
           return RegisterScreen(
             authCubit: _activeAuthCubit,
+            from: from,
             onNavigateToLogin: () {
               final uri = from != null && from.isNotEmpty
                   ? Uri(path: kLoginView, queryParameters: {'from': from}).toString()
