@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:index_pharma/core/localization/app_locale_keys.dart';
+import 'package:index_pharma/core/utils/app_router.dart';
 import 'package:index_pharma/core/theme/theme.dart';
 import 'package:index_pharma/features/settings/presentation/cubit/settings_cubit.dart';
 import 'package:index_pharma/features/settings/presentation/cubit/settings_state.dart';
@@ -124,7 +125,7 @@ class HomeHeroBanner extends StatelessWidget {
                       crossAxisAlignment: WrapCrossAlignment.center,
                       children: [
                         ElevatedButton(
-                          onPressed: onShopNow ?? () => context.go('/browse'),
+                          onPressed: onShopNow ?? () => context.go(AppRouter.browsePath()),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: AppColors.surfaceContainerLowest,
                             foregroundColor: AppColors.primary,

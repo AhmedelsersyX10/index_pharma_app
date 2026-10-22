@@ -69,7 +69,7 @@ class AccountScreen extends StatelessWidget {
       case 0:
         context.go(AppRouter.kStoreView);
       case 1:
-        context.go('/browse');
+        context.go(AppRouter.kBrowseView);
       case 2:
         context.go(AppRouter.kPrescriptionView);
       case 3:

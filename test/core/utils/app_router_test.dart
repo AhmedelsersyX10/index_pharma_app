@@ -12,6 +12,13 @@ void main() {
       expect(AppRouter.kProductDetailsView, equals('/store/products/:id'));
       expect(AppRouter.productDetailsPath('123'), equals('/store/products/123'));
       expect(AppRouter.kBrowseView, equals('/browse'));
+      expect(AppRouter.browsePath(), equals('/browse'));
+      expect(AppRouter.browsePath(categoryId: 'c1'), equals('/browse?categoryId=c1'));
+      expect(AppRouter.browsePath(q: 'panadol'), equals('/browse?q=panadol'));
+      expect(
+        AppRouter.browsePath(categoryId: 'c1', q: 'panadol'),
+        equals('/browse?categoryId=c1&q=panadol'),
+      );
       expect(AppRouter.kPrescriptionView, equals('/prescription'));
       expect(AppRouter.kOrdersView, equals('/orders'));
       expect(AppRouter.kOrderDetailsView, equals('/orders/:id'));

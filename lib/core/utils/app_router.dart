@@ -19,6 +19,7 @@ import 'package:index_pharma/features/choose_branches/presentation/screens/branc
 import 'package:index_pharma/features/home/presentation/screens/home_screen.dart';
 import 'package:index_pharma/features/language/presentation/screens/language_selection_screen.dart';
 import 'package:index_pharma/features/onboarding/presentation/view/onboarding_view.dart';
+import 'package:index_pharma/features/products/presentation/screens/products_page.dart';
 import 'package:index_pharma/features/products/presentation/screens/product_details_screen.dart';
 import 'package:index_pharma/features/splash/presentation/view/splash_view.dart';
 import 'package:index_pharma/features/checkout/domain/entities/order.dart';
@@ -39,13 +40,12 @@ class AppRouter {
     StorageService? storageService,
     Listenable? refreshListenable,
     String? initialLocation,
-  })  : _authCubit = authCubit,
-        _storageService = storageService,
-        refreshListenable = refreshListenable ??
-            (authCubit != null
-                ? GoRouterRefreshStream(authCubit.stream)
-                : _AuthRefreshListenable()),
-        _initialLocation = initialLocation;
+  }) : _authCubit = authCubit,
+       _storageService = storageService,
+       refreshListenable =
+           refreshListenable ??
+           (authCubit != null ? GoRouterRefreshStream(authCubit.stream) : _AuthRefreshListenable()),
+       _initialLocation = initialLocation;
 
   final AuthCubit? _authCubit;
   final StorageService? _storageService;
@@ -78,12 +78,24 @@ class AppRouter {
   /// Generates the product details path for a specific [productId].
   static String productDetailsPath(String productId) => '/store/products/$productId';
 
+  /// Generates the browse path with optional [categoryId] and [q] search term.
+  static String browsePath({String? categoryId, String? q}) {
+    final queryParams = <String, String>{};
+    if (categoryId != null && categoryId.trim().isNotEmpty) {
+      queryParams['categoryId'] = categoryId.trim();
+    }
+    if (q != null && q.trim().isNotEmpty) {
+      queryParams['q'] = q.trim();
+    }
+    if (queryParams.isEmpty) return kBrowseView;
+    return Uri(path: kBrowseView, queryParameters: queryParams).toString();
+  }
+
   /// Generates the order details path for a specific [orderId].
   static String orderDetailsPath(String orderId) => '/orders/$orderId';
 
   /// Generates the prescription details path for a specific [prescriptionId].
-  static String prescriptionDetailsPath(String prescriptionId) =>
-      '/prescription/$prescriptionId';
+  static String prescriptionDetailsPath(String prescriptionId) => '/prescription/$prescriptionId';
 
   AuthCubit? get _activeAuthCubit {
     if (_authCubit != null) return _authCubit;
@@ -116,14 +128,13 @@ class AppRouter {
       return null;
     }
 
-    final bool isStaffRoute = pathOnly == kStaffDashboardView ||
-        pathOnly.startsWith('$kStaffDashboardView/');
-    final bool isBranchManagementRoute = pathOnly == kBranchManagementView ||
-        pathOnly.startsWith('$kBranchManagementView/');
+    final bool isStaffRoute =
+        pathOnly == kStaffDashboardView || pathOnly.startsWith('$kStaffDashboardView/');
+    final bool isBranchManagementRoute =
+        pathOnly == kBranchManagementView || pathOnly.startsWith('$kBranchManagementView/');
 
-    final isStaff = role == UserRole.pharmacist ||
-        role == UserRole.admin ||
-        role == UserRole.superadmin;
+    final isStaff =
+        role == UserRole.pharmacist || role == UserRole.admin || role == UserRole.superadmin;
 
     if (isStaff) {
       if (isBranchManagementRoute) {
@@ -152,17 +163,15 @@ class AppRouter {
     required String location,
     String? from,
   }) {
-    final bool isStaffRoute = location == kStaffDashboardView ||
-        location.startsWith('$kStaffDashboardView/');
-    final bool isBranchManagementRoute = location == kBranchManagementView ||
-        location.startsWith('$kBranchManagementView/');
-    final bool isAuthRoute =
-        location == kLoginView || location == kRegisterView;
+    final bool isStaffRoute =
+        location == kStaffDashboardView || location.startsWith('$kStaffDashboardView/');
+    final bool isBranchManagementRoute =
+        location == kBranchManagementView || location.startsWith('$kBranchManagementView/');
+    final bool isAuthRoute = location == kLoginView || location == kRegisterView;
 
     // Superadmin branch-management protection:
     if (isBranchManagementRoute) {
-      if (authState is AuthAuthenticated &&
-          authState.user.role == UserRole.superadmin) {
+      if (authState is AuthAuthenticated && authState.user.role == UserRole.superadmin) {
         return null; // Allowed for superadmin
       }
       return kStoreView; // Unauthorized: redirect to store
@@ -172,9 +181,7 @@ class AppRouter {
     if (isStaffRoute) {
       if (authState is AuthAuthenticated) {
         final role = authState.user.role;
-        if (role == UserRole.pharmacist ||
-            role == UserRole.admin ||
-            role == UserRole.superadmin) {
+        if (role == UserRole.pharmacist || role == UserRole.admin || role == UserRole.superadmin) {
           return null; // Allowed for staff
         }
       }
@@ -184,9 +191,7 @@ class AppRouter {
     // Auth pages guard when already authenticated
     if (isAuthRoute && authState is AuthAuthenticated) {
       final role = authState.user.role;
-      if (role == UserRole.pharmacist ||
-          role == UserRole.admin ||
-          role == UserRole.superadmin) {
+      if (role == UserRole.pharmacist || role == UserRole.admin || role == UserRole.superadmin) {
         if (from != null) {
           final safeFrom = sanitizeReturnRoute(from, role);
           if (safeFrom != null) return safeFrom;
@@ -222,10 +227,8 @@ class AppRouter {
     routes: <RouteBase>[
       GoRoute(
         path: kSplashView,
-        builder: (context, state) => SplashView(
-          authCubit: _activeAuthCubit,
-          storageService: _activeStorageService,
-        ),
+        builder: (context, state) =>
+            SplashView(authCubit: _activeAuthCubit, storageService: _activeStorageService),
       ),
       GoRoute(
         path: kLanguageSelectionView,
@@ -236,9 +239,7 @@ class AppRouter {
       ),
       GoRoute(
         path: kOnboardingView,
-        builder: (context, state) => OnboardingView(
-          storageService: _activeStorageService,
-        ),
+        builder: (context, state) => OnboardingView(storageService: _activeStorageService),
       ),
       GoRoute(
         path: kLoginView,
@@ -277,10 +278,7 @@ class AppRouter {
         path: kBranchSelectionView,
         builder: (context, state) => const BranchSelectionScreen(),
       ),
-      GoRoute(
-        path: kStoreView,
-        builder: (context, state) => const HomeScreen(),
-      ),
+      GoRoute(path: kStoreView, builder: (context, state) => const HomeScreen()),
       GoRoute(
         path: kProductDetailsView,
         builder: (context, state) {
@@ -289,14 +287,17 @@ class AppRouter {
           return ProductDetailsScreen(
             productId: productId,
             branchId: branchId,
-            cartCubit:
-                getIt.isRegistered<CartCubit>() ? getIt<CartCubit>() : null,
+            cartCubit: getIt.isRegistered<CartCubit>() ? getIt<CartCubit>() : null,
           );
         },
       ),
       GoRoute(
         path: kBrowseView,
-        builder: (context, state) => const BrowsePlaceholderScreen(),
+        builder: (context, state) {
+          final categoryId = state.uri.queryParameters['categoryId'];
+          final q = state.uri.queryParameters['q'];
+          return ProductsPage(initialCategoryId: categoryId, initialKeyword: q);
+        },
       ),
       GoRoute(
         path: kPrescriptionView,
@@ -378,25 +379,18 @@ class AppRouter {
       ),
       GoRoute(
         path: kAccountView,
-        builder: (context, state) => AccountScreen(
-          authCubit: _activeAuthCubit,
-          storageService: _activeStorageService,
-        ),
+        builder: (context, state) =>
+            AccountScreen(authCubit: _activeAuthCubit, storageService: _activeStorageService),
       ),
       GoRoute(
         path: kEditProfileView,
         builder: (context, state) => AuthRequiredGuard(
           routePath: kEditProfileView,
           authCubit: _activeAuthCubit,
-          child: EditProfileScreen(
-            authCubit: _activeAuthCubit,
-          ),
+          child: EditProfileScreen(authCubit: _activeAuthCubit),
         ),
       ),
-      GoRoute(
-        path: kCartView,
-        builder: (context, state) => const CartScreen(),
-      ),
+      GoRoute(path: kCartView, builder: (context, state) => const CartScreen()),
       GoRoute(
         path: kCheckoutView,
         builder: (context, state) => AuthRequiredGuard(
@@ -421,8 +415,7 @@ class AppRouter {
       ),
       GoRoute(
         path: kBranchManagementView,
-        builder: (context, state) =>
-            const BranchManagementPlaceholderScreen(),
+        builder: (context, state) => const BranchManagementPlaceholderScreen(),
       ),
     ],
   );
@@ -432,8 +425,7 @@ class AppRouter {
 class _AuthRefreshListenable extends ChangeNotifier {
   _AuthRefreshListenable() {
     if (getIt.isRegistered<AuthCubit>()) {
-      _subscription =
-          getIt<AuthCubit>().stream.listen((_) => notifyListeners());
+      _subscription = getIt<AuthCubit>().stream.listen((_) => notifyListeners());
     }
   }
 

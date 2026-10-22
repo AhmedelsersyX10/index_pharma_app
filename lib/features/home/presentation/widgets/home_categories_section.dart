@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:index_pharma/core/localization/app_locale_keys.dart';
+import 'package:index_pharma/core/utils/app_router.dart';
 import 'package:index_pharma/core/theme/theme.dart';
 import 'package:index_pharma/core/widgets/app_empty_state.dart';
 import 'package:index_pharma/core/widgets/app_error_view.dart';
@@ -61,7 +62,7 @@ class HomeCategoriesSection extends StatelessWidget {
               ],
             ),
             TextButton(
-              onPressed: onViewAll ?? () => context.go('/browse'),
+              onPressed: onViewAll ?? () => context.go(AppRouter.browsePath()),
               style: TextButton.styleFrom(
                 padding: EdgeInsets.zero,
                 minimumSize: const Size(44, 44),
@@ -115,7 +116,7 @@ class HomeCategoriesSection extends StatelessWidget {
               CategoriesLoaded(:final categories) => _CategoriesLoadedGrid(
                   categories: categories.take(maxCategories).toList(),
                   onCategoryTap: onCategoryTap ??
-                      (cat) => context.go('/browse'),
+                      (cat) => context.go(AppRouter.browsePath(categoryId: cat.id)),
                 ),
             };
           },

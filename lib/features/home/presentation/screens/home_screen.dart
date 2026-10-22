@@ -193,7 +193,7 @@ class _HomeViewState extends State<_HomeView> {
           );
         }
       case 1:
-        context.go('/browse');
+        context.go(AppRouter.kBrowseView);
       case 2:
         _handleProtectedNav(AppRouter.kPrescriptionView);
       case 3:

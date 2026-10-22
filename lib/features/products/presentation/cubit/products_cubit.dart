@@ -37,8 +37,34 @@ class ProductsCubit extends Cubit<ProductsState> {
   /// The active category filter.
   String? get currentCategory => _selectedCategory;
 
-  /// Loads the first page of products for the specified or current branch.
-  Future<void> loadFirstPage({String? branchId}) async {
+  /// Sets initial filters without immediately triggering a network request.
+  void setInitialFilters({String? categoryId, String? keyword}) {
+    if (categoryId != null) {
+      final trimmedCat = categoryId.trim();
+      _selectedCategory = trimmedCat.isNotEmpty ? trimmedCat : null;
+    }
+    if (keyword != null) {
+      final trimmedKw = keyword.trim();
+      _keyword = trimmedKw.isNotEmpty ? trimmedKw : null;
+    }
+  }
+
+  /// Loads the first page of products for the specified or current branch,
+  /// with optional initial [categoryId] and [keyword] filters.
+  Future<void> loadFirstPage({
+    String? branchId,
+    String? categoryId,
+    String? keyword,
+  }) async {
+    if (categoryId != null) {
+      final trimmedCat = categoryId.trim();
+      _selectedCategory = trimmedCat.isNotEmpty ? trimmedCat : null;
+    }
+    if (keyword != null) {
+      final trimmedKw = keyword.trim();
+      _keyword = trimmedKw.isNotEmpty ? trimmedKw : null;
+    }
+
     final effectiveBranchId =
         branchId ?? _branchId ?? _storageService?.selectedBranchId;
 
