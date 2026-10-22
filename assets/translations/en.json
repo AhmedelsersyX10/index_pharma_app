@@ -93,6 +93,8 @@
     "password_label": "Password",
     "password_hint": "••••••••",
     "password_secure_hint": "Confidential & Protected",
+    "password_show": "Show password",
+    "password_hide": "Hide password",
     "sign_in_button": "Log In",
     "no_account_prompt": "Don't have a pharmacy profile yet?",
     "create_account_link": "Create New Account",

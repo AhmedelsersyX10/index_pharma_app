@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:index_pharma/core/theme/theme.dart';
+import 'package:index_pharma/core/widgets/app_text_fields.dart';
 import 'package:index_pharma/features/choose_branches/presentation/cubit/branch_cubit.dart';
 import 'package:index_pharma/features/choose_branches/presentation/cubit/branch_state.dart';
 import 'package:index_pharma/features/categories/presentation/cubit/categories_cubit.dart';
@@ -22,7 +23,6 @@ import '../widgets/home_featured_products_section.dart';
 import '../widgets/home_header_bar.dart';
 import '../widgets/home_hero_banner.dart';
 import '../widgets/home_prescription_upload_card.dart';
-import '../widgets/home_search_bar.dart';
 import '../widgets/home_storage_guarantee_footer.dart';
 
 /// Full customer Home screen adhering to Stitch design B2 (Arabic RTL / English LTR).
@@ -209,7 +209,7 @@ class _HomeViewState extends State<_HomeView> {
                 const SizedBox(height: AppSpacing.spaceSm),
 
                 // 2. Search Bar (without barcode icon)
-                const HomeSearchBar(),
+                const AppSearchBar(),
                 const SizedBox(height: AppSpacing.spaceMd),
 
                 // 3. Hero Clinical Banner

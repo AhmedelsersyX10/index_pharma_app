@@ -70,14 +70,7 @@ class _MyOrdersViewState extends State<_MyOrdersView> {
       case 0:
         context.go(AppRouter.kStoreView);
       case 1:
-        // Already on Browse: smoothly scroll to top
-        if (_scrollController.hasClients) {
-          _scrollController.animateTo(
-            0,
-            duration: const Duration(milliseconds: 300),
-            curve: Curves.easeOut,
-          );
-        }
+        context.go(AppRouter.kBrowseView);
       case 2:
         context.go(AppRouter.kPrescriptionView);
       case 3:
@@ -111,11 +104,7 @@ class _MyOrdersViewState extends State<_MyOrdersView> {
               onRetry: () => context.read<MyOrdersCubit>().fetchMyOrders(refresh: true),
             ),
             MyOrdersEmpty() => AppEmptyState(
-              icon: Icon(
-                Icons.receipt_long_outlined,
-                size: 42,
-                color: colors.brandEmeraldDark,
-              ),
+              icon: Icon(Icons.receipt_long_outlined, size: 42, color: colors.brandEmeraldDark),
               title: 'orders.empty_title'.tr(),
               message: 'orders.empty_desc'.tr(),
               action: ElevatedButton.icon(
@@ -145,11 +134,7 @@ class _MyOrdersViewState extends State<_MyOrdersView> {
     );
   }
 
-  Widget _buildLoadedView(
-    BuildContext context,
-    MyOrdersLoaded state,
-    AppColorsExtension colors,
-  ) {
+  Widget _buildLoadedView(BuildContext context, MyOrdersLoaded state, AppColorsExtension colors) {
     final filteredOrders = state.filteredOrders;
 
     return Column(

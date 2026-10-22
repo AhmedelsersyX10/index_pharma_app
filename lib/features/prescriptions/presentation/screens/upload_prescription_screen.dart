@@ -8,6 +8,7 @@ import 'package:index_pharma/core/localization/app_locale_keys.dart';
 import 'package:index_pharma/core/theme/theme.dart';
 import 'package:index_pharma/core/utils/app_router.dart';
 import 'package:index_pharma/core/widgets/app_page_bar.dart';
+import 'package:index_pharma/core/widgets/app_text_fields.dart';
 import '../cubit/prescription_cubit.dart';
 import '../cubit/prescription_state.dart';
 import '../widgets/prescription_image_viewer_dialog.dart';
@@ -615,28 +616,15 @@ class _UploadPrescriptionViewState extends State<_UploadPrescriptionView> {
             style: TextStyle(fontSize: 12, color: colors.neutral),
           ),
           const SizedBox(height: AppSpacing.spaceSm),
-          TextField(
+          AppTextField(
             controller: _notesController,
             enabled: !isProcessing,
             maxLines: 3,
-            maxLength: 250,
-            buildCounter: (_, {required currentLength, required isFocused, maxLength}) =>
-                const SizedBox.shrink(),
+            hintText: AppLocaleKeys.prescriptionsNotesHint.tr(),
             onChanged: (val) {
               cubit.updateNotes(val);
               setState(() {});
             },
-            decoration: InputDecoration(
-              hintText: AppLocaleKeys.prescriptionsNotesHint.tr(),
-              hintStyle: TextStyle(fontSize: 13, color: colors.neutral),
-              fillColor: colors.surfaceSubtle,
-              filled: true,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-                borderSide: BorderSide.none,
-              ),
-              contentPadding: const EdgeInsets.all(12),
-            ),
           ),
           const SizedBox(height: 8),
 

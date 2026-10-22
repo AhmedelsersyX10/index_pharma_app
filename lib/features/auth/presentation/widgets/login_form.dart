@@ -118,6 +118,7 @@ class _LoginFormState extends State<LoginForm> {
                 controller: _emailController,
                 label: AppLocaleKeys.authEmailLabel.tr(),
                 hintText: AppLocaleKeys.authEmailHint.tr(),
+                required: true,
                 keyboardType: TextInputType.emailAddress,
                 textInputAction: TextInputAction.next,
                 textDirection: TextDirection.ltr,
@@ -127,10 +128,7 @@ class _LoginFormState extends State<LoginForm> {
                     : null,
                 onChanged: (_) => _onFieldChanged(),
                 validator: (val) => AuthValidators.validateEmail(val)?.tr(),
-                prefix: Padding(
-                  padding: const EdgeInsetsDirectional.only(start: 12, end: 8),
-                  child: Icon(Icons.mail_outline_rounded, color: colors.slate400, size: 20),
-                ),
+                prefix: const Icon(Icons.mail_outline_rounded, size: 20),
               ),
               const SizedBox(height: AppSpacing.spaceMd),
 
@@ -139,6 +137,7 @@ class _LoginFormState extends State<LoginForm> {
                 controller: _passwordController,
                 label: AppLocaleKeys.authPasswordLabel.tr(),
                 hintText: AppLocaleKeys.authPasswordHint.tr(),
+                required: true,
                 errorText: _credentialsError,
                 trailingLabelWidget: Text(
                   AppLocaleKeys.authPasswordSecureHint.tr(),

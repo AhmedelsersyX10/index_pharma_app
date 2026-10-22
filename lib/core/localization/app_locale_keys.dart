@@ -92,6 +92,8 @@ abstract class AppLocaleKeys {
   static const authPasswordLabel = 'auth.password_label';
   static const authPasswordHint = 'auth.password_hint';
   static const authPasswordSecureHint = 'auth.password_secure_hint';
+  static const authPasswordShow = 'auth.password_show';
+  static const authPasswordHide = 'auth.password_hide';
   static const authSignInButton = 'auth.sign_in_button';
   static const authNoAccountPrompt = 'auth.no_account_prompt';
   static const authCreateAccountLink = 'auth.create_account_link';

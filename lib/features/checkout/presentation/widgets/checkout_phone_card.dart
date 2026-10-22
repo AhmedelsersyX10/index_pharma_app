@@ -120,23 +120,20 @@ class CheckoutPhoneCard extends StatelessWidget {
                     onChanged: onChanged,
                     keyboardType: TextInputType.phone,
                     textDirection: TextDirection.ltr,
-                    style: TextStyle(
-                      fontSize: 15,
+                    style: AppTypography.bodyMd(color: colors.onSurface).copyWith(
                       fontWeight: FontWeight.w600,
                       letterSpacing: 1.1,
-                      color: colors.onSurface,
                     ),
                     decoration: InputDecoration(
+                      border: InputBorder.none,
+                      enabledBorder: InputBorder.none,
+                      focusedBorder: InputBorder.none,
+                      filled: false,
                       contentPadding: const EdgeInsets.symmetric(
                         horizontal: AppSpacing.spaceSm,
                         vertical: AppSpacing.spaceSm,
                       ),
-                      border: InputBorder.none,
                       hintText: 'checkout.phone_hint'.tr(),
-                      hintStyle: TextStyle(
-                        fontSize: 13,
-                        color: colors.onSurfaceVariant.withAlpha(128),
-                      ),
                     ),
                   ),
                 ),

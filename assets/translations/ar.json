@@ -93,6 +93,8 @@
     "password_label": "كلمة المرور",
     "password_hint": "••••••••",
     "password_secure_hint": "سرية ومحمية",
+    "password_show": "إظهار كلمة المرور",
+    "password_hide": "إخفاء كلمة المرور",
     "sign_in_button": "تسجيل الدخول",
     "no_account_prompt": "ليس لديك ملف صيدلاني بعد؟",
     "create_account_link": "إنشاء حساب جديد",

@@ -97,30 +97,26 @@ class _RegisterFormState extends State<RegisterForm> {
             // Full Name (Required)
             AppTextField(
               controller: _nameController,
-              label: '${AppLocaleKeys.authNameLabel.tr()} *',
+              label: AppLocaleKeys.authNameLabel.tr(),
+              required: true,
               hintText: AppLocaleKeys.authNameHint.tr(),
               textInputAction: TextInputAction.next,
               validator: (val) => AuthValidators.validateName(val)?.tr(),
-              prefix: Padding(
-                padding: const EdgeInsetsDirectional.only(start: 12, end: 8),
-                child: Icon(Icons.person_outline_rounded, color: colors.slate400, size: 20),
-              ),
+              prefix: const Icon(Icons.person_outline_rounded, size: 20),
             ),
             const SizedBox(height: AppSpacing.spaceMd),
 
             // Email Address (Required)
             AppTextField(
               controller: _emailController,
-              label: '${AppLocaleKeys.authEmailLabel.tr()} *',
+              label: AppLocaleKeys.authEmailLabel.tr(),
+              required: true,
               hintText: AppLocaleKeys.authEmailHint.tr(),
               keyboardType: TextInputType.emailAddress,
               textInputAction: TextInputAction.next,
               textDirection: TextDirection.ltr,
               validator: (val) => AuthValidators.validateEmail(val)?.tr(),
-              prefix: Padding(
-                padding: const EdgeInsetsDirectional.only(start: 12, end: 8),
-                child: Icon(Icons.mail_outline_rounded, color: colors.slate400, size: 20),
-              ),
+              prefix: const Icon(Icons.mail_outline_rounded, size: 20),
             ),
             const SizedBox(height: AppSpacing.spaceMd),
 
@@ -137,20 +133,19 @@ class _RegisterFormState extends State<RegisterForm> {
                 AppLocaleKeys.authPhoneNote.tr(),
                 style: AppTypography.bodySm(color: colors.slate500),
               ),
-              prefix: Padding(
-                padding: const EdgeInsetsDirectional.only(start: 12, end: 8),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const Text('🇪🇬', style: TextStyle(fontSize: 16)),
-                    const SizedBox(width: 4),
-                    Text(
-                      '+20',
-                      style: AppTypography.labelMd(color: colors.onSurface),
-                      textDirection: TextDirection.ltr,
-                    ),
-                  ],
-                ),
+              prefix: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const SizedBox(width: 12),
+                  const Text('🇪🇬', style: TextStyle(fontSize: 16)),
+                  const SizedBox(width: 4),
+                  Text(
+                    '+20',
+                    style: AppTypography.labelMd(color: colors.onSurface),
+                    textDirection: TextDirection.ltr,
+                  ),
+                  const SizedBox(width: 8),
+                ],
               ),
             ),
             const SizedBox(height: AppSpacing.spaceMd),
@@ -163,17 +158,15 @@ class _RegisterFormState extends State<RegisterForm> {
               hintText: AppLocaleKeys.authAddressHint.tr(),
               maxLines: 2,
               textInputAction: TextInputAction.next,
-              prefix: Padding(
-                padding: const EdgeInsetsDirectional.only(start: 12, end: 8),
-                child: Icon(Icons.pin_drop_outlined, color: colors.slate400, size: 20),
-              ),
+              prefix: const Icon(Icons.pin_drop_outlined, size: 20),
             ),
             const SizedBox(height: AppSpacing.spaceMd),
 
             // Password (Required >= 8 characters)
             PasswordTextField(
               controller: _passwordController,
-              label: '${AppLocaleKeys.authPasswordLabel.tr()} *',
+              label: AppLocaleKeys.authPasswordLabel.tr(),
+              required: true,
               hintText: '••••••••••••',
               textInputAction: TextInputAction.done,
               validator: (val) => AuthValidators.validatePassword(val)?.tr(),

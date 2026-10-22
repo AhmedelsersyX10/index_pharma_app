@@ -67,18 +67,14 @@ class CheckoutNotesCard extends StatelessWidget {
               controller: controller,
               onChanged: onChanged,
               maxLines: 2,
-              style: TextStyle(
-                fontSize: 14,
-                color: colors.onSurface,
-              ),
+              style: AppTypography.bodyMd(color: colors.onSurface),
               decoration: InputDecoration(
-                contentPadding: const EdgeInsets.all(AppSpacing.spaceSm),
                 border: InputBorder.none,
+                enabledBorder: InputBorder.none,
+                focusedBorder: InputBorder.none,
+                filled: false,
+                contentPadding: const EdgeInsets.all(AppSpacing.spaceSm),
                 hintText: 'checkout.notes_hint'.tr(),
-                hintStyle: TextStyle(
-                  fontSize: 13,
-                  color: colors.onSurfaceVariant.withAlpha(128),
-                ),
               ),
             ),
           ),

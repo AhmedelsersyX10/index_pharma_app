@@ -1,4 +1,6 @@
+import 'package:easy_localization/easy_localization.dart' hide TextDirection;
 import 'package:flutter/material.dart';
+import 'package:index_pharma/core/localization/app_locale_keys.dart';
 import 'package:index_pharma/core/theme/theme.dart';
 import 'package:index_pharma/core/widgets/app_text_fields.dart';
 
@@ -16,6 +18,7 @@ class PasswordTextField extends StatefulWidget {
   final TextInputAction textInputAction;
   final ValueChanged<String>? onFieldSubmitted;
   final ValueChanged<String>? onChanged;
+  final bool required;
 
   const PasswordTextField({
     super.key,
@@ -29,6 +32,7 @@ class PasswordTextField extends StatefulWidget {
     this.textInputAction = TextInputAction.done,
     this.onFieldSubmitted,
     this.onChanged,
+    this.required = false,
   });
 
   @override
@@ -60,10 +64,8 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
       validator: widget.validator,
       onChanged: widget.onChanged,
       onFieldSubmitted: widget.onFieldSubmitted,
-      prefix: Padding(
-        padding: const EdgeInsetsDirectional.only(start: 12, end: 8),
-        child: Icon(Icons.lock_outline_rounded, color: context.colors.slate400, size: 20),
-      ),
+      required: widget.required,
+      prefix: const Icon(Icons.lock_outline_rounded, size: 20),
       suffix: IconButton(
         icon: Icon(
           _obscureText ? Icons.visibility_rounded : Icons.visibility_off_rounded,
@@ -71,7 +73,9 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
           size: 20,
         ),
         onPressed: _toggleVisibility,
-        tooltip: _obscureText ? 'Show password' : 'Hide password',
+        tooltip: _obscureText
+            ? AppLocaleKeys.authPasswordShow.tr()
+            : AppLocaleKeys.authPasswordHide.tr(),
       ),
     );
   }

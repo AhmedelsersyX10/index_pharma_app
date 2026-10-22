@@ -38,8 +38,6 @@ class _MyPrescriptionsView extends StatefulWidget {
 }
 
 class _MyPrescriptionsViewState extends State<_MyPrescriptionsView> {
-  final ScrollController _scrollController = ScrollController();
-
   @override
   void initState() {
     super.initState();
@@ -58,14 +56,7 @@ class _MyPrescriptionsViewState extends State<_MyPrescriptionsView> {
       case 0:
         context.go(AppRouter.kStoreView);
       case 1:
-        // Already on Browse: smoothly scroll to top
-        if (_scrollController.hasClients) {
-          _scrollController.animateTo(
-            0,
-            duration: const Duration(milliseconds: 300),
-            curve: Curves.easeOut,
-          );
-        }
+        context.go(AppRouter.kBrowseView);
       case 2:
         context.go(AppRouter.kPrescriptionView);
       case 3:
@@ -189,20 +180,13 @@ class _MyPrescriptionsViewState extends State<_MyPrescriptionsView> {
             Container(
               width: 90,
               height: 90,
-              decoration: BoxDecoration(
-                color: colors.surfaceContainerLow,
-                shape: BoxShape.circle,
-              ),
+              decoration: BoxDecoration(color: colors.surfaceContainerLow, shape: BoxShape.circle),
               child: Icon(Icons.assignment_outlined, size: 44, color: colors.neutral),
             ),
             const SizedBox(height: AppSpacing.spaceMd),
             Text(
               AppLocaleKeys.prescriptionsEmptyTitle.tr(),
-              style: TextStyle(
-                fontSize: 17,
-                fontWeight: FontWeight.w700,
-                color: colors.onSurface,
-              ),
+              style: TextStyle(fontSize: 17, fontWeight: FontWeight.w700, color: colors.onSurface),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 6),
@@ -249,11 +233,7 @@ class _MyPrescriptionsViewState extends State<_MyPrescriptionsView> {
             const SizedBox(height: AppSpacing.spaceSm),
             Text(
               state.listErrorMessage ?? AppLocaleKeys.prescriptionsErrorLoadingList.tr(),
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-                color: colors.onSurface,
-              ),
+              style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: colors.onSurface),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: AppSpacing.spaceMd),

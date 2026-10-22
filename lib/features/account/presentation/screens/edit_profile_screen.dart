@@ -6,6 +6,7 @@ import 'package:index_pharma/core/localization/app_locale_keys.dart';
 import 'package:index_pharma/core/network/api_result.dart';
 import 'package:index_pharma/core/theme/theme.dart';
 import 'package:index_pharma/core/widgets/app_page_bar.dart';
+import 'package:index_pharma/core/widgets/app_text_fields.dart';
 import 'package:index_pharma/features/auth/domain/validators/auth_validators.dart';
 import 'package:index_pharma/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:index_pharma/features/auth/presentation/cubit/auth_state.dart';
@@ -223,267 +224,80 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               const SizedBox(height: 20),
 
               // Full Name Field
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Text(
-                            AppLocaleKeys.editProfileNameLabel.tr(),
-                            style: AppTypography.labelLg(
-                              color: colors.onSurface,
-                            ),
-                          ),
-                          const SizedBox(width: 4),
-                          Text(
-                            '*',
-                            style: TextStyle(
-                              color: colors.error,
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                      Text(
-                        AppLocaleKeys.editProfileNameSub.tr(),
-                        style: AppTypography.labelSm(
-                          color: colors.onSurfaceVariant,
-                        ),
-                      ),
-                    ],
+              AppTextField(
+                key: const ValueKey('edit_profile_name_field'),
+                controller: _nameController,
+                label: AppLocaleKeys.editProfileNameLabel.tr(),
+                required: true,
+                trailingLabelWidget: Text(
+                  AppLocaleKeys.editProfileNameSub.tr(),
+                  style: AppTypography.labelSm(
+                    color: colors.onSurfaceVariant,
                   ),
-                  const SizedBox(height: 6),
-                  TextFormField(
-                    key: const ValueKey('edit_profile_name_field'),
-                    controller: _nameController,
-                    decoration: InputDecoration(
-                      hintText: AppLocaleKeys.editProfileNameHint.tr(),
-                      prefixIcon: Icon(
-                        Icons.person_outline_rounded,
-                        color: colors.onSurfaceVariant,
-                        size: 20,
-                      ),
-                      filled: true,
-                      fillColor: colors.surfaceContainerLowest,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide(
-                          color: colors.borderSubtle.withValues(alpha: 0.6),
-                        ),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide(
-                          color: colors.borderSubtle.withValues(alpha: 0.6),
-                        ),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide(
-                          color: colors.primary,
-                          width: 1.5,
-                        ),
-                      ),
-                      errorBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide(color: colors.error),
-                      ),
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 14,
-                        vertical: 12,
-                      ),
-                    ),
-                    validator: (value) {
-                      final key = AuthValidators.validateName(value);
-                      return key?.tr();
-                    },
-                  ),
-                ],
+                ),
+                hintText: AppLocaleKeys.editProfileNameHint.tr(),
+                prefix: const Icon(Icons.person_outline_rounded, size: 20),
+                validator: (value) => AuthValidators.validateName(value)?.tr(),
               ),
 
               const SizedBox(height: 16),
 
               // Phone Number Field
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              AppTextField(
+                key: const ValueKey('edit_profile_phone_field'),
+                controller: _phoneController,
+                label: AppLocaleKeys.editProfilePhoneLabel.tr(),
+                required: true,
+                trailingLabelWidget: Text(
+                  AppLocaleKeys.editProfilePhoneSub.tr(),
+                  style: AppTypography.labelSm(
+                    color: colors.primary,
+                  ).copyWith(fontWeight: FontWeight.bold),
+                ),
+                hintText: AppLocaleKeys.editProfilePhoneHint.tr(),
+                keyboardType: TextInputType.phone,
+                textDirection: TextDirection.ltr,
+                prefix: Container(
+                  margin: const EdgeInsetsDirectional.only(start: 8, end: 10),
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: colors.surfaceContainer,
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
-                      Row(
-                        children: [
-                          Text(
-                            AppLocaleKeys.editProfilePhoneLabel.tr(),
-                            style: AppTypography.labelLg(
-                              color: colors.onSurface,
-                            ),
-                          ),
-                          const SizedBox(width: 4),
-                          Text(
-                            '*',
-                            style: TextStyle(
-                              color: colors.error,
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
+                      const Text('🇪🇬', style: TextStyle(fontSize: 14)),
+                      const SizedBox(width: 4),
                       Text(
-                        AppLocaleKeys.editProfilePhoneSub.tr(),
+                        '+20',
                         style: AppTypography.labelSm(
-                          color: colors.primary,
+                          color: colors.onSurfaceVariant,
                         ).copyWith(fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 6),
-                  TextFormField(
-                    key: const ValueKey('edit_profile_phone_field'),
-                    controller: _phoneController,
-                    keyboardType: TextInputType.phone,
-                    textDirection: TextDirection.ltr,
-                    decoration: InputDecoration(
-                      hintText: AppLocaleKeys.editProfilePhoneHint.tr(),
-                      prefixIcon: Container(
-                        margin: const EdgeInsetsDirectional.only(start: 8, end: 10),
-                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                        decoration: BoxDecoration(
-                          color: colors.surfaceContainer,
-                          borderRadius: BorderRadius.circular(6),
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            const Text('🇪🇬', style: TextStyle(fontSize: 14)),
-                            const SizedBox(width: 4),
-                            Text(
-                              '+20',
-                              style: AppTypography.labelSm(
-                                color: colors.onSurfaceVariant,
-                              ).copyWith(fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
-                      ),
-                      prefixIconConstraints: const BoxConstraints(
-                        minWidth: 0,
-                        minHeight: 0,
-                      ),
-                      filled: true,
-                      fillColor: colors.surfaceContainerLowest,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide(
-                          color: colors.borderSubtle.withValues(alpha: 0.6),
-                        ),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide(
-                          color: colors.borderSubtle.withValues(alpha: 0.6),
-                        ),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide(
-                          color: colors.primary,
-                          width: 1.5,
-                        ),
-                      ),
-                      errorBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide(color: colors.error),
-                      ),
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 14,
-                        vertical: 12,
-                      ),
-                    ),
-                    validator: (value) {
-                      final key = AuthValidators.validatePhone(
-                        value,
-                        isRequired: true,
-                      );
-                      return key?.tr();
-                    },
-                  ),
-                ],
+                ),
+                validator: (value) => AuthValidators.validatePhone(
+                  value,
+                  isRequired: true,
+                )?.tr(),
               ),
 
               const SizedBox(height: 16),
 
               // Delivery Address Field
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        AppLocaleKeys.editProfileAddressLabel.tr(),
-                        style: AppTypography.labelLg(
-                          color: colors.onSurface,
-                        ),
-                      ),
-                      const SizedBox(width: 4),
-                      Text(
-                        '*',
-                        style: TextStyle(
-                          color: colors.error,
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 6),
-                  TextFormField(
-                    key: const ValueKey('edit_profile_address_field'),
-                    controller: _addressController,
-                    minLines: 3,
-                    maxLines: 4,
-                    decoration: InputDecoration(
-                      hintText: AppLocaleKeys.editProfileAddressHint.tr(),
-                      filled: true,
-                      fillColor: colors.surfaceContainerLowest,
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide(
-                          color: colors.borderSubtle.withValues(alpha: 0.6),
-                        ),
-                      ),
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide(
-                          color: colors.borderSubtle.withValues(alpha: 0.6),
-                        ),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide(
-                          color: colors.primary,
-                          width: 1.5,
-                        ),
-                      ),
-                      errorBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                        borderSide: BorderSide(color: colors.error),
-                      ),
-                      contentPadding: const EdgeInsets.all(14),
-                    ),
-                    validator: (value) {
-                      final key = AuthValidators.validateAddress(
-                        value,
-                        isRequired: true,
-                      );
-                      return key?.tr();
-                    },
-                  ),
-                ],
+              AppTextField(
+                key: const ValueKey('edit_profile_address_field'),
+                controller: _addressController,
+                label: AppLocaleKeys.editProfileAddressLabel.tr(),
+                required: true,
+                hintText: AppLocaleKeys.editProfileAddressHint.tr(),
+                maxLines: 3,
+                validator: (value) => AuthValidators.validateAddress(
+                  value,
+                  isRequired: true,
+                )?.tr(),
               ),
 
               const SizedBox(height: 16),

@@ -133,16 +133,22 @@ abstract class AppTheme {
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: AppColors.surfaceSubtle,
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 15),
         hintStyle: AppTypography.bodyMd(color: AppColors.slate400),
         labelStyle: AppTypography.bodyMd(color: AppColors.slate600),
-        prefixIconColor: AppColors.primaryBrand,
+        helperStyle: AppTypography.bodySm(color: AppColors.slate500),
+        errorStyle: AppTypography.bodySm(color: AppColors.error),
+        prefixIconColor: AppColors.slate400,
         suffixIconColor: AppColors.slate400,
         border: const OutlineInputBorder(
           borderRadius: AppRadii.roundedBase,
           borderSide: BorderSide(color: AppColors.borderSubtle, width: 1),
         ),
         enabledBorder: const OutlineInputBorder(
+          borderRadius: AppRadii.roundedBase,
+          borderSide: BorderSide(color: AppColors.borderSubtle, width: 1),
+        ),
+        disabledBorder: const OutlineInputBorder(
           borderRadius: AppRadii.roundedBase,
           borderSide: BorderSide(color: AppColors.borderSubtle, width: 1),
         ),
@@ -355,16 +361,22 @@ abstract class AppTheme {
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: AppColors.darkSurfaceContainerLow,
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 15),
         hintStyle: AppTypography.bodyMd(color: AppColors.slate500),
         labelStyle: AppTypography.bodyMd(color: AppColors.slate400),
-        prefixIconColor: AppColors.inversePrimary,
+        helperStyle: AppTypography.bodySm(color: AppColors.slate400),
+        errorStyle: AppTypography.bodySm(color: AppColors.medicalRed),
+        prefixIconColor: AppColors.slate400,
         suffixIconColor: AppColors.slate400,
         border: const OutlineInputBorder(
           borderRadius: AppRadii.roundedBase,
           borderSide: BorderSide(color: AppColors.darkOutline, width: 1),
         ),
         enabledBorder: const OutlineInputBorder(
+          borderRadius: AppRadii.roundedBase,
+          borderSide: BorderSide(color: AppColors.darkOutline, width: 1),
+        ),
+        disabledBorder: const OutlineInputBorder(
           borderRadius: AppRadii.roundedBase,
           borderSide: BorderSide(color: AppColors.darkOutline, width: 1),
         ),

@@ -274,12 +274,13 @@ void main() {
       // Verify portal header & fields
       expect(find.text(AppLocaleKeys.authRegisterBadge.tr()), findsOneWidget);
       expect(find.text('إنشاء حساب عميل جديد'), findsOneWidget);
-      expect(find.text('الاسم بالكامل *'), findsOneWidget);
-      expect(find.text('البريد الإلكتروني *'), findsOneWidget);
+      expect(find.text('الاسم بالكامل'), findsOneWidget);
+      expect(find.text('البريد الإلكتروني'), findsOneWidget);
       expect(find.text('رقم الهاتف المحمول'), findsOneWidget);
       expect(find.text('العنوان ومقر الاستلام'), findsOneWidget);
       expect(find.text('اختياري'), findsNWidgets(2)); // Phone and Address badges
-      expect(find.text('كلمة المرور *'), findsOneWidget);
+      expect(find.text('كلمة المرور'), findsOneWidget);
+      expect(find.text('*'), findsNWidgets(3)); // Name, Email, Password required asterisks
       expect(find.text('يجب ألا تقل عن 8 أحرف'), findsOneWidget);
     });
 
@@ -299,11 +300,12 @@ void main() {
 
       expect(find.text('Verified Customer Portal'), findsOneWidget);
       expect(find.text('Create Customer Account'), findsOneWidget);
-      expect(find.text('Full Name *'), findsOneWidget);
-      expect(find.text('Email Address *'), findsOneWidget);
+      expect(find.text('Full Name'), findsOneWidget);
+      expect(find.text('Email Address'), findsOneWidget);
       expect(find.text('Mobile Phone Number'), findsOneWidget);
       expect(find.text('Delivery Address'), findsOneWidget);
       expect(find.text('Optional'), findsNWidgets(2));
+      expect(find.text('*'), findsNWidgets(3));
     });
 
     testWidgets('Registering with already used email displays conflict alert', (tester) async {
