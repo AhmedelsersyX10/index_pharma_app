@@ -6,6 +6,7 @@ import 'package:index_pharma/core/localization/app_locale_keys.dart';
 import 'package:index_pharma/core/theme/app_colors.dart';
 import 'package:index_pharma/core/theme/app_spacing.dart';
 import 'package:index_pharma/core/utils/app_router.dart';
+import 'package:index_pharma/core/widgets/app_page_bar.dart';
 import '../../domain/entities/prescription_entity.dart';
 import '../widgets/prescription_status_badge.dart';
 
@@ -55,22 +56,9 @@ class _PrescriptionSubmittedScreenState
 
     return Scaffold(
       backgroundColor: AppColors.background,
-      appBar: AppBar(
-        backgroundColor: AppColors.surface,
-        elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: AppColors.onSurface),
-          onPressed: () => context.go(AppRouter.kStoreView),
-        ),
-        title: Text(
-          AppLocaleKeys.prescriptionsConfirmationBadge.tr(),
-          style: const TextStyle(
-            color: AppColors.onSurface,
-            fontWeight: FontWeight.w700,
-            fontSize: 16,
-          ),
-        ),
-        centerTitle: false,
+      appBar: AppPageBar(
+        title: AppLocaleKeys.prescriptionsConfirmationBadge.tr(),
+        onBackPressed: () => context.go(AppRouter.kStoreView),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(

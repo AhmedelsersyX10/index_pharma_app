@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:index_pharma/core/localization/app_locale_keys.dart';
 import 'package:index_pharma/core/theme/theme.dart';
+import 'package:index_pharma/core/widgets/app_page_bar.dart';
 
 /// Minimal placeholder screen for the public customer store.
 ///
@@ -11,13 +12,12 @@ class StorePlaceholderScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       backgroundColor: AppColors.background,
-      appBar: AppBar(
-        title: const Text('Index Pharma Store'),
-        backgroundColor: Colors.transparent,
+      appBar: AppPageBar(
+        title: 'Index Pharma Store',
       ),
-      body: const Center(
+      body: Center(
         child: Text(
           'Store Screen',
           style: TextStyle(
@@ -39,13 +39,12 @@ class StaffDashboardPlaceholderScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       backgroundColor: AppColors.background,
-      appBar: AppBar(
-        title: const Text('Staff Dashboard'),
-        backgroundColor: Colors.transparent,
+      appBar: AppPageBar(
+        title: 'Staff Dashboard',
       ),
-      body: const Center(
+      body: Center(
         child: Text(
           'Staff Dashboard Screen',
           style: TextStyle(
@@ -67,13 +66,12 @@ class BranchManagementPlaceholderScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       backgroundColor: AppColors.background,
-      appBar: AppBar(
-        title: const Text('Branch Management'),
-        backgroundColor: Colors.transparent,
+      appBar: AppPageBar(
+        title: 'Branch Management',
       ),
-      body: const Center(
+      body: Center(
         child: Text(
           'Branch Management Screen',
           style: TextStyle(
@@ -95,9 +93,8 @@ class BrowsePlaceholderScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
-      appBar: AppBar(
-        title: Text(AppLocaleKeys.navBrowse.tr()),
-        backgroundColor: Colors.transparent,
+      appBar: AppPageBar(
+        title: AppLocaleKeys.navBrowse.tr(),
       ),
       body: const Center(
         child: Text(
@@ -121,9 +118,8 @@ class PrescriptionPlaceholderScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
-      appBar: AppBar(
-        title: Text(AppLocaleKeys.navPrescription.tr()),
-        backgroundColor: Colors.transparent,
+      appBar: AppPageBar(
+        title: AppLocaleKeys.navPrescription.tr(),
       ),
       body: const Center(
         child: Text(
@@ -147,9 +143,8 @@ class MyOrdersPlaceholderScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
-      appBar: AppBar(
-        title: Text(AppLocaleKeys.navOrders.tr()),
-        backgroundColor: Colors.transparent,
+      appBar: AppPageBar(
+        title: AppLocaleKeys.navOrders.tr(),
       ),
       body: const Center(
         child: Text(
@@ -173,9 +168,8 @@ class AccountPlaceholderScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
-      appBar: AppBar(
-        title: Text(AppLocaleKeys.navAccount.tr()),
-        backgroundColor: Colors.transparent,
+      appBar: AppPageBar(
+        title: AppLocaleKeys.navAccount.tr(),
       ),
       body: const Center(
         child: Text(
@@ -199,9 +193,8 @@ class CartPlaceholderScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
-      appBar: AppBar(
-        title: Text(AppLocaleKeys.cartTitle.tr()),
-        backgroundColor: Colors.transparent,
+      appBar: AppPageBar(
+        title: AppLocaleKeys.cartTitle.tr(),
       ),
       body: const Center(
         child: Text(
@@ -225,9 +218,8 @@ class CheckoutPlaceholderScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.background,
-      appBar: AppBar(
-        title: Text(AppLocaleKeys.checkoutTitle.tr()),
-        backgroundColor: Colors.transparent,
+      appBar: AppPageBar(
+        title: AppLocaleKeys.checkoutTitle.tr(),
       ),
       body: const Center(
         child: Text(

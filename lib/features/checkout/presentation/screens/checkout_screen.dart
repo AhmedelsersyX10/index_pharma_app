@@ -5,6 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:index_pharma/core/theme/theme.dart';
 import 'package:index_pharma/core/utils/app_router.dart';
+import 'package:index_pharma/core/widgets/app_page_bar.dart';
 import 'package:index_pharma/features/cart/domain/entities/cart_item.dart';
 import 'package:index_pharma/features/cart/presentation/cubit/cart_cubit.dart';
 import 'package:index_pharma/features/cart/presentation/cubit/cart_state.dart';
@@ -69,28 +70,15 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       providers: providers,
       child: Scaffold(
         backgroundColor: AppColors.background,
-        appBar: AppBar(
-          backgroundColor: AppColors.surface.withAlpha(204),
-          elevation: 0,
-          scrolledUnderElevation: 1,
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back_rounded, color: AppColors.onSurface),
-            onPressed: () {
-              if (Navigator.of(context).canPop()) {
-                Navigator.of(context).pop();
-              } else {
-                context.go(AppRouter.kCartView);
-              }
-            },
-          ),
-          title: Text(
-            'checkout.title'.tr(),
-            style: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: AppColors.onSurface,
-            ),
-          ),
+        appBar: AppPageBar(
+          title: 'checkout.title'.tr(),
+          onBackPressed: () {
+            if (Navigator.of(context).canPop()) {
+              Navigator.of(context).pop();
+            } else {
+              context.go(AppRouter.kCartView);
+            }
+          },
         ),
         body: BlocConsumer<CheckoutCubit, CheckoutState>(
           listener: (context, state) {

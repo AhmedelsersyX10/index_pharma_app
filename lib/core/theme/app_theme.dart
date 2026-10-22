@@ -68,11 +68,14 @@ abstract class AppTheme {
         backgroundColor: AppColors.canvasPure,
         foregroundColor: AppColors.onSurface,
         elevation: 0,
-        scrolledUnderElevation: 1,
+        scrolledUnderElevation: 0,
         centerTitle: true,
         systemOverlayStyle: SystemUiOverlayStyle.dark,
         titleTextStyle: AppTypography.titleLg(color: AppColors.onSurface),
         iconTheme: const IconThemeData(color: AppColors.onSurface),
+        shape: const Border(
+          bottom: BorderSide(color: AppColors.borderSubtle, width: 1.0),
+        ),
       ),
 
       // Card Theme
@@ -284,11 +287,14 @@ abstract class AppTheme {
         backgroundColor: AppColors.darkSurface,
         foregroundColor: AppColors.darkOnSurface,
         elevation: 0,
-        scrolledUnderElevation: 1,
+        scrolledUnderElevation: 0,
         centerTitle: true,
         systemOverlayStyle: SystemUiOverlayStyle.light,
         titleTextStyle: AppTypography.titleLg(color: AppColors.darkOnSurface),
         iconTheme: const IconThemeData(color: AppColors.darkOnSurface),
+        shape: const Border(
+          bottom: BorderSide(color: AppColors.darkOutline, width: 1.0),
+        ),
       ),
 
       // Card Theme

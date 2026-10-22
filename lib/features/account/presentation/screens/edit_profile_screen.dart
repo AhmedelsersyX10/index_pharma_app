@@ -5,6 +5,7 @@ import 'package:index_pharma/core/errors/failure_mapper.dart';
 import 'package:index_pharma/core/localization/app_locale_keys.dart';
 import 'package:index_pharma/core/network/api_result.dart';
 import 'package:index_pharma/core/theme/theme.dart';
+import 'package:index_pharma/core/widgets/app_page_bar.dart';
 import 'package:index_pharma/features/auth/domain/validators/auth_validators.dart';
 import 'package:index_pharma/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:index_pharma/features/auth/presentation/cubit/auth_state.dart';
@@ -133,31 +134,16 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
     return Scaffold(
       backgroundColor: AppColors.background,
-      appBar: AppBar(
-        backgroundColor: AppColors.background,
-        elevation: 0,
-        scrolledUnderElevation: 1,
-        titleSpacing: 0,
-        leading: IconButton(
-          key: const ValueKey('edit_profile_back_btn'),
-          icon: const Icon(Icons.arrow_back_rounded, color: AppColors.onSurface),
-          onPressed: _popSafely,
-        ),
-        title: Text(
-          AppLocaleKeys.editProfileTitle.tr(),
-          style: AppTypography.titleLg(color: AppColors.onSurface),
-        ),
-        actions: [
+      appBar: AppPageBar(
+        title: AppLocaleKeys.editProfileTitle.tr(),
+        onBackPressed: _popSafely,
+        actions: const [
           Padding(
-            padding: const EdgeInsetsDirectional.only(end: 16),
-            child: Container(
-              width: 32,
-              height: 32,
-              decoration: const BoxDecoration(
-                color: AppColors.primary,
-                shape: BoxShape.circle,
-              ),
-              child: const Icon(
+            padding: EdgeInsetsDirectional.only(end: 16),
+            child: CircleAvatar(
+              radius: 16,
+              backgroundColor: AppColors.primary,
+              child: Icon(
                 Icons.person_rounded,
                 color: Colors.white,
                 size: 18,

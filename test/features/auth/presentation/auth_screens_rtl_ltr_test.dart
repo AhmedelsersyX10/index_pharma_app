@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:index_pharma/core/errors/failure.dart';
 import 'package:index_pharma/core/network/api_result.dart';
+import 'package:index_pharma/core/localization/app_locale_keys.dart';
 import 'package:index_pharma/core/theme/theme.dart';
 import 'package:index_pharma/features/auth/domain/entities/user.dart';
 import 'package:index_pharma/features/auth/domain/repositories/auth_repository.dart';
@@ -271,7 +272,7 @@ void main() {
       expect(directionality, equals(TextDirection.rtl));
 
       // Verify portal header & fields
-      expect(find.text('بوابة العملاء المعتمدة'), findsOneWidget);
+      expect(find.text(AppLocaleKeys.authRegisterBadge.tr()), findsOneWidget);
       expect(find.text('إنشاء حساب عميل جديد'), findsOneWidget);
       expect(find.text('الاسم بالكامل *'), findsOneWidget);
       expect(find.text('البريد الإلكتروني *'), findsOneWidget);

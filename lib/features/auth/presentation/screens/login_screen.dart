@@ -1,11 +1,10 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:index_pharma/core/errors/failure.dart';
-import 'package:index_pharma/core/localization/app_locale_keys.dart';
 import 'package:index_pharma/core/theme/theme.dart';
 import 'package:index_pharma/core/utils/app_router.dart';
+import 'package:index_pharma/core/widgets/app_page_bar.dart';
 import 'package:index_pharma/features/auth/domain/entities/user.dart';
 import 'package:index_pharma/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:index_pharma/features/auth/presentation/cubit/auth_state.dart';
@@ -47,17 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
       value: cubit,
       child: Scaffold(
         backgroundColor: AppColors.background,
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          leading: Navigator.of(context).canPop()
-              ? IconButton(
-                  icon: const Icon(Icons.arrow_back_rounded, color: AppColors.onSurface),
-                  onPressed: () => Navigator.of(context).pop(),
-                  tooltip: AppLocaleKeys.commonSkip.tr(),
-                )
-              : null,
-        ),
+        appBar: const AppPageBar.transparent(),
         body: SafeArea(
           child: BlocConsumer<AuthCubit, AuthState>(
             listener: (context, state) {

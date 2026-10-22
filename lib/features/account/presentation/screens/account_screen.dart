@@ -7,6 +7,7 @@ import 'package:index_pharma/core/localization/app_locale_keys.dart';
 import 'package:index_pharma/core/storage/storage_service.dart';
 import 'package:index_pharma/core/theme/theme.dart';
 import 'package:index_pharma/core/utils/app_router.dart';
+import 'package:index_pharma/core/widgets/app_page_bar.dart';
 import 'package:index_pharma/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:index_pharma/features/auth/presentation/cubit/auth_state.dart';
 import 'package:index_pharma/features/choose_branches/presentation/cubit/branch_cubit.dart';
@@ -86,54 +87,8 @@ class AccountScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: AppColors.background,
-      appBar: AppBar(
-        backgroundColor: AppColors.background,
-        elevation: 0,
-        scrolledUnderElevation: 1,
-        titleSpacing: 16,
-        leadingWidth: 52,
-        leading: Padding(
-          padding: const EdgeInsetsDirectional.only(start: 16),
-          child: Center(
-            child: Container(
-              width: 36,
-              height: 36,
-              decoration: BoxDecoration(
-                color: AppColors.brandMintSurface,
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: const Icon(
-                Icons.local_pharmacy_rounded,
-                color: AppColors.primary,
-                size: 20,
-              ),
-            ),
-          ),
-        ),
-        title: Text(
-          AppLocaleKeys.accountTitle.tr(),
-          style: AppTypography.titleLg(
-            color: AppColors.onSurface,
-          ),
-        ),
-        actions: [
-          Padding(
-            padding: const EdgeInsetsDirectional.only(end: 16),
-            child: Container(
-              width: 32,
-              height: 32,
-              decoration: const BoxDecoration(
-                color: AppColors.primary,
-                shape: BoxShape.circle,
-              ),
-              child: const Icon(
-                Icons.person_rounded,
-                color: Colors.white,
-                size: 18,
-              ),
-            ),
-          ),
-        ],
+      appBar: AppPageBar(
+        title: AppLocaleKeys.accountTitle.tr(),
       ),
       body: BlocBuilder<AuthCubit, AuthState>(
         bloc: activeAuthCubit,

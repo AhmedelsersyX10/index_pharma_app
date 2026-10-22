@@ -4,9 +4,10 @@ import 'package:go_router/go_router.dart';
 import 'package:index_pharma/core/localization/app_locale_keys.dart';
 import 'package:index_pharma/core/theme/theme.dart';
 import 'package:index_pharma/core/utils/app_router.dart';
-import 'package:index_pharma/features/cart/presentation/widgets/cart_badge_button.dart';
+import 'package:index_pharma/core/widgets/app_page_bar.dart';
+import 'package:index_pharma/core/widgets/cart_action_button.dart';
 
-/// Clinical app bar for the Product Details screen per Stitch B4.
+/// Clinical app bar for the Product Details screen built on unified [AppPageBar].
 class ProductDetailsHeader extends StatelessWidget implements PreferredSizeWidget {
   const ProductDetailsHeader({
     super.key,
@@ -22,36 +23,20 @@ class ProductDetailsHeader extends StatelessWidget implements PreferredSizeWidge
 
   @override
   Widget build(BuildContext context) {
-    final isRtl = Directionality.of(context) == TextDirection.rtl;
-
-    return AppBar(
-      backgroundColor: AppColors.background.withValues(alpha: 0.95),
-      elevation: 0,
-      scrolledUnderElevation: 1,
-      centerTitle: false,
-      leading: IconButton(
-        icon: Icon(
-          isRtl ? Icons.arrow_forward_rounded : Icons.arrow_back_rounded,
-          color: AppColors.onSurface,
-          size: 24,
-        ),
-        tooltip: MaterialLocalizations.of(context).backButtonTooltip,
-        onPressed: onBack ?? () {
-          if (context.canPop()) {
-            context.pop();
-          } else {
-            context.go(AppRouter.kStoreView);
-          }
-        },
-      ),
-      title: Text(
-        AppLocaleKeys.productDetailsTitle.tr(),
-        style: AppTypography.titleLg(color: AppColors.onSurface).copyWith(
-          fontWeight: FontWeight.w700,
-        ),
-      ),
+    return AppPageBar(
+      height: preferredSize.height,
+      centerTitle: true,
+      onBackPressed: onBack ??
+          () {
+            if (context.canPop()) {
+              context.pop();
+            } else {
+              context.go(AppRouter.kStoreView);
+            }
+          },
+      title: AppLocaleKeys.productDetailsTitle.tr(),
       actions: [
-        CartBadgeButton(
+        CartActionButton(
           onTap: onCartTap ?? () => context.push(AppRouter.kCartView),
         ),
         const SizedBox(width: AppSpacing.spaceXs),

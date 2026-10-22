@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:index_pharma/core/theme/theme.dart';
+import 'package:index_pharma/core/widgets/app_page_bar.dart';
 import '../../domain/entities/customer_order.dart';
 import '../../domain/entities/order_status.dart';
 import '../widgets/order_delivery_info_card.dart';
@@ -29,18 +30,8 @@ class OrderDetailsScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: AppColors.surface,
-      appBar: AppBar(
-        backgroundColor: AppColors.canvasPure,
-        elevation: 0,
-        scrolledUnderElevation: 1,
-        title: Text(
-          'orders.details_title'.tr(),
-          style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-            color: AppColors.onSurface,
-          ),
-        ),
+      appBar: AppPageBar(
+        title: 'orders.details_title'.tr(),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(AppSpacing.marginMobile),

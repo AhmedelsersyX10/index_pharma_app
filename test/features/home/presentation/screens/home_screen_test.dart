@@ -363,7 +363,7 @@ void main() {
 
       // 8. Storage Guarantee Footer
       expect(find.byType(HomeStorageGuaranteeFooter), findsOneWidget);
-      expect(find.text('ضمان التخزين الدوائي المعتمد'), findsOneWidget);
+      expect(find.text(AppLocaleKeys.homeGuaranteeTitle.tr()), findsOneWidget);
 
       // 9. Customer Bottom Navigation (5 tabs, NO Deals tab per Decision 0.6)
       expect(find.byType(CustomerBottomNav), findsOneWidget);
