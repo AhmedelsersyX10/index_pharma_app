@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:index_pharma/core/di/service_locator.dart';
 import 'package:index_pharma/core/theme/theme.dart';
 import 'package:index_pharma/core/utils/app_router.dart';
 import 'package:index_pharma/features/cart/presentation/cubit/cart_cubit.dart';
@@ -35,23 +34,19 @@ class BranchSelectionScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Widget view = _BranchSelectionView(
+      onBranchConfirmed: onBranchConfirmed,
+      cartCubit: cartCubit,
+    );
+
     if (branchCubit != null) {
       return BlocProvider.value(
         value: branchCubit!,
-        child: _BranchSelectionView(
-          onBranchConfirmed: onBranchConfirmed,
-          cartCubit: cartCubit,
-        ),
+        child: view,
       );
     }
 
-    return BlocProvider<BranchCubit>(
-      create: (context) => getIt<BranchCubit>()..fetchBranches(),
-      child: _BranchSelectionView(
-        onBranchConfirmed: onBranchConfirmed,
-        cartCubit: cartCubit,
-      ),
-    );
+    return view;
   }
 }
 
@@ -80,13 +75,12 @@ class _BranchSelectionViewState extends State<_BranchSelectionView> {
 
   Future<void> _handleBranchSelection(String targetBranchId) async {
     final branchCubit = context.read<BranchCubit>();
-    final cartCubit = widget.cartCubit ??
-        (getIt.isRegistered<CartCubit>() ? getIt<CartCubit>() : null);
+    final activeCartCubit = widget.cartCubit ?? context.read<CartCubit>();
 
-    if (cartCubit != null && cartCubit.hasConflictWithBranch(targetBranchId)) {
+    if (activeCartCubit.hasConflictWithBranch(targetBranchId)) {
       final shouldClear = await CartBranchConflictDialog.show(context);
       if (!shouldClear) return;
-      await cartCubit.clearCart();
+      await activeCartCubit.clearCart();
     }
 
     await branchCubit.selectBranch(targetBranchId);

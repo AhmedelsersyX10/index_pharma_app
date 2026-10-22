@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:index_pharma/core/di/service_locator.dart';
 import 'package:index_pharma/core/storage/storage_service.dart';
 import 'package:index_pharma/core/theme/theme.dart';
 import 'package:index_pharma/core/utils/app_router.dart';
@@ -98,27 +98,20 @@ class _SplashViewBodyState extends State<SplashViewBody>
     final timerFuture = Future.delayed(widget.minSplashDuration);
 
     // 1. Resolve StorageService
-    final storage = widget.storageService ??
-        (getIt.isRegistered<StorageService>()
-            ? getIt<StorageService>()
-            : null);
+    final storage = widget.storageService ?? context.read<StorageService>();
 
     // 2. Resolve AuthCubit and restoreSession()
-    final auth = widget.authCubit ??
-        (getIt.isRegistered<AuthCubit>() ? getIt<AuthCubit>() : null);
-
-    if (auth != null) {
-      await auth.restoreSession();
-    }
+    final auth = widget.authCubit ?? context.read<AuthCubit>();
+    await auth.restoreSession();
 
     // Wait for minimum splash animation duration
     await timerFuture;
 
     if (!mounted) return;
 
-    final bool onboardingSeen = storage?.onboardingSeen ?? false;
+    final bool onboardingSeen = storage.onboardingSeen;
     if (!onboardingSeen) {
-      final bool hasSelectedLocale = storage?.locale != null;
+      final bool hasSelectedLocale = storage.locale != null;
       if (!hasSelectedLocale) {
         context.go(AppRouter.kLanguageSelectionView);
         return;
@@ -127,7 +120,7 @@ class _SplashViewBodyState extends State<SplashViewBody>
       return;
     }
 
-    final authState = auth?.state ?? const AuthGuest();
+    final authState = auth.state;
     switch (authState) {
       case AuthAuthenticated(:final user):
         if (user.role == UserRole.pharmacist ||

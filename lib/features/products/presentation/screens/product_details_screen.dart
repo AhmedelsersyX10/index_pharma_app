@@ -1,10 +1,9 @@
 import 'package:easy_localization/easy_localization.dart' hide TextDirection;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
-import 'package:index_pharma/core/di/service_locator.dart';
 import 'package:go_router/go_router.dart';
 import 'package:index_pharma/core/localization/app_locale_keys.dart';
+import 'package:index_pharma/core/storage/storage_service.dart';
 import 'package:index_pharma/core/theme/theme.dart';
 import 'package:index_pharma/core/utils/app_router.dart';
 import 'package:index_pharma/core/widgets/app_badges.dart';
@@ -47,35 +46,30 @@ class ProductDetailsScreen extends StatefulWidget {
 }
 
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
-  late final ProductDetailsCubit _cubit;
-  bool _isLocalCubit = false;
+  late ProductDetailsCubit _cubit;
+  bool _initialized = false;
   int _selectedQuantity = 1;
 
   @override
-  void initState() {
-    super.initState();
-    if (widget.cubit != null) {
-      _cubit = widget.cubit!;
-    } else if (GetIt.instance.isRegistered<ProductDetailsCubit>()) {
-      _cubit = GetIt.instance<ProductDetailsCubit>();
-      _isLocalCubit = true;
-    } else {
-      throw StateError(
-        'ProductDetailsCubit is not registered in GetIt and was not passed to ProductDetailsScreen.',
-      );
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!_initialized) {
+      _initialized = true;
+      _cubit = widget.cubit ?? context.read<ProductDetailsCubit>();
+      _loadDetails();
     }
-
-    _loadDetails();
   }
 
   void _loadDetails() {
     String? effectiveBranchId = widget.branchId;
     if (effectiveBranchId == null || effectiveBranchId.trim().isEmpty) {
-      final activeBranchCubit = widget.branchCubit ??
-          (getIt.isRegistered<BranchCubit>() ? getIt<BranchCubit>() : null);
-      final branchState = activeBranchCubit?.state;
-      if (branchState is BranchLoaded) {
-        effectiveBranchId = branchState.selectedBranchId;
+      if (widget.branchCubit != null) {
+        final branchState = widget.branchCubit!.state;
+        if (branchState is BranchLoaded) {
+          effectiveBranchId = branchState.selectedBranchId;
+        }
+      } else {
+        effectiveBranchId = context.read<StorageService>().selectedBranchId;
       }
     }
 
@@ -85,27 +79,12 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     );
   }
 
-  @override
-  void dispose() {
-    if (_isLocalCubit) {
-      _cubit.close();
-    }
-    super.dispose();
-  }
-
-  CartCubit? _resolveCartCubit() {
-    if (widget.cartCubit != null) return widget.cartCubit;
-    try {
-      return context.read<CartCubit>();
-    } catch (_) {
-      return null;
-    }
+  CartCubit _resolveCartCubit() {
+    return widget.cartCubit ?? context.read<CartCubit>();
   }
 
   void _handleAddToCart(Product product) {
     final activeCartCubit = _resolveCartCubit();
-    if (activeCartCubit == null) return;
-
     CartActionHelper.addProductToCart(
       context: context,
       cartCubit: activeCartCubit,
@@ -116,14 +95,12 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider.value(
-      value: _cubit,
-      child: Scaffold(
-        backgroundColor: AppColors.background,
-        appBar: ProductDetailsHeader(
-          onCartTap: () => context.push(AppRouter.kCartView),
-        ),
-        body: BlocConsumer<ProductDetailsCubit, ProductDetailsState>(
+    final scaffold = Scaffold(
+      backgroundColor: AppColors.background,
+      appBar: ProductDetailsHeader(
+        onCartTap: () => context.push(AppRouter.kCartView),
+      ),
+      body: BlocConsumer<ProductDetailsCubit, ProductDetailsState>(
           listener: (context, state) {
             if (state is ProductDetailsLoaded) {
               final stock = state.product.stockQuantity;
@@ -165,7 +142,21 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
             );
           },
         ),
-      ),
+      );
+
+    if (widget.cartCubit != null) {
+      return MultiBlocProvider(
+        providers: [
+          BlocProvider<ProductDetailsCubit>.value(value: _cubit),
+          BlocProvider<CartCubit>.value(value: widget.cartCubit!),
+        ],
+        child: scaffold,
+      );
+    }
+
+    return BlocProvider.value(
+      value: _cubit,
+      child: scaffold,
     );
   }
 

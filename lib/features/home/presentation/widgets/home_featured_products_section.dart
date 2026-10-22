@@ -67,10 +67,14 @@ class HomeFeaturedProductsSection extends StatelessWidget {
                 ),
               ],
             ),
-            Text(
-              AppLocaleKeys.homeFeaturedSubtitle.tr(),
-              style: AppTypography.labelSm(
-                color: AppColors.onSurfaceVariant,
+            const SizedBox(width: AppSpacing.spaceSm),
+            Flexible(
+              child: Text(
+                AppLocaleKeys.homeFeaturedSubtitle.tr(),
+                style: AppTypography.labelSm(
+                  color: AppColors.onSurfaceVariant,
+                ),
+                overflow: TextOverflow.ellipsis,
               ),
             ),
           ],
@@ -113,16 +117,12 @@ class HomeFeaturedProductsSection extends StatelessWidget {
                       },
                   onAddToCart: onAddToCart ??
                       (prod) {
-                        try {
-                          final cartCubit = context.read<CartCubit>();
-                          CartActionHelper.addProductToCart(
-                            context: context,
-                            cartCubit: cartCubit,
-                            product: prod,
-                          );
-                        } catch (_) {
-                          // Handled in isolated tests where CartCubit is not provided
-                        }
+                        final cartCubit = context.read<CartCubit>();
+                        CartActionHelper.addProductToCart(
+                          context: context,
+                          cartCubit: cartCubit,
+                          product: prod,
+                        );
                       },
                 ),
             };

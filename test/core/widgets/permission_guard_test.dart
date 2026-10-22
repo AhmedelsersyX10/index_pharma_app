@@ -1,21 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:get_it/get_it.dart';
 import 'package:index_pharma/core/widgets/permission_guard.dart';
 import 'package:index_pharma/features/auth/domain/entities/user.dart';
 import 'package:index_pharma/features/auth/domain/services/permission_service.dart';
 
 void main() {
-  final testGetIt = GetIt.instance;
-
-  tearDown(() async {
-    if (testGetIt.isRegistered<PermissionService>()) {
-      testGetIt.unregister<PermissionService>();
-    }
-  });
-
-  Widget createTestApp(Widget child) {
-    return MaterialApp(home: Scaffold(body: child));
+  Widget createTestApp(Widget child, [PermissionService? service]) {
+    final content = service != null
+        ? RepositoryProvider<PermissionService>.value(
+            value: service,
+            child: child,
+          )
+        : child;
+    return MaterialApp(home: Scaffold(body: content));
   }
 
   group('PermissionGuard Widget - Constructor Injected Service', () {
@@ -91,8 +89,8 @@ void main() {
     );
   });
 
-  group('PermissionGuard Widget - GetIt Service Resolution', () {
-    testWidgets('reads PermissionService from GetIt when constructor argument is omitted', (
+  group('PermissionGuard Widget - Context Service Resolution', () {
+    testWidgets('reads PermissionService from context when constructor argument is omitted', (
       tester,
     ) async {
       const superadminUser = UserEntity(
@@ -101,39 +99,39 @@ void main() {
         email: 'super@test.com',
         role: UserRole.superadmin,
       );
-      testGetIt.registerSingleton<PermissionService>(const PermissionService(superadminUser));
 
       await tester.pumpWidget(
         createTestApp(
-          PermissionGuard(
+          const PermissionGuard(
             permission: AppPermissions.manageTransfers,
-            child: const Text('Transfer Goods'),
+            child: Text('Transfer Goods'),
           ),
+          const PermissionService(superadminUser),
         ),
       );
 
       expect(find.text('Transfer Goods'), findsOneWidget);
     });
 
-    testWidgets('prefers explicit constructor argument over GetIt registration', (tester) async {
+    testWidgets('prefers explicit constructor argument over context resolution', (tester) async {
       const superadminUser = UserEntity(
         id: 'usr_super',
         name: 'SuperAdmin',
         email: 'super@test.com',
         role: UserRole.superadmin,
       );
-      testGetIt.registerSingleton<PermissionService>(const PermissionService(superadminUser));
 
       // Explicitly pass a guest service that denies permissions
       const guestService = PermissionService(null);
 
       await tester.pumpWidget(
         createTestApp(
-          PermissionGuard(
+          const PermissionGuard(
             permission: AppPermissions.editPrice,
             permissionService: guestService,
-            child: const Text('Edit Price'),
+            child: Text('Edit Price'),
           ),
+          const PermissionService(superadminUser),
         ),
       );
 

@@ -21,12 +21,11 @@ class ProductDetailsShowcaseCard extends StatelessWidget {
 
   String _formatExpiryDate(String? rawDate) {
     if (rawDate == null || rawDate.trim().isEmpty) return '-';
-    try {
-      final parsed = DateTime.parse(rawDate);
+    final parsed = DateTime.tryParse(rawDate);
+    if (parsed != null) {
       return DateFormat('MM / yyyy').format(parsed);
-    } catch (_) {
-      return rawDate;
     }
+    return rawDate;
   }
 
   @override

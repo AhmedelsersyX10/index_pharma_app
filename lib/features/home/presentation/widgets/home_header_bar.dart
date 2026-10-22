@@ -1,14 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:index_pharma/core/localization/app_locale_keys.dart';
 import 'package:index_pharma/core/theme/theme.dart';
 import 'package:index_pharma/core/utils/app_router.dart';
 import 'package:index_pharma/core/widgets/cart_action_button.dart';
-import 'package:index_pharma/features/choose_branches/domain/entities/branch_entity.dart';
-import 'package:index_pharma/features/choose_branches/presentation/cubit/branch_cubit.dart';
-import 'package:index_pharma/features/choose_branches/presentation/cubit/branch_state.dart';
 
 /// Top App Bar / Header for B2 Customer Home screen.
 ///
@@ -82,18 +78,14 @@ class HomeHeaderBar extends StatelessWidget implements PreferredSizeWidget {
               const SizedBox(width: AppSpacing.spaceSm),
               Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
                     AppLocaleKeys.homeTitle.tr(),
-                    style: AppTypography.titleMd(color: isDark ? AppColors.darkOnSurface : AppColors.onSurface)
-                        .copyWith(
-                      fontWeight: FontWeight.bold,
-                      height: 1.1,
-                    ),
+                    style: AppTypography.titleMd(
+                      color: isDark ? AppColors.darkOnSurface : AppColors.onSurface,
+                    ).copyWith(fontWeight: FontWeight.bold, fontSize: 18, height: 1.1),
                   ),
-                  const SizedBox(height: 2),
-                  _ActiveBranchSubtitle(onTap: onBranchTap),
                 ],
               ),
             ],
@@ -104,9 +96,7 @@ class HomeHeaderBar extends StatelessWidget implements PreferredSizeWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               // Cart Button with Badge
-              CartActionButton(
-                onTap: onCartTap ?? () => context.push(AppRouter.kCartView),
-              ),
+              CartActionButton(onTap: onCartTap ?? () => context.push(AppRouter.kCartView)),
               const SizedBox(width: AppSpacing.space2xs),
 
               // Account Button
@@ -116,80 +106,15 @@ class HomeHeaderBar extends StatelessWidget implements PreferredSizeWidget {
                 child: Container(
                   width: 34,
                   height: 34,
-                  decoration: const BoxDecoration(
-                    color: AppColors.primary,
-                    shape: BoxShape.circle,
-                  ),
+                  decoration: const BoxDecoration(color: AppColors.primary, shape: BoxShape.circle),
                   alignment: Alignment.center,
-                  child: const Icon(
-                    Icons.person_rounded,
-                    size: 20,
-                    color: Colors.white,
-                  ),
+                  child: const Icon(Icons.person_rounded, size: 20, color: Colors.white),
                 ),
               ),
             ],
           ),
         ],
       ),
-    );
-  }
-}
-
-class _ActiveBranchSubtitle extends StatelessWidget {
-  const _ActiveBranchSubtitle({this.onTap});
-
-  final VoidCallback? onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<BranchCubit, BranchState>(
-      builder: (context, state) {
-        String branchName = AppLocaleKeys.homeSelectBranch.tr();
-
-        if (state is BranchLoaded && state.selectedBranchId != null) {
-          final BranchEntity? branch = state.branches
-              .where((b) => b.id == state.selectedBranchId)
-              .firstOrNull;
-          if (branch != null) {
-            branchName = branch.name;
-          }
-        }
-
-        return InkWell(
-          onTap: onTap ??
-              () => context.push(AppRouter.kBranchSelectionView),
-          borderRadius: AppRadii.roundedSm,
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Icon(
-                Icons.location_on_outlined,
-                size: 14,
-                color: AppColors.primary,
-              ),
-              const SizedBox(width: 2),
-              ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 160),
-                child: Text(
-                  branchName,
-                  style: AppTypography.labelSm(
-                    color: AppColors.onSurfaceVariant,
-                  ),
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-              const SizedBox(width: 2),
-              const Icon(
-                Icons.keyboard_arrow_down_rounded,
-                size: 14,
-                color: AppColors.onSurfaceVariant,
-              ),
-            ],
-          ),
-        );
-      },
     );
   }
 }

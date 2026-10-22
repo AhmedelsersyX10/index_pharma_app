@@ -1,21 +1,20 @@
 import 'dart:async';
-import 'dart:convert';
-import 'dart:io';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:index_pharma/core/di/service_locator.dart';
 import 'package:index_pharma/core/errors/failure.dart';
 import 'package:index_pharma/core/network/api_result.dart';
 import 'package:index_pharma/core/storage/storage_service.dart';
-import 'package:index_pharma/core/theme/theme.dart';
 import 'package:index_pharma/core/utils/app_router.dart';
 import 'package:index_pharma/core/utils/go_router_refresh_stream.dart';
 import 'package:index_pharma/features/auth/domain/entities/user.dart';
 import 'package:index_pharma/features/auth/domain/repositories/auth_repository.dart';
 import 'package:index_pharma/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:index_pharma/features/auth/presentation/cubit/auth_state.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../helpers/pump_with_providers.dart';
 
 // --- Fakes & Mocks ---
 
@@ -117,39 +116,16 @@ UserEntity _createUser({
 }
 
 Widget createTestApp(RouterConfig<Object> routerConfig) {
-  return EasyLocalization(
-    key: UniqueKey(),
-    supportedLocales: const [Locale('ar'), Locale('en')],
-    path: 'assets/translations',
-    fallbackLocale: const Locale('ar'),
-    startLocale: const Locale('ar'),
-    saveLocale: false,
-    useOnlyLangCode: true,
-    assetLoader: const SynchronousDiskAssetLoader(),
-    child: Builder(
-      builder: (context) {
-        return MaterialApp.router(
-          localizationsDelegates: context.localizationDelegates,
-          supportedLocales: context.supportedLocales,
-          locale: context.locale,
-          theme: AppTheme.lightTheme,
-          routerConfig: routerConfig,
-        );
-      },
-    ),
+  return buildAppWithProviders(
+    routerConfig: routerConfig,
   );
 }
 
 void main() {
   setUpAll(() async {
-    SharedPreferences.setMockInitialValues({});
-    _arTranslations = jsonDecode(
-      File('assets/translations/ar.json').readAsStringSync(),
-    ) as Map<String, dynamic>;
-    _enTranslations = jsonDecode(
-      File('assets/translations/en.json').readAsStringSync(),
-    ) as Map<String, dynamic>;
-    await EasyLocalization.ensureInitialized();
+    await initTestEnvironment();
+    _arTranslations = testArTranslations;
+    _enTranslations = testEnTranslations;
   });
 
   group('AppRouter.redirectGuard Pure Logic Unit Tests', () {
@@ -533,12 +509,15 @@ void main() {
     late AuthCubit authCubit;
 
     setUp(() {
+      getIt.reset();
+      registerDefaultTestFactories();
       authRepo = FakeAuthRepository();
       authCubit = AuthCubit(authRepository: authRepo);
     });
 
     tearDown(() async {
       await authCubit.close();
+      await getIt.reset();
     });
 
     testWidgets('unauthenticated user navigating to /staff is redirected to /store',
@@ -667,12 +646,15 @@ void main() {
     late AuthCubit authCubit;
 
     setUp(() {
+      getIt.reset();
+      registerDefaultTestFactories();
       authRepo = FakeAuthRepository();
       authCubit = AuthCubit(authRepository: authRepo);
     });
 
     tearDown(() async {
       await authCubit.close();
+      await getIt.reset();
     });
 
     testWidgets(

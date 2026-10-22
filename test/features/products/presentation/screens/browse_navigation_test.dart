@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:easy_localization/easy_localization.dart' hide TextDirection;
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:index_pharma/core/di/service_locator.dart';
 import 'package:index_pharma/core/errors/failure.dart';
@@ -12,6 +13,7 @@ import 'package:index_pharma/core/theme/theme.dart';
 import 'package:index_pharma/core/utils/app_router.dart';
 import 'package:index_pharma/features/auth/domain/entities/user.dart';
 import 'package:index_pharma/features/auth/domain/repositories/auth_repository.dart';
+import 'package:index_pharma/features/auth/domain/services/permission_service.dart';
 import 'package:index_pharma/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:index_pharma/features/cart/domain/entities/cart_item.dart';
 import 'package:index_pharma/features/cart/domain/repositories/cart_repository.dart';
@@ -23,10 +25,10 @@ import 'package:index_pharma/features/choose_branches/domain/entities/branch_ent
 import 'package:index_pharma/features/choose_branches/domain/repositories/branch_repository.dart';
 import 'package:index_pharma/features/choose_branches/presentation/cubit/branch_cubit.dart';
 import 'package:index_pharma/features/products/domain/entities/product.dart';
-import 'package:index_pharma/features/products/domain/entities/products_page.dart';
+import 'package:index_pharma/features/products/domain/entities/products_page.dart' as domain;
 import 'package:index_pharma/features/products/domain/repositories/products_repository.dart';
 import 'package:index_pharma/features/products/presentation/cubit/products_cubit.dart';
-import 'package:index_pharma/features/products/presentation/screens/products_page.dart' hide ProductsPage;
+import 'package:index_pharma/features/products/presentation/screens/products_page.dart';
 import 'package:index_pharma/features/settings/domain/entities/public_settings.dart';
 import 'package:index_pharma/features/settings/domain/repositories/settings_repository.dart';
 import 'package:index_pharma/features/settings/presentation/cubit/settings_cubit.dart';
@@ -91,7 +93,7 @@ class FakeProductsRepository implements ProductsRepository {
   int lastPage = 1;
 
   @override
-  Future<ApiResult<ProductsPage>> getProducts({
+  Future<ApiResult<domain.ProductsPage>> getProducts({
     required String branchId,
     int page = 1,
     int limit = 20,
@@ -103,7 +105,7 @@ class FakeProductsRepository implements ProductsRepository {
     lastCategory = category;
     lastPage = page;
 
-    return const Success(ProductsPage(products: [], total: 0, page: 1, limit: 20, totalPages: 0));
+    return const Success(domain.ProductsPage(products: [], total: 0, page: 1, limit: 20, totalPages: 0));
   }
 
   @override
@@ -192,7 +194,21 @@ class FakeSettingsRepository implements SettingsRepository {
   }
 }
 
-Widget createRouterTestApp({required RouterConfig<Object> routerConfig}) {
+Widget createRouterTestApp({
+  required RouterConfig<Object> routerConfig,
+  AuthCubit? authCubit,
+  CartCubit? cartCubit,
+  StorageService? storageService,
+  PermissionService? permissionService,
+}) {
+  final effectiveAuth = authCubit ?? getIt<AuthCubit>();
+  final effectiveCart = cartCubit ?? getIt<CartCubit>();
+  final effectiveStorage = storageService ?? getIt<StorageService>();
+  final effectivePermission = permissionService ??
+      (getIt.isRegistered<PermissionService>()
+          ? getIt<PermissionService>()
+          : const PermissionService());
+
   return EasyLocalization(
     supportedLocales: const [Locale('ar'), Locale('en')],
     path: 'assets/translations',
@@ -203,12 +219,24 @@ Widget createRouterTestApp({required RouterConfig<Object> routerConfig}) {
     assetLoader: const SynchronousDiskAssetLoader(),
     child: Builder(
       builder: (context) {
-        return MaterialApp.router(
-          localizationsDelegates: context.localizationDelegates,
-          supportedLocales: context.supportedLocales,
-          locale: context.locale,
-          theme: AppTheme.lightTheme,
-          routerConfig: routerConfig,
+        return MultiRepositoryProvider(
+          providers: [
+            RepositoryProvider<StorageService>.value(value: effectiveStorage),
+            RepositoryProvider<PermissionService>.value(value: effectivePermission),
+          ],
+          child: MultiBlocProvider(
+            providers: [
+              BlocProvider<AuthCubit>.value(value: effectiveAuth),
+              BlocProvider<CartCubit>.value(value: effectiveCart),
+            ],
+            child: MaterialApp.router(
+              localizationsDelegates: context.localizationDelegates,
+              supportedLocales: context.supportedLocales,
+              locale: context.locale,
+              theme: AppTheme.lightTheme,
+              routerConfig: routerConfig,
+            ),
+          ),
         );
       },
     ),
@@ -236,10 +264,6 @@ void main() {
     late FakeSettingsRepository settingsRepo;
     late FakeStorageService storageService;
 
-    late BranchCubit branchCubit;
-    late SettingsCubit settingsCubit;
-    late CategoriesCubit categoriesCubit;
-    late ProductsCubit productsCubit;
     late CartCubit cartCubit;
     late AuthCubit authCubit;
 
@@ -254,23 +278,28 @@ void main() {
       settingsRepo = FakeSettingsRepository();
       storageService = FakeStorageService();
 
-      branchCubit = BranchCubit(branchRepository: branchRepo, storageService: storageService);
-      settingsCubit = SettingsCubit(settingsRepository: settingsRepo);
-      categoriesCubit = CategoriesCubit(categoriesRepository: categoriesRepo);
-      productsCubit = ProductsCubit(
-        productsRepository: productsRepo,
-        storageService: storageService,
-      );
       cartCubit = CartCubit(cartRepository: cartRepo, storageService: storageService);
       authCubit = AuthCubit(authRepository: authRepo);
 
       getIt.registerSingleton<StorageService>(storageService);
-      getIt.registerSingleton<BranchCubit>(branchCubit);
-      getIt.registerSingleton<SettingsCubit>(settingsCubit);
-      getIt.registerSingleton<CategoriesCubit>(categoriesCubit);
-      getIt.registerSingleton<ProductsCubit>(productsCubit);
       getIt.registerSingleton<CartCubit>(cartCubit);
       getIt.registerSingleton<AuthCubit>(authCubit);
+
+      getIt.registerFactory<BranchCubit>(
+        () => BranchCubit(branchRepository: branchRepo, storageService: storageService),
+      );
+      getIt.registerFactory<SettingsCubit>(
+        () => SettingsCubit(settingsRepository: settingsRepo),
+      );
+      getIt.registerFactory<CategoriesCubit>(
+        () => CategoriesCubit(categoriesRepository: categoriesRepo),
+      );
+      getIt.registerFactory<ProductsCubit>(
+        () => ProductsCubit(
+          productsRepository: productsRepo,
+          storageService: storageService,
+        ),
+      );
     });
 
     tearDown(() {
@@ -334,6 +363,25 @@ void main() {
       expect(find.byType(ProductsPage), findsOneWidget);
       expect(productsRepo.lastCategory, 'cat-1');
       expect(productsRepo.lastKeyword, 'aspirin');
+    });
+
+    testWidgets('changing query parameters while on /browse applies new filters to cubit', (tester) async {
+      final appRouter = AppRouter(
+        authCubit: authCubit,
+        storageService: storageService,
+        initialLocation: AppRouter.browsePath(categoryId: 'cat-1'),
+      );
+      await tester.pumpWidget(createRouterTestApp(routerConfig: appRouter.router));
+      await tester.pumpAndSettle();
+
+      expect(productsRepo.lastCategory, 'cat-1');
+
+      // Now change location to /browse with new query parameters
+      appRouter.router.go(AppRouter.browsePath(categoryId: 'cat-2', q: 'panadol'));
+      await tester.pumpAndSettle();
+
+      expect(productsRepo.lastCategory, 'cat-2');
+      expect(productsRepo.lastKeyword, 'panadol');
     });
   });
 }

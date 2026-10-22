@@ -19,9 +19,10 @@ class AccountPreferencesSection extends StatelessWidget {
   final StorageService storageService;
 
   Future<void> _openLanguageSelection(BuildContext context) async {
-    try {
+    final router = GoRouter.maybeOf(context);
+    if (router != null) {
       context.push('${AppRouter.kLanguageSelectionView}?from=account');
-    } catch (_) {
+    } else {
       final currentCode = context.locale.languageCode;
       final targetLocale =
           currentCode == 'ar' ? const Locale('en') : const Locale('ar');

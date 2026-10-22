@@ -2,12 +2,12 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:index_pharma/core/di/service_locator.dart';
 import 'package:index_pharma/core/localization/app_locale_keys.dart';
 import 'package:index_pharma/core/theme/app_colors.dart';
 import 'package:index_pharma/core/theme/app_spacing.dart';
 import 'package:index_pharma/core/utils/app_router.dart';
 import 'package:index_pharma/core/widgets/app_page_bar.dart';
+import 'package:index_pharma/features/home/presentation/widgets/customer_bottom_nav.dart';
 import '../cubit/prescription_cubit.dart';
 import '../cubit/prescription_state.dart';
 import '../widgets/prescription_card.dart';
@@ -27,10 +27,7 @@ class MyPrescriptionsScreen extends StatelessWidget {
       );
     }
 
-    return BlocProvider<PrescriptionCubit>(
-      create: (_) => getIt<PrescriptionCubit>(),
-      child: const _MyPrescriptionsView(),
-    );
+    return const _MyPrescriptionsView();
   }
 }
 
@@ -42,6 +39,8 @@ class _MyPrescriptionsView extends StatefulWidget {
 }
 
 class _MyPrescriptionsViewState extends State<_MyPrescriptionsView> {
+  final ScrollController _scrollController = ScrollController();
+
   @override
   void initState() {
     super.initState();
@@ -53,6 +52,28 @@ class _MyPrescriptionsViewState extends State<_MyPrescriptionsView> {
 
   Future<void> _onRefresh() async {
     await context.read<PrescriptionCubit>().loadMyPrescriptions();
+  }
+
+  void _onBottomNavTapped(int index) {
+    switch (index) {
+      case 0:
+        context.go(AppRouter.kStoreView);
+      case 1:
+        // Already on Browse: smoothly scroll to top
+        if (_scrollController.hasClients) {
+          _scrollController.animateTo(
+            0,
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeOut,
+          );
+        }
+      case 2:
+        context.go(AppRouter.kPrescriptionView);
+      case 3:
+        context.go(AppRouter.kOrdersView);
+      case 4:
+        context.go(AppRouter.kAccountView);
+    }
   }
 
   @override
@@ -153,6 +174,7 @@ class _MyPrescriptionsViewState extends State<_MyPrescriptionsView> {
           );
         },
       ),
+      bottomNavigationBar: CustomerBottomNav(currentIndex: 2, onTap: _onBottomNavTapped),
     );
   }
 

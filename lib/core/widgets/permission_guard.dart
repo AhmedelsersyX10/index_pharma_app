@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:index_pharma/core/di/service_locator.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:index_pharma/features/auth/domain/services/permission_service.dart';
 
 /// A convenience widget that displays its [child] only when the current user
@@ -11,25 +11,23 @@ import 'package:index_pharma/features/auth/domain/services/permission_service.da
 /// All security and permission enforcement must always be executed by the backend.
 class PermissionGuard extends StatelessWidget {
   /// Creates a [PermissionGuard] that resolves [PermissionService] either from
-  /// the provided [permissionService] or from the global service locator [getIt].
-  ///
-  /// The dependency is resolved during construction, never inside [build].
-  PermissionGuard({
+  /// the provided [permissionService] or from the inherited widget context.
+  const PermissionGuard({
     super.key,
     required this.permission,
     required this.child,
     this.fallback,
-    PermissionService? permissionService,
-  }) : _service = permissionService ?? getIt<PermissionService>();
+    this.permissionService,
+  });
 
   /// Creates a [PermissionGuard] with an explicitly provided [PermissionService].
   const PermissionGuard.withService({
     super.key,
     required this.permission,
     required this.child,
-    required PermissionService permissionService,
+    required PermissionService this.permissionService,
     this.fallback,
-  }) : _service = permissionService;
+  });
 
   /// The permission identifier to evaluate (e.g., [AppPermissions.editPrice]).
   final String permission;
@@ -41,14 +39,16 @@ class PermissionGuard extends StatelessWidget {
   /// Defaults to [SizedBox.shrink] if not provided.
   final Widget? fallback;
 
-  /// The resolved permission service.
-  final PermissionService _service;
+  /// The optional explicit permission service.
+  final PermissionService? permissionService;
 
   @override
   Widget build(BuildContext context) {
-    if (_service.can(permission)) {
+    final service = permissionService ?? context.read<PermissionService>();
+    if (service.can(permission)) {
       return child;
     }
     return fallback ?? const SizedBox.shrink();
   }
 }
+

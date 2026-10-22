@@ -2,15 +2,14 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:index_pharma/core/di/service_locator.dart';
 import 'package:index_pharma/core/theme/theme.dart';
 import 'package:index_pharma/core/utils/app_router.dart';
 import 'package:index_pharma/core/widgets/app_empty_state.dart';
 import 'package:index_pharma/core/widgets/app_error_view.dart';
 import 'package:index_pharma/core/widgets/app_loading_indicator.dart';
 import 'package:index_pharma/core/widgets/app_page_bar.dart';
+import 'package:index_pharma/features/home/presentation/widgets/customer_bottom_nav.dart';
 import '../../domain/entities/customer_order.dart';
-import '../../domain/usecases/get_my_orders_use_case.dart';
 import '../cubit/my_orders_cubit.dart';
 import '../cubit/my_orders_state.dart';
 import '../widgets/order_card.dart';
@@ -30,11 +29,7 @@ class MyOrdersScreen extends StatelessWidget {
       return BlocProvider<MyOrdersCubit>.value(value: cubit!, child: const _MyOrdersView());
     }
 
-    return BlocProvider<MyOrdersCubit>(
-      create: (context) =>
-          MyOrdersCubit(getMyOrdersUseCase: getIt<GetMyOrdersUseCase>())..fetchMyOrders(),
-      child: const _MyOrdersView(),
-    );
+    return const _MyOrdersView();
   }
 }
 
@@ -67,6 +62,28 @@ class _MyOrdersViewState extends State<_MyOrdersView> {
     final currentScroll = _scrollController.position.pixels;
     if (currentScroll >= maxScroll - 200) {
       context.read<MyOrdersCubit>().loadMore();
+    }
+  }
+
+  void _onBottomNavTapped(int index) {
+    switch (index) {
+      case 0:
+        context.go(AppRouter.kStoreView);
+      case 1:
+        // Already on Browse: smoothly scroll to top
+        if (_scrollController.hasClients) {
+          _scrollController.animateTo(
+            0,
+            duration: const Duration(milliseconds: 300),
+            curve: Curves.easeOut,
+          );
+        }
+      case 2:
+        context.go(AppRouter.kPrescriptionView);
+      case 3:
+        context.go(AppRouter.kOrdersView);
+      case 4:
+        context.go(AppRouter.kAccountView);
     }
   }
 
@@ -122,6 +139,8 @@ class _MyOrdersViewState extends State<_MyOrdersView> {
           };
         },
       ),
+
+      bottomNavigationBar: CustomerBottomNav(currentIndex: 3, onTap: _onBottomNavTapped),
     );
   }
 

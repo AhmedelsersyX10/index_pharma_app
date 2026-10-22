@@ -1,10 +1,9 @@
-import 'dart:convert';
-import 'dart:io';
-
 import 'package:easy_localization/easy_localization.dart' hide TextDirection;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:get_it/get_it.dart';
+import 'package:index_pharma/core/di/service_locator.dart';
 import 'package:index_pharma/core/errors/failure.dart';
 import 'package:index_pharma/core/network/api_result.dart';
 import 'package:index_pharma/core/theme/theme.dart';
@@ -19,8 +18,8 @@ import 'package:index_pharma/features/orders/domain/entities/my_orders_page.dart
 import 'package:index_pharma/features/orders/domain/repositories/orders_repository.dart';
 import 'package:index_pharma/features/orders/domain/usecases/get_my_orders_use_case.dart';
 import 'package:index_pharma/features/orders/presentation/screens/my_orders_screen.dart';
-import 'package:get_it/get_it.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../helpers/pump_with_providers.dart';
 
 late final Map<String, dynamic> _arTranslations;
 late final Map<String, dynamic> _enTranslations;
@@ -113,14 +112,9 @@ Widget createTestLocalizedApp({
 
 void main() {
   setUpAll(() async {
-    WidgetsFlutterBinding.ensureInitialized();
-    SharedPreferences.setMockInitialValues({});
-    await EasyLocalization.ensureInitialized();
-
-    final arFile = File('assets/translations/ar.json');
-    final enFile = File('assets/translations/en.json');
-    _arTranslations = jsonDecode(await arFile.readAsString()) as Map<String, dynamic>;
-    _enTranslations = jsonDecode(await enFile.readAsString()) as Map<String, dynamic>;
+    await initTestEnvironment();
+    _arTranslations = testArTranslations;
+    _enTranslations = testEnTranslations;
   });
 
   group('AuthRequiredGuard Widget Tests', () {
@@ -318,49 +312,43 @@ void main() {
   group('GoRouter End-to-End: Return to Original Route After Login', () {
     late FakeAuthRepository fakeRepo;
     late AuthCubit authCubit;
+    late FakeTestStorageService storage;
     late AppRouter appRouter;
 
     setUp(() {
+      getIt.reset();
+      storage = FakeTestStorageService();
+      registerDefaultTestFactories(storageService: storage);
       fakeRepo = FakeAuthRepository();
       authCubit = AuthCubit(authRepository: fakeRepo);
       appRouter = AppRouter(
         authCubit: authCubit,
+        storageService: storage,
         refreshListenable: GoRouterRefreshStream(authCubit.stream),
+        initialLocation: AppRouter.kOrdersView,
       );
     });
 
-    tearDown(() {
-      authCubit.close();
+    tearDown(() async {
+      await authCubit.close();
+      await getIt.reset();
     });
 
     testWidgets('Guest navigating to /orders is blocked; after login, returns to /orders', (tester) async {
+      tester.view.physicalSize = const Size(1080, 2400);
+      tester.view.devicePixelRatio = 2.0;
+      addTearDown(() {
+        tester.view.resetPhysicalSize();
+        tester.view.resetDevicePixelRatio();
+      });
+
       await tester.pumpWidget(
-        EasyLocalization(
-          key: const ValueKey('EasyLocalization_RouterTest'),
-          supportedLocales: const [Locale('ar'), Locale('en')],
-          path: 'assets/translations',
-          fallbackLocale: const Locale('ar'),
-          startLocale: const Locale('ar'),
-          saveLocale: false,
-          useOnlyLangCode: true,
-          assetLoader: const SynchronousDiskAssetLoader(),
-          child: Builder(
-            builder: (context) {
-              return MaterialApp.router(
-                locale: context.locale,
-                supportedLocales: context.supportedLocales,
-                localizationsDelegates: context.localizationDelegates,
-                theme: AppTheme.lightTheme,
-                routerConfig: appRouter.router,
-              );
-            },
-          ),
+        buildAppWithProviders(
+          routerConfig: appRouter.router,
+          authCubit: authCubit,
+          storageService: storage,
         ),
       );
-      await tester.pumpAndSettle();
-
-      // 1. Navigate to /orders as a guest
-      appRouter.router.go(AppRouter.kOrdersView);
       await tester.pumpAndSettle();
 
       // Verified: guest is blocked, A4 prompt is rendered, MyOrdersScreen is NOT rendered

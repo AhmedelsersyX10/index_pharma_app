@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:index_pharma/core/di/service_locator.dart';
 import 'package:index_pharma/core/storage/storage_service.dart';
 import 'package:index_pharma/core/theme/theme.dart';
 import 'package:index_pharma/core/utils/app_router.dart';
@@ -59,11 +59,8 @@ class _OnboardingViewBodyState extends State<OnboardingViewBody> {
   }
 
   Future<void> _markOnboardingSeenAndNavigate(String targetRoute) async {
-    final storage = widget.storageService ??
-        (getIt.isRegistered<StorageService>()
-            ? getIt<StorageService>()
-            : null);
-    await storage?.setOnboardingSeen(true);
+    final storage = widget.storageService ?? context.read<StorageService>();
+    await storage.setOnboardingSeen(true);
 
     if (!mounted) return;
     context.go(targetRoute);

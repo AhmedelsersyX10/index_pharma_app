@@ -2,7 +2,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:index_pharma/core/di/service_locator.dart';
 import 'package:index_pharma/core/localization/app_locale_keys.dart';
 import 'package:index_pharma/core/theme/theme.dart';
 import 'package:index_pharma/core/utils/app_router.dart';
@@ -39,12 +38,14 @@ class CartScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final effectiveCubit = cartCubit ?? getIt<CartCubit>();
+    if (cartCubit != null) {
+      return BlocProvider.value(
+        value: cartCubit!,
+        child: const _CartScreenContent(),
+      );
+    }
 
-    return BlocProvider.value(
-      value: effectiveCubit,
-      child: const _CartScreenContent(),
-    );
+    return const _CartScreenContent();
   }
 }
 
@@ -70,16 +71,12 @@ class _CartScreenContentState extends State<_CartScreenContent> {
 
   String? _resolveBranchName(BuildContext context, String? branchId) {
     if (branchId == null) return null;
-    try {
-      final branchState = context.read<BranchCubit>().state;
-      if (branchState is BranchLoaded) {
-        final match = branchState.branches
-            .where((b) => b.id == branchId)
-            .firstOrNull;
-        return match?.name;
-      }
-    } catch (_) {
-      // In isolated test environments where BranchCubit is not in context
+    final branchState = context.read<BranchCubit>().state;
+    if (branchState is BranchLoaded) {
+      final match = branchState.branches
+          .where((b) => b.id == branchId)
+          .firstOrNull;
+      return match?.name;
     }
     return null;
   }

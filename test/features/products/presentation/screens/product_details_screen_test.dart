@@ -144,6 +144,7 @@ void main() {
     CartCubit? cartCubit,
     Locale locale = const Locale('ar'),
   }) {
+    final effectiveCart = cartCubit ?? CartCubit(cartRepository: FakeCartRepository());
     return EasyLocalization(
       supportedLocales: const [Locale('ar'), Locale('en')],
       path: 'assets/translations',
@@ -161,7 +162,7 @@ void main() {
               productId: 'p01',
               branchId: 'b01',
               cubit: cubit,
-              cartCubit: cartCubit,
+              cartCubit: effectiveCart,
             ),
           );
         },

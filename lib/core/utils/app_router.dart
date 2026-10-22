@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:index_pharma/core/di/service_locator.dart';
 import 'package:index_pharma/core/storage/storage_service.dart';
@@ -13,9 +14,13 @@ import 'package:index_pharma/features/auth/presentation/screens/login_screen.dar
 import 'package:index_pharma/features/auth/presentation/screens/register_screen.dart';
 import 'package:index_pharma/features/account/presentation/screens/account_screen.dart';
 import 'package:index_pharma/features/account/presentation/screens/edit_profile_screen.dart';
-import 'package:index_pharma/features/cart/presentation/cubit/cart_cubit.dart';
 import 'package:index_pharma/features/cart/presentation/screens/cart_screen.dart';
+import 'package:index_pharma/features/choose_branches/presentation/cubit/branch_cubit.dart';
 import 'package:index_pharma/features/choose_branches/presentation/screens/branch_selection_screen.dart';
+import 'package:index_pharma/features/settings/presentation/cubit/settings_cubit.dart';
+import 'package:index_pharma/features/categories/presentation/cubit/categories_cubit.dart';
+import 'package:index_pharma/features/products/presentation/cubit/products_cubit.dart';
+import 'package:index_pharma/features/products/presentation/cubit/product_details_cubit.dart';
 import 'package:index_pharma/features/home/presentation/screens/home_screen.dart';
 import 'package:index_pharma/features/language/presentation/screens/language_selection_screen.dart';
 import 'package:index_pharma/features/onboarding/presentation/view/onboarding_view.dart';
@@ -23,12 +28,15 @@ import 'package:index_pharma/features/products/presentation/screens/products_pag
 import 'package:index_pharma/features/products/presentation/screens/product_details_screen.dart';
 import 'package:index_pharma/features/splash/presentation/view/splash_view.dart';
 import 'package:index_pharma/features/checkout/domain/entities/order.dart';
+import 'package:index_pharma/features/checkout/presentation/cubit/checkout_cubit.dart';
 import 'package:index_pharma/features/checkout/presentation/screens/checkout_screen.dart';
 import 'package:index_pharma/features/checkout/presentation/screens/order_confirmation_screen.dart';
 import 'package:index_pharma/features/orders/domain/entities/customer_order.dart';
+import 'package:index_pharma/features/orders/presentation/cubit/my_orders_cubit.dart';
 import 'package:index_pharma/features/orders/presentation/screens/my_orders_screen.dart';
 import 'package:index_pharma/features/orders/presentation/screens/order_details_screen.dart';
 import 'package:index_pharma/features/prescriptions/domain/entities/prescription_entity.dart';
+import 'package:index_pharma/features/prescriptions/presentation/cubit/prescription_cubit.dart';
 import 'package:index_pharma/features/prescriptions/presentation/screens/my_prescriptions_screen.dart';
 import 'package:index_pharma/features/prescriptions/presentation/screens/prescription_details_screen.dart';
 import 'package:index_pharma/features/prescriptions/presentation/screens/prescription_submitted_screen.dart';
@@ -276,18 +284,42 @@ class AppRouter {
       ),
       GoRoute(
         path: kBranchSelectionView,
-        builder: (context, state) => const BranchSelectionScreen(),
+        builder: (context, state) => BlocProvider<BranchCubit>(
+          create: (context) => getIt<BranchCubit>()..fetchBranches(),
+          child: const BranchSelectionScreen(),
+        ),
       ),
-      GoRoute(path: kStoreView, builder: (context, state) => const HomeScreen()),
+      GoRoute(
+        path: kStoreView,
+        builder: (context, state) => MultiBlocProvider(
+          providers: [
+            BlocProvider<BranchCubit>(
+              create: (context) => getIt<BranchCubit>()..fetchBranches(),
+            ),
+            BlocProvider<SettingsCubit>(
+              create: (context) => getIt<SettingsCubit>()..fetchSettings(),
+            ),
+            BlocProvider<CategoriesCubit>(
+              create: (context) => getIt<CategoriesCubit>()..fetchCategories(),
+            ),
+            BlocProvider<ProductsCubit>(
+              create: (context) => getIt<ProductsCubit>(),
+            ),
+          ],
+          child: const HomeScreen(),
+        ),
+      ),
       GoRoute(
         path: kProductDetailsView,
         builder: (context, state) {
           final productId = state.pathParameters['id'] ?? '';
           final branchId = state.uri.queryParameters['branchId'];
-          return ProductDetailsScreen(
-            productId: productId,
-            branchId: branchId,
-            cartCubit: getIt.isRegistered<CartCubit>() ? getIt<CartCubit>() : null,
+          return BlocProvider<ProductDetailsCubit>(
+            create: (context) => getIt<ProductDetailsCubit>(),
+            child: ProductDetailsScreen(
+              productId: productId,
+              branchId: branchId,
+            ),
           );
         },
       ),
@@ -296,7 +328,30 @@ class AppRouter {
         builder: (context, state) {
           final categoryId = state.uri.queryParameters['categoryId'];
           final q = state.uri.queryParameters['q'];
-          return ProductsPage(initialCategoryId: categoryId, initialKeyword: q);
+          final uriString = state.uri.toString();
+          return MultiBlocProvider(
+            key: ValueKey(uriString),
+            providers: [
+              BlocProvider<ProductsCubit>(
+                create: (context) => getIt<ProductsCubit>()
+                  ..loadFirstPage(
+                    categoryId: categoryId,
+                    keyword: q,
+                  ),
+              ),
+              BlocProvider<CategoriesCubit>(
+                create: (context) => getIt<CategoriesCubit>()..fetchCategories(),
+              ),
+              BlocProvider<BranchCubit>(
+                create: (context) => getIt<BranchCubit>()..fetchBranches(),
+              ),
+            ],
+            child: ProductsPage(
+              key: ValueKey('ProductsPage_$uriString'),
+              initialCategoryId: categoryId,
+              initialKeyword: q,
+            ),
+          );
         },
       ),
       GoRoute(
@@ -304,7 +359,10 @@ class AppRouter {
         builder: (context, state) => AuthRequiredGuard(
           routePath: kPrescriptionView,
           authCubit: _activeAuthCubit,
-          child: const MyPrescriptionsScreen(),
+          child: BlocProvider<PrescriptionCubit>(
+            create: (context) => getIt<PrescriptionCubit>(),
+            child: const MyPrescriptionsScreen(),
+          ),
         ),
       ),
       GoRoute(
@@ -312,7 +370,10 @@ class AppRouter {
         builder: (context, state) => AuthRequiredGuard(
           routePath: kPrescriptionUploadView,
           authCubit: _activeAuthCubit,
-          child: const UploadPrescriptionScreen(),
+          child: BlocProvider<PrescriptionCubit>(
+            create: (context) => getIt<PrescriptionCubit>(),
+            child: const UploadPrescriptionScreen(),
+          ),
         ),
       ),
       GoRoute(
@@ -329,7 +390,10 @@ class AppRouter {
           return AuthRequiredGuard(
             routePath: kPrescriptionView,
             authCubit: _activeAuthCubit,
-            child: const MyPrescriptionsScreen(),
+            child: BlocProvider<PrescriptionCubit>(
+              create: (context) => getIt<PrescriptionCubit>(),
+              child: const MyPrescriptionsScreen(),
+            ),
           );
         },
       ),
@@ -347,7 +411,10 @@ class AppRouter {
           return AuthRequiredGuard(
             routePath: kPrescriptionView,
             authCubit: _activeAuthCubit,
-            child: const MyPrescriptionsScreen(),
+            child: BlocProvider<PrescriptionCubit>(
+              create: (context) => getIt<PrescriptionCubit>(),
+              child: const MyPrescriptionsScreen(),
+            ),
           );
         },
       ),
@@ -356,7 +423,10 @@ class AppRouter {
         builder: (context, state) => AuthRequiredGuard(
           routePath: kOrdersView,
           authCubit: _activeAuthCubit,
-          child: const MyOrdersScreen(),
+          child: BlocProvider<MyOrdersCubit>(
+            create: (context) => getIt<MyOrdersCubit>()..fetchMyOrders(),
+            child: const MyOrdersScreen(),
+          ),
         ),
       ),
       GoRoute(
@@ -390,13 +460,22 @@ class AppRouter {
           child: EditProfileScreen(authCubit: _activeAuthCubit),
         ),
       ),
-      GoRoute(path: kCartView, builder: (context, state) => const CartScreen()),
+      GoRoute(
+        path: kCartView,
+        builder: (context, state) => BlocProvider<BranchCubit>(
+          create: (context) => getIt<BranchCubit>()..fetchBranches(),
+          child: const CartScreen(),
+        ),
+      ),
       GoRoute(
         path: kCheckoutView,
         builder: (context, state) => AuthRequiredGuard(
           routePath: kCheckoutView,
           authCubit: _activeAuthCubit,
-          child: const CheckoutScreen(),
+          child: BlocProvider<CheckoutCubit>(
+            create: (context) => getIt<CheckoutCubit>(),
+            child: const CheckoutScreen(),
+          ),
         ),
       ),
       GoRoute(

@@ -1,14 +1,21 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:index_pharma/core/di/service_locator.dart';
 import 'package:index_pharma/core/localization/app_locale_keys.dart';
 import 'package:index_pharma/core/storage/storage_service.dart';
 import 'package:index_pharma/core/theme/theme.dart';
 import 'package:index_pharma/core/utils/app_router.dart';
+import 'package:index_pharma/features/auth/domain/services/permission_service.dart';
+import 'package:index_pharma/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:index_pharma/features/cart/presentation/cubit/cart_cubit.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
+  await initializeDateFormatting('ar', null);
+  await initializeDateFormatting('en', null);
   await setupServiceLocator();
   await getIt.allReady();
 
@@ -36,9 +43,17 @@ class IndexPharmaApp extends StatelessWidget {
   const IndexPharmaApp({
     super.key,
     this.appRouter,
+    this.authCubit,
+    this.cartCubit,
+    this.storageService,
+    this.permissionService,
   });
 
   final AppRouter? appRouter;
+  final AuthCubit? authCubit;
+  final CartCubit? cartCubit;
+  final StorageService? storageService;
+  final PermissionService? permissionService;
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +62,16 @@ class IndexPharmaApp extends StatelessWidget {
             ? getIt<AppRouter>()
             : AppRouter());
 
-    return MaterialApp.router(
+    final resolvedAuthCubit = authCubit ??
+        (getIt.isRegistered<AuthCubit>() ? getIt<AuthCubit>() : null);
+    final resolvedCartCubit = cartCubit ??
+        (getIt.isRegistered<CartCubit>() ? getIt<CartCubit>() : null);
+    final resolvedStorageService = storageService ??
+        (getIt.isRegistered<StorageService>() ? getIt<StorageService>() : null);
+    final resolvedPermissionService = permissionService ??
+        (getIt.isRegistered<PermissionService>() ? getIt<PermissionService>() : null);
+
+    final Widget app = MaterialApp.router(
       onGenerateTitle: (context) => AppLocaleKeys.appTitle.tr(),
       debugShowCheckedModeBanner: false,
       localizationsDelegates: context.localizationDelegates,
@@ -58,5 +82,36 @@ class IndexPharmaApp extends StatelessWidget {
       themeMode: ThemeMode.light,
       routerConfig: router.router,
     );
+
+    Widget wrapped = app;
+
+    final blocProviders = [
+      if (resolvedAuthCubit != null)
+        BlocProvider<AuthCubit>.value(value: resolvedAuthCubit),
+      if (resolvedCartCubit != null)
+        BlocProvider<CartCubit>.value(value: resolvedCartCubit),
+    ];
+    if (blocProviders.isNotEmpty) {
+      wrapped = MultiBlocProvider(
+        providers: blocProviders,
+        child: wrapped,
+      );
+    }
+
+    final repoProviders = [
+      if (resolvedStorageService != null)
+        RepositoryProvider<StorageService>.value(value: resolvedStorageService),
+      if (resolvedPermissionService != null)
+        RepositoryProvider<PermissionService>.value(value: resolvedPermissionService),
+    ];
+    if (repoProviders.isNotEmpty) {
+      wrapped = MultiRepositoryProvider(
+        providers: repoProviders,
+        child: wrapped,
+      );
+    }
+
+    return wrapped;
   }
 }
+

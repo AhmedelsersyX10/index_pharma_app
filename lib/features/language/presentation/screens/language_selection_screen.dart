@@ -2,7 +2,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:index_pharma/core/localization/app_locale_keys.dart';
 import 'package:index_pharma/core/storage/storage_service.dart';
@@ -43,8 +42,7 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
   void initState() {
     super.initState();
     _storageService =
-        widget.storageService ??
-        (GetIt.instance.isRegistered<StorageService>() ? GetIt.instance<StorageService>() : null);
+        widget.storageService ?? context.read<StorageService>();
 
     if (widget.cubit != null) {
       _cubit = widget.cubit!;

@@ -62,13 +62,11 @@ Widget _buildTestApp({
   CartCubit? cartCubit,
   Locale locale = const Locale('ar'),
 }) {
-  Widget content = child;
-  if (cartCubit != null) {
-    content = BlocProvider<CartCubit>.value(
-      value: cartCubit,
-      child: content,
-    );
-  }
+  final effectiveCartCubit = cartCubit ?? CartCubit(cartRepository: _FakeCartRepository());
+  final Widget content = BlocProvider<CartCubit>.value(
+    value: effectiveCartCubit,
+    child: child,
+  );
 
   return EasyLocalization(
     key: ValueKey('EasyLocalization_${locale.languageCode}'),

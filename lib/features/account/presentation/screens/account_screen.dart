@@ -1,7 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:index_pharma/core/localization/app_locale_keys.dart';
 import 'package:index_pharma/core/storage/storage_service.dart';
@@ -45,12 +44,8 @@ class AccountScreen extends StatelessWidget {
     return authCubit ?? context.read<AuthCubit>();
   }
 
-  StorageService _resolveStorageService() {
-    if (storageService != null) return storageService!;
-    if (GetIt.instance.isRegistered<StorageService>()) {
-      return GetIt.instance<StorageService>();
-    }
-    throw StateError('StorageService not provided and not registered in GetIt');
+  StorageService _resolveStorageService(BuildContext context) {
+    return storageService ?? context.read<StorageService>();
   }
 
   BranchCubit? _resolveBranchCubit(BuildContext context) {
@@ -82,7 +77,7 @@ class AccountScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final activeAuthCubit = _resolveAuthCubit(context);
-    final activeStorageService = _resolveStorageService();
+    final activeStorageService = _resolveStorageService(context);
     final activeBranchCubit = _resolveBranchCubit(context);
 
     return Scaffold(

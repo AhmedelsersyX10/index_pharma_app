@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:index_pharma/core/di/service_locator.dart';
 import 'package:index_pharma/core/theme/theme.dart';
 import 'package:index_pharma/features/choose_branches/presentation/cubit/branch_cubit.dart';
 import 'package:index_pharma/features/choose_branches/presentation/cubit/branch_state.dart';
@@ -11,7 +10,6 @@ import 'package:index_pharma/features/products/presentation/cubit/products_cubit
 import 'package:index_pharma/features/settings/presentation/cubit/settings_cubit.dart';
 import 'package:index_pharma/features/settings/presentation/cubit/settings_state.dart';
 import 'package:index_pharma/core/utils/app_router.dart';
-import 'package:index_pharma/core/widgets/route_placeholder_screens.dart';
 import 'package:index_pharma/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:index_pharma/features/auth/presentation/cubit/auth_state.dart';
 import 'package:index_pharma/features/auth/presentation/widgets/login_required_prompt.dart';
@@ -59,48 +57,24 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final hasRequiredServices =
-        branchCubit != null || getIt.isRegistered<BranchCubit>();
-
-    if (!hasRequiredServices) {
-      return const StorePlaceholderScreen();
+    if (branchCubit != null ||
+        settingsCubit != null ||
+        categoriesCubit != null ||
+        productsCubit != null ||
+        cartCubit != null) {
+      return MultiBlocProvider(
+        providers: [
+          if (branchCubit != null) BlocProvider.value(value: branchCubit!),
+          if (settingsCubit != null) BlocProvider.value(value: settingsCubit!),
+          if (categoriesCubit != null) BlocProvider.value(value: categoriesCubit!),
+          if (productsCubit != null) BlocProvider.value(value: productsCubit!),
+          if (cartCubit != null) BlocProvider.value(value: cartCubit!),
+        ],
+        child: const _HomeView(),
+      );
     }
 
-    return MultiBlocProvider(
-      providers: [
-        if (branchCubit != null)
-          BlocProvider.value(value: branchCubit!)
-        else if (getIt.isRegistered<BranchCubit>())
-          BlocProvider<BranchCubit>(
-            create: (context) => getIt<BranchCubit>()..fetchBranches(),
-          ),
-        if (settingsCubit != null)
-          BlocProvider.value(value: settingsCubit!)
-        else if (getIt.isRegistered<SettingsCubit>())
-          BlocProvider<SettingsCubit>(
-            create: (context) => getIt<SettingsCubit>()..fetchSettings(),
-          ),
-        if (categoriesCubit != null)
-          BlocProvider.value(value: categoriesCubit!)
-        else if (getIt.isRegistered<CategoriesCubit>())
-          BlocProvider<CategoriesCubit>(
-            create: (context) => getIt<CategoriesCubit>()..fetchCategories(),
-          ),
-        if (productsCubit != null)
-          BlocProvider.value(value: productsCubit!)
-        else if (getIt.isRegistered<ProductsCubit>())
-          BlocProvider<ProductsCubit>(
-            create: (context) => getIt<ProductsCubit>(),
-          ),
-        if (cartCubit != null)
-          BlocProvider.value(value: cartCubit!)
-        else if (getIt.isRegistered<CartCubit>())
-          BlocProvider<CartCubit>.value(
-            value: getIt<CartCubit>(),
-          ),
-      ],
-      child: const _HomeView(),
-    );
+    return const _HomeView();
   }
 }
 
@@ -126,39 +100,34 @@ class _HomeViewState extends State<_HomeView> {
 
   void _checkAndFetchProducts() {
     if (!mounted) return;
-    try {
-      final branchCubit = context.read<BranchCubit>();
-      if (branchCubit.state is BranchInitial) {
-        branchCubit.fetchBranches();
-      }
-      final categoriesCubit = context.read<CategoriesCubit>();
-      if (categoriesCubit.state is CategoriesInitial) {
-        categoriesCubit.fetchCategories();
-      }
-      final settingsCubit = context.read<SettingsCubit>();
-      if (settingsCubit.state is SettingsInitial) {
-        settingsCubit.fetchSettings();
-      }
+    final branchCubit = context.read<BranchCubit>();
+    if (branchCubit.state is BranchInitial) {
+      branchCubit.fetchBranches();
+    }
+    final categoriesCubit = context.read<CategoriesCubit>();
+    if (categoriesCubit.state is CategoriesInitial) {
+      categoriesCubit.fetchCategories();
+    }
+    final settingsCubit = context.read<SettingsCubit>();
+    if (settingsCubit.state is SettingsInitial) {
+      settingsCubit.fetchSettings();
+    }
 
-      final branchState = branchCubit.state;
-      if (branchState is BranchLoaded && branchState.selectedBranchId != null) {
-        final currentBranchId = branchState.selectedBranchId;
-        if (_lastLoadedBranchId != currentBranchId) {
-          _lastLoadedBranchId = currentBranchId;
-          context.read<ProductsCubit>().loadFirstPage(branchId: currentBranchId);
-        }
-      } else {
-        context.read<ProductsCubit>().loadFirstPage();
+    final branchState = branchCubit.state;
+    if (branchState is BranchLoaded && branchState.selectedBranchId != null) {
+      final currentBranchId = branchState.selectedBranchId;
+      if (_lastLoadedBranchId != currentBranchId) {
+        _lastLoadedBranchId = currentBranchId;
+        context.read<ProductsCubit>().loadFirstPage(branchId: currentBranchId);
       }
-    } catch (_) {
-      // In minimal test setups where cubits are not in tree
+    } else {
+      context.read<ProductsCubit>().loadFirstPage();
     }
   }
 
   Future<void> _onRefresh() async {
     final branchState = context.read<BranchCubit>().state;
-    final branchId =
-        branchState is BranchLoaded ? branchState.selectedBranchId : null;
+    final branchId = branchState is BranchLoaded ? branchState.selectedBranchId : null;
 
     await Future.wait<dynamic>([
       context.read<BranchCubit>().fetchBranches(),
@@ -169,14 +138,10 @@ class _HomeViewState extends State<_HomeView> {
   }
 
   void _handleProtectedNav(String route) {
-    try {
-      final authCubit = context.read<AuthCubit>();
-      if (authCubit.state is! AuthAuthenticated) {
-        LoginRequiredBottomSheet.show(context, returnRoute: route);
-        return;
-      }
-    } catch (_) {
-      // In minimal test setups where AuthCubit is not in tree
+    final authCubit = context.read<AuthCubit>();
+    if (authCubit.state is! AuthAuthenticated) {
+      LoginRequiredBottomSheet.show(context, returnRoute: route);
+      return;
     }
     context.go(route);
   }
@@ -195,9 +160,9 @@ class _HomeViewState extends State<_HomeView> {
       case 1:
         context.go(AppRouter.kBrowseView);
       case 2:
-        _handleProtectedNav(AppRouter.kPrescriptionView);
+        context.go(AppRouter.kPrescriptionView);
       case 3:
-        _handleProtectedNav(AppRouter.kOrdersView);
+        context.go(AppRouter.kOrdersView);
       case 4:
         context.go(AppRouter.kAccountView);
     }
@@ -217,9 +182,7 @@ class _HomeViewState extends State<_HomeView> {
             state.selectedBranchId != null &&
             state.selectedBranchId != _lastLoadedBranchId) {
           _lastLoadedBranchId = state.selectedBranchId;
-          context
-              .read<ProductsCubit>()
-              .loadFirstPage(branchId: state.selectedBranchId);
+          context.read<ProductsCubit>().loadFirstPage(branchId: state.selectedBranchId);
         }
       },
       child: Scaffold(
@@ -255,8 +218,7 @@ class _HomeViewState extends State<_HomeView> {
 
                 // 4. Prescription Upload Card
                 HomePrescriptionUploadCard(
-                  onUploadTap: () =>
-                      _handleProtectedNav(AppRouter.kPrescriptionView),
+                  onUploadTap: () => _handleProtectedNav(AppRouter.kPrescriptionView),
                 ),
                 const SizedBox(height: AppSpacing.spaceLg),
 
@@ -283,10 +245,7 @@ class _HomeViewState extends State<_HomeView> {
             ),
           ),
         ),
-        bottomNavigationBar: CustomerBottomNav(
-          currentIndex: 0,
-          onTap: _onBottomNavTapped,
-        ),
+        bottomNavigationBar: CustomerBottomNav(currentIndex: 0, onTap: _onBottomNavTapped),
       ),
     );
   }

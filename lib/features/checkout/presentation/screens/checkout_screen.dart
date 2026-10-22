@@ -1,7 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:index_pharma/core/theme/theme.dart';
 import 'package:index_pharma/core/utils/app_router.dart';
@@ -38,7 +37,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   @override
   void initState() {
     super.initState();
-    _cubit = widget.checkoutCubit ?? GetIt.instance<CheckoutCubit>();
+    _cubit = widget.checkoutCubit ?? context.read<CheckoutCubit>();
     _addressController = TextEditingController(text: _cubit.state.deliveryAddress);
     _phoneController = TextEditingController(text: _cubit.state.customerPhone);
     _notesController = TextEditingController(text: _cubit.state.notes);
@@ -49,21 +48,16 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     _addressController.dispose();
     _phoneController.dispose();
     _notesController.dispose();
-    if (widget.checkoutCubit == null) {
-      _cubit.close();
-    }
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final effectiveCartCubit =
-        widget.cartCubit ??
-        (GetIt.instance.isRegistered<CartCubit>() ? GetIt.instance<CartCubit>() : null);
+    final effectiveCartCubit = widget.cartCubit ?? context.read<CartCubit>();
 
     final providers = [
       BlocProvider<CheckoutCubit>.value(value: _cubit),
-      if (effectiveCartCubit != null) BlocProvider<CartCubit>.value(value: effectiveCartCubit),
+      BlocProvider<CartCubit>.value(value: effectiveCartCubit),
     ];
 
     return MultiBlocProvider(

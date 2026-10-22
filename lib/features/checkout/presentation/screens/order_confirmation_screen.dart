@@ -31,12 +31,8 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
   }
 
   String _formatDate(DateTime date, BuildContext context) {
-    try {
-      final locale = context.locale.languageCode;
-      return DateFormat.yMMMd(locale).add_jm().format(date);
-    } catch (_) {
-      return date.toIso8601String().split('T').first;
-    }
+    final locale = context.locale.languageCode;
+    return DateFormat.yMMMd(locale).add_jm().format(date);
   }
 
   @override

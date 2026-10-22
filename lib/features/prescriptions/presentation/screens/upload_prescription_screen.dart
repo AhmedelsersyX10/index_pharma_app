@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:index_pharma/core/di/service_locator.dart';
 import 'package:index_pharma/core/localization/app_locale_keys.dart';
 import 'package:index_pharma/core/theme/app_colors.dart';
 import 'package:index_pharma/core/theme/app_spacing.dart';
@@ -29,10 +28,7 @@ class UploadPrescriptionScreen extends StatelessWidget {
       );
     }
 
-    return BlocProvider<PrescriptionCubit>(
-      create: (_) => getIt<PrescriptionCubit>(),
-      child: const _UploadPrescriptionView(),
-    );
+    return const _UploadPrescriptionView();
   }
 }
 

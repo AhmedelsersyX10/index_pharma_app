@@ -1,5 +1,3 @@
-import 'dart:convert';
-import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:cookie_jar/cookie_jar.dart';
@@ -14,12 +12,14 @@ import 'package:index_pharma/core/localization/app_locale_keys.dart';
 import 'package:index_pharma/core/network/api_client.dart';
 import 'package:index_pharma/core/network/api_result.dart';
 import 'package:index_pharma/core/storage/storage_service.dart';
-import 'package:index_pharma/core/theme/theme.dart';
 import 'package:index_pharma/core/utils/app_router.dart';
 import 'package:index_pharma/core/widgets/app_buttons.dart';
 import 'package:index_pharma/features/account/presentation/screens/account_screen.dart';
 import 'package:index_pharma/features/account/presentation/widgets/account_guest_view.dart';
 import 'package:index_pharma/features/account/presentation/widgets/account_profile_card.dart';
+import 'package:index_pharma/features/orders/presentation/cubit/my_orders_cubit.dart';
+
+import '../../../helpers/pump_with_providers.dart';
 import 'package:index_pharma/features/auth/domain/entities/user.dart';
 import 'package:index_pharma/features/auth/domain/repositories/auth_repository.dart';
 import 'package:index_pharma/features/auth/presentation/cubit/auth_cubit.dart';
@@ -47,7 +47,6 @@ import 'package:index_pharma/features/products/presentation/cubit/products_cubit
 import 'package:index_pharma/features/settings/domain/entities/public_settings.dart';
 import 'package:index_pharma/features/settings/domain/repositories/settings_repository.dart';
 import 'package:index_pharma/features/settings/presentation/cubit/settings_cubit.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 late final Map<String, dynamic> _arTranslations;
 late final Map<String, dynamic> _enTranslations;
@@ -294,41 +293,16 @@ class FakeHttpClientAdapter implements HttpClientAdapter {
 }
 
 Widget createTestApp(RouterConfig<Object> routerConfig) {
-  return EasyLocalization(
-    key: UniqueKey(),
-    supportedLocales: const [Locale('ar'), Locale('en')],
-    path: 'assets/translations',
-    fallbackLocale: const Locale('ar'),
-    startLocale: const Locale('ar'),
-    saveLocale: false,
-    useOnlyLangCode: true,
-    assetLoader: const SynchronousDiskAssetLoader(),
-    child: Builder(
-      builder: (context) {
-        return MaterialApp.router(
-          localizationsDelegates: context.localizationDelegates,
-          supportedLocales: context.supportedLocales,
-          locale: context.locale,
-          theme: AppTheme.lightTheme,
-          routerConfig: routerConfig,
-        );
-      },
-    ),
+  return buildAppWithProviders(
+    routerConfig: routerConfig,
   );
 }
 
 void main() {
   setUpAll(() async {
-    WidgetsFlutterBinding.ensureInitialized();
-    SharedPreferences.setMockInitialValues({});
-
-    final arFile = File('assets/translations/ar.json');
-    final enFile = File('assets/translations/en.json');
-    _arTranslations =
-        jsonDecode(await arFile.readAsString()) as Map<String, dynamic>;
-    _enTranslations =
-        jsonDecode(await enFile.readAsString()) as Map<String, dynamic>;
-    await EasyLocalization.ensureInitialized();
+    await initTestEnvironment();
+    _arTranslations = testArTranslations;
+    _enTranslations = testEnTranslations;
   });
 
   group('Login & Registration Navigation Flow Tests', () {
@@ -360,34 +334,42 @@ void main() {
       getIt.registerSingleton<StorageService>(storageService);
       getIt.registerSingleton<AuthCubit>(authCubit);
 
-      final branchCubit = BranchCubit(
-        branchRepository: branchRepo,
-        storageService: storageService,
-      );
-      final settingsCubit = SettingsCubit(settingsRepository: settingsRepo);
-      final categoriesCubit =
-          CategoriesCubit(categoriesRepository: categoriesRepo);
-      final productsCubit = ProductsCubit(
-        productsRepository: productsRepo,
-        storageService: storageService,
-      );
       final cartCubit = CartCubit(
         cartRepository: cartRepo,
         storageService: storageService,
       );
-
-      getIt.registerSingleton<BranchCubit>(branchCubit);
-      getIt.registerSingleton<SettingsCubit>(settingsCubit);
-      getIt.registerSingleton<CategoriesCubit>(categoriesCubit);
-      getIt.registerSingleton<ProductsCubit>(productsCubit);
       getIt.registerSingleton<CartCubit>(cartCubit);
-      getIt.registerSingleton<GetMyOrdersUseCase>(
-        GetMyOrdersUseCase(repository: ordersRepo),
+
+      getIt.registerFactory<BranchCubit>(
+        () => BranchCubit(
+          branchRepository: branchRepo,
+          storageService: storageService,
+        ),
+      );
+      getIt.registerFactory<SettingsCubit>(
+        () => SettingsCubit(settingsRepository: settingsRepo),
+      );
+      getIt.registerFactory<CategoriesCubit>(
+        () => CategoriesCubit(categoriesRepository: categoriesRepo),
+      );
+      getIt.registerFactory<ProductsCubit>(
+        () => ProductsCubit(
+          productsRepository: productsRepo,
+          storageService: storageService,
+        ),
+      );
+      getIt.registerFactory<GetMyOrdersUseCase>(
+        () => GetMyOrdersUseCase(repository: ordersRepo),
+      );
+      getIt.registerFactory<MyOrdersCubit>(
+        () => MyOrdersCubit(
+          getMyOrdersUseCase: GetMyOrdersUseCase(repository: ordersRepo),
+        ),
       );
     });
 
-    tearDown(() {
-      getIt.reset();
+    tearDown(() async {
+      await getIt.reset();
     });
 
     testWidgets(

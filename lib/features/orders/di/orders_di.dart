@@ -5,6 +5,7 @@ import '../data/datasources/orders_remote_data_source_impl.dart';
 import '../data/repositories/orders_repository_impl.dart';
 import '../domain/repositories/orders_repository.dart';
 import '../domain/usecases/get_my_orders_use_case.dart';
+import '../presentation/cubit/my_orders_cubit.dart';
 
 /// Registers dependencies for the Customer Orders feature.
 void setupOrdersDependencies(GetIt getIt) {
@@ -26,6 +27,14 @@ void setupOrdersDependencies(GetIt getIt) {
     getIt.registerLazySingleton<GetMyOrdersUseCase>(
       () => GetMyOrdersUseCase(
         repository: getIt<OrdersRepository>(),
+      ),
+    );
+  }
+
+  if (!getIt.isRegistered<MyOrdersCubit>()) {
+    getIt.registerFactory<MyOrdersCubit>(
+      () => MyOrdersCubit(
+        getMyOrdersUseCase: getIt<GetMyOrdersUseCase>(),
       ),
     );
   }

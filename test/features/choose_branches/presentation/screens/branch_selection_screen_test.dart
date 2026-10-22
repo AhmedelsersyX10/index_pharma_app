@@ -9,6 +9,9 @@ import 'package:index_pharma/core/errors/failure.dart';
 import 'package:index_pharma/core/localization/app_locale_keys.dart';
 import 'package:index_pharma/core/network/api_result.dart';
 import 'package:index_pharma/core/storage/storage_service.dart';
+import 'package:index_pharma/features/cart/domain/entities/cart_item.dart';
+import 'package:index_pharma/features/cart/domain/repositories/cart_repository.dart';
+import 'package:index_pharma/features/cart/presentation/cubit/cart_cubit.dart';
 import 'package:index_pharma/features/choose_branches/domain/entities/branch_entity.dart';
 import 'package:index_pharma/features/choose_branches/domain/repositories/branch_repository.dart';
 import 'package:index_pharma/features/choose_branches/presentation/cubit/branch_cubit.dart';
@@ -85,6 +88,23 @@ class FakeStorageService implements StorageService {
   }
 }
 
+class FakeCartRepository implements CartRepository {
+  @override
+  Future<void> clearCart(String branchId) async {}
+
+  @override
+  Future<String?> getActiveCartBranchId() async => null;
+
+  @override
+  Future<List<CartItem>> getCartItems(String branchId) async => [];
+
+  @override
+  Future<void> saveCartItems(String branchId, List<CartItem> items) async {}
+
+  @override
+  Future<void> setActiveCartBranchId(String? branchId) async {}
+}
+
 void main() {
   setUpAll(() async {
     final arRaw = await File('assets/translations/ar.json').readAsString();
@@ -98,6 +118,8 @@ void main() {
 
   late FakeBranchRepository fakeRepository;
   late FakeStorageService fakeStorageService;
+  late FakeCartRepository fakeCartRepository;
+  late CartCubit cartCubit;
   late BranchCubit cubit;
 
   const branch1 = BranchEntity(
@@ -117,6 +139,11 @@ void main() {
   setUp(() {
     fakeRepository = FakeBranchRepository();
     fakeStorageService = FakeStorageService();
+    fakeCartRepository = FakeCartRepository();
+    cartCubit = CartCubit(
+      cartRepository: fakeCartRepository,
+      storageService: fakeStorageService,
+    );
     cubit = BranchCubit(
       branchRepository: fakeRepository,
       storageService: fakeStorageService,
@@ -125,6 +152,7 @@ void main() {
 
   tearDown(() {
     cubit.close();
+    cartCubit.close();
   });
 
   Widget buildTestApp({VoidCallback? onBranchConfirmed}) {
@@ -142,6 +170,7 @@ void main() {
             locale: context.locale,
             home: BranchSelectionScreen(
               branchCubit: cubit,
+              cartCubit: cartCubit,
               onBranchConfirmed: onBranchConfirmed,
             ),
           );

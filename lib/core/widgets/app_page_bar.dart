@@ -73,28 +73,23 @@ class AppPageBar extends StatelessWidget implements PreferredSizeWidget {
   Size get preferredSize => Size.fromHeight(height);
 
   static bool _canPopSafely(BuildContext context) {
-    try {
-      if (context.canPop()) return true;
-    } catch (_) {}
-    try {
-      return Navigator.of(context).canPop();
-    } catch (_) {
-      return false;
+    final goRouter = GoRouter.maybeOf(context);
+    if (goRouter != null && goRouter.canPop()) {
+      return true;
     }
+    return Navigator.maybeOf(context)?.canPop() ?? false;
   }
 
   static void _popSafely(BuildContext context) {
-    try {
-      if (context.canPop()) {
-        context.pop();
-        return;
-      }
-    } catch (_) {}
-    try {
-      if (Navigator.of(context).canPop()) {
-        Navigator.of(context).pop();
-      }
-    } catch (_) {}
+    final goRouter = GoRouter.maybeOf(context);
+    if (goRouter != null && goRouter.canPop()) {
+      goRouter.pop();
+      return;
+    }
+    final navigator = Navigator.maybeOf(context);
+    if (navigator != null && navigator.canPop()) {
+      navigator.pop();
+    }
   }
 
   @override

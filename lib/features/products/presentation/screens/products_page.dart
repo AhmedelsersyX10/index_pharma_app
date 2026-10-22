@@ -1,7 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:index_pharma/core/localization/app_locale_keys.dart';
 import 'package:index_pharma/core/theme/theme.dart';
@@ -29,18 +28,6 @@ import '../widgets/products_loading_skeleton.dart';
 
 /// Customer Browse screen conforming to Stitch B3 & B5 designs, Clean Architecture,
 /// and project design guidelines.
-///
-/// Features:
-/// 1. Unified app bar with dynamic cart action button.
-/// 2. Live stock & branch availability reassurance indicator.
-/// 3. Debounced product search bar with query parameter support.
-/// 4. Category filter chips populated from [CategoriesCubit] with categoryId support.
-/// 5. 2-column responsive product grid with total products count pill.
-/// 6. Infinite scroll load-more pagination.
-/// 7. Add-to-cart using shared [CartActionHelper].
-/// 8. Reloading on active branch change.
-/// 9. Product card tap navigating to product details.
-/// 10. Customer bottom navigation with Browse tab (index 1) highlighted.
 class ProductsPage extends StatelessWidget {
   const ProductsPage({
     super.key,
@@ -65,48 +52,31 @@ class ProductsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        if (productsCubit != null)
-          BlocProvider.value(value: productsCubit!)
-        else if (GetIt.instance.isRegistered<ProductsCubit>())
-          BlocProvider<ProductsCubit>(
-            create: (context) {
-              final cubit = GetIt.instance<ProductsCubit>();
-              cubit.loadFirstPage(
-                branchId: branchId,
-                categoryId: initialCategoryId,
-                keyword: initialKeyword,
-              );
-              return cubit;
-            },
-          ),
-        if (categoriesCubit != null)
-          BlocProvider.value(value: categoriesCubit!)
-        else if (GetIt.instance.isRegistered<CategoriesCubit>())
-          BlocProvider<CategoriesCubit>(
-            create: (context) => GetIt.instance<CategoriesCubit>()..fetchCategories(),
-          ),
-        if (branchCubit != null)
-          BlocProvider.value(value: branchCubit!)
-        else if (GetIt.instance.isRegistered<BranchCubit>())
-          BlocProvider<BranchCubit>(
-            create: (context) => GetIt.instance<BranchCubit>()..fetchBranches(),
-          ),
-        if (cartCubit != null)
-          BlocProvider.value(value: cartCubit!)
-        else if (GetIt.instance.isRegistered<CartCubit>())
-          BlocProvider<CartCubit>.value(value: GetIt.instance<CartCubit>()),
-        if (authCubit != null)
-          BlocProvider.value(value: authCubit!)
-        else if (GetIt.instance.isRegistered<AuthCubit>())
-          BlocProvider<AuthCubit>.value(value: GetIt.instance<AuthCubit>()),
-      ],
-      child: _BrowseView(
-        initialCategoryId: initialCategoryId,
-        initialKeyword: initialKeyword,
-        branchId: branchId,
-      ),
+    if (productsCubit != null ||
+        categoriesCubit != null ||
+        branchCubit != null ||
+        cartCubit != null ||
+        authCubit != null) {
+      return MultiBlocProvider(
+        providers: [
+          if (productsCubit != null) BlocProvider.value(value: productsCubit!),
+          if (categoriesCubit != null) BlocProvider.value(value: categoriesCubit!),
+          if (branchCubit != null) BlocProvider.value(value: branchCubit!),
+          if (cartCubit != null) BlocProvider.value(value: cartCubit!),
+          if (authCubit != null) BlocProvider.value(value: authCubit!),
+        ],
+        child: _BrowseView(
+          initialCategoryId: initialCategoryId,
+          initialKeyword: initialKeyword,
+          branchId: branchId,
+        ),
+      );
+    }
+
+    return _BrowseView(
+      initialCategoryId: initialCategoryId,
+      initialKeyword: initialKeyword,
+      branchId: branchId,
     );
   }
 }
@@ -139,32 +109,28 @@ class _BrowseViewState extends State<_BrowseView> {
 
   void _checkInitialFetch() {
     if (!mounted) return;
-    try {
-      final branchCubit = context.read<BranchCubit>();
-      if (branchCubit.state is BranchInitial) {
-        branchCubit.fetchBranches();
-      }
-      final categoriesCubit = context.read<CategoriesCubit>();
-      if (categoriesCubit.state is CategoriesInitial) {
-        categoriesCubit.fetchCategories();
-      }
+    final branchCubit = context.read<BranchCubit>();
+    if (branchCubit.state is BranchInitial) {
+      branchCubit.fetchBranches();
+    }
+    final categoriesCubit = context.read<CategoriesCubit>();
+    if (categoriesCubit.state is CategoriesInitial) {
+      categoriesCubit.fetchCategories();
+    }
 
-      final productsCubit = context.read<ProductsCubit>();
-      if (productsCubit.state is ProductsInitial) {
-        final currentBranchId =
-            widget.branchId ??
-            (branchCubit.state is BranchLoaded
-                ? (branchCubit.state as BranchLoaded).selectedBranchId
-                : null);
+    final productsCubit = context.read<ProductsCubit>();
+    if (productsCubit.state is ProductsInitial) {
+      final currentBranchId =
+          widget.branchId ??
+          (branchCubit.state is BranchLoaded
+              ? (branchCubit.state as BranchLoaded).selectedBranchId
+              : null);
 
-        productsCubit.loadFirstPage(
-          branchId: currentBranchId,
-          categoryId: widget.initialCategoryId,
-          keyword: widget.initialKeyword,
-        );
-      }
-    } catch (_) {
-      // In isolated widget test setups without full cubit tree
+      productsCubit.loadFirstPage(
+        branchId: currentBranchId,
+        categoryId: widget.initialCategoryId,
+        keyword: widget.initialKeyword,
+      );
     }
   }
 
@@ -179,13 +145,11 @@ class _BrowseViewState extends State<_BrowseView> {
       if (branchChanged) {
         _lastLoadedBranchId = widget.branchId;
       }
-      try {
-        context.read<ProductsCubit>().loadFirstPage(
-          branchId: widget.branchId,
-          categoryId: widget.initialCategoryId,
-          keyword: widget.initialKeyword,
-        );
-      } catch (_) {}
+      context.read<ProductsCubit>().loadFirstPage(
+        branchId: widget.branchId,
+        categoryId: widget.initialCategoryId,
+        keyword: widget.initialKeyword,
+      );
     }
   }
 
@@ -194,20 +158,16 @@ class _BrowseViewState extends State<_BrowseView> {
     final maxScroll = _scrollController.position.maxScrollExtent;
     final currentScroll = _scrollController.position.pixels;
     if (maxScroll > 0 && currentScroll >= maxScroll - 250) {
-      try {
-        context.read<ProductsCubit>().loadMore();
-      } catch (_) {}
+      context.read<ProductsCubit>().loadMore();
     }
   }
 
   void _handleProtectedNav(String route) {
-    try {
-      final authCubit = context.read<AuthCubit>();
-      if (authCubit.state is! AuthAuthenticated) {
-        LoginRequiredBottomSheet.show(context, returnRoute: route);
-        return;
-      }
-    } catch (_) {}
+    final authCubit = context.read<AuthCubit>();
+    if (authCubit.state is! AuthAuthenticated) {
+      LoginRequiredBottomSheet.show(context, returnRoute: route);
+      return;
+    }
     context.go(route);
   }
 
@@ -253,9 +213,7 @@ class _BrowseViewState extends State<_BrowseView> {
         child: RefreshIndicator(
           color: AppColors.primary,
           onRefresh: () async {
-            try {
-              await context.read<ProductsCubit>().loadFirstPage();
-            } catch (_) {}
+            await context.read<ProductsCubit>().loadFirstPage();
           },
           child: CustomScrollView(
             controller: _scrollController,
@@ -275,9 +233,7 @@ class _BrowseViewState extends State<_BrowseView> {
                       ProductSearchBar(
                         initialValue: widget.initialKeyword,
                         onChanged: (keyword) {
-                          try {
-                            context.read<ProductsCubit>().onKeywordChanged(keyword);
-                          } catch (_) {}
+                          context.read<ProductsCubit>().onKeywordChanged(keyword);
                         },
                       ),
                       const SizedBox(height: AppSpacing.spaceSm),
@@ -311,23 +267,17 @@ class _BrowseViewState extends State<_BrowseView> {
       bottomNavigationBar: CustomerBottomNav(currentIndex: 1, onTap: _onBottomNavTapped),
     );
 
-    // Optionally wrap with BranchCubit listener when available in tree
-    try {
-      context.read<BranchCubit>();
-      view = BlocListener<BranchCubit, BranchState>(
-        listener: (context, state) {
-          if (state is BranchLoaded &&
-              state.selectedBranchId != null &&
-              state.selectedBranchId != _lastLoadedBranchId) {
-            _lastLoadedBranchId = state.selectedBranchId;
-            try {
-              context.read<ProductsCubit>().reloadForBranch(state.selectedBranchId!);
-            } catch (_) {}
-          }
-        },
-        child: view,
-      );
-    } catch (_) {}
+    view = BlocListener<BranchCubit, BranchState>(
+      listener: (context, state) {
+        if (state is BranchLoaded &&
+            state.selectedBranchId != null &&
+            state.selectedBranchId != _lastLoadedBranchId) {
+          _lastLoadedBranchId = state.selectedBranchId;
+          context.read<ProductsCubit>().reloadForBranch(state.selectedBranchId!);
+        }
+      },
+      child: view,
+    );
 
     return view;
   }
@@ -385,9 +335,7 @@ class _BrowseViewState extends State<_BrowseView> {
               categories: categories,
               selectedCategoryId: selectedCategory,
               onSelected: (categoryId) {
-                try {
-                  context.read<ProductsCubit>().onCategoryChanged(categoryId);
-                } catch (_) {}
+                context.read<ProductsCubit>().onCategoryChanged(categoryId);
               },
             );
           },
@@ -455,14 +403,12 @@ class _BrowseViewState extends State<_BrowseView> {
             onRetryMore: () => context.read<ProductsCubit>().loadMore(),
             onProductTap: (product) => context.push(AppRouter.productDetailsPath(product.id)),
             onAddToCart: (product) {
-              try {
-                final cartCubit = context.read<CartCubit>();
-                CartActionHelper.addProductToCart(
-                  context: context,
-                  cartCubit: cartCubit,
-                  product: product,
-                );
-              } catch (_) {}
+              final cartCubit = context.read<CartCubit>();
+              CartActionHelper.addProductToCart(
+                context: context,
+                cartCubit: cartCubit,
+                product: product,
+              );
             },
           ),
           ProductsEmpty() => _buildEmptyState(),
