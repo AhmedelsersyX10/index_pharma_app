@@ -21,6 +21,7 @@ class LanguageTopBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     return SizedBox(
       height: 48,
       child: Row(
@@ -31,7 +32,7 @@ class LanguageTopBar extends StatelessWidget {
             IconButton(
               key: const ValueKey('language_back_button'),
               icon: const Icon(Icons.arrow_forward),
-              color: AppColors.onSurfaceVariant,
+              color: colors.onSurfaceVariant,
               tooltip: MaterialLocalizations.of(context).backButtonTooltip,
               onPressed: onBack,
             )
@@ -40,14 +41,14 @@ class LanguageTopBar extends StatelessWidget {
               key: const ValueKey('language_skip_button'),
               onPressed: onSkip,
               iconAlignment: IconAlignment.end,
-              icon: const Icon(
+              icon: Icon(
                 Icons.chevron_right_rounded,
                 size: 18,
-                color: AppColors.onSurfaceVariant,
+                color: colors.onSurfaceVariant,
               ),
               label: Text(
                 AppLocaleKeys.languageSkip.tr(),
-                style: AppTypography.labelMd(color: AppColors.onSurfaceVariant),
+                style: AppTypography.labelMd(color: colors.onSurfaceVariant),
               ),
               style: TextButton.styleFrom(
                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),

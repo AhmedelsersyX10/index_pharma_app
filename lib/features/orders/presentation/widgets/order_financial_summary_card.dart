@@ -19,13 +19,14 @@ class OrderFinancialSummaryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     return Container(
       padding: const EdgeInsets.all(AppSpacing.spaceMd),
       decoration: BoxDecoration(
-        color: AppColors.canvasPure,
+        color: colors.canvasPure,
         borderRadius: BorderRadius.circular(AppRadii.xl),
-        border: Border.all(color: AppColors.borderSubtle),
-        boxShadow: AppShadows.level1,
+        border: Border.all(color: colors.borderSubtle),
+        boxShadow: context.shadowsLevel1,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -33,18 +34,18 @@ class OrderFinancialSummaryCard extends StatelessWidget {
           // Section Title
           Row(
             children: [
-              const Icon(
+              Icon(
                 Icons.receipt_long_rounded,
                 size: 20,
-                color: AppColors.primary,
+                color: colors.primary,
               ),
               const SizedBox(width: AppSpacing.spaceXs),
               Text(
                 'orders.financial_summary_title'.tr(),
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.bold,
-                  color: AppColors.onSurface,
+                  color: colors.onSurface,
                 ),
               ),
             ],
@@ -57,17 +58,17 @@ class OrderFinancialSummaryCard extends StatelessWidget {
             children: [
               Text(
                 'orders.subtotal_label'.tr(),
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 13,
-                  color: AppColors.onSurfaceVariant,
+                  color: colors.onSurfaceVariant,
                 ),
               ),
               Text(
                 '${subtotal.toStringAsFixed(2)} ${'orders.currency'.tr()}',
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.w600,
-                  color: AppColors.onSurface,
+                  color: colors.onSurface,
                 ),
               ),
             ],
@@ -78,7 +79,7 @@ class OrderFinancialSummaryCard extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(AppSpacing.spaceSm),
             decoration: BoxDecoration(
-              color: AppColors.surfaceContainerLow,
+              color: colors.surfaceContainerLow,
               borderRadius: BorderRadius.circular(AppRadii.lg),
             ),
             child: Row(
@@ -89,28 +90,28 @@ class OrderFinancialSummaryCard extends StatelessWidget {
                   children: [
                     Text(
                       'orders.total_amount_label'.tr(),
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
-                        color: AppColors.onSurface,
+                        color: colors.onSurface,
                       ),
                     ),
                     const SizedBox(height: 2),
                     Text(
                       'orders.tax_included_label'.tr(),
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 11,
-                        color: AppColors.onSurfaceVariant,
+                        color: colors.onSurfaceVariant,
                       ),
                     ),
                   ],
                 ),
                 Text(
                   '${totalAmount.toStringAsFixed(2)} ${'orders.currency'.tr()}',
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 17,
                     fontWeight: FontWeight.bold,
-                    color: AppColors.primary,
+                    color: colors.primary,
                   ),
                 ),
               ],
@@ -122,9 +123,9 @@ class OrderFinancialSummaryCard extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(AppSpacing.spaceSm),
             decoration: BoxDecoration(
-              color: AppColors.surfaceContainerLowest,
+              color: colors.surfaceContainerLowest,
               borderRadius: BorderRadius.circular(AppRadii.lg),
-              border: Border.all(color: AppColors.borderSubtle),
+              border: Border.all(color: colors.borderSubtle),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -134,14 +135,14 @@ class OrderFinancialSummaryCard extends StatelessWidget {
                     Container(
                       width: 32,
                       height: 32,
-                      decoration: const BoxDecoration(
-                        color: AppColors.brandMintSurface,
+                      decoration: BoxDecoration(
+                        color: colors.brandMintSurface,
                         shape: BoxShape.circle,
                       ),
-                      child: const Icon(
+                      child: Icon(
                         Icons.payments_rounded,
                         size: 16,
-                        color: AppColors.brandEmeraldDark,
+                        color: colors.brandEmeraldDark,
                       ),
                     ),
                     const SizedBox(width: AppSpacing.spaceSm),
@@ -150,18 +151,18 @@ class OrderFinancialSummaryCard extends StatelessWidget {
                       children: [
                         Text(
                           'orders.payment_method_label'.tr(),
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 11,
-                            color: AppColors.onSurfaceVariant,
+                            color: colors.onSurfaceVariant,
                           ),
                         ),
                         const SizedBox(height: 2),
                         Text(
                           'orders.payment_cod'.tr(),
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 13,
                             fontWeight: FontWeight.w600,
-                            color: AppColors.onSurface,
+                            color: colors.onSurface,
                           ),
                         ),
                       ],

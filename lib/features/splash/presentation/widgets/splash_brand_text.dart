@@ -11,6 +11,7 @@ class SplashBrandText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     return AnimatedBuilder(
       animation: Listenable.merge([textFade, textSlide]),
       builder: (context, child) {
@@ -29,20 +30,20 @@ class SplashBrandText extends StatelessWidget {
               children: [
                 Text(
                   AppLocaleKeys.splashBrandIndex.tr(),
-                  style: AppTypography.displayLgMobile(color: AppColors.secondary),
+                  style: AppTypography.displayLgMobile(color: colors.secondary),
                 ),
                 const SizedBox(width: 6),
                 Text(
                   AppLocaleKeys.splashBrandPharma.tr(),
-                  style: AppTypography.displayLgMobile(color: AppColors.primaryBrand),
+                  style: AppTypography.displayLgMobile(color: colors.primaryBrand),
                 ),
                 const SizedBox(width: 4),
                 Container(
                   width: 8,
                   height: 8,
                   margin: const EdgeInsets.only(top: 14),
-                  decoration: const BoxDecoration(
-                    color: AppColors.primaryBrand,
+                  decoration: BoxDecoration(
+                    color: colors.primaryBrand,
                     shape: BoxShape.circle,
                   ),
                 ),
@@ -52,7 +53,7 @@ class SplashBrandText extends StatelessWidget {
           AppSpacing.vSpaceXs,
           Text(
             AppLocaleKeys.splashSlogan.tr(),
-            style: AppTypography.bodyMd(color: AppColors.slate500),
+            style: AppTypography.bodyMd(color: colors.slate500),
           ),
         ],
       ),

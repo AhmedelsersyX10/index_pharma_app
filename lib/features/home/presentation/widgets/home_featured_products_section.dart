@@ -38,6 +38,8 @@ class HomeFeaturedProductsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -51,8 +53,8 @@ class HomeFeaturedProductsSection extends StatelessWidget {
                 Container(
                   width: 4,
                   height: 18,
-                  decoration: const BoxDecoration(
-                    color: AppColors.primary,
+                  decoration: BoxDecoration(
+                    color: colors.primary,
                     borderRadius: AppRadii.roundedFull,
                   ),
                 ),
@@ -60,7 +62,7 @@ class HomeFeaturedProductsSection extends StatelessWidget {
                 Text(
                   AppLocaleKeys.homeFeaturedTitle.tr(),
                   style: AppTypography.titleMd(
-                    color: AppColors.onSurface,
+                    color: colors.onSurface,
                   ).copyWith(
                     fontWeight: FontWeight.bold,
                   ),
@@ -72,7 +74,7 @@ class HomeFeaturedProductsSection extends StatelessWidget {
               child: Text(
                 AppLocaleKeys.homeFeaturedSubtitle.tr(),
                 style: AppTypography.labelSm(
-                  color: AppColors.onSurfaceVariant,
+                  color: colors.onSurfaceVariant,
                 ),
                 overflow: TextOverflow.ellipsis,
               ),
@@ -90,10 +92,10 @@ class HomeFeaturedProductsSection extends StatelessWidget {
               ProductsEmpty() => AppEmptyState(
                   title: AppLocaleKeys.productsEmptyTitle.tr(),
                   message: AppLocaleKeys.productsEmptyDesc.tr(),
-                  icon: const Icon(
+                  icon: Icon(
                     Icons.medication_outlined,
                     size: 32,
-                    color: AppColors.slate400,
+                    color: colors.slate400,
                   ),
                 ),
               ProductsFailure(:final message) => AppErrorView(

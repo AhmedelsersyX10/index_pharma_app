@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:go_router/go_router.dart';
 import 'package:index_pharma/core/localization/app_locale_keys.dart';
-import 'package:index_pharma/core/theme/app_colors.dart';
-import 'package:index_pharma/core/theme/app_spacing.dart';
+import 'package:index_pharma/core/theme/theme.dart';
 import 'package:index_pharma/core/utils/app_router.dart';
 import 'package:index_pharma/core/widgets/app_page_bar.dart';
 import '../../domain/entities/prescription_entity.dart';
@@ -37,7 +36,7 @@ class _PrescriptionSubmittedScreenState
       SnackBar(
         content: Text(AppLocaleKeys.prescriptionsCopied.tr()),
         duration: const Duration(seconds: 2),
-        backgroundColor: AppColors.primary,
+        backgroundColor: context.colors.primary,
         behavior: SnackBarBehavior.floating,
       ),
     );
@@ -48,6 +47,7 @@ class _PrescriptionSubmittedScreenState
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     final dateStr = widget.prescription.createdAt != null
         ? DateFormat('d MMMM yyyy - hh:mm a', context.locale.languageCode)
             .format(widget.prescription.createdAt!)
@@ -55,7 +55,7 @@ class _PrescriptionSubmittedScreenState
             .format(DateTime.now());
 
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: colors.background,
       appBar: AppPageBar(
         title: AppLocaleKeys.prescriptionsConfirmationBadge.tr(),
         onBackPressed: () => context.go(AppRouter.kStoreView),
@@ -75,8 +75,8 @@ class _PrescriptionSubmittedScreenState
                   Container(
                     width: 80,
                     height: 80,
-                    decoration: const BoxDecoration(
-                      color: AppColors.brandMintSurface,
+                    decoration: BoxDecoration(
+                      color: colors.brandMintSurface,
                       shape: BoxShape.circle,
                     ),
                     child: Center(
@@ -84,12 +84,12 @@ class _PrescriptionSubmittedScreenState
                         width: 56,
                         height: 56,
                         decoration: BoxDecoration(
-                          color: AppColors.primary.withValues(alpha: 0.15),
+                          color: colors.primary.withValues(alpha: 0.15),
                           shape: BoxShape.circle,
                         ),
-                        child: const Icon(
+                        child: Icon(
                           Icons.check_circle,
-                          color: AppColors.primary,
+                          color: colors.primary,
                           size: 38,
                         ),
                       ),
@@ -102,7 +102,7 @@ class _PrescriptionSubmittedScreenState
                       vertical: 4,
                     ),
                     decoration: BoxDecoration(
-                      color: AppColors.brandMintSurface,
+                      color: colors.brandMintSurface,
                       borderRadius: BorderRadius.circular(9999),
                     ),
                     child: Row(
@@ -111,18 +111,18 @@ class _PrescriptionSubmittedScreenState
                         Container(
                           width: 6,
                           height: 6,
-                          decoration: const BoxDecoration(
-                            color: AppColors.brandEmeraldDark,
+                          decoration: BoxDecoration(
+                            color: colors.brandEmeraldDark,
                             shape: BoxShape.circle,
                           ),
                         ),
                         const SizedBox(width: 6),
                         Text(
                           AppLocaleKeys.prescriptionsConfirmationBadge.tr(),
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 12,
                             fontWeight: FontWeight.w600,
-                            color: AppColors.brandEmeraldDark,
+                            color: colors.brandEmeraldDark,
                           ),
                         ),
                       ],
@@ -131,19 +131,19 @@ class _PrescriptionSubmittedScreenState
                   const SizedBox(height: 8),
                   Text(
                     AppLocaleKeys.prescriptionsConfirmationTitle.tr(),
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w800,
-                      color: AppColors.onSurface,
+                      color: colors.onSurface,
                     ),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 6),
                   Text(
                     AppLocaleKeys.prescriptionsConfirmationDesc.tr(),
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 13,
-                      color: AppColors.neutral,
+                      color: colors.neutral,
                       height: 1.5,
                     ),
                     textAlign: TextAlign.center,
@@ -157,15 +157,9 @@ class _PrescriptionSubmittedScreenState
             Container(
               padding: const EdgeInsets.all(AppSpacing.spaceMd),
               decoration: BoxDecoration(
-                color: AppColors.canvasPure,
+                color: colors.canvasPure,
                 borderRadius: BorderRadius.circular(16),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Color(0x0A0F172A),
-                    blurRadius: 8,
-                    offset: Offset(0, 2),
-                  ),
-                ],
+                boxShadow: context.shadowsLevel1,
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -177,7 +171,7 @@ class _PrescriptionSubmittedScreenState
                       vertical: 10,
                     ),
                     decoration: BoxDecoration(
-                      color: AppColors.surfaceContainerLow,
+                      color: colors.surfaceContainerLow,
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Row(
@@ -188,18 +182,18 @@ class _PrescriptionSubmittedScreenState
                           children: [
                             Text(
                               AppLocaleKeys.prescriptionsRxRefLabel.tr(),
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontSize: 11,
-                                color: AppColors.neutral,
+                                color: colors.neutral,
                               ),
                             ),
                             const SizedBox(height: 2),
                             Text(
                               widget.prescription.prescriptionNumber,
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w700,
-                                color: AppColors.onSurface,
+                                color: colors.onSurface,
                                 fontFamily: 'monospace',
                               ),
                             ),
@@ -218,8 +212,8 @@ class _PrescriptionSubmittedScreenState
                             style: const TextStyle(fontSize: 12),
                           ),
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.canvasPure,
-                            foregroundColor: AppColors.primary,
+                            backgroundColor: colors.canvasPure,
+                            foregroundColor: colors.primary,
                             elevation: 0,
                             padding: const EdgeInsets.symmetric(
                               horizontal: 10,
@@ -243,32 +237,32 @@ class _PrescriptionSubmittedScreenState
                     children: [
                       Row(
                         children: [
-                          const Icon(
+                          Icon(
                             Icons.calendar_today,
                             size: 16,
-                            color: AppColors.neutral,
+                            color: colors.neutral,
                           ),
                           const SizedBox(width: 6),
                           Text(
                             AppLocaleKeys.prescriptionsDateLabel.tr(),
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 13,
-                              color: AppColors.onSurfaceVariant,
+                              color: colors.onSurfaceVariant,
                             ),
                           ),
                         ],
                       ),
                       Text(
                         dateStr,
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.w600,
-                          color: AppColors.onSurface,
+                          color: colors.onSurface,
                         ),
                       ),
                     ],
                   ),
-                  const Divider(height: 18, color: Color(0xFFF1F5F9)),
+                  Divider(height: 18, color: colors.outlineVariant.withValues(alpha: 0.3)),
 
                   // Status
                   Row(
@@ -276,17 +270,17 @@ class _PrescriptionSubmittedScreenState
                     children: [
                       Row(
                         children: [
-                          const Icon(
+                          Icon(
                             Icons.hourglass_top,
                             size: 16,
-                            color: AppColors.neutral,
+                            color: colors.neutral,
                           ),
                           const SizedBox(width: 6),
                           Text(
                             AppLocaleKeys.prescriptionsStatusLabel.tr(),
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 13,
-                              color: AppColors.onSurfaceVariant,
+                              color: colors.onSurfaceVariant,
                             ),
                           ),
                         ],
@@ -306,39 +300,34 @@ class _PrescriptionSubmittedScreenState
             Container(
               padding: const EdgeInsets.all(AppSpacing.spaceMd),
               decoration: BoxDecoration(
-                color: AppColors.canvasPure,
+                color: colors.canvasPure,
                 borderRadius: BorderRadius.circular(16),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Color(0x0A0F172A),
-                    blurRadius: 8,
-                    offset: Offset(0, 2),
-                  ),
-                ],
+                boxShadow: context.shadowsLevel1,
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     children: [
-                      const Icon(
+                      Icon(
                         Icons.help_outline,
                         size: 20,
-                        color: AppColors.primary,
+                        color: colors.primary,
                       ),
                       const SizedBox(width: 6),
                       Text(
                         AppLocaleKeys.prescriptionsStepsTitle.tr(),
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w700,
-                          color: AppColors.onSurface,
+                          color: colors.onSurface,
                         ),
                       ),
                     ],
                   ),
                   const SizedBox(height: AppSpacing.spaceSm),
                   _buildProgressItem(
+                    colors: colors,
                     stepNumber: AppLocaleKeys.prescriptionsStepNum1.tr(),
                     title: AppLocaleKeys.prescriptionsSubmittedStep1Title.tr(),
                     desc: AppLocaleKeys.prescriptionsStep1.tr(),
@@ -346,6 +335,7 @@ class _PrescriptionSubmittedScreenState
                   ),
                   const SizedBox(height: 10),
                   _buildProgressItem(
+                    colors: colors,
                     stepNumber: AppLocaleKeys.prescriptionsStepNum2.tr(),
                     title: AppLocaleKeys.prescriptionsSubmittedStep2Title.tr(),
                     desc: AppLocaleKeys.prescriptionsStep2.tr(),
@@ -353,6 +343,7 @@ class _PrescriptionSubmittedScreenState
                   ),
                   const SizedBox(height: 10),
                   _buildProgressItem(
+                    colors: colors,
                     stepNumber: AppLocaleKeys.prescriptionsStepNum3.tr(),
                     title: AppLocaleKeys.prescriptionsSubmittedStep3Title.tr(),
                     desc: AppLocaleKeys.prescriptionsStep3.tr(),
@@ -370,17 +361,17 @@ class _PrescriptionSubmittedScreenState
                 onPressed: () {
                   context.pushReplacement(AppRouter.kPrescriptionView);
                 },
-                icon: const Icon(Icons.assignment, size: 20, color: Colors.white),
+                icon: Icon(Icons.assignment, size: 20, color: colors.onPrimary),
                 label: Text(
                   AppLocaleKeys.prescriptionsViewMyPrescriptionsBtn.tr(),
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w700,
-                    color: Colors.white,
+                    color: colors.onPrimary,
                   ),
                 ),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.primary,
+                  backgroundColor: colors.primary,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
@@ -393,21 +384,21 @@ class _PrescriptionSubmittedScreenState
               height: 48,
               child: OutlinedButton.icon(
                 onPressed: () => context.go(AppRouter.kStoreView),
-                icon: const Icon(
+                icon: Icon(
                   Icons.storefront,
                   size: 20,
-                  color: AppColors.onSurface,
+                  color: colors.onSurface,
                 ),
                 label: Text(
                   AppLocaleKeys.prescriptionsBackToHomeBtn.tr(),
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
-                    color: AppColors.onSurface,
+                    color: colors.onSurface,
                   ),
                 ),
                 style: OutlinedButton.styleFrom(
-                  side: const BorderSide(color: AppColors.outlineVariant),
+                  side: BorderSide(color: colors.outlineVariant),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
@@ -422,6 +413,7 @@ class _PrescriptionSubmittedScreenState
   }
 
   Widget _buildProgressItem({
+    required AppColorsExtension colors,
     required String stepNumber,
     required String title,
     required String desc,
@@ -433,14 +425,14 @@ class _PrescriptionSubmittedScreenState
         CircleAvatar(
           radius: 12,
           backgroundColor: isCurrent
-              ? AppColors.primary
-              : AppColors.surfaceContainerHigh,
+              ? colors.primary
+              : colors.surfaceContainerHigh,
           child: Text(
             stepNumber,
             style: TextStyle(
               fontSize: 11,
               fontWeight: FontWeight.w700,
-              color: isCurrent ? Colors.white : AppColors.onSurface,
+              color: isCurrent ? colors.onPrimary : colors.onSurface,
             ),
           ),
         ),
@@ -454,15 +446,15 @@ class _PrescriptionSubmittedScreenState
                 style: TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.w700,
-                  color: isCurrent ? AppColors.primary : AppColors.onSurface,
+                  color: isCurrent ? colors.primary : colors.onSurface,
                 ),
               ),
               const SizedBox(height: 2),
               Text(
                 desc,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 12,
-                  color: AppColors.neutral,
+                  color: colors.neutral,
                   height: 1.4,
                 ),
               ),

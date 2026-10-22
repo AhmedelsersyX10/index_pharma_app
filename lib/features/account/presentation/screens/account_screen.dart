@@ -76,12 +76,13 @@ class AccountScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     final activeAuthCubit = _resolveAuthCubit(context);
     final activeStorageService = _resolveStorageService(context);
     final activeBranchCubit = _resolveBranchCubit(context);
 
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: colors.background,
       appBar: AppPageBar(
         title: AppLocaleKeys.accountTitle.tr(),
       ),
@@ -89,9 +90,9 @@ class AccountScreen extends StatelessWidget {
         bloc: activeAuthCubit,
         builder: (context, authState) {
           if (authState is AuthLoading) {
-            return const Center(
+            return Center(
               child: CircularProgressIndicator(
-                color: AppColors.primary,
+                color: colors.primary,
               ),
             );
           }
@@ -174,15 +175,15 @@ class AccountScreen extends StatelessWidget {
             child: ElevatedButton.icon(
               key: const ValueKey('account_logout_button'),
               onPressed: () => _handleLogout(context, authCubit),
-              icon: const Icon(Icons.logout_rounded, color: AppColors.error, size: 20),
+              icon: Icon(Icons.logout_rounded, color: context.colors.error, size: 20),
               label: Text(
                 AppLocaleKeys.accountLogoutBtn.tr(),
-                style: AppTypography.labelLg(color: AppColors.error).copyWith(
+                style: AppTypography.labelLg(color: context.colors.error).copyWith(
                   fontWeight: FontWeight.bold,
                 ),
               ),
               style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.errorContainer,
+                backgroundColor: context.colors.errorContainer,
                 elevation: 0,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
@@ -196,7 +197,7 @@ class AccountScreen extends StatelessWidget {
           Text(
             AppLocaleKeys.accountHotlineFooter.tr(),
             style: AppTypography.bodySm(
-              color: AppColors.onSurfaceVariant,
+              color: context.colors.onSurfaceVariant,
             ),
             textAlign: TextAlign.center,
           ),
@@ -204,7 +205,7 @@ class AccountScreen extends StatelessWidget {
           Text(
             AppLocaleKeys.accountVersionFooter.tr(),
             style: AppTypography.labelSm(
-              color: AppColors.outline,
+              color: context.colors.outline,
             ),
             textAlign: TextAlign.center,
           ),

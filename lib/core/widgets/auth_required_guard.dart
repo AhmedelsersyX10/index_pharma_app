@@ -52,7 +52,7 @@ class AuthRequiredGuard extends StatelessWidget {
 
     return fallback ??
         Scaffold(
-          backgroundColor: AppColors.background,
+          backgroundColor: context.colors.background,
           appBar: const AppPageBar.transparent(),
           body: SafeArea(
             child: Center(

@@ -27,6 +27,7 @@ class AccountProfileCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     final initials = _getInitials(user.name);
     final displayPhone = user.phone?.trim().isNotEmpty == true
         ? user.phone!
@@ -37,10 +38,10 @@ class AccountProfileCard extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.surfaceContainerLowest,
+        color: colors.surfaceContainerLowest,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: AppColors.borderSubtle.withValues(alpha: 0.6),
+          color: colors.borderSubtle.withValues(alpha: 0.6),
           width: 1,
         ),
         boxShadow: const [
@@ -66,15 +67,15 @@ class AccountProfileCard extends StatelessWidget {
                   Container(
                     width: 60,
                     height: 60,
-                    decoration: const BoxDecoration(
-                      color: AppColors.brandMintSurface,
+                    decoration: BoxDecoration(
+                      color: colors.brandMintSurface,
                       shape: BoxShape.circle,
                     ),
                     alignment: Alignment.center,
                     child: Text(
                       initials,
                       style: AppTypography.headlineMd(
-                        color: AppColors.primary,
+                        color: colors.primary,
                       ),
                     ),
                   ),
@@ -85,10 +86,10 @@ class AccountProfileCard extends StatelessWidget {
                       width: 22,
                       height: 22,
                       decoration: BoxDecoration(
-                        color: AppColors.primary,
+                        color: colors.primary,
                         shape: BoxShape.circle,
                         border: Border.all(
-                          color: AppColors.surfaceContainerLowest,
+                          color: colors.surfaceContainerLowest,
                           width: 2,
                         ),
                       ),
@@ -111,7 +112,7 @@ class AccountProfileCard extends StatelessWidget {
                     Text(
                       user.name,
                       style: AppTypography.titleLg(
-                        color: AppColors.onSurface,
+                        color: colors.onSurface,
                       ),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
@@ -123,27 +124,27 @@ class AccountProfileCard extends StatelessWidget {
                         vertical: 3,
                       ),
                       decoration: BoxDecoration(
-                        color: AppColors.brandMintSurface,
+                        color: colors.brandMintSurface,
                         borderRadius: BorderRadius.circular(20),
                         border: Border.all(
-                          color: AppColors.brandMintBorder,
+                          color: colors.brandMintBorder,
                           width: 1,
                         ),
                       ),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          const Icon(
+                          Icon(
                             Icons.verified_rounded,
                             size: 14,
-                            color: AppColors.brandEmeraldDark,
+                            color: colors.brandEmeraldDark,
                           ),
                           const SizedBox(width: 4),
                           Flexible(
                             child: Text(
                               AppLocaleKeys.accountVerifiedBadge.tr(),
                               style: AppTypography.labelSm(
-                                color: AppColors.brandEmeraldDark,
+                                color: colors.brandEmeraldDark,
                               ),
                               overflow: TextOverflow.ellipsis,
                             ),
@@ -158,7 +159,7 @@ class AccountProfileCard extends StatelessWidget {
           ),
 
           const SizedBox(height: 16),
-          const Divider(height: 1, color: AppColors.surfaceContainerLow),
+          Divider(height: 1, color: colors.surfaceContainerLow),
           const SizedBox(height: 12),
 
           // Email Row
@@ -202,7 +203,7 @@ class AccountProfileCard extends StatelessWidget {
                 style: AppTypography.labelLg(color: Colors.white),
               ),
               style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.primary,
+                backgroundColor: colors.primary,
                 foregroundColor: Colors.white,
                 elevation: 0,
                 shape: RoundedRectangleBorder(
@@ -234,10 +235,12 @@ class _DetailRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
       decoration: BoxDecoration(
-        color: AppColors.surfaceSubtle,
+        color: colors.surfaceSubtle,
         borderRadius: BorderRadius.circular(8),
       ),
       child: Row(
@@ -247,11 +250,11 @@ class _DetailRow extends StatelessWidget {
           Container(
             width: 32,
             height: 32,
-            decoration: const BoxDecoration(
-              color: AppColors.surfaceContainer,
+            decoration: BoxDecoration(
+              color: colors.surfaceContainer,
               shape: BoxShape.circle,
             ),
-            child: Icon(icon, size: 18, color: AppColors.primary),
+            child: Icon(icon, size: 18, color: colors.primary),
           ),
           const SizedBox(width: 10),
           Expanded(
@@ -261,7 +264,7 @@ class _DetailRow extends StatelessWidget {
                 Text(
                   label,
                   style: AppTypography.labelSm(
-                    color: AppColors.onSurfaceVariant,
+                    color: colors.onSurfaceVariant,
                   ),
                 ),
                 const SizedBox(height: 1),
@@ -269,7 +272,7 @@ class _DetailRow extends StatelessWidget {
                   value,
                   textDirection: isLtrValue ? TextDirection.ltr : null,
                   style: AppTypography.bodySm(
-                    color: AppColors.onSurface,
+                    color: colors.onSurface,
                   ).copyWith(fontWeight: FontWeight.w500),
                   maxLines: isMultiline ? 3 : 1,
                   overflow: TextOverflow.ellipsis,

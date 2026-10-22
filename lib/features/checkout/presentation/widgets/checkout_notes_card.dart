@@ -15,13 +15,15 @@ class CheckoutNotesCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
+
     return Container(
       padding: const EdgeInsets.all(AppSpacing.spaceMd),
       decoration: BoxDecoration(
-        color: AppColors.canvasPure,
+        color: colors.canvasPure,
         borderRadius: BorderRadius.circular(AppRadii.xl),
-        boxShadow: AppShadows.level1,
-        border: Border.all(color: AppColors.borderSubtle),
+        boxShadow: context.shadowsLevel1,
+        border: Border.all(color: colors.borderSubtle),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -31,13 +33,13 @@ class CheckoutNotesCard extends StatelessWidget {
               Container(
                 width: 28,
                 height: 28,
-                decoration: const BoxDecoration(
-                  color: AppColors.secondaryContainer,
+                decoration: BoxDecoration(
+                  color: colors.secondaryContainer,
                   shape: BoxShape.circle,
                 ),
-                child: const Icon(
+                child: Icon(
                   Icons.edit_note_rounded,
-                  color: AppColors.primary,
+                  color: colors.primary,
                   size: 18,
                 ),
               ),
@@ -45,10 +47,10 @@ class CheckoutNotesCard extends StatelessWidget {
               Expanded(
                 child: Text(
                   'checkout.notes_title'.tr(),
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
-                    color: AppColors.onSurface,
+                    color: colors.onSurface,
                   ),
                 ),
               ),
@@ -57,7 +59,7 @@ class CheckoutNotesCard extends StatelessWidget {
           const SizedBox(height: AppSpacing.spaceSm),
           Container(
             decoration: BoxDecoration(
-              color: AppColors.surfaceSubtle,
+              color: colors.surfaceSubtle,
               borderRadius: BorderRadius.circular(AppRadii.md),
             ),
             child: TextField(
@@ -65,9 +67,9 @@ class CheckoutNotesCard extends StatelessWidget {
               controller: controller,
               onChanged: onChanged,
               maxLines: 2,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 14,
-                color: AppColors.onSurface,
+                color: colors.onSurface,
               ),
               decoration: InputDecoration(
                 contentPadding: const EdgeInsets.all(AppSpacing.spaceSm),
@@ -75,7 +77,7 @@ class CheckoutNotesCard extends StatelessWidget {
                 hintText: 'checkout.notes_hint'.tr(),
                 hintStyle: TextStyle(
                   fontSize: 13,
-                  color: AppColors.onSurfaceVariant.withAlpha(128),
+                  color: colors.onSurfaceVariant.withAlpha(128),
                 ),
               ),
             ),

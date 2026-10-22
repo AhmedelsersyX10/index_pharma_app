@@ -28,6 +28,7 @@ class ProductsGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -60,23 +61,23 @@ class ProductsGrid extends StatelessWidget {
               horizontal: AppSpacing.spaceMd,
               vertical: AppSpacing.spaceSm,
             ),
-            decoration: const BoxDecoration(
-              color: AppColors.surfaceContainer,
+            decoration: BoxDecoration(
+              color: colors.surfaceContainer,
               borderRadius: AppRadii.roundedXl,
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const SizedBox(
+                SizedBox(
                   width: 16,
                   height: 16,
-                  child: CircularProgressIndicator(strokeWidth: 2, color: AppColors.primary),
+                  child: CircularProgressIndicator(strokeWidth: 2, color: colors.primary),
                 ),
                 const SizedBox(width: AppSpacing.spaceXs),
                 Text(
                   AppLocaleKeys.productsLoadingMore.tr(),
                   style: AppTypography.labelMd(
-                    color: AppColors.primary,
+                    color: colors.primary,
                   ).copyWith(fontWeight: FontWeight.w600),
                 ),
               ],
@@ -94,7 +95,7 @@ class ProductsGrid extends StatelessWidget {
                   defaultFallback: AppLocaleKeys.commonRetry.tr(),
                 ),
                 style: AppTypography.bodySm(
-                  color: AppColors.error,
+                  color: colors.error,
                 ).copyWith(fontWeight: FontWeight.w600),
               ),
             ),

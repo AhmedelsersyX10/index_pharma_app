@@ -103,51 +103,52 @@ class AppBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     final (Color bgColor, Color borderColor, Color textColor) = switch (tone) {
       AppBadgeTone.warning => (
-        AppColors.badgeWarningBg,
+        colors.badgeWarningBg,
         Colors.transparent,
-        AppColors.badgeWarningText,
+        colors.badgeWarningText,
       ),
       AppBadgeTone.info => (
-        AppColors.badgeInfoBg,
+        colors.badgeInfoBg,
         Colors.transparent,
-        AppColors.badgeInfoText,
+        colors.badgeInfoText,
       ),
       AppBadgeTone.purple => (
-        AppColors.badgePurpleBg,
+        colors.badgePurpleBg,
         Colors.transparent,
-        AppColors.badgePurpleText,
+        colors.badgePurpleText,
       ),
       AppBadgeTone.success => (
-        AppColors.badgeSuccessBg,
+        colors.badgeSuccessBg,
         Colors.transparent,
-        AppColors.badgeSuccessText,
+        colors.badgeSuccessText,
       ),
       AppBadgeTone.error => (
-        AppColors.badgeErrorBg,
+        colors.badgeErrorBg,
         Colors.transparent,
-        AppColors.badgeErrorText,
+        colors.badgeErrorText,
       ),
       AppBadgeTone.trust => (
-        AppColors.brandMintSurface,
-        AppColors.brandMintBorder,
-        AppColors.brandEmeraldDark,
+        colors.brandMintSurface,
+        colors.brandMintBorder,
+        colors.brandEmeraldDark,
       ),
       AppBadgeTone.offer => (
-        AppColors.medicalAmber,
+        colors.medicalAmber,
         Colors.transparent,
         Colors.white,
       ),
       AppBadgeTone.urgent => (
-        AppColors.medicalRed,
+        colors.medicalRed,
         Colors.transparent,
         Colors.white,
       ),
       AppBadgeTone.neutral => (
-        AppColors.slate100,
-        AppColors.slate200,
-        AppColors.slate700,
+        colors.slate100,
+        colors.slate200,
+        colors.slate700,
       ),
     };
 

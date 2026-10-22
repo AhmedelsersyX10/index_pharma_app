@@ -64,28 +64,30 @@ class _RegisterFormState extends State<RegisterForm> {
     }
   }
 
-  Widget _buildOptionalBadge() {
+  Widget _buildOptionalBadge(BuildContext context) {
+    final colors = context.colors;
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-      decoration: const BoxDecoration(
-        color: AppColors.surfaceContainerLow,
+      decoration: BoxDecoration(
+        color: colors.surfaceContainerLow,
         borderRadius: AppRadii.roundedFull,
       ),
       child: Text(
         AppLocaleKeys.authOptionalBadge.tr(),
-        style: AppTypography.labelSm(color: AppColors.secondary),
+        style: AppTypography.labelSm(color: colors.secondary),
       ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     return Container(
       padding: const EdgeInsets.all(AppSpacing.spaceLg),
-      decoration: const BoxDecoration(
-        color: AppColors.canvasPure,
+      decoration: BoxDecoration(
+        color: colors.canvasPure,
         borderRadius: AppRadii.roundedXl,
-        boxShadow: AppShadows.level1,
+        boxShadow: context.shadowsLevel1,
       ),
       child: Form(
         key: _formKey,
@@ -99,9 +101,9 @@ class _RegisterFormState extends State<RegisterForm> {
               hintText: AppLocaleKeys.authNameHint.tr(),
               textInputAction: TextInputAction.next,
               validator: (val) => AuthValidators.validateName(val)?.tr(),
-              prefix: const Padding(
-                padding: EdgeInsetsDirectional.only(start: 12, end: 8),
-                child: Icon(Icons.person_outline_rounded, color: AppColors.slate400, size: 20),
+              prefix: Padding(
+                padding: const EdgeInsetsDirectional.only(start: 12, end: 8),
+                child: Icon(Icons.person_outline_rounded, color: colors.slate400, size: 20),
               ),
             ),
             const SizedBox(height: AppSpacing.spaceMd),
@@ -115,9 +117,9 @@ class _RegisterFormState extends State<RegisterForm> {
               textInputAction: TextInputAction.next,
               textDirection: TextDirection.ltr,
               validator: (val) => AuthValidators.validateEmail(val)?.tr(),
-              prefix: const Padding(
-                padding: EdgeInsetsDirectional.only(start: 12, end: 8),
-                child: Icon(Icons.mail_outline_rounded, color: AppColors.slate400, size: 20),
+              prefix: Padding(
+                padding: const EdgeInsetsDirectional.only(start: 12, end: 8),
+                child: Icon(Icons.mail_outline_rounded, color: colors.slate400, size: 20),
               ),
             ),
             const SizedBox(height: AppSpacing.spaceMd),
@@ -126,14 +128,14 @@ class _RegisterFormState extends State<RegisterForm> {
             AppTextField(
               controller: _phoneController,
               label: AppLocaleKeys.authPhoneLabel.tr(),
-              trailingLabelWidget: _buildOptionalBadge(),
+              trailingLabelWidget: _buildOptionalBadge(context),
               hintText: AppLocaleKeys.authPhoneHint.tr(),
               keyboardType: TextInputType.phone,
               textInputAction: TextInputAction.next,
               textDirection: TextDirection.ltr,
               helper: Text(
                 AppLocaleKeys.authPhoneNote.tr(),
-                style: AppTypography.bodySm(color: AppColors.slate500),
+                style: AppTypography.bodySm(color: colors.slate500),
               ),
               prefix: Padding(
                 padding: const EdgeInsetsDirectional.only(start: 12, end: 8),
@@ -144,7 +146,7 @@ class _RegisterFormState extends State<RegisterForm> {
                     const SizedBox(width: 4),
                     Text(
                       '+20',
-                      style: AppTypography.labelMd(color: AppColors.onSurface),
+                      style: AppTypography.labelMd(color: colors.onSurface),
                       textDirection: TextDirection.ltr,
                     ),
                   ],
@@ -157,13 +159,13 @@ class _RegisterFormState extends State<RegisterForm> {
             AppTextField(
               controller: _addressController,
               label: AppLocaleKeys.authAddressLabel.tr(),
-              trailingLabelWidget: _buildOptionalBadge(),
+              trailingLabelWidget: _buildOptionalBadge(context),
               hintText: AppLocaleKeys.authAddressHint.tr(),
               maxLines: 2,
               textInputAction: TextInputAction.next,
-              prefix: const Padding(
-                padding: EdgeInsetsDirectional.only(start: 12, end: 8),
-                child: Icon(Icons.pin_drop_outlined, color: AppColors.slate400, size: 20),
+              prefix: Padding(
+                padding: const EdgeInsetsDirectional.only(start: 12, end: 8),
+                child: Icon(Icons.pin_drop_outlined, color: colors.slate400, size: 20),
               ),
             ),
             const SizedBox(height: AppSpacing.spaceMd),
@@ -177,11 +179,11 @@ class _RegisterFormState extends State<RegisterForm> {
               validator: (val) => AuthValidators.validatePassword(val)?.tr(),
               helper: Row(
                 children: [
-                  const Icon(Icons.lock_clock_outlined, size: 14, color: AppColors.primaryBrand),
+                  Icon(Icons.lock_clock_outlined, size: 14, color: colors.primaryBrand),
                   const SizedBox(width: AppSpacing.space2xs),
                   Text(
                     AppLocaleKeys.authPasswordRequirement.tr(),
-                    style: AppTypography.bodySm(color: AppColors.slate500),
+                    style: AppTypography.bodySm(color: colors.slate500),
                   ),
                 ],
               ),

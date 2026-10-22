@@ -29,18 +29,19 @@ class OnboardingBottomSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     final isFirstPage = currentPage == 0;
     final isLastPage = currentPage == totalPages - 1;
     final isRtl = context.locale.languageCode == 'ar';
 
     final forwardIcon = Transform.scale(
       scaleX: isRtl ? -1 : 1,
-      child: const Icon(Icons.arrow_forward_rounded, color: Colors.white, size: 18),
+      child: Icon(Icons.arrow_forward_rounded, color: colors.onPrimary, size: 18),
     );
 
     final backIcon = Transform.scale(
       scaleX: isRtl ? -1 : 1,
-      child: const Icon(Icons.arrow_back_rounded, color: AppColors.slate700, size: 20),
+      child: Icon(Icons.arrow_back_rounded, color: colors.slate700, size: 20),
     );
 
     return Padding(
@@ -72,7 +73,7 @@ class OnboardingBottomSection extends StatelessWidget {
                 children: [
                   // Circular Back button
                   Material(
-                    color: AppColors.slate100,
+                    color: colors.slate100,
                     shape: const CircleBorder(),
                     child: InkWell(
                       onTap: onPrevious,
@@ -82,7 +83,7 @@ class OnboardingBottomSection extends StatelessWidget {
                         height: 52,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          border: Border.all(color: AppColors.slate200, width: 1),
+                          border: Border.all(color: colors.slate200, width: 1),
                         ),
                         child: backIcon,
                       ),
@@ -120,13 +121,13 @@ class OnboardingBottomSection extends StatelessWidget {
               children: [
                 Text(
                   AppLocaleKeys.onboardingAlreadyHaveAccount.tr(),
-                  style: AppTypography.bodyMd(color: AppColors.slate500),
+                  style: AppTypography.bodyMd(color: colors.slate500),
                 ),
                 GestureDetector(
                   onTap: onSignIn,
                   child: Text(
                     AppLocaleKeys.onboardingSignIn.tr(),
-                    style: AppTypography.labelLg(color: AppColors.primaryBrand),
+                    style: AppTypography.labelLg(color: colors.primaryBrand),
                   ),
                 ),
               ],
@@ -138,7 +139,7 @@ class OnboardingBottomSection extends StatelessWidget {
                 onTap: onExplore,
                 child: Text(
                   AppLocaleKeys.onboardingStartExploring.tr(),
-                  style: AppTypography.labelMd(color: AppColors.slate500),
+                  style: AppTypography.labelMd(color: colors.slate500),
                 ),
               ),
             ],

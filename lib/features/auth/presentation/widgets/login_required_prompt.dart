@@ -16,7 +16,7 @@ class LoginRequiredBottomSheet {
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
-      barrierColor: AppColors.inverseSurface.withValues(alpha: 0.5),
+      barrierColor: context.colors.inverseSurface.withValues(alpha: 0.5),
       builder: (sheetContext) => LoginRequiredPrompt(
         returnRoute: returnRoute,
         isBottomSheet: true,
@@ -96,6 +96,7 @@ class LoginRequiredPrompt extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     final content = SingleChildScrollView(
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -112,7 +113,7 @@ class LoginRequiredPrompt extends StatelessWidget {
           Text(
             AppLocaleKeys.authLoginRequiredTitle.tr(),
             textAlign: TextAlign.center,
-            style: AppTypography.headlineLgMobile(color: AppColors.onSurface),
+            style: AppTypography.headlineLgMobile(color: colors.onSurface),
           ),
           const SizedBox(height: AppSpacing.spaceXs),
           Padding(
@@ -120,7 +121,7 @@ class LoginRequiredPrompt extends StatelessWidget {
             child: Text(
               AppLocaleKeys.authLoginRequiredDesc.tr(),
               textAlign: TextAlign.center,
-              style: AppTypography.bodyMd(color: AppColors.secondaryMuted),
+              style: AppTypography.bodyMd(color: colors.secondaryMuted),
             ),
           ),
           const SizedBox(height: AppSpacing.spaceLg),
@@ -139,13 +140,13 @@ class LoginRequiredPrompt extends StatelessWidget {
 
     if (isBottomSheet) {
       return Container(
-        decoration: const BoxDecoration(
-          color: AppColors.canvasPure,
-          borderRadius: BorderRadius.only(
+        decoration: BoxDecoration(
+          color: colors.canvasPure,
+          borderRadius: const BorderRadius.only(
             topLeft: Radius.circular(28.0),
             topRight: Radius.circular(28.0),
           ),
-          boxShadow: AppShadows.level3,
+          boxShadow: context.shadowsLevel3,
         ),
         padding: const EdgeInsets.fromLTRB(
           AppSpacing.spaceLg,
@@ -159,10 +160,10 @@ class LoginRequiredPrompt extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.canvasPure,
+        color: colors.canvasPure,
         borderRadius: AppRadii.roundedXl,
-        boxShadow: AppShadows.level1,
-        border: Border.all(color: AppColors.slate200),
+        boxShadow: context.shadowsLevel1,
+        border: Border.all(color: colors.slate200),
       ),
       padding: const EdgeInsets.all(AppSpacing.spaceLg),
       child: content,
@@ -181,7 +182,7 @@ class _TactileDragHandle extends StatelessWidget {
         width: 44,
         height: 4,
         decoration: BoxDecoration(
-          color: AppColors.outlineVariant.withValues(alpha: 0.6),
+          color: context.colors.outlineVariant.withValues(alpha: 0.6),
           borderRadius: AppRadii.roundedFull,
         ),
       ),
@@ -197,17 +198,18 @@ class _TopHeaderArea extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         // Symmetrical close button
         Material(
-          color: AppColors.surfaceContainerHigh,
+          color: colors.surfaceContainerHigh,
           shape: const CircleBorder(),
           clipBehavior: Clip.antiAlias,
           child: IconButton(
             icon: const Icon(Icons.close_rounded, size: 20),
-            color: AppColors.onSurfaceVariant,
+            color: colors.onSurfaceVariant,
             onPressed: onDismiss,
             tooltip: AppLocaleKeys.commonSkip.tr(),
             constraints: const BoxConstraints.tightFor(width: 36, height: 36),
@@ -231,6 +233,7 @@ class _ClinicalShieldBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     return SizedBox(
       width: 68,
       height: 68,
@@ -242,18 +245,18 @@ class _ClinicalShieldBadge extends StatelessWidget {
             width: 64,
             height: 64,
             decoration: BoxDecoration(
-              color: AppColors.brandMintSurface,
+              color: colors.brandMintSurface,
               borderRadius: BorderRadius.circular(20),
               boxShadow: [
                 BoxShadow(
-                  color: AppColors.primaryBrand.withValues(alpha: 0.08),
+                  color: colors.primaryBrand.withValues(alpha: 0.08),
                   blurRadius: 10,
                   offset: const Offset(0, 4),
                 ),
               ],
             ),
             alignment: Alignment.center,
-            child: const Icon(Icons.verified_user_rounded, color: AppColors.primaryBrand, size: 34),
+            child: Icon(Icons.verified_user_rounded, color: colors.primaryBrand, size: 34),
           ),
           Positioned(
             bottom: 0,
@@ -261,10 +264,10 @@ class _ClinicalShieldBadge extends StatelessWidget {
             child: Container(
               width: 24,
               height: 24,
-              decoration: const BoxDecoration(
-                color: AppColors.canvasPure,
+              decoration: BoxDecoration(
+                color: colors.canvasPure,
                 shape: BoxShape.circle,
-                boxShadow: [
+                boxShadow: const [
                   BoxShadow(color: Color(0x1A0F172A), blurRadius: 4, offset: Offset(0, 1)),
                 ],
               ),
@@ -272,12 +275,9 @@ class _ClinicalShieldBadge extends StatelessWidget {
               child: Container(
                 width: 18,
                 height: 18,
-                decoration: const BoxDecoration(
-                  color: AppColors.primaryBrand,
-                  shape: BoxShape.circle,
-                ),
+                decoration: BoxDecoration(color: colors.primaryBrand, shape: BoxShape.circle),
                 alignment: Alignment.center,
-                child: const Icon(Icons.lock_rounded, color: AppColors.onPrimary, size: 11),
+                child: Icon(Icons.lock_rounded, color: colors.onPrimary, size: 11),
               ),
             ),
           ),
@@ -293,21 +293,22 @@ class _HealthcareContextBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     return Center(
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
-        decoration: const BoxDecoration(
-          color: AppColors.brandMintSurface,
+        decoration: BoxDecoration(
+          color: colors.brandMintSurface,
           borderRadius: AppRadii.roundedFull,
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(Icons.shield_outlined, size: 14, color: AppColors.brandEmeraldDark),
+            Icon(Icons.shield_outlined, size: 14, color: colors.brandEmeraldDark),
             const SizedBox(width: AppSpacing.space2xs),
             Text(
               AppLocaleKeys.authLoginRequiredBadge.tr(),
-              style: AppTypography.labelSm(color: AppColors.brandEmeraldDark),
+              style: AppTypography.labelSm(color: colors.brandEmeraldDark),
             ),
           ],
         ),
@@ -324,9 +325,10 @@ class _ValuePropsGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     return Container(
-      decoration: const BoxDecoration(
-        color: AppColors.surfaceContainerLow,
+      decoration: BoxDecoration(
+        color: colors.surfaceContainerLow,
         borderRadius: AppRadii.roundedLg,
       ),
       padding: const EdgeInsets.symmetric(
@@ -369,18 +371,16 @@ class _ValuePropItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         Container(
           width: 32,
           height: 32,
-          decoration: const BoxDecoration(
-            color: AppColors.surfaceContainerLowest,
-            shape: BoxShape.circle,
-          ),
+          decoration: BoxDecoration(color: colors.surfaceContainerLowest, shape: BoxShape.circle),
           alignment: Alignment.center,
-          child: Icon(icon, color: AppColors.primaryBrand, size: 18),
+          child: Icon(icon, color: colors.primaryBrand, size: 18),
         ),
         const SizedBox(height: 6),
         Text(
@@ -388,7 +388,7 @@ class _ValuePropItem extends StatelessWidget {
           textAlign: TextAlign.center,
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
-          style: AppTypography.labelSm(color: AppColors.onSurface),
+          style: AppTypography.labelSm(color: colors.onSurface),
         ),
       ],
     );
@@ -409,13 +409,14 @@ class _ActionButtonsStack extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         // 1. Primary Action: Sign In
         AppButton.primary(
           text: AppLocaleKeys.authLoginRequiredBtnLogin.tr(),
-          icon: const Icon(Icons.login_rounded, size: 20, color: AppColors.onPrimary),
+          icon: Icon(Icons.login_rounded, size: 20, color: colors.onPrimary),
           onPressed: onLogin,
           height: 48,
         ),
@@ -424,8 +425,8 @@ class _ActionButtonsStack extends StatelessWidget {
         ElevatedButton(
           onPressed: onRegister,
           style: ElevatedButton.styleFrom(
-            backgroundColor: AppColors.secondaryContainer,
-            foregroundColor: AppColors.onSecondaryFixed,
+            backgroundColor: colors.secondaryContainer,
+            foregroundColor: colors.onSecondaryFixed,
             elevation: 0,
             minimumSize: const Size(double.infinity, 48),
             shape: const StadiumBorder(),
@@ -433,11 +434,11 @@ class _ActionButtonsStack extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(Icons.person_add_outlined, size: 20, color: AppColors.onSecondaryFixed),
+              Icon(Icons.person_add_outlined, size: 20, color: colors.onSecondaryFixed),
               const SizedBox(width: AppSpacing.spaceSm),
               Text(
                 AppLocaleKeys.authLoginRequiredBtnRegister.tr(),
-                style: AppTypography.labelLg(color: AppColors.onSecondaryFixed),
+                style: AppTypography.labelLg(color: colors.onSecondaryFixed),
               ),
             ],
           ),
@@ -447,13 +448,13 @@ class _ActionButtonsStack extends StatelessWidget {
         TextButton(
           onPressed: onContinueAsGuest,
           style: TextButton.styleFrom(
-            foregroundColor: AppColors.secondaryMuted,
+            foregroundColor: colors.secondaryMuted,
             padding: const EdgeInsets.symmetric(vertical: AppSpacing.spaceSm),
             shape: const StadiumBorder(),
           ),
           child: Text(
             AppLocaleKeys.authLoginRequiredBtnContinueGuest.tr(),
-            style: AppTypography.labelMd(color: AppColors.secondaryMuted),
+            style: AppTypography.labelMd(color: colors.secondaryMuted),
           ),
         ),
       ],
@@ -469,23 +470,24 @@ class _PrivacyAndSecurityPill extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     return Center(
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-        decoration: const BoxDecoration(
-          color: AppColors.surfaceContainerLow,
+        decoration: BoxDecoration(
+          color: colors.surfaceContainerLow,
           borderRadius: AppRadii.roundedFull,
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(Icons.lock_rounded, size: 13, color: AppColors.brandEmeraldDark),
+            Icon(Icons.lock_rounded, size: 13, color: colors.brandEmeraldDark),
             const SizedBox(width: AppSpacing.space2xs),
             Flexible(
               child: Text(
                 AppLocaleKeys.authLoginRequiredPrivacyPill.tr(),
                 textAlign: TextAlign.center,
-                style: AppTypography.labelSm(color: AppColors.secondaryMuted),
+                style: AppTypography.labelSm(color: colors.secondaryMuted),
               ),
             ),
           ],

@@ -21,6 +21,7 @@ class ProductDetailsQuantitySelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     final effectiveMax = maxStock > 0 ? maxStock : 1;
     final canDecrement = quantity > 1 && maxStock > 0;
     final canIncrement = quantity < effectiveMax && maxStock > 0;
@@ -37,7 +38,7 @@ class ProductDetailsQuantitySelector extends StatelessWidget {
                 Text(
                   AppLocaleKeys.productDetailsRequestedQuantity.tr(),
                   style: AppTypography.titleMd(
-                    color: AppColors.onSurface,
+                    color: colors.onSurface,
                   ).copyWith(fontWeight: FontWeight.w700),
                 ),
                 const SizedBox(height: AppSpacing.space2xs),
@@ -48,7 +49,7 @@ class ProductDetailsQuantitySelector extends StatelessWidget {
                         )
                       : AppLocaleKeys.productDetailsOutOfStock.tr(),
                   style: AppTypography.bodySm(
-                    color: maxStock > 0 ? AppColors.slate500 : AppColors.medicalRed,
+                    color: maxStock > 0 ? colors.neutral : colors.medicalRed,
                   ),
                 ),
               ],
@@ -59,8 +60,8 @@ class ProductDetailsQuantitySelector extends StatelessWidget {
           // Stepper
           Container(
             padding: const EdgeInsets.all(4),
-            decoration: const BoxDecoration(
-              color: AppColors.surfaceContainerLow,
+            decoration: BoxDecoration(
+              color: colors.surfaceContainerLow,
               borderRadius: AppRadii.roundedMd,
             ),
             child: Row(
@@ -82,7 +83,7 @@ class ProductDetailsQuantitySelector extends StatelessWidget {
                     maxStock > 0 ? quantity.toString() : '0',
                     textAlign: TextAlign.center,
                     style: AppTypography.headlineMd(
-                      color: AppColors.onSurface,
+                      color: colors.onSurface,
                     ).copyWith(fontWeight: FontWeight.w700),
                   ),
                 ),
@@ -121,6 +122,8 @@ class _StepperButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
+
     return InkWell(
       onTap: isEnabled ? onTap : null,
       borderRadius: AppRadii.roundedSm,
@@ -128,15 +131,15 @@ class _StepperButton extends StatelessWidget {
         width: 36,
         height: 36,
         decoration: BoxDecoration(
-          color: isEnabled ? AppColors.surfaceContainerLowest : AppColors.surfaceContainerLow,
+          color: isEnabled ? colors.surfaceContainerLowest : colors.surfaceContainerLow,
           borderRadius: AppRadii.roundedSm,
         ),
         child: Icon(
           icon,
           size: 18,
           color: isEnabled
-              ? (isPrimary ? AppColors.primary : AppColors.onSurface)
-              : AppColors.slate300,
+              ? (isPrimary ? colors.primary : colors.onSurface)
+              : colors.outlineVariant,
         ),
       ),
     );

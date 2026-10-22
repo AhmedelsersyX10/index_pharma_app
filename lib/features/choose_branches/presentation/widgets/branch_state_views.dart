@@ -10,6 +10,7 @@ class BranchLoadingView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     return ListView.separated(
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
@@ -21,9 +22,9 @@ class BranchLoadingView extends StatelessWidget {
           height: 140,
           padding: const EdgeInsets.all(AppSpacing.spaceMd),
           decoration: BoxDecoration(
-            color: AppColors.canvasPure,
+            color: colors.canvasPure,
             borderRadius: BorderRadius.circular(AppRadii.xl),
-            border: Border.all(color: AppColors.borderSubtle),
+            border: Border.all(color: colors.borderSubtle),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -33,8 +34,8 @@ class BranchLoadingView extends StatelessWidget {
                   Container(
                     width: 38,
                     height: 38,
-                    decoration: const BoxDecoration(
-                      color: AppColors.surfaceContainerHigh,
+                    decoration: BoxDecoration(
+                      color: colors.surfaceContainerHigh,
                       shape: BoxShape.circle,
                     ),
                   ),
@@ -47,7 +48,7 @@ class BranchLoadingView extends StatelessWidget {
                           width: 140,
                           height: 16,
                           decoration: BoxDecoration(
-                            color: AppColors.surfaceContainerHigh,
+                            color: colors.surfaceContainerHigh,
                             borderRadius: BorderRadius.circular(AppRadii.sm),
                           ),
                         ),
@@ -56,7 +57,7 @@ class BranchLoadingView extends StatelessWidget {
                           width: 80,
                           height: 12,
                           decoration: BoxDecoration(
-                            color: AppColors.surfaceContainerHigh,
+                            color: colors.surfaceContainerHigh,
                             borderRadius: BorderRadius.circular(AppRadii.sm),
                           ),
                         ),
@@ -70,7 +71,7 @@ class BranchLoadingView extends StatelessWidget {
                 width: double.infinity,
                 height: 28,
                 decoration: BoxDecoration(
-                  color: AppColors.surfaceContainerLow,
+                  color: colors.surfaceContainerLow,
                   borderRadius: BorderRadius.circular(AppRadii.sm),
                 ),
               ),
@@ -93,6 +94,7 @@ class BranchEmptyView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     return Center(
       child: Padding(
         padding: const EdgeInsets.all(AppSpacing.space2xl),
@@ -102,21 +104,21 @@ class BranchEmptyView extends StatelessWidget {
             Container(
               width: 72,
               height: 72,
-              decoration: const BoxDecoration(
-                color: AppColors.surfaceContainerHigh,
+              decoration: BoxDecoration(
+                color: colors.surfaceContainerHigh,
                 shape: BoxShape.circle,
               ),
-              child: const Icon(
+              child: Icon(
                 Icons.store_mall_directory_outlined,
                 size: 36,
-                color: AppColors.secondaryMuted,
+                color: colors.secondaryMuted,
               ),
             ),
             AppSpacing.vSpaceMd,
             Text(
               'branch_selection.empty_branches_title'.tr(),
               style: AppTypography.titleMd(
-                color: AppColors.onSurface,
+                color: colors.onSurface,
               ).copyWith(
                 fontWeight: FontWeight.w700,
               ),
@@ -126,7 +128,7 @@ class BranchEmptyView extends StatelessWidget {
             Text(
               'branch_selection.empty_branches_desc'.tr(),
               style: AppTypography.bodySm(
-                color: AppColors.onSurfaceVariant,
+                color: colors.onSurfaceVariant,
               ),
               textAlign: TextAlign.center,
             ),
@@ -136,8 +138,8 @@ class BranchEmptyView extends StatelessWidget {
               icon: const Icon(Icons.refresh, size: 18),
               label: Text('common.retry'.tr()),
               style: OutlinedButton.styleFrom(
-                foregroundColor: AppColors.primary,
-                side: const BorderSide(color: AppColors.primary),
+                foregroundColor: colors.primary,
+                side: BorderSide(color: colors.primary),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(AppRadii.full),
                 ),
@@ -163,6 +165,7 @@ class BranchErrorView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     final errorMessage = FailureMapper.toMessage(
       failure,
       defaultFallback: 'branch_selection.fetch_error_desc'.tr(),
@@ -177,21 +180,21 @@ class BranchErrorView extends StatelessWidget {
             Container(
               width: 72,
               height: 72,
-              decoration: const BoxDecoration(
-                color: AppColors.errorContainer,
+              decoration: BoxDecoration(
+                color: colors.errorContainer,
                 shape: BoxShape.circle,
               ),
-              child: const Icon(
+              child: Icon(
                 Icons.error_outline_rounded,
                 size: 36,
-                color: AppColors.error,
+                color: colors.error,
               ),
             ),
             AppSpacing.vSpaceMd,
             Text(
               'branch_selection.fetch_error_title'.tr(),
               style: AppTypography.titleMd(
-                color: AppColors.onSurface,
+                color: colors.onSurface,
               ).copyWith(
                 fontWeight: FontWeight.w700,
               ),
@@ -201,7 +204,7 @@ class BranchErrorView extends StatelessWidget {
             Text(
               errorMessage,
               style: AppTypography.bodySm(
-                color: AppColors.onSurfaceVariant,
+                color: colors.onSurfaceVariant,
               ),
               textAlign: TextAlign.center,
             ),
@@ -211,8 +214,8 @@ class BranchErrorView extends StatelessWidget {
               icon: const Icon(Icons.refresh, size: 18),
               label: Text('common.retry'.tr()),
               style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.primary,
-                foregroundColor: AppColors.onPrimary,
+                backgroundColor: colors.primary,
+                foregroundColor: colors.onPrimary,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(AppRadii.full),
                 ),

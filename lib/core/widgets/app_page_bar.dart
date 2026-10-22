@@ -95,14 +95,13 @@ class AppPageBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final colors = context.colors;
     final isDark = theme.brightness == Brightness.dark;
     final isRtl = Directionality.of(context) == TextDirection.rtl;
 
-    final resolvedBg = backgroundColor ??
-        (isDark ? AppColors.darkSurface : AppColors.canvasPure);
-    final resolvedFg = foregroundColor ??
-        (isDark ? AppColors.darkOnSurface : AppColors.onSurface);
-    final dividerColor = isDark ? AppColors.darkOutline : AppColors.borderSubtle;
+    final resolvedBg = backgroundColor ?? colors.surface;
+    final resolvedFg = foregroundColor ?? colors.onSurface;
+    final dividerColor = colors.borderSubtle;
 
     // Determine whether to display the back button
     final bool canPop = _canPopSafely(context);

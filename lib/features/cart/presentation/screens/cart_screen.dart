@@ -83,13 +83,15 @@ class _CartScreenContentState extends State<_CartScreenContent> {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
+
     return BlocBuilder<CartCubit, CartState>(
       builder: (context, state) {
         final cubit = context.read<CartCubit>();
 
         return switch (state) {
           CartEmpty(:final branchId) => Scaffold(
-              backgroundColor: AppColors.background,
+              backgroundColor: colors.background,
               appBar: CartHeader(
                 branchName: _resolveBranchName(context, branchId),
                 itemsCount: 0,
@@ -108,7 +110,7 @@ class _CartScreenContentState extends State<_CartScreenContent> {
             :final stockAlertMessage,
           ) =>
             Scaffold(
-              backgroundColor: AppColors.background,
+              backgroundColor: colors.background,
               appBar: CartHeader(
                 branchName: _resolveBranchName(context, branchId),
                 itemsCount: totalUniqueProducts,
@@ -123,6 +125,7 @@ class _CartScreenContentState extends State<_CartScreenContent> {
                   children: [
                     // Branch Context Strip with Location Icon and items count
                     _buildBranchContextStrip(
+                      context,
                       branchName: _resolveBranchName(context, branchId),
                       itemsCount: totalUniqueProducts,
                     ),
@@ -183,10 +186,13 @@ class _CartScreenContentState extends State<_CartScreenContent> {
     );
   }
 
-  Widget _buildBranchContextStrip({
+  Widget _buildBranchContextStrip(
+    BuildContext context, {
     required String? branchName,
     required int itemsCount,
   }) {
+    final colors = context.colors;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -196,23 +202,23 @@ class _CartScreenContentState extends State<_CartScreenContent> {
               horizontal: AppSpacing.spaceSm,
               vertical: AppSpacing.space2xs,
             ),
-            decoration: const BoxDecoration(
-              color: AppColors.brandMintSurface,
+            decoration: BoxDecoration(
+              color: colors.brandMintSurface,
               borderRadius: AppRadii.roundedFull,
             ),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Icon(
+                Icon(
                   Icons.location_on_outlined,
                   size: 16,
-                  color: AppColors.brandEmeraldDark,
+                  color: colors.brandEmeraldDark,
                 ),
                 const SizedBox(width: AppSpacing.space2xs),
                 Text(
                   branchName,
                   style: AppTypography.labelSm(
-                    color: AppColors.brandEmeraldDark,
+                    color: colors.brandEmeraldDark,
                   ).copyWith(fontWeight: FontWeight.w600),
                 ),
               ],
@@ -222,7 +228,7 @@ class _CartScreenContentState extends State<_CartScreenContent> {
           const SizedBox.shrink(),
         Text(
           AppLocaleKeys.cartItemsCount.tr(args: [itemsCount.toString()]),
-          style: AppTypography.labelSm(color: AppColors.secondary),
+          style: AppTypography.labelSm(color: colors.secondary),
         ),
       ],
     );

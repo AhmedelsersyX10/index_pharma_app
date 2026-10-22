@@ -19,12 +19,14 @@ class ProductDetailsPrescriptionBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
+
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.errorContainer.withValues(alpha: 0.35),
+        color: colors.errorContainer.withValues(alpha: 0.35),
         borderRadius: AppRadii.roundedXl,
         border: Border.all(
-          color: AppColors.medicalRed.withValues(alpha: 0.2),
+          color: colors.medicalRed.withValues(alpha: 0.2),
         ),
       ),
       padding: const EdgeInsets.all(AppSpacing.spaceMd),
@@ -38,12 +40,12 @@ class ProductDetailsPrescriptionBanner extends StatelessWidget {
                 width: 40,
                 height: 40,
                 decoration: BoxDecoration(
-                  color: AppColors.medicalRed.withValues(alpha: 0.12),
+                  color: colors.medicalRed.withValues(alpha: 0.12),
                   shape: BoxShape.circle,
                 ),
-                child: const Icon(
+                child: Icon(
                   Icons.receipt_long_rounded,
-                  color: AppColors.medicalRed,
+                  color: colors.medicalRed,
                   size: 22,
                 ),
               ),
@@ -55,14 +57,14 @@ class ProductDetailsPrescriptionBanner extends StatelessWidget {
                     Text(
                       AppLocaleKeys.productDetailsRxRequiredTitle.tr(),
                       style: AppTypography.titleMd(
-                        color: AppColors.onSurface,
+                        color: colors.onSurface,
                       ).copyWith(fontWeight: FontWeight.w700),
                     ),
                     const SizedBox(height: AppSpacing.space2xs),
                     Text(
                       AppLocaleKeys.productDetailsRxRequiredDesc.tr(),
                       style: AppTypography.bodySm(
-                        color: AppColors.onSurfaceVariant,
+                        color: colors.onSurfaceVariant,
                       ).copyWith(height: 1.4),
                     ),
                   ],
@@ -78,20 +80,20 @@ class ProductDetailsPrescriptionBanner extends StatelessWidget {
                   () {
                     context.push(AppRouter.kPrescriptionView);
                   },
-              icon: const Icon(
+              icon: Icon(
                 Icons.add_a_photo_outlined,
                 size: 18,
-                color: Colors.white,
+                color: colors.onError,
               ),
               label: Text(
                 AppLocaleKeys.productDetailsUploadPrescriptionBtn.tr(),
-                style: AppTypography.labelMd(color: Colors.white).copyWith(
+                style: AppTypography.labelMd(color: colors.onError).copyWith(
                   fontWeight: FontWeight.w700,
                 ),
               ),
               style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.medicalRed,
-                foregroundColor: Colors.white,
+                backgroundColor: colors.medicalRed,
+                foregroundColor: colors.onError,
                 elevation: 0,
                 shape: const RoundedRectangleBorder(
                   borderRadius: AppRadii.roundedLg,

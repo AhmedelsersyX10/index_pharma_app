@@ -22,6 +22,7 @@ class OrderFilterChips extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       padding: const EdgeInsets.symmetric(
@@ -31,18 +32,24 @@ class OrderFilterChips extends StatelessWidget {
       child: Row(
         children: [
           _buildChip(
+            context: context,
+            colors: colors,
             filter: OrderFilter.all,
             label: OrderFilter.all.translationKey.tr(),
             count: countAll,
           ),
           const SizedBox(width: AppSpacing.spaceSm),
           _buildChip(
+            context: context,
+            colors: colors,
             filter: OrderFilter.active,
             label: OrderFilter.active.translationKey.tr(),
             count: countActive,
           ),
           const SizedBox(width: AppSpacing.spaceSm),
           _buildChip(
+            context: context,
+            colors: colors,
             filter: OrderFilter.past,
             label: OrderFilter.past.translationKey.tr(),
             count: countPast,
@@ -53,6 +60,8 @@ class OrderFilterChips extends StatelessWidget {
   }
 
   Widget _buildChip({
+    required BuildContext context,
+    required AppColorsExtension colors,
     required OrderFilter filter,
     required String label,
     required int count,
@@ -69,12 +78,12 @@ class OrderFilterChips extends StatelessWidget {
           vertical: AppSpacing.spaceXs + 2,
         ),
         decoration: BoxDecoration(
-          color: isSelected ? AppColors.primary : AppColors.canvasPure,
+          color: isSelected ? colors.primary : colors.canvasPure,
           borderRadius: BorderRadius.circular(AppRadii.full),
           border: Border.all(
-            color: isSelected ? AppColors.primary : AppColors.borderSubtle,
+            color: isSelected ? colors.primary : colors.borderSubtle,
           ),
-          boxShadow: isSelected ? AppShadows.level1 : null,
+          boxShadow: isSelected ? context.shadowsLevel1 : null,
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
@@ -84,7 +93,7 @@ class OrderFilterChips extends StatelessWidget {
               style: TextStyle(
                 fontSize: 13,
                 fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
-                color: isSelected ? AppColors.onPrimary : AppColors.onSurfaceVariant,
+                color: isSelected ? colors.onPrimary : colors.onSurfaceVariant,
               ),
             ),
             const SizedBox(width: 6),
@@ -92,8 +101,8 @@ class OrderFilterChips extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
               decoration: BoxDecoration(
                 color: isSelected
-                    ? AppColors.onPrimary.withValues(alpha: 0.2)
-                    : AppColors.surfaceContainerHigh,
+                    ? colors.onPrimary.withValues(alpha: 0.2)
+                    : colors.surfaceContainerHigh,
                 borderRadius: BorderRadius.circular(AppRadii.full),
               ),
               child: Text(
@@ -101,7 +110,7 @@ class OrderFilterChips extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 11,
                   fontWeight: FontWeight.bold,
-                  color: isSelected ? AppColors.onPrimary : AppColors.onSurfaceVariant,
+                  color: isSelected ? colors.onPrimary : colors.onSurfaceVariant,
                 ),
               ),
             ),

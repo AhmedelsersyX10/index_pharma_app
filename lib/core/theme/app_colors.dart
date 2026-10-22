@@ -111,6 +111,8 @@ abstract class AppColors {
   static const Color badgeSuccessText = Color(0xFF047857);
   static const Color badgeErrorBg = Color(0xFFFEF2F2);
   static const Color badgeErrorText = Color(0xFFB91C1C);
+  static const Color badgeNeutralBg = slate100;
+  static const Color badgeNeutralText = slate700;
 
   // ===========================================================================
   // Neutral Slate Palette

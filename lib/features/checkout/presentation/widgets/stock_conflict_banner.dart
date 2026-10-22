@@ -16,15 +16,17 @@ class StockConflictBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
+
     return Container(
       margin: const EdgeInsets.only(bottom: AppSpacing.spaceMd),
       padding: const EdgeInsets.all(AppSpacing.spaceMd),
       decoration: BoxDecoration(
-        color: AppColors.errorContainer,
+        color: colors.errorContainer,
         borderRadius: BorderRadius.circular(AppRadii.xl),
-        boxShadow: AppShadows.level1,
+        boxShadow: context.shadowsLevel1,
         border: Border.all(
-          color: AppColors.medicalRed.withAlpha(51),
+          color: colors.medicalRed.withAlpha(51),
         ),
       ),
       child: Row(
@@ -33,13 +35,13 @@ class StockConflictBanner extends StatelessWidget {
           Container(
             width: 36,
             height: 36,
-            decoration: const BoxDecoration(
-              color: AppColors.error,
+            decoration: BoxDecoration(
+              color: colors.error,
               shape: BoxShape.circle,
             ),
-            child: const Icon(
+            child: Icon(
               Icons.inventory_2_rounded,
-              color: AppColors.onError,
+              color: colors.onError,
               size: 20,
             ),
           ),
@@ -50,27 +52,27 @@ class StockConflictBanner extends StatelessWidget {
               children: [
                 Text(
                   'checkout.stock_conflict_title'.tr(),
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
-                    color: AppColors.onErrorContainer,
+                    color: colors.onErrorContainer,
                   ),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   message,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 13,
                     height: 1.4,
-                    color: AppColors.onErrorContainer,
+                    color: colors.onErrorContainer,
                   ),
                 ),
                 const SizedBox(height: AppSpacing.spaceSm),
                 ElevatedButton.icon(
                   onPressed: onReturnToCart,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.error,
-                    foregroundColor: AppColors.onError,
+                    backgroundColor: colors.error,
+                    foregroundColor: colors.onError,
                     elevation: 0,
                     padding: const EdgeInsets.symmetric(
                       horizontal: AppSpacing.spaceMd,

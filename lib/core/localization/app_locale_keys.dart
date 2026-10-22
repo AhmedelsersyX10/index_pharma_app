@@ -376,6 +376,11 @@ abstract class AppLocaleKeys {
   static const accountLanguageDesc = 'account.language_desc';
   static const accountLangArabic = 'account.lang_arabic';
   static const accountLangEnglish = 'account.lang_english';
+  static const accountThemeTitle = 'account.theme_title';
+  static const accountThemeDesc = 'account.theme_desc';
+  static const accountThemeLight = 'account.theme_light';
+  static const accountThemeDark = 'account.theme_dark';
+  static const accountThemeSystem = 'account.theme_system';
   static const accountPrivacyPolicyTitle = 'account.privacy_policy_title';
   static const accountPrivacyPolicyDesc = 'account.privacy_policy_desc';
   static const accountEdaBadge = 'account.eda_badge';

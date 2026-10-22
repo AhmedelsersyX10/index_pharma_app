@@ -11,11 +11,12 @@ class ClinicalTrustFooter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     if (isDetailed) {
       return Container(
         padding: const EdgeInsets.all(AppSpacing.spaceSm),
-        decoration: const BoxDecoration(
-          color: AppColors.surfaceContainerLow,
+        decoration: BoxDecoration(
+          color: colors.surfaceContainerLow,
           borderRadius: AppRadii.roundedXl,
         ),
         child: Row(
@@ -23,13 +24,13 @@ class ClinicalTrustFooter extends StatelessWidget {
             Container(
               width: 38,
               height: 38,
-              decoration: const BoxDecoration(
-                color: AppColors.brandMintSurface,
+              decoration: BoxDecoration(
+                color: colors.brandMintSurface,
                 borderRadius: AppRadii.roundedLg,
               ),
-              child: const Icon(
+              child: Icon(
                 Icons.verified_user_outlined,
-                color: AppColors.brandEmeraldDark,
+                color: colors.brandEmeraldDark,
                 size: 22,
               ),
             ),
@@ -40,12 +41,12 @@ class ClinicalTrustFooter extends StatelessWidget {
                 children: [
                   Text(
                     AppLocaleKeys.authMedicalConfidentialityTitle.tr(),
-                    style: AppTypography.titleMd(color: AppColors.onSurface),
+                    style: AppTypography.titleMd(color: colors.onSurface),
                   ),
                   const SizedBox(height: 2),
                   Text(
                     AppLocaleKeys.authMedicalConfidentialityDesc.tr(),
-                    style: AppTypography.bodySm(color: AppColors.slate600),
+                    style: AppTypography.bodySm(color: colors.slate600),
                   ),
                 ],
               ),
@@ -60,12 +61,12 @@ class ClinicalTrustFooter extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Icon(Icons.shield_outlined, size: 16, color: AppColors.slate500),
+          Icon(Icons.shield_outlined, size: 16, color: colors.slate500),
           const SizedBox(width: AppSpacing.space2xs),
           Flexible(
             child: Text(
               AppLocaleKeys.authDataSecurityNote.tr(),
-              style: AppTypography.labelSm(color: AppColors.slate500),
+              style: AppTypography.labelSm(color: colors.slate500),
               textAlign: TextAlign.center,
             ),
           ),

@@ -19,6 +19,7 @@ class CategoryFilterChips extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     final isAllSelected = selectedCategoryId == null;
 
     return SizedBox(
@@ -31,6 +32,8 @@ class CategoryFilterChips extends StatelessWidget {
         itemBuilder: (context, index) {
           if (index == 0) {
             return _buildChip(
+              context: context,
+              colors: colors,
               label: AppLocaleKeys.productsAll.tr(),
               isSelected: isAllSelected,
               onTap: () => onSelected(null),
@@ -41,6 +44,8 @@ class CategoryFilterChips extends StatelessWidget {
           final isSelected = selectedCategoryId == category.id;
 
           return _buildChip(
+            context: context,
+            colors: colors,
             label: category.name,
             isSelected: isSelected,
             onTap: () => onSelected(category.id),
@@ -51,6 +56,8 @@ class CategoryFilterChips extends StatelessWidget {
   }
 
   Widget _buildChip({
+    required BuildContext context,
+    required AppColorsExtension colors,
     required String label,
     required bool isSelected,
     required VoidCallback onTap,
@@ -63,22 +70,22 @@ class CategoryFilterChips extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: BoxDecoration(
           color: isSelected
-              ? AppColors.primary
-              : AppColors.surfaceContainerLowest,
+              ? colors.primary
+              : colors.surfaceContainerLowest,
           borderRadius: AppRadii.roundedFull,
           border: Border.all(
             color: isSelected
-                ? AppColors.primary
-                : AppColors.borderSubtle,
+                ? colors.primary
+                : colors.borderSubtle,
             width: 1,
           ),
-          boxShadow: isSelected ? null : AppShadows.level1,
+          boxShadow: isSelected ? null : context.shadowsLevel1,
         ),
         alignment: Alignment.center,
         child: Text(
           label,
           style: AppTypography.labelMd(
-            color: isSelected ? Colors.white : AppColors.onSurface,
+            color: isSelected ? Colors.white : colors.onSurface,
           ).copyWith(
             fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
           ),

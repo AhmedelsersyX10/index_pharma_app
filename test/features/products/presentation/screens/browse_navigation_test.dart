@@ -84,6 +84,15 @@ class FakeStorageService implements StorageService {
     selectedBranchId = branchId;
     return true;
   }
+
+  @override
+  String? themeMode;
+
+  @override
+  Future<bool> setThemeMode(String mode) async {
+    themeMode = mode;
+    return true;
+  }
 }
 
 class FakeProductsRepository implements ProductsRepository {

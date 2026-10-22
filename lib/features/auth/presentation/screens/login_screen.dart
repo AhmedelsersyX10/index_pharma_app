@@ -45,7 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return BlocProvider.value(
       value: cubit,
       child: Scaffold(
-        backgroundColor: AppColors.background,
+        backgroundColor: context.colors.background,
         appBar: const AppPageBar.transparent(),
         body: SafeArea(
           child: BlocConsumer<AuthCubit, AuthState>(

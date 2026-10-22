@@ -32,6 +32,8 @@ class HomeCategoriesSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -45,8 +47,8 @@ class HomeCategoriesSection extends StatelessWidget {
                 Container(
                   width: 4,
                   height: 18,
-                  decoration: const BoxDecoration(
-                    color: AppColors.primary,
+                  decoration: BoxDecoration(
+                    color: colors.primary,
                     borderRadius: AppRadii.roundedFull,
                   ),
                 ),
@@ -54,7 +56,7 @@ class HomeCategoriesSection extends StatelessWidget {
                 Text(
                   AppLocaleKeys.categoriesTitle.tr(),
                   style: AppTypography.titleMd(
-                    color: AppColors.onSurface,
+                    color: colors.onSurface,
                   ).copyWith(
                     fontWeight: FontWeight.bold,
                   ),
@@ -74,16 +76,16 @@ class HomeCategoriesSection extends StatelessWidget {
                   Text(
                     AppLocaleKeys.categoriesViewAll.tr(),
                     style: AppTypography.labelSm(
-                      color: AppColors.primary,
+                      color: colors.primary,
                     ).copyWith(
                       fontWeight: FontWeight.w600,
                     ),
                   ),
                   const SizedBox(width: AppSpacing.space2xs),
-                  const Icon(
+                  Icon(
                     Icons.arrow_forward_ios_rounded,
                     size: 11,
-                    color: AppColors.primary,
+                    color: colors.primary,
                   ),
                 ],
               ),
@@ -101,10 +103,10 @@ class HomeCategoriesSection extends StatelessWidget {
               CategoriesEmpty() => AppEmptyState(
                   title: AppLocaleKeys.categoriesEmptyTitle.tr(),
                   message: AppLocaleKeys.categoriesEmptyDesc.tr(),
-                  icon: const Icon(
+                  icon: Icon(
                     Icons.category_outlined,
                     size: 32,
-                    color: AppColors.slate400,
+                    color: colors.slate400,
                   ),
                 ),
               CategoriesFailure(:final message) => AppErrorView(
@@ -163,6 +165,8 @@ class _CategoriesSkeletonGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
+
     return GridView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
@@ -176,9 +180,9 @@ class _CategoriesSkeletonGrid extends StatelessWidget {
       itemBuilder: (context, index) {
         return Container(
           decoration: BoxDecoration(
-            color: AppColors.surfaceContainerLow,
+            color: colors.surfaceContainerLow,
             borderRadius: AppRadii.roundedXl,
-            border: Border.all(color: AppColors.borderSubtle, width: 1),
+            border: Border.all(color: colors.borderSubtle, width: 1),
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -186,8 +190,8 @@ class _CategoriesSkeletonGrid extends StatelessWidget {
               Container(
                 width: 44,
                 height: 44,
-                decoration: const BoxDecoration(
-                  color: AppColors.slate200,
+                decoration: BoxDecoration(
+                  color: colors.slate200,
                   shape: BoxShape.circle,
                 ),
               ),
@@ -195,8 +199,8 @@ class _CategoriesSkeletonGrid extends StatelessWidget {
               Container(
                 width: 50,
                 height: 10,
-                decoration: const BoxDecoration(
-                  color: AppColors.slate200,
+                decoration: BoxDecoration(
+                  color: colors.slate200,
                   borderRadius: AppRadii.roundedSm,
                 ),
               ),

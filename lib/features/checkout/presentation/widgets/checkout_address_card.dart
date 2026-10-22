@@ -17,16 +17,17 @@ class CheckoutAddressCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     final hasError = errorMessage != null && errorMessage!.isNotEmpty;
 
     return Container(
       padding: const EdgeInsets.all(AppSpacing.spaceMd),
       decoration: BoxDecoration(
-        color: AppColors.canvasPure,
+        color: colors.canvasPure,
         borderRadius: BorderRadius.circular(AppRadii.xl),
-        boxShadow: AppShadows.level1,
+        boxShadow: context.shadowsLevel1,
         border: Border.all(
-          color: hasError ? AppColors.error : AppColors.borderSubtle,
+          color: hasError ? colors.error : colors.borderSubtle,
         ),
       ),
       child: Column(
@@ -40,23 +41,23 @@ class CheckoutAddressCard extends StatelessWidget {
                   Container(
                     width: 28,
                     height: 28,
-                    decoration: const BoxDecoration(
-                      color: AppColors.secondaryContainer,
+                    decoration: BoxDecoration(
+                      color: colors.secondaryContainer,
                       shape: BoxShape.circle,
                     ),
-                    child: const Icon(
+                    child: Icon(
                       Icons.pin_drop_rounded,
-                      color: AppColors.primary,
+                      color: colors.primary,
                       size: 16,
                     ),
                   ),
                   const SizedBox(width: AppSpacing.spaceSm),
                   Text(
                     'checkout.delivery_address_title'.tr(),
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
-                      color: AppColors.onSurface,
+                      color: colors.onSurface,
                     ),
                   ),
                 ],
@@ -67,15 +68,15 @@ class CheckoutAddressCard extends StatelessWidget {
                   vertical: AppSpacing.space2xs,
                 ),
                 decoration: BoxDecoration(
-                  color: AppColors.brandMintSurface,
+                  color: colors.brandMintSurface,
                   borderRadius: BorderRadius.circular(AppRadii.full),
                 ),
                 child: Text(
                   'checkout.required_badge'.tr(),
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w600,
-                    color: AppColors.brandEmeraldDark,
+                    color: colors.brandEmeraldDark,
                   ),
                 ),
               ),
@@ -85,11 +86,11 @@ class CheckoutAddressCard extends StatelessWidget {
           Container(
             decoration: BoxDecoration(
               color: hasError
-                  ? AppColors.errorContainer.withAlpha(77)
-                  : AppColors.surfaceSubtle,
+                  ? colors.errorContainer.withAlpha(77)
+                  : colors.surfaceSubtle,
               borderRadius: BorderRadius.circular(AppRadii.md),
               border: Border.all(
-                color: hasError ? AppColors.error : Colors.transparent,
+                color: hasError ? colors.error : Colors.transparent,
               ),
             ),
             child: TextField(
@@ -97,9 +98,9 @@ class CheckoutAddressCard extends StatelessWidget {
               controller: controller,
               onChanged: onChanged,
               maxLines: 3,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 14,
-                color: AppColors.onSurface,
+                color: colors.onSurface,
               ),
               decoration: InputDecoration(
                 contentPadding: const EdgeInsets.all(AppSpacing.spaceSm),
@@ -107,7 +108,7 @@ class CheckoutAddressCard extends StatelessWidget {
                 hintText: 'checkout.delivery_address_hint'.tr(),
                 hintStyle: TextStyle(
                   fontSize: 13,
-                  color: AppColors.onSurfaceVariant.withAlpha(128),
+                  color: colors.onSurfaceVariant.withAlpha(128),
                 ),
               ),
             ),
@@ -116,19 +117,19 @@ class CheckoutAddressCard extends StatelessWidget {
             const SizedBox(height: 6),
             Row(
               children: [
-                const Icon(
+                Icon(
                   Icons.error_outline_rounded,
-                  color: AppColors.error,
+                  color: colors.error,
                   size: 15,
                 ),
                 const SizedBox(width: 4),
                 Expanded(
                   child: Text(
                     errorMessage!,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w500,
-                      color: AppColors.error,
+                      color: colors.error,
                     ),
                   ),
                 ),
@@ -139,18 +140,18 @@ class CheckoutAddressCard extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Icon(
+              Icon(
                 Icons.info_outline_rounded,
-                color: AppColors.primary,
+                color: colors.primary,
                 size: 16,
               ),
               const SizedBox(width: 6),
               Expanded(
                 child: Text(
                   'checkout.delivery_address_helper'.tr(),
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 12,
-                    color: AppColors.secondaryMuted,
+                    color: colors.secondaryMuted,
                     height: 1.35,
                   ),
                 ),

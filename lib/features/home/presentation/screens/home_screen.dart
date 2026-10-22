@@ -186,14 +186,14 @@ class _HomeViewState extends State<_HomeView> {
         }
       },
       child: Scaffold(
-        backgroundColor: AppColors.background,
+        backgroundColor: context.colors.background,
         appBar: HomeHeaderBar(
           onCartTap: () => context.push('/cart'),
           onAccountTap: () => context.go(AppRouter.kAccountView),
         ),
         body: RefreshIndicator(
           onRefresh: _onRefresh,
-          color: AppColors.primary,
+          color: context.colors.primary,
           child: SingleChildScrollView(
             controller: _scrollController,
             physics: const AlwaysScrollableScrollPhysics(),

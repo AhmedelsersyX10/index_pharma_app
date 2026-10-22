@@ -32,7 +32,7 @@ class HomeHeaderBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final colors = context.colors;
 
     return Container(
       height: preferredSize.height + MediaQuery.paddingOf(context).top,
@@ -42,10 +42,10 @@ class HomeHeaderBar extends StatelessWidget implements PreferredSizeWidget {
         right: AppSpacing.marginMobile,
       ),
       decoration: BoxDecoration(
-        color: isDark ? AppColors.darkSurface : AppColors.canvasPure,
+        color: colors.surface,
         border: Border(
           bottom: BorderSide(
-            color: isDark ? AppColors.darkOutline : AppColors.borderSubtle,
+            color: colors.borderSubtle,
             width: 1.0,
           ),
         ),
@@ -60,8 +60,8 @@ class HomeHeaderBar extends StatelessWidget implements PreferredSizeWidget {
               Container(
                 width: 40,
                 height: 40,
-                decoration: const BoxDecoration(
-                  color: AppColors.primary,
+                decoration: BoxDecoration(
+                  color: colors.primary,
                   borderRadius: AppRadii.roundedLg,
                 ),
                 alignment: Alignment.center,
@@ -83,7 +83,7 @@ class HomeHeaderBar extends StatelessWidget implements PreferredSizeWidget {
                   Text(
                     AppLocaleKeys.homeTitle.tr(),
                     style: AppTypography.titleMd(
-                      color: isDark ? AppColors.darkOnSurface : AppColors.onSurface,
+                      color: colors.onSurface,
                     ).copyWith(fontWeight: FontWeight.bold, fontSize: 18, height: 1.1),
                   ),
                 ],
@@ -106,7 +106,7 @@ class HomeHeaderBar extends StatelessWidget implements PreferredSizeWidget {
                 child: Container(
                   width: 34,
                   height: 34,
-                  decoration: const BoxDecoration(color: AppColors.primary, shape: BoxShape.circle),
+                  decoration: BoxDecoration(color: colors.primary, shape: BoxShape.circle),
                   alignment: Alignment.center,
                   child: const Icon(Icons.person_rounded, size: 20, color: Colors.white),
                 ),

@@ -25,6 +25,7 @@ class LanguageSelectionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     return InkWell(
       key: ValueKey('language_card_$languageCode'),
       onTap: onTap,
@@ -33,15 +34,13 @@ class LanguageSelectionCard extends StatelessWidget {
         duration: const Duration(milliseconds: 200),
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
-          color: AppColors.surfaceContainerLowest,
+          color: colors.surfaceContainerLowest,
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
-            color: isSelected ? AppColors.primary : AppColors.borderSubtle.withValues(alpha: 0.6),
+            color: isSelected ? colors.primary : colors.borderSubtle.withValues(alpha: 0.6),
             width: isSelected ? 1.5 : 1.0,
           ),
-          boxShadow: isSelected
-              ? const [BoxShadow(color: Color(0x1400966B), blurRadius: 14, offset: Offset(0, 4))]
-              : const [BoxShadow(color: Color(0x060B1C30), blurRadius: 6, offset: Offset(0, 2))],
+          boxShadow: isSelected ? context.shadowsLevel2 : context.shadowsLevel1,
         ),
         child: Column(
           children: [
@@ -53,14 +52,14 @@ class LanguageSelectionCard extends StatelessWidget {
                   width: 44,
                   height: 44,
                   decoration: BoxDecoration(
-                    color: isSelected ? AppColors.brandMintSurface : AppColors.surfaceContainer,
+                    color: isSelected ? colors.brandMintSurface : colors.surfaceContainer,
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Center(
                     child: Text(
                       iconText,
                       style: AppTypography.titleLg(
-                        color: isSelected ? AppColors.primary : AppColors.secondary,
+                        color: isSelected ? colors.primary : colors.secondary,
                       ).copyWith(fontWeight: FontWeight.bold),
                     ),
                   ),
@@ -78,7 +77,7 @@ class LanguageSelectionCard extends StatelessWidget {
                             child: Text(
                               title,
                               style: AppTypography.titleLg(
-                                color: AppColors.onSurface,
+                                color: colors.onSurface,
                               ).copyWith(fontWeight: FontWeight.bold),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
@@ -89,16 +88,16 @@ class LanguageSelectionCard extends StatelessWidget {
                             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                             decoration: BoxDecoration(
                               color: isSelected
-                                  ? AppColors.brandMintSurface
-                                  : AppColors.surfaceContainer,
+                                  ? colors.brandMintSurface
+                                  : colors.surfaceContainer,
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: Text(
                               badge,
                               style: AppTypography.labelSm(
                                 color: isSelected
-                                    ? AppColors.brandEmeraldDark
-                                    : AppColors.onSecondaryContainer,
+                                    ? colors.brandEmeraldDark
+                                    : colors.onSecondaryContainer,
                               ).copyWith(fontWeight: FontWeight.w600),
                             ),
                           ),
@@ -116,14 +115,14 @@ class LanguageSelectionCard extends StatelessWidget {
                   width: 24,
                   height: 24,
                   decoration: BoxDecoration(
-                    color: isSelected ? AppColors.primary : AppColors.surfaceContainer,
+                    color: isSelected ? colors.primary : colors.surfaceContainer,
                     shape: BoxShape.circle,
                   ),
                   child: Center(
                     child: Icon(
                       Icons.check_rounded,
                       size: 16,
-                      color: isSelected ? Colors.white : Colors.transparent,
+                      color: isSelected ? colors.onPrimary : Colors.transparent,
                     ),
                   ),
                 ),

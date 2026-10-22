@@ -72,38 +72,39 @@ abstract final class CartActionHelper {
     final result = await showDialog<bool>(
       context: context,
       builder: (dialogContext) {
+        final dialogColors = dialogContext.colors;
         return AlertDialog(
           shape: const RoundedRectangleBorder(borderRadius: AppRadii.roundedXl),
           title: Text(
             AppLocaleKeys.cartBranchConflictTitle.tr(),
-            style: AppTypography.titleMd(color: AppColors.onSurface).copyWith(
+            style: AppTypography.titleMd(color: dialogColors.onSurface).copyWith(
               fontWeight: FontWeight.bold,
             ),
           ),
           content: Text(
             AppLocaleKeys.cartBranchConflictMessage.tr(),
-            style: AppTypography.bodyMd(color: AppColors.onSurfaceVariant),
+            style: AppTypography.bodyMd(color: dialogColors.onSurfaceVariant),
           ),
           actions: [
             TextButton(
               onPressed: () => Navigator.of(dialogContext).pop(false),
               child: Text(
                 AppLocaleKeys.cartBranchConflictCancel.tr(),
-                style: AppTypography.labelLg(color: AppColors.slate600),
+                style: AppTypography.labelLg(color: dialogColors.onSurfaceVariant),
               ),
             ),
             ElevatedButton(
               onPressed: () => Navigator.of(dialogContext).pop(true),
               style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.primary,
-                foregroundColor: Colors.white,
+                backgroundColor: dialogColors.primary,
+                foregroundColor: dialogColors.onPrimary,
                 shape: const RoundedRectangleBorder(
                   borderRadius: AppRadii.roundedMd,
                 ),
               ),
               child: Text(
                 AppLocaleKeys.cartBranchConflictConfirm.tr(),
-                style: AppTypography.labelLg(color: Colors.white).copyWith(
+                style: AppTypography.labelLg(color: dialogColors.onPrimary).copyWith(
                   fontWeight: FontWeight.w700,
                 ),
               ),
@@ -120,33 +121,34 @@ abstract final class CartActionHelper {
     Product product,
     VoidCallback? onViewCart,
   ) {
+    final colors = context.colors;
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Row(
           children: [
-            const Icon(
+            Icon(
               Icons.check_circle_rounded,
-              color: AppColors.primaryFixed,
+              color: colors.primaryFixed,
               size: 20,
             ),
             const SizedBox(width: AppSpacing.spaceSm),
             Expanded(
               child: Text(
                 AppLocaleKeys.cartItemAddedSuccess.tr(args: [product.name]),
-                style: AppTypography.bodyMd(color: AppColors.inverseOnSurface),
+                style: AppTypography.bodyMd(color: colors.inverseOnSurface),
               ),
             ),
           ],
         ),
         action: SnackBarAction(
           label: AppLocaleKeys.cartViewCartAction.tr(),
-          textColor: AppColors.primaryFixed,
+          textColor: colors.primaryFixed,
           onPressed: onViewCart ?? () => context.push(AppRouter.kCartView),
         ),
         duration: const Duration(seconds: 3),
         behavior: SnackBarBehavior.floating,
-        backgroundColor: AppColors.inverseSurface,
+        backgroundColor: colors.inverseSurface,
         shape: const RoundedRectangleBorder(borderRadius: AppRadii.roundedMd),
       ),
     );
@@ -157,61 +159,63 @@ abstract final class CartActionHelper {
     Product product,
     VoidCallback? onViewCart,
   ) {
+    final colors = context.colors;
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Row(
           children: [
-            const Icon(
+            Icon(
               Icons.info_outline_rounded,
-              color: AppColors.medicalAmber,
+              color: colors.medicalAmber,
               size: 20,
             ),
             const SizedBox(width: AppSpacing.spaceSm),
             Expanded(
               child: Text(
                 AppLocaleKeys.cartStockAlertDesc.tr(args: [product.name]),
-                style: AppTypography.bodyMd(color: AppColors.inverseOnSurface),
+                style: AppTypography.bodyMd(color: colors.inverseOnSurface),
               ),
             ),
           ],
         ),
         action: SnackBarAction(
           label: AppLocaleKeys.cartViewCartAction.tr(),
-          textColor: AppColors.primaryFixed,
+          textColor: colors.primaryFixed,
           onPressed: onViewCart ?? () => context.push(AppRouter.kCartView),
         ),
         duration: const Duration(seconds: 3),
         behavior: SnackBarBehavior.floating,
-        backgroundColor: AppColors.inverseSurface,
+        backgroundColor: colors.inverseSurface,
         shape: const RoundedRectangleBorder(borderRadius: AppRadii.roundedMd),
       ),
     );
   }
 
   static void _showOutOfStockSnackBar(BuildContext context) {
+    final colors = context.colors;
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Row(
           children: [
-            const Icon(
+            Icon(
               Icons.warning_amber_rounded,
-              color: AppColors.medicalAmber,
+              color: colors.medicalAmber,
               size: 20,
             ),
             const SizedBox(width: AppSpacing.spaceSm),
             Expanded(
               child: Text(
                 AppLocaleKeys.productDetailsOutOfStock.tr(),
-                style: AppTypography.bodyMd(color: AppColors.inverseOnSurface),
+                style: AppTypography.bodyMd(color: colors.inverseOnSurface),
               ),
             ),
           ],
         ),
         duration: const Duration(seconds: 3),
         behavior: SnackBarBehavior.floating,
-        backgroundColor: AppColors.inverseSurface,
+        backgroundColor: colors.inverseSurface,
         shape: const RoundedRectangleBorder(borderRadius: AppRadii.roundedMd),
       ),
     );

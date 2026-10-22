@@ -226,7 +226,10 @@ abstract class AppTheme {
       ),
 
       // Extensions
-      extensions: const [ClinicalThemeExtension.light],
+      extensions: const [
+        ClinicalThemeExtension.light,
+        AppColorsExtension.light,
+      ],
     );
   }
 
@@ -388,6 +391,33 @@ abstract class AppTheme {
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       ),
 
+      // Bottom Navigation Bar Theme
+      bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+        backgroundColor: AppColors.darkSurface,
+        selectedItemColor: AppColors.inversePrimary,
+        unselectedItemColor: AppColors.slate400,
+        elevation: 8,
+        type: BottomNavigationBarType.fixed,
+      ),
+
+      // Navigation Bar Theme (M3)
+      navigationBarTheme: NavigationBarThemeData(
+        backgroundColor: AppColors.darkSurface,
+        indicatorColor: AppColors.darkMintBorder,
+        iconTheme: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) {
+            return const IconThemeData(color: AppColors.inversePrimary);
+          }
+          return const IconThemeData(color: AppColors.slate400);
+        }),
+        labelTextStyle: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.selected)) {
+            return AppTypography.labelSm(color: AppColors.inversePrimary);
+          }
+          return AppTypography.labelSm(color: AppColors.slate400);
+        }),
+      ),
+
       // Bottom Sheet Theme
       bottomSheetTheme: const BottomSheetThemeData(
         backgroundColor: AppColors.darkSurface,
@@ -410,7 +440,10 @@ abstract class AppTheme {
       dividerTheme: const DividerThemeData(color: AppColors.darkOutline, thickness: 1, space: 1),
 
       // Extensions
-      extensions: const [ClinicalThemeExtension.dark],
+      extensions: const [
+        ClinicalThemeExtension.dark,
+        AppColorsExtension.dark,
+      ],
     );
   }
 }

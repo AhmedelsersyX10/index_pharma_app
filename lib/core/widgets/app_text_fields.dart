@@ -25,45 +25,48 @@ class AppSearchBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
+    final shadows = context.isDarkMode ? AppShadows.darkLevel1 : AppShadows.level1;
+
     return Container(
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         borderRadius: AppRadii.roundedFull,
-        boxShadow: AppShadows.level1,
+        boxShadow: shadows,
       ),
       child: TextField(
         controller: controller,
         autofocus: autoFocus,
         onChanged: onChanged,
-        style: AppTypography.bodyMd(color: AppColors.onSurface),
+        style: AppTypography.bodyMd(color: colors.onSurface),
         decoration: InputDecoration(
           hintText: hintText ?? AppLocaleKeys.commonSearchHint.tr(),
-          hintStyle: AppTypography.bodyMd(color: AppColors.slate400),
-          fillColor: AppColors.canvasPure,
+          hintStyle: AppTypography.bodyMd(color: colors.slate400),
+          fillColor: colors.surface,
           filled: true,
           contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
-          prefixIcon: const Padding(
-            padding: EdgeInsetsDirectional.only(start: 16, end: 12),
-            child: Icon(Icons.search_rounded, color: AppColors.primaryBrand, size: 24),
+          prefixIcon: Padding(
+            padding: const EdgeInsetsDirectional.only(start: 16, end: 12),
+            child: Icon(Icons.search_rounded, color: colors.primaryBrand, size: 24),
           ),
           prefixIconConstraints: const BoxConstraints(minWidth: 52, minHeight: 44),
           suffixIcon: onFilterTap != null
               ? IconButton(
-                  icon: const Icon(Icons.tune_rounded, color: AppColors.slate500),
+                  icon: Icon(Icons.tune_rounded, color: colors.slate500),
                   onPressed: onFilterTap,
                   tooltip: AppLocaleKeys.commonFilter.tr(),
                 )
               : null,
-          border: const OutlineInputBorder(
+          border: OutlineInputBorder(
             borderRadius: AppRadii.roundedFull,
-            borderSide: BorderSide(color: AppColors.borderSubtle, width: 1),
+            borderSide: BorderSide(color: colors.borderSubtle, width: 1),
           ),
-          enabledBorder: const OutlineInputBorder(
+          enabledBorder: OutlineInputBorder(
             borderRadius: AppRadii.roundedFull,
-            borderSide: BorderSide(color: AppColors.borderSubtle, width: 1),
+            borderSide: BorderSide(color: colors.borderSubtle, width: 1),
           ),
-          focusedBorder: const OutlineInputBorder(
+          focusedBorder: OutlineInputBorder(
             borderRadius: AppRadii.roundedFull,
-            borderSide: BorderSide(color: AppColors.primaryBrand, width: 2),
+            borderSide: BorderSide(color: colors.primaryBrand, width: 2),
           ),
         ),
       ),
@@ -120,6 +123,7 @@ class AppTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -128,7 +132,7 @@ class AppTextField extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               if (label != null)
-                Text(label!, style: AppTypography.labelMd(color: AppColors.slate700))
+                Text(label!, style: AppTypography.labelMd(color: colors.slate700))
               else
                 const SizedBox.shrink(),
               ?trailingLabelWidget,
@@ -149,7 +153,7 @@ class AppTextField extends StatelessWidget {
           onChanged: onChanged,
           onFieldSubmitted: onFieldSubmitted,
           validator: validator,
-          style: AppTypography.bodyMd(color: AppColors.onSurface),
+          style: AppTypography.bodyMd(color: colors.onSurface),
           decoration: InputDecoration(
             hintText: hintText,
             errorText: errorText,

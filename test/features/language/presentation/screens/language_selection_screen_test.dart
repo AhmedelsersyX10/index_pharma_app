@@ -64,6 +64,15 @@ class _MockStorageService implements StorageService {
     selectedBranchId = branchId;
     return true;
   }
+
+  @override
+  String? themeMode;
+
+  @override
+  Future<bool> setThemeMode(String mode) async {
+    themeMode = mode;
+    return true;
+  }
 }
 
 Widget _buildTestApp({

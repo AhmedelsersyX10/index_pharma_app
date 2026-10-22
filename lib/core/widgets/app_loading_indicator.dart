@@ -22,7 +22,7 @@ class AppLoadingIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final effectiveColor = color ?? AppColors.primaryBrand;
+    final effectiveColor = color ?? context.colors.primaryBrand;
 
     final spinner = _LoadingSpinner(
       size: size,
@@ -90,7 +90,7 @@ class _LoadingMessage extends StatelessWidget {
     return Text(
       message,
       textAlign: TextAlign.center,
-      style: style ?? AppTypography.bodyMd(color: AppColors.slate600),
+      style: style ?? AppTypography.bodyMd(color: context.colors.slate600),
     );
   }
 }

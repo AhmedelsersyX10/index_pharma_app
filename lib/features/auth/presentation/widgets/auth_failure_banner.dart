@@ -22,6 +22,7 @@ class AuthFailureBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     final title = AuthFailureMapper.toTitle(failure, isLogin: isLogin);
     final message = AuthFailureMapper.toMessage(failure);
     final isConflict = failure is Conflict;
@@ -29,10 +30,10 @@ class AuthFailureBanner extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(bottom: AppSpacing.spaceMd),
       padding: const EdgeInsets.all(AppSpacing.spaceMd),
-      decoration: const BoxDecoration(
-        color: AppColors.errorContainer,
+      decoration: BoxDecoration(
+        color: colors.errorContainer,
         borderRadius: AppRadii.roundedXl,
-        boxShadow: AppShadows.level1,
+        boxShadow: context.shadowsLevel1,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -43,20 +44,20 @@ class AuthFailureBanner extends StatelessWidget {
               Container(
                 width: 28,
                 height: 28,
-                decoration: const BoxDecoration(color: AppColors.error, shape: BoxShape.circle),
-                child: const Icon(Icons.error_outline_rounded, color: Colors.white, size: 18),
+                decoration: BoxDecoration(color: colors.error, shape: BoxShape.circle),
+                child: Icon(Icons.error_outline_rounded, color: colors.onError, size: 18),
               ),
               const SizedBox(width: AppSpacing.spaceSm),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(title, style: AppTypography.titleMd(color: AppColors.onErrorContainer)),
+                    Text(title, style: AppTypography.titleMd(color: colors.onErrorContainer)),
                     const SizedBox(height: AppSpacing.space2xs),
                     Text(
                       message,
                       style: AppTypography.bodySm(
-                        color: AppColors.onErrorContainer.withValues(alpha: 0.9),
+                        color: colors.onErrorContainer.withValues(alpha: 0.9),
                       ),
                     ),
                   ],
@@ -65,7 +66,7 @@ class AuthFailureBanner extends StatelessWidget {
               IconButton(
                 padding: EdgeInsets.zero,
                 constraints: const BoxConstraints(minWidth: 24, minHeight: 24),
-                icon: const Icon(Icons.close_rounded, size: 18, color: AppColors.onErrorContainer),
+                icon: Icon(Icons.close_rounded, size: 18, color: colors.onErrorContainer),
                 onPressed: onDismiss,
               ),
             ],
@@ -77,23 +78,23 @@ class AuthFailureBanner extends StatelessWidget {
               borderRadius: AppRadii.roundedSm,
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                decoration: const BoxDecoration(
-                  color: AppColors.canvasPure,
+                decoration: BoxDecoration(
+                  color: colors.canvasPure,
                   borderRadius: AppRadii.roundedSm,
-                  boxShadow: AppShadows.level1,
+                  boxShadow: context.shadowsLevel1,
                 ),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
                       AppLocaleKeys.authSignInLink.tr(),
-                      style: AppTypography.labelMd(color: AppColors.onErrorContainer),
+                      style: AppTypography.labelMd(color: colors.onErrorContainer),
                     ),
                     const SizedBox(width: AppSpacing.space2xs),
-                    const Icon(
+                    Icon(
                       Icons.arrow_forward_rounded,
                       size: 14,
-                      color: AppColors.onErrorContainer,
+                      color: colors.onErrorContainer,
                     ),
                   ],
                 ),

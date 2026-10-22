@@ -7,7 +7,7 @@ import 'package:index_pharma/core/theme/theme.dart';
 /// Clinical prescription upload strip for B2 Home Screen.
 ///
 /// Features:
-/// - Soft mint container (`AppColors.brandMintSurface`)
+/// - Soft mint container (`brandMintSurface`)
 /// - Reassurance badge ("آمن وسري" / "Doctor verification")
 /// - Prominent CTA button to launch prescription upload flow.
 ///
@@ -20,13 +20,16 @@ class HomePrescriptionUploadCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
+    final shadows = context.isDarkMode ? AppShadows.darkLevel1 : AppShadows.level1;
+
     return Container(
       padding: const EdgeInsets.all(AppSpacing.spaceMd),
       decoration: BoxDecoration(
-        color: AppColors.brandMintSurface,
+        color: colors.brandMintSurface,
         borderRadius: AppRadii.roundedXl,
-        border: Border.all(color: AppColors.brandMintBorder, width: 1),
-        boxShadow: AppShadows.level1,
+        border: Border.all(color: colors.brandMintBorder, width: 1),
+        boxShadow: shadows,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -42,8 +45,8 @@ class HomePrescriptionUploadCard extends StatelessWidget {
                     Container(
                       width: 40,
                       height: 40,
-                      decoration: const BoxDecoration(
-                        color: AppColors.primary,
+                      decoration: BoxDecoration(
+                        color: colors.primary,
                         borderRadius: AppRadii.roundedLg,
                       ),
                       alignment: Alignment.center,
@@ -57,7 +60,7 @@ class HomePrescriptionUploadCard extends StatelessWidget {
                           Text(
                             AppLocaleKeys.homeRxServiceTitle.tr(),
                             style: AppTypography.titleMd(
-                              color: AppColors.onSurface,
+                              color: colors.onSurface,
                             ).copyWith(fontWeight: FontWeight.bold),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
@@ -65,7 +68,7 @@ class HomePrescriptionUploadCard extends StatelessWidget {
                           Text(
                             AppLocaleKeys.homeRxServiceSubtitle.tr(),
                             style: AppTypography.labelSm(
-                              color: AppColors.brandEmeraldDark,
+                              color: colors.brandEmeraldDark,
                             ).copyWith(fontWeight: FontWeight.w600),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
@@ -81,24 +84,24 @@ class HomePrescriptionUploadCard extends StatelessWidget {
               // Micro Badge
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
-                decoration: const BoxDecoration(
-                  color: AppColors.surfaceContainerLowest,
+                decoration: BoxDecoration(
+                  color: colors.surfaceContainerLowest,
                   borderRadius: AppRadii.roundedFull,
-                  boxShadow: AppShadows.level1,
+                  boxShadow: shadows,
                 ),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Icon(
+                    Icon(
                       Icons.lock_outline_rounded,
                       size: 12,
-                      color: AppColors.brandEmeraldDark,
+                      color: colors.brandEmeraldDark,
                     ),
                     const SizedBox(width: 3),
                     Text(
                       AppLocaleKeys.homeRxBadgeSecure.tr(),
                       style: AppTypography.labelSm(
-                        color: AppColors.brandEmeraldDark,
+                        color: colors.brandEmeraldDark,
                       ).copyWith(fontWeight: FontWeight.w600),
                     ),
                   ],
@@ -112,13 +115,13 @@ class HomePrescriptionUploadCard extends StatelessWidget {
           Text(
             AppLocaleKeys.homeRxHeading.tr(),
             style: AppTypography.titleMd(
-              color: AppColors.onSurface,
+              color: colors.onSurface,
             ).copyWith(fontWeight: FontWeight.w700),
           ),
           const SizedBox(height: 4),
           Text(
             AppLocaleKeys.homeRxDesc.tr(),
-            style: AppTypography.bodySm(color: AppColors.onSurfaceVariant).copyWith(height: 1.4),
+            style: AppTypography.bodySm(color: colors.onSurfaceVariant).copyWith(height: 1.4),
           ),
           const SizedBox(height: AppSpacing.spaceMd),
 
@@ -136,7 +139,7 @@ class HomePrescriptionUploadCard extends StatelessWidget {
                 ).copyWith(fontWeight: FontWeight.bold),
               ),
               style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.primary,
+                backgroundColor: colors.primary,
                 foregroundColor: Colors.white,
                 elevation: 0,
                 shape: const RoundedRectangleBorder(borderRadius: AppRadii.roundedLg),

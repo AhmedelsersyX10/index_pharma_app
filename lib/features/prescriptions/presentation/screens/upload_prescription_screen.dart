@@ -5,8 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:index_pharma/core/localization/app_locale_keys.dart';
-import 'package:index_pharma/core/theme/app_colors.dart';
-import 'package:index_pharma/core/theme/app_spacing.dart';
+import 'package:index_pharma/core/theme/theme.dart';
 import 'package:index_pharma/core/utils/app_router.dart';
 import 'package:index_pharma/core/widgets/app_page_bar.dart';
 import '../cubit/prescription_cubit.dart';
@@ -67,9 +66,10 @@ class _UploadPrescriptionViewState extends State<_UploadPrescriptionView> {
   }
 
   void _showImageSourceModal() {
+    final colors = context.colors;
     showModalBottomSheet<void>(
       context: context,
-      backgroundColor: AppColors.canvasPure,
+      backgroundColor: colors.canvasPure,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
       ),
@@ -86,15 +86,15 @@ class _UploadPrescriptionViewState extends State<_UploadPrescriptionView> {
                 width: 40,
                 height: 4,
                 decoration: BoxDecoration(
-                  color: AppColors.surfaceContainerHigh,
+                  color: colors.surfaceContainerHigh,
                   borderRadius: BorderRadius.circular(2),
                 ),
               ),
               const SizedBox(height: AppSpacing.spaceMd),
               ListTile(
-                leading: const CircleAvatar(
-                  backgroundColor: AppColors.brandMintSurface,
-                  child: Icon(Icons.camera_alt, color: AppColors.primary),
+                leading: CircleAvatar(
+                  backgroundColor: colors.brandMintSurface,
+                  child: Icon(Icons.camera_alt, color: colors.primary),
                 ),
                 title: Text(
                   AppLocaleKeys.prescriptionsCameraBtn.tr(),
@@ -107,9 +107,9 @@ class _UploadPrescriptionViewState extends State<_UploadPrescriptionView> {
                 },
               ),
               ListTile(
-                leading: const CircleAvatar(
-                  backgroundColor: AppColors.surfaceContainerLow,
-                  child: Icon(Icons.photo_library, color: AppColors.primary),
+                leading: CircleAvatar(
+                  backgroundColor: colors.surfaceContainerLow,
+                  child: Icon(Icons.photo_library, color: colors.primary),
                 ),
                 title: Text(
                   AppLocaleKeys.prescriptionsGalleryBtn.tr(),
@@ -130,6 +130,7 @@ class _UploadPrescriptionViewState extends State<_UploadPrescriptionView> {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     return BlocConsumer<PrescriptionCubit, PrescriptionState>(
       listener: (context, state) {
         if (state.uploadStep == PrescriptionUploadStep.submitted &&
@@ -147,7 +148,7 @@ class _UploadPrescriptionViewState extends State<_UploadPrescriptionView> {
             state.uploadStep == PrescriptionUploadStep.submitting;
 
         return Scaffold(
-          backgroundColor: AppColors.background,
+          backgroundColor: colors.background,
           appBar: AppPageBar(
             title: AppLocaleKeys.prescriptionsUploadTitle.tr(),
             onBackPressed: () {
@@ -174,6 +175,7 @@ class _UploadPrescriptionViewState extends State<_UploadPrescriptionView> {
                     description: AppLocaleKeys.prescriptionsErrorSizeDesc.tr(),
                     actionText: AppLocaleKeys.prescriptionsGalleryBtn.tr(),
                     onAction: _showImageSourceModal,
+                    colors: colors,
                   ),
                   const SizedBox(height: AppSpacing.spaceMd),
                 ],
@@ -189,20 +191,21 @@ class _UploadPrescriptionViewState extends State<_UploadPrescriptionView> {
                     onAction: () => cubit.uploadAndSubmit(),
                     secondaryActionText: AppLocaleKeys.prescriptionsCancel.tr(),
                     onSecondaryAction: () => cubit.clearPickedImage(),
+                    colors: colors,
                   ),
                   const SizedBox(height: AppSpacing.spaceMd),
                 ],
 
                 // 3. Preview & Drop / Uploading Container
-                _buildPreviewContainer(state, cubit, isProcessing),
+                _buildPreviewContainer(state, cubit, isProcessing, colors),
                 const SizedBox(height: AppSpacing.spaceMd),
 
                 // 4. Optional Notes Field
-                _buildNotesField(cubit, isProcessing),
+                _buildNotesField(cubit, isProcessing, colors),
                 const SizedBox(height: AppSpacing.spaceMd),
 
                 // 5. Assurance & Steps Mini-Card
-                _buildAssuranceStepsCard(),
+                _buildAssuranceStepsCard(colors),
                 const SizedBox(height: AppSpacing.spaceLg),
 
                 // 7. Submission Button
@@ -213,8 +216,8 @@ class _UploadPrescriptionViewState extends State<_UploadPrescriptionView> {
                         ? () => cubit.uploadAndSubmit()
                         : null,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColors.primary,
-                      disabledBackgroundColor: AppColors.surfaceContainerHigh,
+                      backgroundColor: colors.primary,
+                      disabledBackgroundColor: colors.surfaceContainerHigh,
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(9999)),
                       elevation: 0,
                     ),
@@ -249,7 +252,7 @@ class _UploadPrescriptionViewState extends State<_UploadPrescriptionView> {
                               Text(
                                 AppLocaleKeys.prescriptionsSubmitBtn.tr(),
                                 style: TextStyle(
-                                  color: state.canSubmit ? Colors.white : AppColors.neutral,
+                                  color: state.canSubmit ? Colors.white : colors.neutral,
                                   fontSize: 15,
                                   fontWeight: FontWeight.w700,
                                 ),
@@ -271,24 +274,25 @@ class _UploadPrescriptionViewState extends State<_UploadPrescriptionView> {
     PrescriptionState state,
     PrescriptionCubit cubit,
     bool isProcessing,
+    AppColorsExtension colors,
   ) {
     return Container(
       padding: const EdgeInsets.all(AppSpacing.spaceMd),
       decoration: BoxDecoration(
-        color: AppColors.canvasPure,
+        color: colors.canvasPure,
         borderRadius: BorderRadius.circular(16),
-        boxShadow: const [BoxShadow(color: Color(0x0A0F172A), blurRadius: 6, offset: Offset(0, 2))],
+        boxShadow: context.shadowsLevel1,
       ),
       child: isProcessing
-          ? _buildUploadingProgressView(state)
+          ? _buildUploadingProgressView(state, colors)
           : (state.pickedImagePath != null &&
                 state.uploadStep != PrescriptionUploadStep.fileSizeExceeded)
-          ? _buildSelectedPreviewView(state, cubit)
-          : _buildEmptyDropView(),
+          ? _buildSelectedPreviewView(state, cubit, colors)
+          : _buildEmptyDropView(colors),
     );
   }
 
-  Widget _buildEmptyDropView() {
+  Widget _buildEmptyDropView(AppColorsExtension colors) {
     return InkWell(
       onTap: _showImageSourceModal,
       borderRadius: BorderRadius.circular(12),
@@ -298,35 +302,35 @@ class _UploadPrescriptionViewState extends State<_UploadPrescriptionView> {
           vertical: AppSpacing.spaceLg,
         ),
         decoration: BoxDecoration(
-          color: AppColors.surfaceContainerLow.withValues(alpha: 0.6),
+          color: colors.surfaceContainerLow.withValues(alpha: 0.6),
           borderRadius: BorderRadius.circular(12),
           border: Border.all(
-            color: AppColors.brandMintBorder,
+            color: colors.brandMintBorder,
             style: BorderStyle.solid,
             width: 1.5,
           ),
         ),
         child: Column(
           children: [
-            const CircleAvatar(
+            CircleAvatar(
               radius: 30,
-              backgroundColor: AppColors.brandMintSurface,
-              child: Icon(Icons.cloud_upload_outlined, size: 32, color: AppColors.primary),
+              backgroundColor: colors.brandMintSurface,
+              child: Icon(Icons.cloud_upload_outlined, size: 32, color: colors.primary),
             ),
             const SizedBox(height: AppSpacing.spaceSm),
             Text(
               AppLocaleKeys.prescriptionsDropHint.tr(),
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 15,
                 fontWeight: FontWeight.w700,
-                color: AppColors.onSurface,
+                color: colors.onSurface,
               ),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 4),
             Text(
               AppLocaleKeys.prescriptionsDropSubhint.tr(),
-              style: const TextStyle(fontSize: 12, color: AppColors.neutral),
+              style: TextStyle(fontSize: 12, color: colors.neutral),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: AppSpacing.spaceMd),
@@ -335,8 +339,8 @@ class _UploadPrescriptionViewState extends State<_UploadPrescriptionView> {
               icon: const Icon(Icons.file_upload_outlined, size: 18),
               label: Text(AppLocaleKeys.prescriptionsBrowseFiles.tr()),
               style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.canvasPure,
-                foregroundColor: AppColors.primary,
+                backgroundColor: colors.canvasPure,
+                foregroundColor: colors.primary,
                 elevation: 1,
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
               ),
@@ -347,7 +351,11 @@ class _UploadPrescriptionViewState extends State<_UploadPrescriptionView> {
     );
   }
 
-  Widget _buildSelectedPreviewView(PrescriptionState state, PrescriptionCubit cubit) {
+  Widget _buildSelectedPreviewView(
+    PrescriptionState state,
+    PrescriptionCubit cubit,
+    AppColorsExtension colors,
+  ) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -360,27 +368,27 @@ class _UploadPrescriptionViewState extends State<_UploadPrescriptionView> {
                 Container(
                   width: 8,
                   height: 8,
-                  decoration: const BoxDecoration(
-                    color: AppColors.brandEmeraldDark,
+                  decoration: BoxDecoration(
+                    color: colors.brandEmeraldDark,
                     shape: BoxShape.circle,
                   ),
                 ),
                 const SizedBox(width: 6),
                 Text(
                   AppLocaleKeys.prescriptionsPreviewTitle.tr(),
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w700,
-                    color: AppColors.onSurface,
+                    color: colors.onSurface,
                   ),
                 ),
               ],
             ),
             Text(
               state.formattedPickedFileSize,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 12,
-                color: AppColors.neutral,
+                color: colors.neutral,
                 fontWeight: FontWeight.w500,
               ),
             ),
@@ -414,21 +422,21 @@ class _UploadPrescriptionViewState extends State<_UploadPrescriptionView> {
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    color: Colors.white.withValues(alpha: 0.9),
+                    color: colors.canvasPure.withValues(alpha: 0.9),
                     borderRadius: BorderRadius.circular(9999),
-                    boxShadow: const [BoxShadow(color: Colors.black12, blurRadius: 4)],
+                    boxShadow: context.shadowsLevel1,
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Icon(Icons.check_circle, size: 14, color: AppColors.brandEmeraldDark),
+                      Icon(Icons.check_circle, size: 14, color: colors.brandEmeraldDark),
                       const SizedBox(width: 4),
                       Text(
                         AppLocaleKeys.prescriptionsQualityExcellent.tr(),
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 11,
                           fontWeight: FontWeight.w600,
-                          color: AppColors.onSurface,
+                          color: colors.onSurface,
                         ),
                       ),
                     ],
@@ -472,13 +480,13 @@ class _UploadPrescriptionViewState extends State<_UploadPrescriptionView> {
               onPressed: _showImageSourceModal,
               icon: const Icon(Icons.swap_horiz, size: 18),
               label: Text(AppLocaleKeys.prescriptionsReplaceImage.tr()),
-              style: TextButton.styleFrom(foregroundColor: AppColors.primary),
+              style: TextButton.styleFrom(foregroundColor: colors.primary),
             ),
             TextButton.icon(
               onPressed: () => cubit.clearPickedImage(),
               icon: const Icon(Icons.delete_outline, size: 18),
               label: Text(AppLocaleKeys.prescriptionsDeleteImage.tr()),
-              style: TextButton.styleFrom(foregroundColor: AppColors.error),
+              style: TextButton.styleFrom(foregroundColor: colors.error),
             ),
           ],
         ),
@@ -486,7 +494,7 @@ class _UploadPrescriptionViewState extends State<_UploadPrescriptionView> {
     );
   }
 
-  Widget _buildUploadingProgressView(PrescriptionState state) {
+  Widget _buildUploadingProgressView(PrescriptionState state, AppColorsExtension colors) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: AppSpacing.spaceMd),
       child: Column(
@@ -497,11 +505,11 @@ class _UploadPrescriptionViewState extends State<_UploadPrescriptionView> {
                 width: 48,
                 height: 48,
                 decoration: BoxDecoration(
-                  color: AppColors.brandMintSurface,
+                  color: colors.brandMintSurface,
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: const Center(
-                  child: CircularProgressIndicator(strokeWidth: 2.5, color: AppColors.primary),
+                child: Center(
+                  child: CircularProgressIndicator(strokeWidth: 2.5, color: colors.primary),
                 ),
               ),
               const SizedBox(width: AppSpacing.spaceSm),
@@ -513,16 +521,16 @@ class _UploadPrescriptionViewState extends State<_UploadPrescriptionView> {
                       state.uploadStep == PrescriptionUploadStep.submitting
                           ? AppLocaleKeys.prescriptionsSubmittingTitle.tr()
                           : AppLocaleKeys.prescriptionsUploadingTitle.tr(),
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w700,
-                        color: AppColors.onSurface,
+                        color: colors.onSurface,
                       ),
                     ),
                     const SizedBox(height: 2),
                     Text(
                       '${state.pickedImageName ?? 'prescription.jpg'} (${state.formattedPickedFileSize})',
-                      style: const TextStyle(fontSize: 12, color: AppColors.neutral),
+                      style: TextStyle(fontSize: 12, color: colors.neutral),
                     ),
                   ],
                 ),
@@ -532,10 +540,10 @@ class _UploadPrescriptionViewState extends State<_UploadPrescriptionView> {
           const SizedBox(height: AppSpacing.spaceMd),
           ClipRRect(
             borderRadius: BorderRadius.circular(9999),
-            child: const LinearProgressIndicator(
+            child: LinearProgressIndicator(
               minHeight: 6,
-              color: AppColors.primary,
-              backgroundColor: AppColors.surfaceContainerHigh,
+              color: colors.primary,
+              backgroundColor: colors.surfaceContainerHigh,
             ),
           ),
           const SizedBox(height: 8),
@@ -543,11 +551,11 @@ class _UploadPrescriptionViewState extends State<_UploadPrescriptionView> {
             alignment: AlignmentDirectional.centerStart,
             child: Row(
               children: [
-                const Icon(Icons.security, size: 14, color: AppColors.brandEmeraldDark),
+                Icon(Icons.security, size: 14, color: colors.brandEmeraldDark),
                 const SizedBox(width: 4),
                 Text(
                   AppLocaleKeys.prescriptionsPrivacyNotice.tr(),
-                  style: const TextStyle(fontSize: 11, color: AppColors.neutral),
+                  style: TextStyle(fontSize: 11, color: colors.neutral),
                 ),
               ],
             ),
@@ -557,15 +565,19 @@ class _UploadPrescriptionViewState extends State<_UploadPrescriptionView> {
     );
   }
 
-  Widget _buildNotesField(PrescriptionCubit cubit, bool isProcessing) {
+  Widget _buildNotesField(
+    PrescriptionCubit cubit,
+    bool isProcessing,
+    AppColorsExtension colors,
+  ) {
     final length = _notesController.text.length;
 
     return Container(
       padding: const EdgeInsets.all(AppSpacing.spaceMd),
       decoration: BoxDecoration(
-        color: AppColors.canvasPure,
+        color: colors.canvasPure,
         borderRadius: BorderRadius.circular(16),
-        boxShadow: const [BoxShadow(color: Color(0x0A0F172A), blurRadius: 6, offset: Offset(0, 2))],
+        boxShadow: context.shadowsLevel1,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -575,23 +587,23 @@ class _UploadPrescriptionViewState extends State<_UploadPrescriptionView> {
             children: [
               Row(
                 children: [
-                  const Icon(Icons.edit_note, size: 20, color: AppColors.primary),
+                  Icon(Icons.edit_note, size: 20, color: colors.primary),
                   const SizedBox(width: 6),
                   Text(
                     AppLocaleKeys.prescriptionsNotesLabel.tr(),
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w700,
-                      color: AppColors.onSurface,
+                      color: colors.onSurface,
                     ),
                   ),
                 ],
               ),
               Text(
                 '$length / 250',
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 12,
-                  color: AppColors.neutral,
+                  color: colors.neutral,
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -600,7 +612,7 @@ class _UploadPrescriptionViewState extends State<_UploadPrescriptionView> {
           const SizedBox(height: 4),
           Text(
             AppLocaleKeys.prescriptionsNotesDesc.tr(),
-            style: const TextStyle(fontSize: 12, color: AppColors.neutral),
+            style: TextStyle(fontSize: 12, color: colors.neutral),
           ),
           const SizedBox(height: AppSpacing.spaceSm),
           TextField(
@@ -616,8 +628,8 @@ class _UploadPrescriptionViewState extends State<_UploadPrescriptionView> {
             },
             decoration: InputDecoration(
               hintText: AppLocaleKeys.prescriptionsNotesHint.tr(),
-              hintStyle: const TextStyle(fontSize: 13, color: AppColors.neutral),
-              fillColor: AppColors.surfaceSubtle,
+              hintStyle: TextStyle(fontSize: 13, color: colors.neutral),
+              fillColor: colors.surfaceSubtle,
               filled: true,
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
@@ -636,14 +648,17 @@ class _UploadPrescriptionViewState extends State<_UploadPrescriptionView> {
               _buildSuggestionChip(
                 AppLocaleKeys.prescriptionsChipAlternatives.tr(),
                 AppLocaleKeys.prescriptionsChipAlternativesText.tr(),
+                colors: colors,
               ),
               _buildSuggestionChip(
                 AppLocaleKeys.prescriptionsChipDosage.tr(),
                 AppLocaleKeys.prescriptionsChipDosageText.tr(),
+                colors: colors,
               ),
               _buildSuggestionChip(
                 AppLocaleKeys.prescriptionsChipUrgent.tr(),
                 AppLocaleKeys.prescriptionsChipUrgentText.tr(),
+                colors: colors,
               ),
             ],
           ),
@@ -652,21 +667,25 @@ class _UploadPrescriptionViewState extends State<_UploadPrescriptionView> {
     );
   }
 
-  Widget _buildSuggestionChip(String label, String value) {
+  Widget _buildSuggestionChip(
+    String label,
+    String value, {
+    required AppColorsExtension colors,
+  }) {
     return ActionChip(
-      label: Text(label, style: const TextStyle(fontSize: 11, color: AppColors.onSurfaceVariant)),
-      backgroundColor: AppColors.surfaceContainerLow,
+      label: Text(label, style: TextStyle(fontSize: 11, color: colors.onSurfaceVariant)),
+      backgroundColor: colors.surfaceContainerLow,
       side: BorderSide.none,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(9999)),
       onPressed: () => _appendNote(value),
     );
   }
 
-  Widget _buildAssuranceStepsCard() {
+  Widget _buildAssuranceStepsCard(AppColorsExtension colors) {
     return Container(
       padding: const EdgeInsets.all(AppSpacing.spaceMd),
       decoration: BoxDecoration(
-        color: AppColors.surfaceContainerLow,
+        color: colors.surfaceContainerLow,
         borderRadius: BorderRadius.circular(16),
       ),
       child: Column(
@@ -674,14 +693,14 @@ class _UploadPrescriptionViewState extends State<_UploadPrescriptionView> {
         children: [
           Row(
             children: [
-              const Icon(Icons.assignment_outlined, size: 20, color: AppColors.primary),
+              Icon(Icons.assignment_outlined, size: 20, color: colors.primary),
               const SizedBox(width: 6),
               Text(
                 AppLocaleKeys.prescriptionsStepsTitle.tr(),
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w700,
-                  color: AppColors.onSurface,
+                  color: colors.onSurface,
                 ),
               ),
             ],
@@ -690,29 +709,36 @@ class _UploadPrescriptionViewState extends State<_UploadPrescriptionView> {
           _buildStepRow(
             stepNumber: AppLocaleKeys.prescriptionsStepNum1.tr(),
             text: AppLocaleKeys.prescriptionsStep1.tr(),
+            colors: colors,
           ),
           const SizedBox(height: 8),
           _buildStepRow(
             stepNumber: AppLocaleKeys.prescriptionsStepNum2.tr(),
             text: AppLocaleKeys.prescriptionsStep2.tr(),
+            colors: colors,
           ),
           const SizedBox(height: 8),
           _buildStepRow(
             stepNumber: AppLocaleKeys.prescriptionsStepNum3.tr(),
             text: AppLocaleKeys.prescriptionsStep3.tr(),
+            colors: colors,
           ),
         ],
       ),
     );
   }
 
-  Widget _buildStepRow({required String stepNumber, required String text}) {
+  Widget _buildStepRow({
+    required String stepNumber,
+    required String text,
+    required AppColorsExtension colors,
+  }) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         CircleAvatar(
           radius: 11,
-          backgroundColor: AppColors.primary,
+          backgroundColor: colors.primary,
           child: Text(
             stepNumber,
             style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w700, color: Colors.white),
@@ -722,7 +748,7 @@ class _UploadPrescriptionViewState extends State<_UploadPrescriptionView> {
         Expanded(
           child: Text(
             text,
-            style: const TextStyle(fontSize: 12, color: AppColors.onSurface, height: 1.4),
+            style: TextStyle(fontSize: 12, color: colors.onSurface, height: 1.4),
           ),
         ),
       ],
@@ -737,11 +763,12 @@ class _UploadPrescriptionViewState extends State<_UploadPrescriptionView> {
     required VoidCallback onAction,
     String? secondaryActionText,
     VoidCallback? onSecondaryAction,
+    required AppColorsExtension colors,
   }) {
     return Container(
       padding: const EdgeInsets.all(AppSpacing.spaceMd),
       decoration: BoxDecoration(
-        color: AppColors.errorContainer.withValues(alpha: 0.6),
+        color: colors.errorContainer.withValues(alpha: 0.6),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
@@ -749,7 +776,7 @@ class _UploadPrescriptionViewState extends State<_UploadPrescriptionView> {
         children: [
           CircleAvatar(
             radius: 16,
-            backgroundColor: AppColors.error,
+            backgroundColor: colors.error,
             child: Icon(icon, size: 18, color: Colors.white),
           ),
           const SizedBox(width: AppSpacing.spaceSm),
@@ -759,16 +786,16 @@ class _UploadPrescriptionViewState extends State<_UploadPrescriptionView> {
               children: [
                 Text(
                   title,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w700,
-                    color: AppColors.onErrorContainer,
+                    color: colors.onErrorContainer,
                   ),
                 ),
                 const SizedBox(height: 2),
                 Text(
                   description,
-                  style: const TextStyle(fontSize: 12, color: AppColors.onErrorContainer),
+                  style: TextStyle(fontSize: 12, color: colors.onErrorContainer),
                 ),
                 const SizedBox(height: 8),
                 Row(
@@ -776,7 +803,7 @@ class _UploadPrescriptionViewState extends State<_UploadPrescriptionView> {
                     ElevatedButton(
                       onPressed: onAction,
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.error,
+                        backgroundColor: colors.error,
                         foregroundColor: Colors.white,
                         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 6),
                         minimumSize: Size.zero,
@@ -790,7 +817,7 @@ class _UploadPrescriptionViewState extends State<_UploadPrescriptionView> {
                       TextButton(
                         onPressed: onSecondaryAction,
                         style: TextButton.styleFrom(
-                          foregroundColor: AppColors.onSurface,
+                          foregroundColor: colors.onSurface,
                           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
                           minimumSize: Size.zero,
                           tapTargetSize: MaterialTapTargetSize.shrinkWrap,

@@ -17,6 +17,8 @@ class ProductDetailsDescriptionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     if (description.trim().isEmpty) return const SizedBox.shrink();
 
+    final colors = context.colors;
+
     return AppCard(
       padding: const EdgeInsets.all(AppSpacing.spaceMd),
       child: Column(
@@ -24,16 +26,16 @@ class ProductDetailsDescriptionCard extends StatelessWidget {
         children: [
           Row(
             children: [
-              const Icon(
+              Icon(
                 Icons.assignment_outlined,
                 size: 20,
-                color: AppColors.primary,
+                color: colors.primary,
               ),
               const SizedBox(width: AppSpacing.spaceXs),
               Text(
                 AppLocaleKeys.productDetailsUsageGuidelinesTitle.tr(),
                 style: AppTypography.titleMd(
-                  color: AppColors.onSurface,
+                  color: colors.onSurface,
                 ).copyWith(fontWeight: FontWeight.w700),
               ),
             ],
@@ -42,7 +44,7 @@ class ProductDetailsDescriptionCard extends StatelessWidget {
           Text(
             description.trim(),
             style: AppTypography.bodyMd(
-              color: AppColors.onSurfaceVariant,
+              color: colors.onSurfaceVariant,
             ).copyWith(height: 1.5),
           ),
         ],

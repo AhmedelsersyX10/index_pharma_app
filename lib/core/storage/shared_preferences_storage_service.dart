@@ -21,6 +21,9 @@ class SharedPreferencesStorageService implements StorageService {
   /// SharedPreferences key for onboarding seen flag.
   static const String keyOnboardingSeen = 'onboarding_seen';
 
+  /// SharedPreferences key for theme mode preference ('system', 'light', 'dark').
+  static const String keyThemeMode = 'app_theme_mode';
+
   @override
   String? get locale => _preferences.getString(keyLocale);
 
@@ -45,4 +48,11 @@ class SharedPreferencesStorageService implements StorageService {
   @override
   Future<bool> setOnboardingSeen(bool seen) =>
       _preferences.setBool(keyOnboardingSeen, seen);
+
+  @override
+  String? get themeMode => _preferences.getString(keyThemeMode);
+
+  @override
+  Future<bool> setThemeMode(String mode) =>
+      _preferences.setString(keyThemeMode, mode);
 }

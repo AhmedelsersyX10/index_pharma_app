@@ -11,6 +11,7 @@ class SplashFooter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     return AnimatedBuilder(
       animation: footerFade,
       builder: (context, child) {
@@ -20,14 +21,14 @@ class SplashFooter extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           // Sleek clinical loading progress capsule
-          const SizedBox(
+          SizedBox(
             width: 90,
             height: 4,
             child: ClipRRect(
               borderRadius: AppRadii.roundedFull,
               child: LinearProgressIndicator(
-                backgroundColor: AppColors.slate200,
-                valueColor: AlwaysStoppedAnimation<Color>(AppColors.primaryBrand),
+                backgroundColor: colors.slate200,
+                valueColor: AlwaysStoppedAnimation<Color>(colors.primaryBrand),
               ),
             ),
           ),
@@ -37,10 +38,10 @@ class SplashFooter extends StatelessWidget {
           // Trust Badge
           AppBadge.trust(
             label: AppLocaleKeys.splashCertifiedPlatform.tr(),
-            icon: const Icon(
+            icon: Icon(
               Icons.verified_user_rounded,
               size: 14,
-              color: AppColors.brandEmeraldDark,
+              color: colors.brandEmeraldDark,
             ),
           ),
         ],

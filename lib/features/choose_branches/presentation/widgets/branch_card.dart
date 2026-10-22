@@ -22,19 +22,20 @@ class BranchCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     return InkWell(
       onTap: onTap,
       borderRadius: BorderRadius.circular(AppRadii.xl),
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 200),
         decoration: BoxDecoration(
-          color: isSelected ? AppColors.brandMintSurface : AppColors.canvasPure,
+          color: isSelected ? colors.brandMintSurface : colors.canvasPure,
           borderRadius: BorderRadius.circular(AppRadii.xl),
           border: Border.all(
-            color: isSelected ? AppColors.primary : AppColors.borderSubtle,
+            color: isSelected ? colors.primary : colors.borderSubtle,
             width: isSelected ? 1.5 : 1,
           ),
-          boxShadow: isSelected ? AppShadows.level2 : AppShadows.level1,
+          boxShadow: isSelected ? context.shadowsLevel2 : context.shadowsLevel1,
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(AppRadii.xl),
@@ -46,7 +47,7 @@ class BranchCard extends StatelessWidget {
                 Container(
                   height: 3,
                   width: double.infinity,
-                  color: AppColors.primary,
+                  color: colors.primary,
                 ),
 
               Padding(
@@ -64,16 +65,16 @@ class BranchCard extends StatelessWidget {
                           height: 38,
                           decoration: BoxDecoration(
                             color: isSelected
-                                ? AppColors.primary
-                                : AppColors.surfaceContainerHigh,
+                                ? colors.primary
+                                : colors.surfaceContainerHigh,
                             shape: BoxShape.circle,
                           ),
                           child: Icon(
                             Icons.local_pharmacy_rounded,
                             size: 20,
                             color: isSelected
-                                ? AppColors.onPrimary
-                                : AppColors.primary,
+                                ? colors.onPrimary
+                                : colors.primary,
                           ),
                         ),
 
@@ -87,7 +88,7 @@ class BranchCard extends StatelessWidget {
                               Text(
                                 branch.name,
                                 style: AppTypography.titleMd(
-                                  color: AppColors.onSurface,
+                                  color: colors.onSurface,
                                 ).copyWith(
                                   fontWeight: FontWeight.w700,
                                 ),
@@ -97,8 +98,8 @@ class BranchCard extends StatelessWidget {
                                 'branch_selection.main_branch_badge'.tr(),
                                 style: AppTypography.labelSm(
                                   color: isSelected
-                                      ? AppColors.primary
-                                      : AppColors.onSurfaceVariant,
+                                      ? colors.primary
+                                      : colors.onSurfaceVariant,
                                 ).copyWith(
                                   fontWeight: isSelected
                                       ? FontWeight.w600
@@ -117,22 +118,22 @@ class BranchCard extends StatelessWidget {
                               vertical: 4,
                             ),
                             decoration: BoxDecoration(
-                              color: AppColors.primary,
+                              color: colors.primary,
                               borderRadius: BorderRadius.circular(AppRadii.full),
                             ),
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                const Icon(
+                                Icon(
                                   Icons.check_circle,
                                   size: 14,
-                                  color: AppColors.onPrimary,
+                                  color: colors.onPrimary,
                                 ),
                                 const SizedBox(width: 4),
                                 Text(
                                   'branch_selection.active_branch_badge'.tr(),
                                   style: AppTypography.labelSm(
-                                    color: AppColors.onPrimary,
+                                    color: colors.onPrimary,
                                   ).copyWith(
                                     fontWeight: FontWeight.w600,
                                   ),
@@ -155,15 +156,15 @@ class BranchCard extends StatelessWidget {
                             Icons.location_on_outlined,
                             size: 16,
                             color: isSelected
-                                ? AppColors.primary
-                                : AppColors.secondaryMuted,
+                                ? colors.primary
+                                : colors.secondaryMuted,
                           ),
                           const SizedBox(width: AppSpacing.spaceXs),
                           Expanded(
                             child: Text(
                               branch.address!,
                               style: AppTypography.bodySm(
-                                color: AppColors.onSurfaceVariant,
+                                color: colors.onSurfaceVariant,
                               ),
                             ),
                           ),
@@ -179,14 +180,14 @@ class BranchCard extends StatelessWidget {
                           Icons.schedule_rounded,
                           size: 16,
                           color: isSelected
-                              ? AppColors.primary
-                              : AppColors.secondaryMuted,
+                              ? colors.primary
+                              : colors.secondaryMuted,
                         ),
                         const SizedBox(width: AppSpacing.spaceXs),
                         Text(
                           'branch_selection.open_24_hours'.tr(),
                           style: AppTypography.bodySm(
-                            color: AppColors.onSurface,
+                            color: colors.onSurface,
                           ).copyWith(
                             fontWeight: FontWeight.w500,
                           ),
@@ -204,8 +205,8 @@ class BranchCard extends StatelessWidget {
                             Icons.phone_outlined,
                             size: 16,
                             color: isSelected
-                                ? AppColors.primary
-                                : AppColors.secondaryMuted,
+                                ? colors.primary
+                                : colors.secondaryMuted,
                           ),
                           const SizedBox(width: AppSpacing.spaceXs),
                           Directionality(
@@ -213,7 +214,7 @@ class BranchCard extends StatelessWidget {
                             child: Text(
                               branch.phone!,
                               style: AppTypography.bodySm(
-                                color: AppColors.onSurfaceVariant,
+                                color: colors.onSurfaceVariant,
                               ).copyWith(
                                 fontFamily: 'monospace',
                               ),
@@ -232,7 +233,7 @@ class BranchCard extends StatelessWidget {
                         vertical: 6,
                       ),
                       decoration: BoxDecoration(
-                        color: AppColors.surfaceContainerLow,
+                        color: colors.surfaceContainerLow,
                         borderRadius: BorderRadius.circular(AppRadii.sm),
                       ),
                       child: Row(
@@ -244,8 +245,8 @@ class BranchCard extends StatelessWidget {
                               Container(
                                 width: 7,
                                 height: 7,
-                                decoration: const BoxDecoration(
-                                  color: AppColors.brandEmeraldDark,
+                                decoration: BoxDecoration(
+                                  color: colors.brandEmeraldDark,
                                   shape: BoxShape.circle,
                                 ),
                               ),
@@ -253,7 +254,7 @@ class BranchCard extends StatelessWidget {
                               Text(
                                 'branch_selection.stock_ready'.tr(),
                                 style: AppTypography.labelSm(
-                                  color: AppColors.brandEmeraldDark,
+                                  color: colors.brandEmeraldDark,
                                 ).copyWith(
                                   fontWeight: FontWeight.w600,
                                 ),
@@ -263,7 +264,7 @@ class BranchCard extends StatelessWidget {
                           Text(
                             'branch_selection.delivery_time'.tr(),
                             style: AppTypography.labelSm(
-                              color: AppColors.onSecondaryContainer,
+                              color: colors.onSecondaryContainer,
                             ),
                           ),
                         ],

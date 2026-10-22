@@ -30,6 +30,7 @@ class ProductDetailsShowcaseCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     final hasImage = product.image != null && product.image!.trim().isNotEmpty;
     final resolvedImageUrl = hasImage ? AppConfig.mediaUrl(product.image!.trim()) : '';
 
@@ -50,10 +51,10 @@ class ProductDetailsShowcaseCard extends StatelessWidget {
                 child: AppBadge.tone(
                   label: AppLocaleKeys.productDetailsMohRegisteredPill.tr(),
                   tone: AppBadgeTone.trust,
-                  icon: const Icon(
+                  icon: Icon(
                     Icons.verified_rounded,
                     size: 14,
-                    color: AppColors.brandEmeraldDark,
+                    color: colors.brandEmeraldDark,
                   ),
                 ),
               ),
@@ -70,28 +71,28 @@ class ProductDetailsShowcaseCard extends StatelessWidget {
             aspectRatio: 4 / 3,
             child: Container(
               decoration: BoxDecoration(
-                color: AppColors.surfaceSubtle,
+                color: colors.surfaceSubtle,
                 borderRadius: AppRadii.roundedLg,
-                border: Border.all(color: AppColors.slate200.withValues(alpha: 0.5)),
+                border: Border.all(color: colors.outlineVariant.withValues(alpha: 0.5)),
               ),
               clipBehavior: Clip.antiAlias,
               child: hasImage
                   ? CachedNetworkImage(
                       imageUrl: resolvedImageUrl,
                       fit: BoxFit.contain,
-                      placeholder: (context, url) => const Center(
+                      placeholder: (context, url) => Center(
                         child: SizedBox(
                           width: 28,
                           height: 28,
                           child: CircularProgressIndicator(
                             strokeWidth: 2,
-                            color: AppColors.primary,
+                            color: colors.primary,
                           ),
                         ),
                       ),
-                      errorWidget: (context, url, error) => _buildFallback(),
+                      errorWidget: (context, url, error) => _buildFallback(colors),
                     )
-                  : _buildFallback(),
+                  : _buildFallback(colors),
             ),
           ),
           const SizedBox(height: AppSpacing.spaceSm),
@@ -106,13 +107,13 @@ class ProductDetailsShowcaseCard extends StatelessWidget {
                     horizontal: AppSpacing.spaceSm,
                     vertical: AppSpacing.spaceXs + 2,
                   ),
-                  decoration: const BoxDecoration(
-                    color: AppColors.surfaceContainerLow,
+                  decoration: BoxDecoration(
+                    color: colors.surfaceContainerLow,
                     borderRadius: AppRadii.roundedMd,
                   ),
                   child: Row(
                     children: [
-                      const Icon(Icons.calendar_today_outlined, size: 18, color: AppColors.primary),
+                      Icon(Icons.calendar_today_outlined, size: 18, color: colors.primary),
                       const SizedBox(width: AppSpacing.spaceXs),
                       Expanded(
                         child: Column(
@@ -120,14 +121,14 @@ class ProductDetailsShowcaseCard extends StatelessWidget {
                           children: [
                             Text(
                               AppLocaleKeys.productDetailsExpiryDateLabel.tr(),
-                              style: AppTypography.labelSm(color: AppColors.slate500),
+                              style: AppTypography.labelSm(color: colors.neutral),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),
                             Text(
                               _formatExpiryDate(product.expiryDate),
                               style: AppTypography.labelMd(
-                                color: AppColors.onSurface,
+                                color: colors.onSurface,
                               ).copyWith(fontWeight: FontWeight.w600),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
@@ -148,13 +149,13 @@ class ProductDetailsShowcaseCard extends StatelessWidget {
                     horizontal: AppSpacing.spaceSm,
                     vertical: AppSpacing.spaceXs + 2,
                   ),
-                  decoration: const BoxDecoration(
-                    color: AppColors.surfaceContainerLow,
+                  decoration: BoxDecoration(
+                    color: colors.surfaceContainerLow,
                     borderRadius: AppRadii.roundedMd,
                   ),
                   child: Row(
                     children: [
-                      const Icon(Icons.inventory_2_outlined, size: 18, color: AppColors.primary),
+                      Icon(Icons.inventory_2_outlined, size: 18, color: colors.primary),
                       const SizedBox(width: AppSpacing.spaceXs),
                       Expanded(
                         child: Column(
@@ -162,7 +163,7 @@ class ProductDetailsShowcaseCard extends StatelessWidget {
                           children: [
                             Text(
                               AppLocaleKeys.productDetailsDispensingBranch.tr(),
-                              style: AppTypography.labelSm(color: AppColors.slate500),
+                              style: AppTypography.labelSm(color: colors.neutral),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),
@@ -174,8 +175,8 @@ class ProductDetailsShowcaseCard extends StatelessWidget {
                                   : AppLocaleKeys.productDetailsOutOfStock.tr(),
                               style: AppTypography.labelMd(
                                 color: product.stockQuantity > 0
-                                    ? AppColors.brandEmeraldDark
-                                    : AppColors.medicalRed,
+                                    ? colors.brandEmeraldDark
+                                    : colors.medicalRed,
                               ).copyWith(fontWeight: FontWeight.w600),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
@@ -194,7 +195,7 @@ class ProductDetailsShowcaseCard extends StatelessWidget {
     );
   }
 
-  Widget _buildFallback() {
+  Widget _buildFallback(AppColorsExtension colors) {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -202,16 +203,16 @@ class ProductDetailsShowcaseCard extends StatelessWidget {
           Container(
             width: 56,
             height: 56,
-            decoration: const BoxDecoration(
-              color: AppColors.surfaceContainer,
+            decoration: BoxDecoration(
+              color: colors.surfaceContainer,
               shape: BoxShape.circle,
             ),
-            child: const Icon(Icons.medication_rounded, size: 32, color: AppColors.primary),
+            child: Icon(Icons.medication_rounded, size: 32, color: colors.primary),
           ),
           const SizedBox(height: AppSpacing.spaceXs),
           Text(
             AppLocaleKeys.productDetailsMohRegisteredPill.tr(),
-            style: AppTypography.labelSm(color: AppColors.slate500),
+            style: AppTypography.labelSm(color: colors.neutral),
           ),
         ],
       ),

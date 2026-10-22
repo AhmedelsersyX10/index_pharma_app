@@ -46,23 +46,24 @@ class _ProductSearchBarState extends State<ProductSearchBar> {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     return Container(
       height: 44,
       decoration: BoxDecoration(
-        color: AppColors.canvasPure,
+        color: colors.canvasPure,
         borderRadius: AppRadii.roundedXl,
         border: Border.all(
-          color: AppColors.borderSubtle,
+          color: colors.borderSubtle,
           width: 1,
         ),
-        boxShadow: AppShadows.level1,
+        boxShadow: context.shadowsLevel1,
       ),
       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.spaceSm),
       child: Row(
         children: [
-          const Icon(
+          Icon(
             Icons.search_rounded,
-            color: AppColors.primary,
+            color: colors.primary,
             size: 22,
           ),
           const SizedBox(width: AppSpacing.spaceXs),
@@ -72,13 +73,13 @@ class _ProductSearchBarState extends State<ProductSearchBar> {
               onChanged: widget.onChanged,
               textInputAction: TextInputAction.search,
               style: AppTypography.bodyMd(
-                color: AppColors.onSurface,
+                color: colors.onSurface,
               ),
               decoration: InputDecoration(
                 hintText:
                     widget.hintText ?? AppLocaleKeys.productsSearchHint.tr(),
                 hintStyle: AppTypography.bodyMd(
-                  color: AppColors.slate400,
+                  color: colors.neutral,
                 ),
                 border: InputBorder.none,
                 isDense: true,
@@ -91,10 +92,10 @@ class _ProductSearchBarState extends State<ProductSearchBar> {
             builder: (context, value, _) {
               if (value.text.isEmpty) return const SizedBox.shrink();
               return IconButton(
-                icon: const Icon(
+                icon: Icon(
                   Icons.close_rounded,
                   size: 18,
-                  color: AppColors.slate400,
+                  color: colors.neutral,
                 ),
                 onPressed: () {
                   _controller.clear();

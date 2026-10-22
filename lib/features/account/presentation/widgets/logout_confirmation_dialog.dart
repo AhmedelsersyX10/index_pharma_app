@@ -18,8 +18,10 @@ class LogoutConfirmationDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
+
     return Dialog(
-      backgroundColor: AppColors.surfaceContainerLowest,
+      backgroundColor: colors.surfaceContainerLowest,
       surfaceTintColor: Colors.transparent,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
@@ -34,14 +36,14 @@ class LogoutConfirmationDialog extends StatelessWidget {
             Container(
               width: 56,
               height: 56,
-              decoration: const BoxDecoration(
-                color: AppColors.errorContainer,
+              decoration: BoxDecoration(
+                color: colors.errorContainer,
                 shape: BoxShape.circle,
               ),
               alignment: Alignment.center,
-              child: const Icon(
+              child: Icon(
                 Icons.logout_rounded,
-                color: AppColors.error,
+                color: colors.error,
                 size: 28,
               ),
             ),
@@ -51,7 +53,7 @@ class LogoutConfirmationDialog extends StatelessWidget {
             Text(
               AppLocaleKeys.accountLogoutModalTitle.tr(),
               style: AppTypography.headlineMd(
-                color: AppColors.onSurface,
+                color: colors.onSurface,
               ),
               textAlign: TextAlign.center,
             ),
@@ -61,7 +63,7 @@ class LogoutConfirmationDialog extends StatelessWidget {
             Text(
               AppLocaleKeys.accountLogoutModalDesc.tr(),
               style: AppTypography.bodyMd(
-                color: AppColors.onSurfaceVariant,
+                color: colors.onSurfaceVariant,
               ),
               textAlign: TextAlign.center,
             ),
@@ -75,7 +77,7 @@ class LogoutConfirmationDialog extends StatelessWidget {
                 key: const ValueKey('logout_confirm_button'),
                 onPressed: () => Navigator.of(context).pop(true),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.error,
+                  backgroundColor: colors.error,
                   foregroundColor: Colors.white,
                   elevation: 0,
                   shape: RoundedRectangleBorder(
@@ -96,15 +98,15 @@ class LogoutConfirmationDialog extends StatelessWidget {
                 key: const ValueKey('logout_cancel_button'),
                 onPressed: () => Navigator.of(context).pop(false),
                 style: TextButton.styleFrom(
-                  backgroundColor: AppColors.surfaceContainer,
-                  foregroundColor: AppColors.onSurface,
+                  backgroundColor: colors.surfaceContainer,
+                  foregroundColor: colors.onSurface,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
                 child: Text(
                   AppLocaleKeys.accountLogoutCancel.tr(),
-                  style: AppTypography.labelLg(color: AppColors.onSurface),
+                  style: AppTypography.labelLg(color: colors.onSurface),
                 ),
               ),
             ),

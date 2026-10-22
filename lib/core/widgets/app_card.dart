@@ -34,22 +34,25 @@ class AppCard extends StatelessWidget {
     this.isInteractive = false,
     this.borderRadius,
   }) : isMintToned = true,
-       backgroundColor = AppColors.brandMintSurface,
-       border = const Border.fromBorderSide(BorderSide(color: AppColors.brandMintBorder, width: 1));
+       backgroundColor = null,
+       border = null;
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     final effectiveRadius = borderRadius ?? AppRadii.roundedLg;
     final effectiveBg =
-        backgroundColor ?? (isMintToned ? AppColors.brandMintSurface : AppColors.canvasPure);
+        backgroundColor ?? (isMintToned ? colors.brandMintSurface : colors.surface);
     final effectiveBorder =
         border ??
         Border.all(
-          color: isMintToned ? AppColors.brandMintBorder : AppColors.borderSubtle,
+          color: isMintToned ? colors.brandMintBorder : colors.borderSubtle,
           width: 1,
         );
 
-    final shadows = isInteractive ? AppShadows.level2 : AppShadows.level1;
+    final shadows = context.isDarkMode
+        ? (isInteractive ? AppShadows.darkLevel2 : AppShadows.darkLevel1)
+        : (isInteractive ? AppShadows.level2 : AppShadows.level1);
 
     Widget cardContent = Container(
       padding: padding ?? AppSpacing.pCard,

@@ -146,12 +146,14 @@ class _SplashViewBodyState extends State<SplashViewBody>
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
+    final isDark = context.isDarkMode;
     return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: SystemUiOverlayStyle.dark.copyWith(
+      value: (isDark ? SystemUiOverlayStyle.light : SystemUiOverlayStyle.dark).copyWith(
         statusBarColor: Colors.transparent,
       ),
       child: Scaffold(
-        backgroundColor: AppColors.background,
+        backgroundColor: colors.background,
         body: Stack(
           children: [
             // Ambient clinical background illumination & pulse

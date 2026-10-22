@@ -11,24 +11,25 @@ class GuestAccessCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     return Container(
       padding: const EdgeInsets.all(AppSpacing.spaceMd),
-      decoration: const BoxDecoration(
-        color: AppColors.surfaceContainerLow,
+      decoration: BoxDecoration(
+        color: colors.surfaceContainerLow,
         borderRadius: AppRadii.roundedXl,
-        boxShadow: AppShadows.level1,
+        boxShadow: context.shadowsLevel1,
       ),
       child: Row(
         children: [
           Container(
             width: 44,
             height: 44,
-            decoration: const BoxDecoration(
-              color: AppColors.canvasPure,
+            decoration: BoxDecoration(
+              color: colors.canvasPure,
               borderRadius: AppRadii.roundedXl,
-              boxShadow: AppShadows.level1,
+              boxShadow: context.shadowsLevel1,
             ),
-            child: const Icon(Icons.explore_outlined, color: AppColors.primaryBrand, size: 24),
+            child: Icon(Icons.explore_outlined, color: colors.primaryBrand, size: 24),
           ),
           const SizedBox(width: AppSpacing.spaceSm),
           Expanded(
@@ -37,12 +38,12 @@ class GuestAccessCard extends StatelessWidget {
               children: [
                 Text(
                   AppLocaleKeys.authGuestTitle.tr(),
-                  style: AppTypography.titleMd(color: AppColors.onSurface),
+                  style: AppTypography.titleMd(color: colors.onSurface),
                 ),
                 const SizedBox(height: 2),
                 Text(
                   AppLocaleKeys.authGuestSubtitle.tr(),
-                  style: AppTypography.bodySm(color: AppColors.secondary),
+                  style: AppTypography.bodySm(color: colors.secondary),
                 ),
               ],
             ),
@@ -51,8 +52,8 @@ class GuestAccessCard extends StatelessWidget {
           ElevatedButton(
             onPressed: onGuestTap,
             style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.secondaryContainer,
-              foregroundColor: AppColors.onSecondaryContainer,
+              backgroundColor: colors.secondaryContainer,
+              foregroundColor: colors.onSecondaryContainer,
               elevation: 0,
               padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
               minimumSize: const Size(0, 36),
@@ -60,7 +61,7 @@ class GuestAccessCard extends StatelessWidget {
             ),
             child: Text(
               AppLocaleKeys.authGuestButton.tr(),
-              style: AppTypography.labelMd(color: AppColors.onSecondaryContainer),
+              style: AppTypography.labelMd(color: colors.onSecondaryContainer),
             ),
           ),
         ],

@@ -20,6 +20,7 @@ class LanguageActionButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     final isArabic = selectedLocale == 'ar';
     final label = isArabic
         ? AppLocaleKeys.languageContinueArabic.tr()
@@ -32,8 +33,8 @@ class LanguageActionButton extends StatelessWidget {
         key: const ValueKey('language_submit_button'),
         onPressed: isApplying ? null : onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.primary,
-          foregroundColor: Colors.white,
+          backgroundColor: colors.primary,
+          foregroundColor: colors.onPrimary,
           elevation: 2,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(9999),
@@ -41,12 +42,12 @@ class LanguageActionButton extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 24),
         ),
         child: isApplying
-            ? const SizedBox(
+            ? SizedBox(
                 width: 20,
                 height: 20,
                 child: CircularProgressIndicator(
                   strokeWidth: 2,
-                  color: Colors.white,
+                  color: colors.onPrimary,
                 ),
               )
             : Row(
@@ -55,14 +56,14 @@ class LanguageActionButton extends StatelessWidget {
                   Text(
                     label,
                     style: AppTypography.labelLg(
-                      color: Colors.white,
+                      color: colors.onPrimary,
                     ).copyWith(fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(width: 8),
-                  const Icon(
+                  Icon(
                     Icons.arrow_forward_rounded,
                     size: 18,
-                    color: Colors.white,
+                    color: colors.onPrimary,
                   ),
                 ],
               ),

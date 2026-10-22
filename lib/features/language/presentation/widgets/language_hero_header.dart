@@ -11,6 +11,7 @@ class LanguageHeroHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     return Column(
       children: [
         // Brand Logo Emblem with subtle elevation & active green badge
@@ -22,26 +23,20 @@ class LanguageHeroHeader extends StatelessWidget {
               height: 64,
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: AppColors.surfaceContainerLowest,
+                color: colors.surfaceContainerLowest,
                 borderRadius: BorderRadius.circular(16),
                 border: Border.all(
-                  color: AppColors.borderSubtle.withValues(alpha: 0.6),
+                  color: colors.borderSubtle.withValues(alpha: 0.6),
                   width: 1,
                 ),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Color(0x0C0B1C30),
-                    blurRadius: 10,
-                    offset: Offset(0, 4),
-                  ),
-                ],
+                boxShadow: context.shadowsLevel1,
               ),
               child: Image.asset(
                 'assets/images/logo.png',
                 fit: BoxFit.contain,
-                errorBuilder: (context, error, stackTrace) => const Icon(
+                errorBuilder: (context, error, stackTrace) => Icon(
                   Icons.local_pharmacy_rounded,
-                  color: AppColors.primary,
+                  color: colors.primary,
                   size: 36,
                 ),
               ),
@@ -53,10 +48,10 @@ class LanguageHeroHeader extends StatelessWidget {
                 width: 16,
                 height: 16,
                 decoration: BoxDecoration(
-                  color: AppColors.tertiaryFixed,
+                  color: colors.tertiaryFixed,
                   shape: BoxShape.circle,
                   border: Border.all(
-                    color: AppColors.surfaceContainerLowest,
+                    color: colors.surfaceContainerLowest,
                     width: 2,
                   ),
                 ),
@@ -64,8 +59,8 @@ class LanguageHeroHeader extends StatelessWidget {
                   child: Container(
                     width: 8,
                     height: 8,
-                    decoration: const BoxDecoration(
-                      color: AppColors.primary,
+                    decoration: BoxDecoration(
+                      color: colors.primary,
                       shape: BoxShape.circle,
                     ),
                   ),
@@ -81,26 +76,26 @@ class LanguageHeroHeader extends StatelessWidget {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
           decoration: BoxDecoration(
-            color: AppColors.brandMintSurface,
+            color: colors.brandMintSurface,
             borderRadius: BorderRadius.circular(20),
             border: Border.all(
-              color: AppColors.brandMintBorder,
+              color: colors.brandMintBorder,
               width: 1,
             ),
           ),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Icon(
+              Icon(
                 Icons.translate_rounded,
                 size: 15,
-                color: AppColors.primary,
+                color: colors.primary,
               ),
               const SizedBox(width: 6),
               Text(
                 AppLocaleKeys.languageBilingualBadge.tr(),
                 style: AppTypography.labelSm(
-                  color: AppColors.brandEmeraldDark,
+                  color: colors.brandEmeraldDark,
                 ).copyWith(fontWeight: FontWeight.w600),
               ),
             ],
@@ -113,7 +108,7 @@ class LanguageHeroHeader extends StatelessWidget {
         Text(
           AppLocaleKeys.languageTitle.tr(),
           style: AppTypography.headlineLgMobile(
-            color: AppColors.onSurface,
+            color: colors.onSurface,
           ),
           textAlign: TextAlign.center,
         ),
@@ -124,7 +119,7 @@ class LanguageHeroHeader extends StatelessWidget {
         Text(
           AppLocaleKeys.languageSubtitle.tr(),
           style: AppTypography.bodySm(
-            color: AppColors.onSurfaceVariant,
+            color: colors.onSurfaceVariant,
           ),
           textAlign: TextAlign.center,
         ),

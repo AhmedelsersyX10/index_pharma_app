@@ -16,16 +16,17 @@ class CheckoutSummaryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     final currency = 'cart.currency'.tr();
     final formattedAmount = subtotal.toStringAsFixed(2);
 
     return Container(
       padding: const EdgeInsets.all(AppSpacing.spaceMd),
       decoration: BoxDecoration(
-        color: AppColors.canvasPure,
+        color: colors.canvasPure,
         borderRadius: BorderRadius.circular(AppRadii.xl),
-        boxShadow: AppShadows.level1,
-        border: Border.all(color: AppColors.borderSubtle),
+        boxShadow: context.shadowsLevel1,
+        border: Border.all(color: colors.borderSubtle),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -38,23 +39,23 @@ class CheckoutSummaryCard extends StatelessWidget {
                   Container(
                     width: 28,
                     height: 28,
-                    decoration: const BoxDecoration(
-                      color: AppColors.secondaryContainer,
+                    decoration: BoxDecoration(
+                      color: colors.secondaryContainer,
                       shape: BoxShape.circle,
                     ),
-                    child: const Icon(
+                    child: Icon(
                       Icons.receipt_rounded,
-                      color: AppColors.primary,
+                      color: colors.primary,
                       size: 16,
                     ),
                   ),
                   const SizedBox(width: AppSpacing.spaceSm),
                   Text(
                     'checkout.summary_title'.tr(),
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
-                      color: AppColors.onSurface,
+                      color: colors.onSurface,
                     ),
                   ),
                 ],
@@ -65,15 +66,15 @@ class CheckoutSummaryCard extends StatelessWidget {
                   vertical: AppSpacing.space2xs,
                 ),
                 decoration: BoxDecoration(
-                  color: AppColors.surfaceContainer,
+                  color: colors.surfaceContainer,
                   borderRadius: BorderRadius.circular(AppRadii.full),
                 ),
                 child: Text(
                   'checkout.items_count'.tr(args: [totalItemsCount.toString()]),
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 12,
                     fontWeight: FontWeight.w600,
-                    color: AppColors.onSurface,
+                    color: colors.onSurface,
                   ),
                 ),
               ),
@@ -85,23 +86,23 @@ class CheckoutSummaryCard extends StatelessWidget {
             children: [
               Text(
                 'checkout.subtotal_label'.tr(),
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 14,
-                  color: AppColors.secondaryMuted,
+                  color: colors.secondaryMuted,
                 ),
               ),
               Text(
                 '$formattedAmount $currency',
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
-                  color: AppColors.onSurface,
+                  color: colors.onSurface,
                 ),
               ),
             ],
           ),
           const SizedBox(height: AppSpacing.spaceSm),
-          const Divider(color: AppColors.surfaceContainer, height: 1),
+          Divider(color: colors.surfaceContainer, height: 1),
           const SizedBox(height: AppSpacing.spaceSm),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -113,18 +114,18 @@ class CheckoutSummaryCard extends StatelessWidget {
                 children: [
                   Text(
                     'checkout.total_due_label'.tr(),
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
-                      color: AppColors.onSurface,
+                      color: colors.onSurface,
                     ),
                   ),
                   const SizedBox(height: 2),
                   Text(
                     'checkout.tax_note'.tr(),
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 11,
-                      color: AppColors.secondaryMuted,
+                      color: colors.secondaryMuted,
                     ),
                   ),
                 ],
@@ -135,19 +136,19 @@ class CheckoutSummaryCard extends StatelessWidget {
                 children: [
                   Text(
                     formattedAmount,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
-                      color: AppColors.primary,
+                      color: colors.primary,
                     ),
                   ),
                   const SizedBox(width: 4),
                   Text(
                     currency,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 13,
                       fontWeight: FontWeight.bold,
-                      color: AppColors.primary,
+                      color: colors.primary,
                     ),
                   ),
                 ],
@@ -158,23 +159,23 @@ class CheckoutSummaryCard extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(AppSpacing.spaceSm),
             decoration: BoxDecoration(
-              color: AppColors.surfaceContainerLow,
+              color: colors.surfaceContainerLow,
               borderRadius: BorderRadius.circular(AppRadii.md),
             ),
             child: Row(
               children: [
-                const Icon(
+                Icon(
                   Icons.verified_user_rounded,
-                  color: AppColors.brandEmeraldDark,
+                  color: colors.brandEmeraldDark,
                   size: 18,
                 ),
                 const SizedBox(width: AppSpacing.spaceSm),
                 Expanded(
                   child: Text(
                     'checkout.eda_guarantee'.tr(),
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 12,
-                      color: AppColors.onSurface,
+                      color: colors.onSurface,
                       height: 1.35,
                     ),
                   ),

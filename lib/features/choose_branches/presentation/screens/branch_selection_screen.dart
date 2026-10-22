@@ -102,7 +102,7 @@ class _BranchSelectionViewState extends State<_BranchSelectionView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: context.colors.background,
       appBar: const BranchHeader(),
       body: BlocBuilder<BranchCubit, BranchState>(
         builder: (context, state) {

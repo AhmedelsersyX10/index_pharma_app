@@ -13,6 +13,7 @@ class OrderCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     final dateFormat = DateFormat('d MMMM yyyy, hh:mm a', context.locale.languageCode);
     final itemsSummary = order.items.map((i) => i.productName).join('common.list_separator'.tr());
 
@@ -22,10 +23,10 @@ class OrderCard extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.canvasPure,
+        color: colors.canvasPure,
         borderRadius: BorderRadius.circular(AppRadii.xl),
-        border: Border.all(color: AppColors.borderSubtle),
-        boxShadow: AppShadows.level1,
+        border: Border.all(color: colors.borderSubtle),
+        boxShadow: context.shadowsLevel1,
       ),
       child: Material(
         color: Colors.transparent,
@@ -43,14 +44,14 @@ class OrderCard extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        const Icon(Icons.receipt_rounded, size: 18, color: AppColors.primary),
+                        Icon(Icons.receipt_rounded, size: 18, color: colors.primary),
                         const SizedBox(width: AppSpacing.spaceXs),
                         Text(
                           order.orderNumber,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.bold,
-                            color: AppColors.onSurface,
+                            color: colors.onSurface,
                             letterSpacing: -0.2,
                           ),
                         ),
@@ -64,15 +65,15 @@ class OrderCard extends StatelessWidget {
                 // Order Date & Time
                 Row(
                   children: [
-                    const Icon(
+                    Icon(
                       Icons.calendar_today_rounded,
                       size: 14,
-                      color: AppColors.secondaryMuted,
+                      color: colors.secondaryMuted,
                     ),
                     const SizedBox(width: AppSpacing.spaceXs),
                     Text(
                       '$dateFormat',
-                      style: const TextStyle(fontSize: 12, color: AppColors.onSurfaceVariant),
+                      style: TextStyle(fontSize: 12, color: colors.onSurfaceVariant),
                     ),
                   ],
                 ),
@@ -83,7 +84,7 @@ class OrderCard extends StatelessWidget {
                   width: double.infinity,
                   padding: const EdgeInsets.all(AppSpacing.spaceSm),
                   decoration: BoxDecoration(
-                    color: AppColors.surfaceContainerLow,
+                    color: colors.surfaceContainerLow,
                     borderRadius: BorderRadius.circular(AppRadii.lg),
                   ),
                   child: Column(
@@ -94,21 +95,21 @@ class OrderCard extends StatelessWidget {
                           itemsSummary,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 13,
                             fontWeight: FontWeight.w600,
-                            color: AppColors.onSurface,
+                            color: colors.onSurface,
                           ),
                         ),
                         const SizedBox(height: 3),
                       ],
                       Row(
                         children: [
-                          const Icon(Icons.medication_rounded, size: 14, color: AppColors.primary),
+                          Icon(Icons.medication_rounded, size: 14, color: colors.primary),
                           const SizedBox(width: 4),
                           Text(
                             itemsCountText,
-                            style: const TextStyle(fontSize: 11, color: AppColors.onSurfaceVariant),
+                            style: TextStyle(fontSize: 11, color: colors.onSurfaceVariant),
                           ),
                         ],
                       ),
@@ -127,7 +128,7 @@ class OrderCard extends StatelessWidget {
                       children: [
                         Text(
                           'orders.total_amount'.tr(),
-                          style: const TextStyle(fontSize: 11, color: AppColors.onSurfaceVariant),
+                          style: TextStyle(fontSize: 11, color: colors.onSurfaceVariant),
                         ),
                         const SizedBox(height: 2),
                         Row(
@@ -136,18 +137,18 @@ class OrderCard extends StatelessWidget {
                           children: [
                             Text(
                               order.totalAmount.toStringAsFixed(2),
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
-                                color: AppColors.primary,
+                                color: colors.primary,
                               ),
                             ),
                             const SizedBox(width: 3),
                             Text(
                               'orders.currency'.tr(),
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontSize: 11,
-                                color: AppColors.onSurfaceVariant,
+                                color: colors.onSurfaceVariant,
                               ),
                             ),
                           ],
@@ -157,8 +158,8 @@ class OrderCard extends StatelessWidget {
                     ElevatedButton.icon(
                       onPressed: onTap,
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: AppColors.primaryContainer,
-                        foregroundColor: AppColors.onPrimary,
+                        backgroundColor: colors.primaryContainer,
+                        foregroundColor: colors.onPrimary,
                         elevation: 0,
                         padding: const EdgeInsets.symmetric(
                           horizontal: AppSpacing.spaceMd,

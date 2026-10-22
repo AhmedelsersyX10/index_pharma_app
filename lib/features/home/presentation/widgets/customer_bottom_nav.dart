@@ -25,9 +25,10 @@ class CustomerBottomNav extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.background.withValues(alpha: 0.96),
+        color: colors.background.withValues(alpha: 0.96),
         boxShadow: const [
           BoxShadow(
             color: Color(0x0D000000),
@@ -37,7 +38,7 @@ class CustomerBottomNav extends StatelessWidget {
         ],
         border: Border(
           top: BorderSide(
-            color: AppColors.borderSubtle.withValues(alpha: 0.6),
+            color: colors.borderSubtle.withValues(alpha: 0.6),
             width: 1,
           ),
         ),
@@ -116,7 +117,8 @@ class _NavItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = isSelected ? AppColors.primary : AppColors.onSurfaceVariant;
+    final colors = context.colors;
+    final color = isSelected ? colors.primary : colors.onSurfaceVariant;
 
     return InkWell(
       onTap: onTap,
@@ -161,6 +163,8 @@ class _CenterPrescriptionNavItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
+
     return InkWell(
       onTap: onTap,
       borderRadius: AppRadii.roundedFull,
@@ -173,11 +177,11 @@ class _CenterPrescriptionNavItem extends StatelessWidget {
               width: 48,
               height: 48,
               decoration: BoxDecoration(
-                color: AppColors.primary,
+                color: colors.primary,
                 shape: BoxShape.circle,
                 boxShadow: [
                   BoxShadow(
-                    color: AppColors.primary.withValues(alpha: 0.35),
+                    color: colors.primary.withValues(alpha: 0.35),
                     offset: const Offset(0, 4),
                     blurRadius: 10,
                   ),
@@ -194,7 +198,7 @@ class _CenterPrescriptionNavItem extends StatelessWidget {
             Text(
               label,
               style: AppTypography.labelSm(
-                color: AppColors.primary,
+                color: colors.primary,
               ).copyWith(
                 fontWeight: FontWeight.bold,
               ),

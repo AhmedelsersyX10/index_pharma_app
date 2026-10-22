@@ -24,6 +24,9 @@ class HomeBranchSelectorStrip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
+    final shadows = context.isDarkMode ? AppShadows.darkLevel1 : AppShadows.level1;
+
     return BlocBuilder<BranchCubit, BranchState>(
       builder: (context, state) {
         String branchName = AppLocaleKeys.homeSelectBranch.tr();
@@ -43,7 +46,7 @@ class HomeBranchSelectorStrip extends StatelessWidget {
             // Branch Pill
             Flexible(
               child: Material(
-                color: AppColors.surfaceContainer,
+                color: colors.surfaceContainer,
                 borderRadius: AppRadii.roundedFull,
                 child: InkWell(
                   onTap: onTapBranch ??
@@ -57,17 +60,17 @@ class HomeBranchSelectorStrip extends StatelessWidget {
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        const Icon(
+                        Icon(
                           Icons.storefront_outlined,
                           size: 18,
-                          color: AppColors.primary,
+                          color: colors.primary,
                         ),
                         const SizedBox(width: AppSpacing.spaceXs),
                         Flexible(
                           child: Text(
                             branchName,
                             style: AppTypography.labelMd(
-                              color: AppColors.onSurface,
+                              color: colors.onSurface,
                             ).copyWith(
                               fontWeight: FontWeight.w600,
                             ),
@@ -76,10 +79,10 @@ class HomeBranchSelectorStrip extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(width: AppSpacing.space2xs),
-                        const Icon(
+                        Icon(
                           Icons.expand_more_rounded,
                           size: 16,
-                          color: AppColors.onSurfaceVariant,
+                          color: colors.onSurfaceVariant,
                         ),
                       ],
                     ),
@@ -93,11 +96,11 @@ class HomeBranchSelectorStrip extends StatelessWidget {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
               decoration: BoxDecoration(
-                color: AppColors.surfaceContainerLowest,
+                color: colors.surfaceContainerLowest,
                 borderRadius: AppRadii.roundedFull,
-                boxShadow: AppShadows.level1,
+                boxShadow: shadows,
                 border: Border.all(
-                  color: AppColors.brandMintBorder,
+                  color: colors.brandMintBorder,
                   width: 1,
                 ),
               ),
@@ -107,8 +110,8 @@ class HomeBranchSelectorStrip extends StatelessWidget {
                   Container(
                     width: 7,
                     height: 7,
-                    decoration: const BoxDecoration(
-                      color: AppColors.primary,
+                    decoration: BoxDecoration(
+                      color: colors.primary,
                       shape: BoxShape.circle,
                     ),
                   ),
@@ -116,7 +119,7 @@ class HomeBranchSelectorStrip extends StatelessWidget {
                   Text(
                     AppLocaleKeys.homeLiveStock.tr(),
                     style: AppTypography.labelSm(
-                      color: AppColors.primary,
+                      color: colors.primary,
                     ).copyWith(
                       fontWeight: FontWeight.w600,
                     ),

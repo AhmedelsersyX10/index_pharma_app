@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:index_pharma/core/localization/app_locale_keys.dart';
-import 'package:index_pharma/core/theme/app_colors.dart';
-import 'package:index_pharma/core/theme/app_spacing.dart';
+import 'package:index_pharma/core/theme/theme.dart';
 import 'package:index_pharma/core/utils/app_router.dart';
 import 'package:index_pharma/core/widgets/app_page_bar.dart';
 import 'package:index_pharma/features/home/presentation/widgets/customer_bottom_nav.dart';
@@ -78,8 +77,10 @@ class _MyPrescriptionsViewState extends State<_MyPrescriptionsView> {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
+
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: colors.background,
       appBar: AppPageBar(
         title: AppLocaleKeys.prescriptionsMyPrescriptionsTitle.tr(),
         onBackPressed: () {
@@ -94,7 +95,7 @@ class _MyPrescriptionsViewState extends State<_MyPrescriptionsView> {
         builder: (context, state) {
           return RefreshIndicator(
             onRefresh: _onRefresh,
-            color: AppColors.primary,
+            color: colors.primary,
             child: CustomScrollView(
               physics: const AlwaysScrollableScrollPhysics(),
               slivers: [
@@ -115,7 +116,7 @@ class _MyPrescriptionsViewState extends State<_MyPrescriptionsView> {
                               Container(
                                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                                 decoration: BoxDecoration(
-                                  color: AppColors.brandMintSurface,
+                                  color: colors.brandMintSurface,
                                   borderRadius: BorderRadius.circular(9999),
                                 ),
                                 child: Text(
@@ -124,10 +125,10 @@ class _MyPrescriptionsViewState extends State<_MyPrescriptionsView> {
                                       : AppLocaleKeys.prescriptionsCountBadge.tr(
                                           args: [state.prescriptions.length.toString()],
                                         ),
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     fontSize: 11,
                                     fontWeight: FontWeight.w600,
-                                    color: AppColors.brandEmeraldDark,
+                                    color: colors.brandEmeraldDark,
                                   ),
                                 ),
                               ),
@@ -140,15 +141,15 @@ class _MyPrescriptionsViewState extends State<_MyPrescriptionsView> {
 
                 // Content View according to listStep
                 if (state.listStep == PrescriptionListStep.loading)
-                  const SliverFillRemaining(
+                  SliverFillRemaining(
                     hasScrollBody: false,
-                    child: Center(child: CircularProgressIndicator(color: AppColors.primary)),
+                    child: Center(child: CircularProgressIndicator(color: colors.primary)),
                   )
                 else if (state.listStep == PrescriptionListStep.failure)
-                  SliverFillRemaining(hasScrollBody: false, child: _buildErrorState(state))
+                  SliverFillRemaining(hasScrollBody: false, child: _buildErrorState(colors, state))
                 else if (state.listStep == PrescriptionListStep.empty ||
                     state.prescriptions.isEmpty)
-                  SliverFillRemaining(hasScrollBody: false, child: _buildEmptyState())
+                  SliverFillRemaining(hasScrollBody: false, child: _buildEmptyState(colors))
                 else
                   SliverPadding(
                     padding: const EdgeInsets.symmetric(
@@ -178,7 +179,7 @@ class _MyPrescriptionsViewState extends State<_MyPrescriptionsView> {
     );
   }
 
-  Widget _buildEmptyState() {
+  Widget _buildEmptyState(AppColorsExtension colors) {
     return Padding(
       padding: const EdgeInsets.all(AppSpacing.marginMobile),
       child: Center(
@@ -188,19 +189,19 @@ class _MyPrescriptionsViewState extends State<_MyPrescriptionsView> {
             Container(
               width: 90,
               height: 90,
-              decoration: const BoxDecoration(
-                color: AppColors.surfaceContainerLow,
+              decoration: BoxDecoration(
+                color: colors.surfaceContainerLow,
                 shape: BoxShape.circle,
               ),
-              child: const Icon(Icons.assignment_outlined, size: 44, color: AppColors.neutral),
+              child: Icon(Icons.assignment_outlined, size: 44, color: colors.neutral),
             ),
             const SizedBox(height: AppSpacing.spaceMd),
             Text(
               AppLocaleKeys.prescriptionsEmptyTitle.tr(),
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 17,
                 fontWeight: FontWeight.w700,
-                color: AppColors.onSurface,
+                color: colors.onSurface,
               ),
               textAlign: TextAlign.center,
             ),
@@ -209,7 +210,7 @@ class _MyPrescriptionsViewState extends State<_MyPrescriptionsView> {
               padding: const EdgeInsets.symmetric(horizontal: 24),
               child: Text(
                 AppLocaleKeys.prescriptionsEmptyDesc.tr(),
-                style: const TextStyle(fontSize: 13, color: AppColors.neutral, height: 1.4),
+                style: TextStyle(fontSize: 13, color: colors.neutral, height: 1.4),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -225,8 +226,8 @@ class _MyPrescriptionsViewState extends State<_MyPrescriptionsView> {
                 style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w700),
               ),
               style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.primary,
-                foregroundColor: Colors.white,
+                backgroundColor: colors.primary,
+                foregroundColor: colors.onPrimary,
                 padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(9999)),
               ),
@@ -237,21 +238,21 @@ class _MyPrescriptionsViewState extends State<_MyPrescriptionsView> {
     );
   }
 
-  Widget _buildErrorState(PrescriptionState state) {
+  Widget _buildErrorState(AppColorsExtension colors, PrescriptionState state) {
     return Padding(
       padding: const EdgeInsets.all(AppSpacing.marginMobile),
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(Icons.error_outline, size: 48, color: AppColors.error),
+            Icon(Icons.error_outline, size: 48, color: colors.error),
             const SizedBox(height: AppSpacing.spaceSm),
             Text(
               state.listErrorMessage ?? AppLocaleKeys.prescriptionsErrorLoadingList.tr(),
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w600,
-                color: AppColors.onSurface,
+                color: colors.onSurface,
               ),
               textAlign: TextAlign.center,
             ),
@@ -263,8 +264,8 @@ class _MyPrescriptionsViewState extends State<_MyPrescriptionsView> {
               icon: const Icon(Icons.refresh, size: 18),
               label: Text(AppLocaleKeys.commonRetry.tr()),
               style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.primary,
-                foregroundColor: Colors.white,
+                backgroundColor: colors.primary,
+                foregroundColor: colors.onPrimary,
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
               ),
             ),

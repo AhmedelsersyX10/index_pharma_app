@@ -37,6 +37,7 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     final currency = 'cart.currency'.tr();
     final formattedTotal = widget.order.totalAmount.toStringAsFixed(2);
     final formattedDate = _formatDate(widget.order.createdAt, context);
@@ -49,7 +50,7 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
         }
       },
       child: Scaffold(
-        backgroundColor: AppColors.background,
+        backgroundColor: colors.background,
         body: SafeArea(
           child: Column(
             children: [
@@ -63,14 +64,14 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
                     children: [
                       const SizedBox(height: AppSpacing.spaceMd),
                       // Celebration Glow & Shield
-                      _buildCelebrationBadge(),
+                      _buildCelebrationBadge(colors),
                       const SizedBox(height: AppSpacing.spaceSm),
                       Text(
                         'order_confirmation.success_title'.tr(),
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 22,
                           fontWeight: FontWeight.bold,
-                          color: AppColors.onBackground,
+                          color: colors.onBackground,
                         ),
                         textAlign: TextAlign.center,
                       ),
@@ -79,9 +80,9 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
                         padding: const EdgeInsets.symmetric(horizontal: AppSpacing.spaceSm),
                         child: Text(
                           'order_confirmation.success_desc'.tr(),
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 13,
-                            color: AppColors.onSurfaceVariant,
+                            color: colors.onSurfaceVariant,
                             height: 1.4,
                           ),
                           textAlign: TextAlign.center,
@@ -90,13 +91,14 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
                       const SizedBox(height: AppSpacing.spaceLg),
                       // Order Identification & Summary Card
                       _buildOrderSummaryCard(
+                        context: context,
                         formattedTotal: formattedTotal,
                         formattedDate: formattedDate,
                         currency: currency,
                       ),
                       const SizedBox(height: AppSpacing.spaceMd),
                       // Safety Protocol Card
-                      _buildSafetyProtocolCard(),
+                      _buildSafetyProtocolCard(context),
                       const SizedBox(height: AppSpacing.spaceLg),
                     ],
                   ),
@@ -111,16 +113,16 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
     );
   }
 
-  Widget _buildCelebrationBadge() {
+  Widget _buildCelebrationBadge(AppColorsExtension colors) {
     return Container(
       width: 80,
       height: 80,
       decoration: BoxDecoration(
-        color: AppColors.brandMintSurface,
+        color: colors.brandMintSurface,
         shape: BoxShape.circle,
         boxShadow: [
           BoxShadow(
-            color: AppColors.brandTealBright.withAlpha(51),
+            color: colors.brandTealBright.withAlpha(51),
             blurRadius: 24,
             spreadRadius: 4,
           ),
@@ -130,28 +132,31 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
         child: Container(
           width: 56,
           height: 56,
-          decoration: const BoxDecoration(
-            color: AppColors.brandEmeraldDark,
+          decoration: BoxDecoration(
+            color: colors.brandEmeraldDark,
             shape: BoxShape.circle,
           ),
-          child: const Icon(Icons.check_circle_rounded, color: AppColors.onPrimary, size: 34),
+          child: Icon(Icons.check_circle_rounded, color: colors.onPrimary, size: 34),
         ),
       ),
     );
   }
 
   Widget _buildOrderSummaryCard({
+    required BuildContext context,
     required String formattedTotal,
     required String formattedDate,
     required String currency,
   }) {
+    final colors = context.colors;
+
     return Container(
       padding: const EdgeInsets.all(AppSpacing.spaceMd),
       decoration: BoxDecoration(
-        color: AppColors.canvasPure,
+        color: colors.canvasPure,
         borderRadius: BorderRadius.circular(AppRadii.xl),
-        boxShadow: AppShadows.level1,
-        border: Border.all(color: AppColors.borderSubtle),
+        boxShadow: context.shadowsLevel1,
+        border: Border.all(color: colors.borderSubtle),
       ),
       child: Column(
         children: [
@@ -162,7 +167,7 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
               vertical: AppSpacing.spaceSm,
             ),
             decoration: BoxDecoration(
-              color: AppColors.surfaceContainerLow,
+              color: colors.surfaceContainerLow,
               borderRadius: BorderRadius.circular(AppRadii.lg),
             ),
             child: Row(
@@ -173,16 +178,16 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
                   children: [
                     Text(
                       'order_confirmation.order_number_label'.tr(),
-                      style: const TextStyle(fontSize: 11, color: AppColors.onSurfaceVariant),
+                      style: TextStyle(fontSize: 11, color: colors.onSurfaceVariant),
                     ),
                     const SizedBox(height: 2),
                     Text(
                       widget.order.orderNumber,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
                         fontFamily: 'monospace',
-                        color: AppColors.onSurface,
+                        color: colors.onSurface,
                       ),
                       textDirection: TextDirection.ltr,
                     ),
@@ -198,7 +203,7 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
                       vertical: AppSpacing.space2xs,
                     ),
                     decoration: BoxDecoration(
-                      color: AppColors.canvasPure,
+                      color: colors.canvasPure,
                       borderRadius: BorderRadius.circular(AppRadii.md),
                     ),
                     child: Row(
@@ -207,7 +212,7 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
                         Icon(
                           _copied ? Icons.check_rounded : Icons.content_copy_rounded,
                           size: 15,
-                          color: _copied ? AppColors.brandEmeraldDark : AppColors.primary,
+                          color: _copied ? colors.brandEmeraldDark : colors.primary,
                         ),
                         const SizedBox(width: 4),
                         Text(
@@ -217,7 +222,7 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
                           style: TextStyle(
                             fontSize: 11,
                             fontWeight: FontWeight.w600,
-                            color: _copied ? AppColors.brandEmeraldDark : AppColors.primary,
+                            color: _copied ? colors.brandEmeraldDark : colors.primary,
                           ),
                         ),
                       ],
@@ -230,25 +235,27 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
           const SizedBox(height: AppSpacing.spaceMd),
           // Metadata Rows
           _buildSummaryRow(
+            context: context,
             icon: Icons.calendar_today_rounded,
             title: 'order_confirmation.order_date_label'.tr(),
             valueWidget: Text(
               formattedDate,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 13,
                 fontWeight: FontWeight.w500,
-                color: AppColors.onSurface,
+                color: colors.onSurface,
               ),
             ),
           ),
           const SizedBox(height: AppSpacing.spaceSm),
           _buildSummaryRow(
+            context: context,
             icon: Icons.hourglass_top_rounded,
             title: 'order_confirmation.order_status_label'.tr(),
             valueWidget: Container(
               padding: const EdgeInsets.symmetric(horizontal: AppSpacing.spaceSm, vertical: 2),
               decoration: BoxDecoration(
-                color: AppColors.badgeWarningBg,
+                color: colors.badgeWarningBg,
                 borderRadius: BorderRadius.circular(AppRadii.full),
               ),
               child: Row(
@@ -257,18 +264,18 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
                   Container(
                     width: 6,
                     height: 6,
-                    decoration: const BoxDecoration(
-                      color: AppColors.medicalAmber,
+                    decoration: BoxDecoration(
+                      color: colors.medicalAmber,
                       shape: BoxShape.circle,
                     ),
                   ),
                   const SizedBox(width: 5),
                   Text(
                     'order_confirmation.status_pending'.tr(),
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 11,
                       fontWeight: FontWeight.bold,
-                      color: AppColors.badgeWarningText,
+                      color: colors.badgeWarningText,
                     ),
                   ),
                 ],
@@ -277,14 +284,15 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
           ),
           const SizedBox(height: AppSpacing.spaceSm),
           _buildSummaryRow(
+            context: context,
             icon: Icons.payments_rounded,
             title: 'order_confirmation.payment_method_label'.tr(),
             valueWidget: Text(
               'order_confirmation.payment_cod'.tr(),
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 13,
                 fontWeight: FontWeight.w500,
-                color: AppColors.onSurface,
+                color: colors.onSurface,
               ),
             ),
           ),
@@ -293,7 +301,7 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
           Container(
             padding: const EdgeInsets.all(AppSpacing.spaceSm),
             decoration: BoxDecoration(
-              color: AppColors.surfaceSubtle,
+              color: colors.surfaceSubtle,
               borderRadius: BorderRadius.circular(AppRadii.md),
             ),
             child: Row(
@@ -301,18 +309,18 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
               children: [
                 Row(
                   children: [
-                    const Icon(
+                    Icon(
                       Icons.receipt_long_rounded,
-                      color: AppColors.brandEmeraldDark,
+                      color: colors.brandEmeraldDark,
                       size: 18,
                     ),
                     const SizedBox(width: 6),
                     Text(
                       'order_confirmation.total_amount_label'.tr(),
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
-                        color: AppColors.onSurface,
+                        color: colors.onSurface,
                       ),
                     ),
                   ],
@@ -323,19 +331,19 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
                   children: [
                     Text(
                       formattedTotal,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
-                        color: AppColors.brandEmeraldDark,
+                        color: colors.brandEmeraldDark,
                       ),
                     ),
                     const SizedBox(width: 4),
                     Text(
                       currency,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
-                        color: AppColors.brandEmeraldDark,
+                        color: colors.brandEmeraldDark,
                       ),
                     ),
                   ],
@@ -349,18 +357,21 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
   }
 
   Widget _buildSummaryRow({
+    required BuildContext context,
     required IconData icon,
     required String title,
     required Widget valueWidget,
   }) {
+    final colors = context.colors;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Row(
           children: [
-            Icon(icon, size: 16, color: AppColors.secondaryMuted),
+            Icon(icon, size: 16, color: colors.secondaryMuted),
             const SizedBox(width: 6),
-            Text(title, style: const TextStyle(fontSize: 13, color: AppColors.onSurfaceVariant)),
+            Text(title, style: TextStyle(fontSize: 13, color: colors.onSurfaceVariant)),
           ],
         ),
         valueWidget,
@@ -368,14 +379,16 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
     );
   }
 
-  Widget _buildSafetyProtocolCard() {
+  Widget _buildSafetyProtocolCard(BuildContext context) {
+    final colors = context.colors;
+
     return Container(
       padding: const EdgeInsets.all(AppSpacing.spaceMd),
       decoration: BoxDecoration(
-        color: AppColors.canvasPure,
+        color: colors.canvasPure,
         borderRadius: BorderRadius.circular(AppRadii.xl),
-        boxShadow: AppShadows.level1,
-        border: Border.all(color: AppColors.borderSubtle),
+        boxShadow: context.shadowsLevel1,
+        border: Border.all(color: colors.borderSubtle),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -383,13 +396,13 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
           Container(
             width: 36,
             height: 36,
-            decoration: const BoxDecoration(
-              color: AppColors.brandMintSurface,
+            decoration: BoxDecoration(
+              color: colors.brandMintSurface,
               shape: BoxShape.circle,
             ),
-            child: const Icon(
+            child: Icon(
               Icons.health_and_safety_rounded,
-              color: AppColors.brandEmeraldDark,
+              color: colors.brandEmeraldDark,
               size: 20,
             ),
           ),
@@ -402,16 +415,16 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
                   children: [
                     Text(
                       'order_confirmation.clinical_review_title'.tr(),
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
-                        color: AppColors.onSurface,
+                        color: colors.onSurface,
                       ),
                     ),
                     const SizedBox(width: 4),
-                    const Icon(
+                    Icon(
                       Icons.check_circle_rounded,
-                      color: AppColors.brandEmeraldDark,
+                      color: colors.brandEmeraldDark,
                       size: 14,
                     ),
                   ],
@@ -419,9 +432,9 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
                 const SizedBox(height: 4),
                 Text(
                   'order_confirmation.clinical_review_desc'.tr(),
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 12,
-                    color: AppColors.onSurfaceVariant,
+                    color: colors.onSurfaceVariant,
                     height: 1.35,
                   ),
                 ),
@@ -429,20 +442,20 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
                 Container(
                   padding: const EdgeInsets.symmetric(horizontal: AppSpacing.spaceSm, vertical: 2),
                   decoration: BoxDecoration(
-                    color: AppColors.surfaceContainerLow,
+                    color: colors.surfaceContainerLow,
                     borderRadius: BorderRadius.circular(AppRadii.sm),
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Icon(Icons.verified_user_rounded, color: AppColors.primary, size: 13),
+                      Icon(Icons.verified_user_rounded, color: colors.primary, size: 13),
                       const SizedBox(width: 4),
                       Text(
                         'order_confirmation.authentic_meds_tag'.tr(),
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 11,
                           fontWeight: FontWeight.w500,
-                          color: AppColors.onSurfaceVariant,
+                          color: colors.onSurfaceVariant,
                         ),
                       ),
                     ],
@@ -457,12 +470,14 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
   }
 
   Widget _buildBottomActionButtons(BuildContext context) {
+    final colors = context.colors;
+
     return Container(
       padding: const EdgeInsets.all(AppSpacing.spaceMd),
-      decoration: const BoxDecoration(
-        color: AppColors.canvasPure,
-        boxShadow: AppShadows.level3,
-        border: Border(top: BorderSide(color: AppColors.borderSubtle)),
+      decoration: BoxDecoration(
+        color: colors.canvasPure,
+        boxShadow: context.shadowsLevel3,
+        border: Border(top: BorderSide(color: colors.borderSubtle)),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -471,8 +486,8 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
             key: const Key('btn_view_order_details'),
             onPressed: () => context.go(AppRouter.kOrdersView),
             style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.primary,
-              foregroundColor: AppColors.onPrimary,
+              backgroundColor: colors.primary,
+              foregroundColor: colors.onPrimary,
               elevation: 1,
               minimumSize: const Size.fromHeight(48),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppRadii.lg)),
@@ -488,8 +503,8 @@ class _OrderConfirmationScreenState extends State<OrderConfirmationScreen> {
             key: const Key('btn_continue_shopping'),
             onPressed: () => context.go(AppRouter.kStoreView),
             style: OutlinedButton.styleFrom(
-              foregroundColor: AppColors.onSurface,
-              side: const BorderSide(color: AppColors.borderSubtle),
+              foregroundColor: colors.onSurface,
+              side: BorderSide(color: colors.borderSubtle),
               minimumSize: const Size.fromHeight(48),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(AppRadii.lg)),
             ),

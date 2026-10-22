@@ -17,6 +17,7 @@ class BranchBottomBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     final bool hasSelection = selectedBranch != null;
 
     return Container(
@@ -27,10 +28,10 @@ class BranchBottomBar extends StatelessWidget {
         bottom: MediaQuery.paddingOf(context).bottom + AppSpacing.spaceMd,
       ),
       decoration: BoxDecoration(
-        color: AppColors.surface.withValues(alpha: 0.95),
+        color: colors.surface.withValues(alpha: 0.95),
         boxShadow: [
           BoxShadow(
-            color: AppColors.onSurface.withValues(alpha: 0.08),
+            color: colors.onSurface.withValues(alpha: 0.08),
             offset: const Offset(0, -4),
             blurRadius: 16,
           ),
@@ -51,7 +52,7 @@ class BranchBottomBar extends StatelessWidget {
                       Text(
                         'branch_selection.approved_branch'.tr(),
                         style: AppTypography.bodySm(
-                          color: AppColors.onSurfaceVariant,
+                          color: colors.onSurfaceVariant,
                         ),
                       ),
                       const SizedBox(width: 4),
@@ -62,8 +63,8 @@ class BranchBottomBar extends StatelessWidget {
                               : 'branch_selection.select_branch_prompt'.tr(),
                           style: AppTypography.bodySm(
                             color: hasSelection
-                                ? AppColors.onSurface
-                                : AppColors.onSurfaceVariant,
+                                ? colors.onSurface
+                                : colors.onSurfaceVariant,
                           ).copyWith(
                             fontWeight: hasSelection
                                 ? FontWeight.w700
@@ -83,8 +84,8 @@ class BranchBottomBar extends StatelessWidget {
                       Container(
                         width: 6,
                         height: 6,
-                        decoration: const BoxDecoration(
-                          color: AppColors.brandEmeraldDark,
+                        decoration: BoxDecoration(
+                          color: colors.brandEmeraldDark,
                           shape: BoxShape.circle,
                         ),
                       ),
@@ -92,7 +93,7 @@ class BranchBottomBar extends StatelessWidget {
                       Text(
                         'branch_selection.available_now'.tr(),
                         style: AppTypography.labelSm(
-                          color: AppColors.brandEmeraldDark,
+                          color: colors.brandEmeraldDark,
                         ).copyWith(
                           fontWeight: FontWeight.w600,
                         ),
@@ -112,10 +113,10 @@ class BranchBottomBar extends StatelessWidget {
             child: ElevatedButton(
               onPressed: hasSelection ? onConfirm : null,
               style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.primary,
-                disabledBackgroundColor: AppColors.surfaceContainerHigh,
-                foregroundColor: AppColors.onPrimary,
-                disabledForegroundColor: AppColors.onSurfaceVariant,
+                backgroundColor: colors.primary,
+                disabledBackgroundColor: colors.surfaceContainerHigh,
+                foregroundColor: colors.onPrimary,
+                disabledForegroundColor: colors.onSurfaceVariant,
                 elevation: hasSelection ? 2 : 0,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(AppRadii.full),
@@ -128,8 +129,8 @@ class BranchBottomBar extends StatelessWidget {
                     'branch_selection.confirm_and_continue'.tr(),
                     style: AppTypography.labelLg(
                       color: hasSelection
-                          ? AppColors.onPrimary
-                          : AppColors.onSurfaceVariant,
+                          ? colors.onPrimary
+                          : colors.onSurfaceVariant,
                     ).copyWith(
                       fontWeight: FontWeight.w700,
                     ),
@@ -139,8 +140,8 @@ class BranchBottomBar extends StatelessWidget {
                     Icons.arrow_forward_rounded,
                     size: 18,
                     color: hasSelection
-                        ? AppColors.onPrimary
-                        : AppColors.onSurfaceVariant,
+                        ? colors.onPrimary
+                        : colors.onSurfaceVariant,
                   ),
                 ],
               ),

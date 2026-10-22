@@ -79,30 +79,31 @@ class _EmptyStateIconBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     return Container(
       width: 88,
       height: 88,
       alignment: Alignment.center,
       decoration: BoxDecoration(
-        color: AppColors.brandMintSurface,
+        color: colors.brandMintSurface,
         shape: BoxShape.circle,
         border: Border.all(
-          color: AppColors.brandMintBorder,
+          color: colors.brandMintBorder,
           width: 1.5,
         ),
-        boxShadow: const [
+        boxShadow: [
           BoxShadow(
-            color: Color(0x0A007A55),
+            color: colors.primaryBrand.withAlpha(10),
             blurRadius: 16,
-            offset: Offset(0, 4),
+            offset: const Offset(0, 4),
           ),
         ],
       ),
       child: icon ??
-          const Icon(
+          Icon(
             Icons.inventory_2_outlined,
             size: 42,
-            color: AppColors.brandEmeraldDark,
+            color: colors.brandEmeraldDark,
           ),
     );
   }
@@ -119,6 +120,7 @@ class _EmptyStateContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -126,7 +128,7 @@ class _EmptyStateContent extends StatelessWidget {
         Text(
           title,
           textAlign: TextAlign.center,
-          style: AppTypography.headlineMd(color: AppColors.onSurface).copyWith(
+          style: AppTypography.headlineMd(color: colors.onSurface).copyWith(
             fontWeight: FontWeight.w700,
           ),
         ),
@@ -137,7 +139,7 @@ class _EmptyStateContent extends StatelessWidget {
             child: Text(
               message!,
               textAlign: TextAlign.center,
-              style: AppTypography.bodyMd(color: AppColors.slate600),
+              style: AppTypography.bodyMd(color: colors.slate600),
             ),
           ),
         ],

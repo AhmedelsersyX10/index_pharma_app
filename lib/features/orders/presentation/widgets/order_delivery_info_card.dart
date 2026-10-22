@@ -18,13 +18,14 @@ class OrderDeliveryInfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     return Container(
       padding: const EdgeInsets.all(AppSpacing.spaceMd),
       decoration: BoxDecoration(
-        color: AppColors.canvasPure,
+        color: colors.canvasPure,
         borderRadius: BorderRadius.circular(AppRadii.xl),
-        border: Border.all(color: AppColors.borderSubtle),
-        boxShadow: AppShadows.level1,
+        border: Border.all(color: colors.borderSubtle),
+        boxShadow: context.shadowsLevel1,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -32,18 +33,18 @@ class OrderDeliveryInfoCard extends StatelessWidget {
           // Section Title
           Row(
             children: [
-              const Icon(
+              Icon(
                 Icons.local_shipping_rounded,
                 size: 20,
-                color: AppColors.primary,
+                color: colors.primary,
               ),
               const SizedBox(width: AppSpacing.spaceXs),
               Text(
                 'orders.delivery_info_title'.tr(),
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.bold,
-                  color: AppColors.onSurface,
+                  color: colors.onSurface,
                 ),
               ),
             ],
@@ -52,14 +53,15 @@ class OrderDeliveryInfoCard extends StatelessWidget {
 
           // Address Row
           _buildInfoRow(
+            colors: colors,
             icon: Icons.location_on_rounded,
             label: 'orders.delivery_address_label'.tr(),
             content: Text(
               deliveryAddress.isNotEmpty ? deliveryAddress : '—',
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 13,
                 fontWeight: FontWeight.w500,
-                color: AppColors.onSurface,
+                color: colors.onSurface,
                 height: 1.4,
               ),
             ),
@@ -68,16 +70,17 @@ class OrderDeliveryInfoCard extends StatelessWidget {
 
           // Phone Row
           _buildInfoRow(
+            colors: colors,
             icon: Icons.phone_android_rounded,
             label: 'orders.customer_phone_label'.tr(),
             content: Directionality(
               textDirection: ui.TextDirection.ltr,
               child: Text(
                 customerPhone.isNotEmpty ? customerPhone : '—',
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
-                  color: AppColors.onSurface,
+                  color: colors.onSurface,
                 ),
               ),
             ),
@@ -87,17 +90,18 @@ class OrderDeliveryInfoCard extends StatelessWidget {
           if (notes != null && notes!.trim().isNotEmpty) ...[
             const SizedBox(height: AppSpacing.spaceSm),
             _buildInfoRow(
+              colors: colors,
               icon: Icons.note_alt_outlined,
               label: 'orders.delivery_notes_label'.tr(),
               content: Text(
                 notes!,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 12,
-                  color: AppColors.slate700,
+                  color: colors.onSurface,
                   height: 1.4,
                 ),
               ),
-              backgroundColor: AppColors.badgeInfoBg.withValues(alpha: 0.5),
+              backgroundColor: colors.badgeInfoBg.withValues(alpha: 0.5),
             ),
           ],
         ],
@@ -106,6 +110,7 @@ class OrderDeliveryInfoCard extends StatelessWidget {
   }
 
   Widget _buildInfoRow({
+    required AppColorsExtension colors,
     required IconData icon,
     required String label,
     required Widget content,
@@ -115,7 +120,7 @@ class OrderDeliveryInfoCard extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(AppSpacing.spaceSm),
       decoration: BoxDecoration(
-        color: backgroundColor ?? AppColors.surfaceContainerLow,
+        color: backgroundColor ?? colors.surfaceContainerLow,
         borderRadius: BorderRadius.circular(AppRadii.lg),
       ),
       child: Row(
@@ -124,11 +129,11 @@ class OrderDeliveryInfoCard extends StatelessWidget {
           Container(
             width: 32,
             height: 32,
-            decoration: const BoxDecoration(
-              color: AppColors.surfaceContainerHigh,
+            decoration: BoxDecoration(
+              color: colors.surfaceContainerHigh,
               shape: BoxShape.circle,
             ),
-            child: Icon(icon, size: 16, color: AppColors.primary),
+            child: Icon(icon, size: 16, color: colors.primary),
           ),
           const SizedBox(width: AppSpacing.spaceSm),
           Expanded(
@@ -137,9 +142,9 @@ class OrderDeliveryInfoCard extends StatelessWidget {
               children: [
                 Text(
                   label,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 11,
-                    color: AppColors.onSurfaceVariant,
+                    color: colors.onSurfaceVariant,
                   ),
                 ),
                 const SizedBox(height: 3),

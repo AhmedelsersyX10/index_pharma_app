@@ -29,6 +29,8 @@ class CartHeader extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
+
     return AppPageBar(
       height: preferredSize.height,
       centerTitle: true,
@@ -49,17 +51,17 @@ class CartHeader extends StatelessWidget implements PreferredSizeWidget {
                 horizontal: AppSpacing.spaceSm,
                 vertical: AppSpacing.space2xs,
               ),
-              decoration: const BoxDecoration(
-                color: AppColors.brandMintSurface,
+              decoration: BoxDecoration(
+                color: colors.brandMintSurface,
                 borderRadius: AppRadii.roundedFull,
               ),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Icon(
+                  Icon(
                     Icons.storefront_outlined,
                     size: 16,
-                    color: AppColors.brandEmeraldDark,
+                    color: colors.brandEmeraldDark,
                   ),
                   const SizedBox(width: AppSpacing.space2xs),
                   ConstrainedBox(
@@ -67,7 +69,7 @@ class CartHeader extends StatelessWidget implements PreferredSizeWidget {
                     child: Text(
                       branchName!,
                       style: AppTypography.labelSm(
-                        color: AppColors.brandEmeraldDark,
+                        color: colors.brandEmeraldDark,
                       ).copyWith(fontWeight: FontWeight.w600),
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,

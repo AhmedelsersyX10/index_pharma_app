@@ -23,13 +23,14 @@ class OrderDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     final dateFormat =
         DateFormat('d MMMM yyyy, hh:mm a', context.locale.languageCode);
     final formattedDate = dateFormat.format(order.createdAt);
     final isCancelled = order.statusEnum == OrderStatus.cancelled;
 
     return Scaffold(
-      backgroundColor: AppColors.surface,
+      backgroundColor: colors.surface,
       appBar: AppPageBar(
         title: 'orders.details_title'.tr(),
       ),
@@ -40,40 +41,40 @@ class OrderDetailsScreen extends StatelessWidget {
           children: [
             // Cancellation Alert Banner (if cancelled)
             if (isCancelled) ...[
-              _buildCancellationBanner(context),
+              _buildCancellationBanner(context, colors),
               const SizedBox(height: AppSpacing.spaceMd),
             ],
 
             // Section 1: Order Header & Core Metadata Card
-            _buildOrderHeaderCard(context, formattedDate),
+            _buildOrderHeaderCard(context, formattedDate, colors),
             const SizedBox(height: AppSpacing.spaceMd),
 
             // Section 2: Real Order Timeline
             Container(
               padding: const EdgeInsets.all(AppSpacing.spaceMd),
               decoration: BoxDecoration(
-                color: AppColors.canvasPure,
+                color: colors.canvasPure,
                 borderRadius: BorderRadius.circular(AppRadii.xl),
-                border: Border.all(color: AppColors.borderSubtle),
-                boxShadow: AppShadows.level1,
+                border: Border.all(color: colors.borderSubtle),
+                boxShadow: context.shadowsLevel1,
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     children: [
-                      const Icon(
+                      Icon(
                         Icons.timeline_rounded,
                         size: 20,
-                        color: AppColors.primary,
+                        color: colors.primary,
                       ),
                       const SizedBox(width: AppSpacing.spaceXs),
                       Text(
                         'orders.timeline_title'.tr(),
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
-                          color: AppColors.onSurface,
+                          color: colors.onSurface,
                         ),
                       ),
                     ],
@@ -110,14 +111,14 @@ class OrderDetailsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildCancellationBanner(BuildContext context) {
+  Widget _buildCancellationBanner(BuildContext context, AppColorsExtension colors) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(AppSpacing.spaceMd),
       decoration: BoxDecoration(
-        color: AppColors.badgeErrorBg,
+        color: colors.badgeErrorBg,
         borderRadius: BorderRadius.circular(AppRadii.xl),
-        border: Border.all(color: AppColors.badgeErrorText.withValues(alpha: 0.2)),
+        border: Border.all(color: colors.badgeErrorText.withValues(alpha: 0.2)),
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -125,13 +126,13 @@ class OrderDetailsScreen extends StatelessWidget {
           Container(
             width: 36,
             height: 36,
-            decoration: const BoxDecoration(
-              color: AppColors.medicalRed,
+            decoration: BoxDecoration(
+              color: colors.medicalRed,
               shape: BoxShape.circle,
             ),
-            child: const Icon(
+            child: Icon(
               Icons.cancel_rounded,
-              color: AppColors.onPrimary,
+              color: colors.onPrimary,
               size: 22,
             ),
           ),
@@ -142,10 +143,10 @@ class OrderDetailsScreen extends StatelessWidget {
               children: [
                 Text(
                   'orders.timeline_cancelled_title'.tr(),
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
-                    color: AppColors.badgeErrorText,
+                    color: colors.badgeErrorText,
                   ),
                 ),
                 const SizedBox(height: 4),
@@ -153,7 +154,7 @@ class OrderDetailsScreen extends StatelessWidget {
                   'orders.timeline_cancelled_desc'.tr(),
                   style: TextStyle(
                     fontSize: 12,
-                    color: AppColors.badgeErrorText.withValues(alpha: 0.9),
+                    color: colors.badgeErrorText.withValues(alpha: 0.9),
                     height: 1.4,
                   ),
                 ),
@@ -165,15 +166,19 @@ class OrderDetailsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildOrderHeaderCard(BuildContext context, String formattedDate) {
+  Widget _buildOrderHeaderCard(
+    BuildContext context,
+    String formattedDate,
+    AppColorsExtension colors,
+  ) {
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(AppSpacing.spaceMd),
       decoration: BoxDecoration(
-        color: AppColors.canvasPure,
+        color: colors.canvasPure,
         borderRadius: BorderRadius.circular(AppRadii.xl),
-        border: Border.all(color: AppColors.borderSubtle),
-        boxShadow: AppShadows.level1,
+        border: Border.all(color: colors.borderSubtle),
+        boxShadow: context.shadowsLevel1,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -190,7 +195,7 @@ class OrderDetailsScreen extends StatelessWidget {
                       vertical: AppSpacing.spaceXs,
                     ),
                     decoration: BoxDecoration(
-                      color: AppColors.surfaceContainerLow,
+                      color: colors.surfaceContainerLow,
                       borderRadius: BorderRadius.circular(AppRadii.md),
                     ),
                     child: Row(
@@ -198,10 +203,10 @@ class OrderDetailsScreen extends StatelessWidget {
                       children: [
                         Text(
                           order.orderNumber,
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 13,
                             fontWeight: FontWeight.bold,
-                            color: AppColors.onSurface,
+                            color: colors.onSurface,
                             letterSpacing: -0.2,
                           ),
                         ),
@@ -209,12 +214,12 @@ class OrderDetailsScreen extends StatelessWidget {
                         InkWell(
                           onTap: () => _copyOrderNumber(context),
                           borderRadius: BorderRadius.circular(AppRadii.sm),
-                          child: const Padding(
-                            padding: EdgeInsets.all(2.0),
+                          child: Padding(
+                            padding: const EdgeInsets.all(2.0),
                             child: Icon(
                               Icons.copy_rounded,
                               size: 15,
-                              color: AppColors.primary,
+                              color: colors.primary,
                             ),
                           ),
                         ),
@@ -233,17 +238,17 @@ class OrderDetailsScreen extends StatelessWidget {
           // Date & Time
           Row(
             children: [
-              const Icon(
+              Icon(
                 Icons.calendar_today_rounded,
                 size: 14,
-                color: AppColors.secondaryMuted,
+                color: colors.secondaryMuted,
               ),
               const SizedBox(width: AppSpacing.spaceXs),
               Text(
                 formattedDate,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 12,
-                  color: AppColors.onSurfaceVariant,
+                  color: colors.onSurfaceVariant,
                 ),
               ),
             ],

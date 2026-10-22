@@ -89,7 +89,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(AppLocaleKeys.editProfileSuccess.tr()),
-            backgroundColor: AppColors.primary,
+            backgroundColor: context.colors.primary,
             behavior: SnackBarBehavior.floating,
           ),
         );
@@ -103,7 +103,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 defaultFallback: AppLocaleKeys.authErrorServer.tr(),
               ),
             ),
-            backgroundColor: AppColors.error,
+            backgroundColor: context.colors.error,
             behavior: SnackBarBehavior.floating,
           ),
         );
@@ -118,6 +118,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     final activeBranchCubit = _resolveBranchCubit();
     String? currentBranchName;
     if (activeBranchCubit != null && activeBranchCubit.state is BranchLoaded) {
@@ -133,17 +134,17 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     }
 
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: colors.background,
       appBar: AppPageBar(
         title: AppLocaleKeys.editProfileTitle.tr(),
         onBackPressed: _popSafely,
-        actions: const [
+        actions: [
           Padding(
-            padding: EdgeInsetsDirectional.only(end: 16),
+            padding: const EdgeInsetsDirectional.only(end: 16),
             child: CircleAvatar(
               radius: 16,
-              backgroundColor: AppColors.primary,
-              child: Icon(
+              backgroundColor: colors.primary,
+              child: const Icon(
                 Icons.person_rounded,
                 color: Colors.white,
                 size: 18,
@@ -164,10 +165,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               Container(
                 padding: const EdgeInsets.all(14),
                 decoration: BoxDecoration(
-                  color: AppColors.surfaceContainerLowest,
+                  color: colors.surfaceContainerLowest,
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(
-                    color: AppColors.borderSubtle.withValues(alpha: 0.6),
+                    color: colors.borderSubtle.withValues(alpha: 0.6),
                     width: 1,
                   ),
                   boxShadow: const [
@@ -184,13 +185,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     Container(
                       width: 38,
                       height: 38,
-                      decoration: const BoxDecoration(
-                        color: AppColors.brandMintSurface,
+                      decoration: BoxDecoration(
+                        color: colors.brandMintSurface,
                         shape: BoxShape.circle,
                       ),
-                      child: const Icon(
+                      child: Icon(
                         Icons.local_shipping_outlined,
-                        color: AppColors.brandEmeraldDark,
+                        color: colors.brandEmeraldDark,
                         size: 20,
                       ),
                     ),
@@ -202,14 +203,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           Text(
                             AppLocaleKeys.editProfileReassuranceTitle.tr(),
                             style: AppTypography.titleMd(
-                              color: AppColors.onSurface,
+                              color: colors.onSurface,
                             ),
                           ),
                           const SizedBox(height: 3),
                           Text(
                             AppLocaleKeys.editProfileReassuranceDesc.tr(),
                             style: AppTypography.bodySm(
-                              color: AppColors.onSurfaceVariant,
+                              color: colors.onSurfaceVariant,
                             ),
                           ),
                         ],
@@ -233,14 +234,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           Text(
                             AppLocaleKeys.editProfileNameLabel.tr(),
                             style: AppTypography.labelLg(
-                              color: AppColors.onSurface,
+                              color: colors.onSurface,
                             ),
                           ),
                           const SizedBox(width: 4),
-                          const Text(
+                          Text(
                             '*',
                             style: TextStyle(
-                              color: AppColors.error,
+                              color: colors.error,
                               fontSize: 14,
                               fontWeight: FontWeight.bold,
                             ),
@@ -250,7 +251,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       Text(
                         AppLocaleKeys.editProfileNameSub.tr(),
                         style: AppTypography.labelSm(
-                          color: AppColors.onSurfaceVariant,
+                          color: colors.onSurfaceVariant,
                         ),
                       ),
                     ],
@@ -261,35 +262,35 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     controller: _nameController,
                     decoration: InputDecoration(
                       hintText: AppLocaleKeys.editProfileNameHint.tr(),
-                      prefixIcon: const Icon(
+                      prefixIcon: Icon(
                         Icons.person_outline_rounded,
-                        color: AppColors.onSurfaceVariant,
+                        color: colors.onSurfaceVariant,
                         size: 20,
                       ),
                       filled: true,
-                      fillColor: AppColors.surfaceContainerLowest,
+                      fillColor: colors.surfaceContainerLowest,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                         borderSide: BorderSide(
-                          color: AppColors.borderSubtle.withValues(alpha: 0.6),
+                          color: colors.borderSubtle.withValues(alpha: 0.6),
                         ),
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                         borderSide: BorderSide(
-                          color: AppColors.borderSubtle.withValues(alpha: 0.6),
+                          color: colors.borderSubtle.withValues(alpha: 0.6),
                         ),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
-                        borderSide: const BorderSide(
-                          color: AppColors.primary,
+                        borderSide: BorderSide(
+                          color: colors.primary,
                           width: 1.5,
                         ),
                       ),
                       errorBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
-                        borderSide: const BorderSide(color: AppColors.error),
+                        borderSide: BorderSide(color: colors.error),
                       ),
                       contentPadding: const EdgeInsets.symmetric(
                         horizontal: 14,
@@ -318,14 +319,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           Text(
                             AppLocaleKeys.editProfilePhoneLabel.tr(),
                             style: AppTypography.labelLg(
-                              color: AppColors.onSurface,
+                              color: colors.onSurface,
                             ),
                           ),
                           const SizedBox(width: 4),
-                          const Text(
+                          Text(
                             '*',
                             style: TextStyle(
-                              color: AppColors.error,
+                              color: colors.error,
                               fontSize: 14,
                               fontWeight: FontWeight.bold,
                             ),
@@ -335,7 +336,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       Text(
                         AppLocaleKeys.editProfilePhoneSub.tr(),
                         style: AppTypography.labelSm(
-                          color: AppColors.primary,
+                          color: colors.primary,
                         ).copyWith(fontWeight: FontWeight.bold),
                       ),
                     ],
@@ -352,7 +353,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         margin: const EdgeInsetsDirectional.only(start: 8, end: 10),
                         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                         decoration: BoxDecoration(
-                          color: AppColors.surfaceContainer,
+                          color: colors.surfaceContainer,
                           borderRadius: BorderRadius.circular(6),
                         ),
                         child: Row(
@@ -363,7 +364,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                             Text(
                               '+20',
                               style: AppTypography.labelSm(
-                                color: AppColors.onSurfaceVariant,
+                                color: colors.onSurfaceVariant,
                               ).copyWith(fontWeight: FontWeight.bold),
                             ),
                           ],
@@ -374,29 +375,29 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         minHeight: 0,
                       ),
                       filled: true,
-                      fillColor: AppColors.surfaceContainerLowest,
+                      fillColor: colors.surfaceContainerLowest,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                         borderSide: BorderSide(
-                          color: AppColors.borderSubtle.withValues(alpha: 0.6),
+                          color: colors.borderSubtle.withValues(alpha: 0.6),
                         ),
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                         borderSide: BorderSide(
-                          color: AppColors.borderSubtle.withValues(alpha: 0.6),
+                          color: colors.borderSubtle.withValues(alpha: 0.6),
                         ),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
-                        borderSide: const BorderSide(
-                          color: AppColors.primary,
+                        borderSide: BorderSide(
+                          color: colors.primary,
                           width: 1.5,
                         ),
                       ),
                       errorBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
-                        borderSide: const BorderSide(color: AppColors.error),
+                        borderSide: BorderSide(color: colors.error),
                       ),
                       contentPadding: const EdgeInsets.symmetric(
                         horizontal: 14,
@@ -425,14 +426,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       Text(
                         AppLocaleKeys.editProfileAddressLabel.tr(),
                         style: AppTypography.labelLg(
-                          color: AppColors.onSurface,
+                          color: colors.onSurface,
                         ),
                       ),
                       const SizedBox(width: 4),
-                      const Text(
+                      Text(
                         '*',
                         style: TextStyle(
-                          color: AppColors.error,
+                          color: colors.error,
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
                         ),
@@ -448,29 +449,29 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     decoration: InputDecoration(
                       hintText: AppLocaleKeys.editProfileAddressHint.tr(),
                       filled: true,
-                      fillColor: AppColors.surfaceContainerLowest,
+                      fillColor: colors.surfaceContainerLowest,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                         borderSide: BorderSide(
-                          color: AppColors.borderSubtle.withValues(alpha: 0.6),
+                          color: colors.borderSubtle.withValues(alpha: 0.6),
                         ),
                       ),
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
                         borderSide: BorderSide(
-                          color: AppColors.borderSubtle.withValues(alpha: 0.6),
+                          color: colors.borderSubtle.withValues(alpha: 0.6),
                         ),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
-                        borderSide: const BorderSide(
-                          color: AppColors.primary,
+                        borderSide: BorderSide(
+                          color: colors.primary,
                           width: 1.5,
                         ),
                       ),
                       errorBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
-                        borderSide: const BorderSide(color: AppColors.error),
+                        borderSide: BorderSide(color: colors.error),
                       ),
                       contentPadding: const EdgeInsets.all(14),
                     ),
@@ -491,10 +492,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               Container(
                 padding: const EdgeInsets.all(14),
                 decoration: BoxDecoration(
-                  color: AppColors.brandMintSurface,
+                  color: colors.brandMintSurface,
                   borderRadius: BorderRadius.circular(12),
                   border: Border.all(
-                    color: AppColors.brandMintBorder,
+                    color: colors.brandMintBorder,
                     width: 1,
                   ),
                 ),
@@ -504,13 +505,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     Container(
                       width: 32,
                       height: 32,
-                      decoration: const BoxDecoration(
-                        color: AppColors.surfaceContainerLowest,
+                      decoration: BoxDecoration(
+                        color: colors.surfaceContainerLowest,
                         shape: BoxShape.circle,
                       ),
-                      child: const Icon(
+                      child: Icon(
                         Icons.shield_outlined,
-                        color: AppColors.brandEmeraldDark,
+                        color: colors.brandEmeraldDark,
                         size: 18,
                       ),
                     ),
@@ -519,7 +520,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       child: Text(
                         AppLocaleKeys.editProfilePrivacyShield.tr(),
                         style: AppTypography.bodySm(
-                          color: AppColors.brandEmeraldDark,
+                          color: colors.brandEmeraldDark,
                         ),
                       ),
                     ),
@@ -533,10 +534,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               Container(
                 padding: const EdgeInsets.all(14),
                 decoration: BoxDecoration(
-                  color: AppColors.surfaceContainerLowest,
+                  color: colors.surfaceContainerLowest,
                   borderRadius: BorderRadius.circular(16),
                   border: Border.all(
-                    color: AppColors.borderSubtle.withValues(alpha: 0.6),
+                    color: colors.borderSubtle.withValues(alpha: 0.6),
                     width: 1,
                   ),
                 ),
@@ -546,12 +547,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                       width: 44,
                       height: 44,
                       decoration: BoxDecoration(
-                        color: AppColors.brandMintSurface,
+                        color: colors.brandMintSurface,
                         borderRadius: BorderRadius.circular(10),
                       ),
-                      child: const Icon(
+                      child: Icon(
                         Icons.local_pharmacy_outlined,
-                        color: AppColors.primary,
+                        color: colors.primary,
                         size: 24,
                       ),
                     ),
@@ -563,14 +564,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                           Text(
                             AppLocaleKeys.editProfileBranchCardTitle.tr(),
                             style: AppTypography.titleMd(
-                              color: AppColors.onSurface,
+                              color: colors.onSurface,
                             ),
                           ),
                           const SizedBox(height: 2),
                           Text(
                             currentBranchName ?? AppLocaleKeys.accountNotSet.tr(),
                             style: AppTypography.bodySm(
-                              color: AppColors.onSurfaceVariant,
+                              color: colors.onSurfaceVariant,
                             ),
                           ),
                         ],
@@ -582,13 +583,13 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                         vertical: 3,
                       ),
                       decoration: BoxDecoration(
-                        color: AppColors.brandMintSurface,
+                        color: colors.brandMintSurface,
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Text(
                         AppLocaleKeys.editProfileBranchVerified.tr(),
                         style: AppTypography.labelSm(
-                          color: AppColors.brandEmeraldDark,
+                          color: colors.brandEmeraldDark,
                         ),
                       ),
                     ),
@@ -606,7 +607,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   key: const ValueKey('edit_profile_save_btn'),
                   onPressed: _isSaving ? null : _onSave,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.primary,
+                    backgroundColor: colors.primary,
                     foregroundColor: Colors.white,
                     elevation: 0,
                     shape: RoundedRectangleBorder(
@@ -646,14 +647,14 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                   key: const ValueKey('edit_profile_cancel_btn'),
                   onPressed: _popSafely,
                   style: TextButton.styleFrom(
-                    foregroundColor: AppColors.secondary,
+                    foregroundColor: colors.secondary,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(24),
                     ),
                   ),
                   child: Text(
                     AppLocaleKeys.editProfileCancelBtn.tr(),
-                    style: AppTypography.labelLg(color: AppColors.secondary),
+                    style: AppTypography.labelLg(color: colors.secondary),
                   ),
                 ),
               ),

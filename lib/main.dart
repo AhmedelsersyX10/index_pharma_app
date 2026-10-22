@@ -45,6 +45,7 @@ class IndexPharmaApp extends StatelessWidget {
     this.appRouter,
     this.authCubit,
     this.cartCubit,
+    this.themeCubit,
     this.storageService,
     this.permissionService,
   });
@@ -52,6 +53,7 @@ class IndexPharmaApp extends StatelessWidget {
   final AppRouter? appRouter;
   final AuthCubit? authCubit;
   final CartCubit? cartCubit;
+  final ThemeCubit? themeCubit;
   final StorageService? storageService;
   final PermissionService? permissionService;
 
@@ -62,26 +64,47 @@ class IndexPharmaApp extends StatelessWidget {
             ? getIt<AppRouter>()
             : AppRouter());
 
+    final resolvedStorageService = storageService ??
+        (getIt.isRegistered<StorageService>() ? getIt<StorageService>() : null);
     final resolvedAuthCubit = authCubit ??
         (getIt.isRegistered<AuthCubit>() ? getIt<AuthCubit>() : null);
     final resolvedCartCubit = cartCubit ??
         (getIt.isRegistered<CartCubit>() ? getIt<CartCubit>() : null);
-    final resolvedStorageService = storageService ??
-        (getIt.isRegistered<StorageService>() ? getIt<StorageService>() : null);
+    final resolvedThemeCubit = themeCubit ??
+        (getIt.isRegistered<ThemeCubit>()
+            ? getIt<ThemeCubit>()
+            : (resolvedStorageService != null
+                ? ThemeCubit(storageService: resolvedStorageService)
+                : null));
     final resolvedPermissionService = permissionService ??
         (getIt.isRegistered<PermissionService>() ? getIt<PermissionService>() : null);
 
-    final Widget app = MaterialApp.router(
-      onGenerateTitle: (context) => AppLocaleKeys.appTitle.tr(),
-      debugShowCheckedModeBanner: false,
-      localizationsDelegates: context.localizationDelegates,
-      supportedLocales: context.supportedLocales,
-      locale: context.locale,
-      theme: AppTheme.lightTheme,
-      darkTheme: AppTheme.darkTheme,
-      themeMode: ThemeMode.light,
-      routerConfig: router.router,
-    );
+    final Widget app = resolvedThemeCubit != null
+        ? BlocBuilder<ThemeCubit, ThemeMode>(
+            bloc: resolvedThemeCubit,
+            builder: (context, themeMode) => MaterialApp.router(
+              onGenerateTitle: (context) => AppLocaleKeys.appTitle.tr(),
+              debugShowCheckedModeBanner: false,
+              localizationsDelegates: context.localizationDelegates,
+              supportedLocales: context.supportedLocales,
+              locale: context.locale,
+              theme: AppTheme.lightTheme,
+              darkTheme: AppTheme.darkTheme,
+              themeMode: themeMode,
+              routerConfig: router.router,
+            ),
+          )
+        : MaterialApp.router(
+            onGenerateTitle: (context) => AppLocaleKeys.appTitle.tr(),
+            debugShowCheckedModeBanner: false,
+            localizationsDelegates: context.localizationDelegates,
+            supportedLocales: context.supportedLocales,
+            locale: context.locale,
+            theme: AppTheme.lightTheme,
+            darkTheme: AppTheme.darkTheme,
+            themeMode: ThemeMode.system,
+            routerConfig: router.router,
+          );
 
     Widget wrapped = app;
 
@@ -90,6 +113,8 @@ class IndexPharmaApp extends StatelessWidget {
         BlocProvider<AuthCubit>.value(value: resolvedAuthCubit),
       if (resolvedCartCubit != null)
         BlocProvider<CartCubit>.value(value: resolvedCartCubit),
+      if (resolvedThemeCubit != null)
+        BlocProvider<ThemeCubit>.value(value: resolvedThemeCubit),
     ];
     if (blocProviders.isNotEmpty) {
       wrapped = MultiBlocProvider(

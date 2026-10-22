@@ -13,13 +13,14 @@ class HomeStorageGuaranteeFooter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     return Container(
       padding: const EdgeInsets.all(AppSpacing.spaceMd),
       decoration: BoxDecoration(
-        color: AppColors.surfaceContainerLow,
+        color: colors.surfaceContainerLow,
         borderRadius: AppRadii.roundedXl,
         border: Border.all(
-          color: AppColors.borderSubtle,
+          color: colors.borderSubtle,
           width: 1,
         ),
       ),
@@ -30,14 +31,14 @@ class HomeStorageGuaranteeFooter extends StatelessWidget {
             width: 36,
             height: 36,
             decoration: BoxDecoration(
-              color: AppColors.primary.withValues(alpha: 0.12),
+              color: colors.primary.withValues(alpha: 0.12),
               shape: BoxShape.circle,
             ),
             alignment: Alignment.center,
-            child: const Icon(
+            child: Icon(
               Icons.shield_outlined,
               size: 20,
-              color: AppColors.primary,
+              color: colors.primary,
             ),
           ),
           const SizedBox(width: AppSpacing.spaceSm),
@@ -48,7 +49,7 @@ class HomeStorageGuaranteeFooter extends StatelessWidget {
                 Text(
                   AppLocaleKeys.homeGuaranteeTitle.tr(),
                   style: AppTypography.titleMd(
-                    color: AppColors.onSurface,
+                    color: colors.onSurface,
                   ).copyWith(
                     fontWeight: FontWeight.bold,
                   ),
@@ -57,7 +58,7 @@ class HomeStorageGuaranteeFooter extends StatelessWidget {
                 Text(
                   AppLocaleKeys.homeGuaranteeDesc.tr(),
                   style: AppTypography.bodySm(
-                    color: AppColors.onSurfaceVariant,
+                    color: colors.onSurfaceVariant,
                   ).copyWith(
                     height: 1.4,
                   ),

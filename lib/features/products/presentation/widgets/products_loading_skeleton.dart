@@ -37,6 +37,7 @@ class _ProductsLoadingSkeletonState extends State<ProductsLoadingSkeleton>
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     return AnimatedBuilder(
       animation: _opacityAnim,
       builder: (context, _) {
@@ -52,14 +53,14 @@ class _ProductsLoadingSkeletonState extends State<ProductsLoadingSkeleton>
               mainAxisSpacing: AppSpacing.spaceSm,
               childAspectRatio: 0.58,
             ),
-            itemBuilder: (context, index) => _buildSkeletonCard(),
+            itemBuilder: (context, index) => _buildSkeletonCard(colors),
           ),
         );
       },
     );
   }
 
-  Widget _buildSkeletonCard() {
+  Widget _buildSkeletonCard(AppColorsExtension colors) {
     return AppCard(
       padding: const EdgeInsets.all(AppSpacing.spaceSm),
       borderRadius: AppRadii.roundedXl,
@@ -72,8 +73,8 @@ class _ProductsLoadingSkeletonState extends State<ProductsLoadingSkeleton>
             child: Stack(
               children: [
                 Container(
-                  decoration: const BoxDecoration(
-                    color: AppColors.surfaceContainerLow,
+                  decoration: BoxDecoration(
+                    color: colors.surfaceContainerLow,
                     borderRadius: AppRadii.roundedLg,
                   ),
                 ),
@@ -83,8 +84,8 @@ class _ProductsLoadingSkeletonState extends State<ProductsLoadingSkeleton>
                   child: Container(
                     width: 55,
                     height: 18,
-                    decoration: const BoxDecoration(
-                      color: AppColors.slate200,
+                    decoration: BoxDecoration(
+                      color: colors.surfaceContainerHigh,
                       borderRadius: AppRadii.roundedFull,
                     ),
                   ),
@@ -95,8 +96,8 @@ class _ProductsLoadingSkeletonState extends State<ProductsLoadingSkeleton>
           const SizedBox(height: AppSpacing.spaceSm),
           Container(
             height: 16,
-            decoration: const BoxDecoration(
-              color: AppColors.slate200,
+            decoration: BoxDecoration(
+              color: colors.surfaceContainerHigh,
               borderRadius: AppRadii.roundedSm,
             ),
           ),
@@ -104,8 +105,8 @@ class _ProductsLoadingSkeletonState extends State<ProductsLoadingSkeleton>
           Container(
             height: 12,
             width: 80,
-            decoration: const BoxDecoration(
-              color: AppColors.slate100,
+            decoration: BoxDecoration(
+              color: colors.surfaceContainer,
               borderRadius: AppRadii.roundedSm,
             ),
           ),
@@ -113,8 +114,8 @@ class _ProductsLoadingSkeletonState extends State<ProductsLoadingSkeleton>
           Container(
             height: 12,
             width: 100,
-            decoration: const BoxDecoration(
-              color: AppColors.slate100,
+            decoration: BoxDecoration(
+              color: colors.surfaceContainer,
               borderRadius: AppRadii.roundedSm,
             ),
           ),
@@ -122,16 +123,16 @@ class _ProductsLoadingSkeletonState extends State<ProductsLoadingSkeleton>
           Container(
             height: 20,
             width: 60,
-            decoration: const BoxDecoration(
-              color: AppColors.slate200,
+            decoration: BoxDecoration(
+              color: colors.surfaceContainerHigh,
               borderRadius: AppRadii.roundedSm,
             ),
           ),
           const SizedBox(height: AppSpacing.spaceXs),
           Container(
             height: 36,
-            decoration: const BoxDecoration(
-              color: AppColors.slate200,
+            decoration: BoxDecoration(
+              color: colors.surfaceContainerHigh,
               borderRadius: AppRadii.roundedLg,
             ),
           ),

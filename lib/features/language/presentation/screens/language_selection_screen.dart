@@ -100,10 +100,14 @@ class _LanguageSelectionScreenState extends State<LanguageSelectionScreen> {
         final isArabicSelected = state.selectedLocale == 'ar';
         final isEnglishSelected = state.selectedLocale == 'en';
 
+        final colors = context.colors;
+        final isDark = context.isDarkMode;
+
         return AnnotatedRegion<SystemUiOverlayStyle>(
-          value: SystemUiOverlayStyle.dark.copyWith(statusBarColor: Colors.transparent),
+          value: (isDark ? SystemUiOverlayStyle.light : SystemUiOverlayStyle.dark)
+              .copyWith(statusBarColor: Colors.transparent),
           child: Scaffold(
-            backgroundColor: AppColors.background,
+            backgroundColor: colors.background,
             body: SafeArea(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),

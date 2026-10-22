@@ -3,7 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:index_pharma/core/localization/app_locale_keys.dart';
-import 'package:index_pharma/core/theme/app_colors.dart';
+import 'package:index_pharma/core/theme/theme.dart';
 
 /// Full-screen dialog providing pinch-to-zoom and pan inspection of prescription images.
 class PrescriptionImageViewerDialog extends StatelessWidget {
@@ -37,6 +37,8 @@ class PrescriptionImageViewerDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
+
     return Dialog(
       backgroundColor: Colors.transparent,
       insetPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 24),
@@ -87,9 +89,9 @@ class PrescriptionImageViewerDialog extends StatelessWidget {
                         : CachedNetworkImage(
                             imageUrl: imageUrl!,
                             fit: BoxFit.contain,
-                            placeholder: (context, url) => const Center(
+                            placeholder: (context, url) => Center(
                               child: CircularProgressIndicator(
-                                color: AppColors.primary,
+                                color: colors.primary,
                               ),
                             ),
                             errorWidget: (context, url, error) => const Icon(

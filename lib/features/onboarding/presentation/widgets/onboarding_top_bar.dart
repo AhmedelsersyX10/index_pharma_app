@@ -18,6 +18,7 @@ class OnboardingTopBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     final isLastPage = currentPage == totalPages - 1;
 
     return Padding(
@@ -43,14 +44,14 @@ class OnboardingTopBar extends StatelessWidget {
               child: TextButton(
                 onPressed: onSkip,
                 style: TextButton.styleFrom(
-                  foregroundColor: AppColors.slate500,
+                  foregroundColor: colors.slate500,
                   padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                   minimumSize: const Size(0, 36),
                   tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                 ),
                 child: Text(
                   AppLocaleKeys.onboardingSkip.tr(),
-                  style: AppTypography.labelLg(color: AppColors.slate500),
+                  style: AppTypography.labelLg(color: colors.slate500),
                 ),
               ),
             ),

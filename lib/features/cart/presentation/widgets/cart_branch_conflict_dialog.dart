@@ -19,16 +19,18 @@ class CartBranchConflictDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
+
     return AlertDialog(
       shape: const RoundedRectangleBorder(
         borderRadius: AppRadii.roundedXl,
       ),
-      backgroundColor: AppColors.surfaceContainerLowest,
+      backgroundColor: colors.surfaceContainerLowest,
       title: Row(
         children: [
-          const Icon(
+          Icon(
             Icons.warning_amber_rounded,
-            color: AppColors.medicalAmber,
+            color: colors.medicalAmber,
             size: 26,
           ),
           const SizedBox(width: AppSpacing.spaceSm),
@@ -36,7 +38,7 @@ class CartBranchConflictDialog extends StatelessWidget {
             child: Text(
               AppLocaleKeys.cartBranchConflictTitle.tr(),
               style: AppTypography.titleMd(
-                color: AppColors.onSurface,
+                color: colors.onSurface,
               ).copyWith(fontWeight: FontWeight.bold),
             ),
           ),
@@ -44,7 +46,7 @@ class CartBranchConflictDialog extends StatelessWidget {
       ),
       content: Text(
         AppLocaleKeys.cartBranchConflictMessage.tr(),
-        style: AppTypography.bodyMd(color: AppColors.onSurfaceVariant),
+        style: AppTypography.bodyMd(color: colors.onSurfaceVariant),
       ),
       actionsPadding: const EdgeInsets.symmetric(
         horizontal: AppSpacing.spaceMd,
@@ -54,18 +56,18 @@ class CartBranchConflictDialog extends StatelessWidget {
         TextButton(
           onPressed: () => Navigator.of(context).pop(false),
           style: TextButton.styleFrom(
-            foregroundColor: AppColors.secondary,
+            foregroundColor: colors.secondary,
           ),
           child: Text(
             AppLocaleKeys.cartBranchConflictCancel.tr(),
-            style: AppTypography.labelMd(color: AppColors.secondary),
+            style: AppTypography.labelMd(color: colors.secondary),
           ),
         ),
         ElevatedButton(
           onPressed: () => Navigator.of(context).pop(true),
           style: ElevatedButton.styleFrom(
-            backgroundColor: AppColors.medicalRed,
-            foregroundColor: Colors.white,
+            backgroundColor: colors.medicalRed,
+            foregroundColor: colors.onPrimary,
             elevation: 0,
             shape: const RoundedRectangleBorder(
               borderRadius: AppRadii.roundedMd,
@@ -74,7 +76,7 @@ class CartBranchConflictDialog extends StatelessWidget {
           child: Text(
             AppLocaleKeys.cartBranchConflictConfirm.tr(),
             style: AppTypography.labelMd(
-              color: Colors.white,
+              color: colors.onPrimary,
             ).copyWith(fontWeight: FontWeight.bold),
           ),
         ),

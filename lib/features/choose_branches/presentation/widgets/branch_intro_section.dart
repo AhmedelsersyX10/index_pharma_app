@@ -16,6 +16,7 @@ class BranchIntroSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     final countText = branchesCount == 1
         ? 'branch_selection.single_active_branch'.tr()
         : 'branch_selection.active_branches_count'.tr(args: [branchesCount.toString()]);
@@ -36,22 +37,22 @@ class BranchIntroSection extends StatelessWidget {
                   vertical: 6,
                 ),
                 decoration: BoxDecoration(
-                  color: AppColors.surfaceContainerHigh,
+                  color: colors.surfaceContainerHigh,
                   borderRadius: BorderRadius.circular(AppRadii.full),
                 ),
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Icon(
+                    Icon(
                       Icons.location_on,
                       size: 16,
-                      color: AppColors.primary,
+                      color: colors.primary,
                     ),
                     const SizedBox(width: AppSpacing.space2xs),
                     Text(
                       'branch_selection.region_title'.tr(),
                       style: AppTypography.labelMd(
-                        color: AppColors.onSurface,
+                        color: colors.onSurface,
                       ).copyWith(
                         fontWeight: FontWeight.w600,
                       ),
@@ -60,15 +61,15 @@ class BranchIntroSection extends StatelessWidget {
                       margin: const EdgeInsets.symmetric(horizontal: 6),
                       width: 4,
                       height: 4,
-                      decoration: const BoxDecoration(
-                        color: AppColors.primary,
+                      decoration: BoxDecoration(
+                        color: colors.primary,
                         shape: BoxShape.circle,
                       ),
                     ),
                     Text(
                       countText,
                       style: AppTypography.labelSm(
-                        color: AppColors.onSurfaceVariant,
+                        color: colors.onSurfaceVariant,
                       ),
                     ),
                   ],
@@ -86,25 +87,25 @@ class BranchIntroSection extends StatelessWidget {
                       vertical: 6,
                     ),
                     decoration: BoxDecoration(
-                      color: AppColors.brandMintSurface,
+                      color: colors.brandMintSurface,
                       borderRadius: BorderRadius.circular(AppRadii.full),
                       border: Border.all(
-                        color: AppColors.brandMintBorder,
+                        color: colors.brandMintBorder,
                       ),
                     ),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        const Icon(
+                        Icon(
                           Icons.my_location,
                           size: 14,
-                          color: AppColors.brandEmeraldDark,
+                          color: colors.brandEmeraldDark,
                         ),
                         const SizedBox(width: 4),
                         Text(
                           'branch_selection.auto_locate'.tr(),
                           style: AppTypography.labelSm(
-                            color: AppColors.brandEmeraldDark,
+                            color: colors.brandEmeraldDark,
                           ).copyWith(
                             fontWeight: FontWeight.w600,
                           ),
@@ -122,7 +123,7 @@ class BranchIntroSection extends StatelessWidget {
           Text(
             'branch_selection.headline'.tr(),
             style: AppTypography.headlineMd(
-              color: AppColors.onSurface,
+              color: colors.onSurface,
             ).copyWith(
               fontWeight: FontWeight.w700,
             ),
@@ -134,7 +135,7 @@ class BranchIntroSection extends StatelessWidget {
           Text(
             'branch_selection.subheadline'.tr(),
             style: AppTypography.bodySm(
-              color: AppColors.onSurfaceVariant,
+              color: colors.onSurfaceVariant,
             ).copyWith(
               height: 1.45,
             ),

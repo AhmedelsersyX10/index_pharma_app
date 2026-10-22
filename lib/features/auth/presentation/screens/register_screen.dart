@@ -38,12 +38,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     final cubit = widget.authCubit ?? context.read<AuthCubit>();
 
     return BlocProvider.value(
       value: cubit,
       child: Scaffold(
-        backgroundColor: AppColors.background,
+        backgroundColor: colors.background,
         appBar: const AppPageBar.transparent(),
         body: SafeArea(
           child: BlocConsumer<AuthCubit, AuthState>(
@@ -80,8 +81,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     // Header Badge & Clinical Portal Title
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
-                      decoration: const BoxDecoration(
-                        color: AppColors.brandMintSurface,
+                      decoration: BoxDecoration(
+                        color: colors.brandMintSurface,
                         borderRadius: AppRadii.roundedFull,
                       ),
                       child: Row(
@@ -90,15 +91,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           Container(
                             width: 6,
                             height: 6,
-                            decoration: const BoxDecoration(
-                              color: AppColors.brandEmeraldDark,
+                            decoration: BoxDecoration(
+                              color: colors.brandEmeraldDark,
                               shape: BoxShape.circle,
                             ),
                           ),
                           const SizedBox(width: AppSpacing.space2xs),
                           Text(
                             AppLocaleKeys.authRegisterBadge.tr(),
-                            style: AppTypography.labelSm(color: AppColors.brandEmeraldDark),
+                            style: AppTypography.labelSm(color: colors.brandEmeraldDark),
                           ),
                         ],
                       ),
@@ -106,12 +107,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     const SizedBox(height: AppSpacing.spaceSm),
                     Text(
                       AppLocaleKeys.authRegisterTitle.tr(),
-                      style: AppTypography.headlineLg(color: AppColors.onSurface),
+                      style: AppTypography.headlineLg(color: colors.onSurface),
                     ),
                     const SizedBox(height: AppSpacing.space2xs),
                     Text(
                       AppLocaleKeys.authRegisterSubtitle.tr(),
-                      style: AppTypography.bodyMd(color: AppColors.secondary),
+                      style: AppTypography.bodyMd(color: colors.secondary),
                     ),
                     const SizedBox(height: AppSpacing.spaceLg),
 
@@ -143,7 +144,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         children: [
                           Text(
                             AppLocaleKeys.authAlreadyHaveAccount.tr(),
-                            style: AppTypography.bodyMd(color: AppColors.secondary),
+                            style: AppTypography.bodyMd(color: colors.secondary),
                           ),
                           InkWell(
                             onTap: widget.onNavigateToLogin,
@@ -155,13 +156,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 children: [
                                   Text(
                                     AppLocaleKeys.authSignInLink.tr(),
-                                    style: AppTypography.labelLg(color: AppColors.primaryBrand),
+                                    style: AppTypography.labelLg(color: colors.primaryBrand),
                                   ),
                                   const SizedBox(width: 2),
-                                  const Icon(
+                                  Icon(
                                     Icons.arrow_forward_rounded,
                                     size: 16,
-                                    color: AppColors.primaryBrand,
+                                    color: colors.primaryBrand,
                                   ),
                                 ],
                               ),

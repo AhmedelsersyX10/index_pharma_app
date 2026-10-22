@@ -10,6 +10,7 @@ class AuthBrandHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     return Column(
       children: [
         const SizedBox(height: AppSpacing.spaceSm),
@@ -21,10 +22,10 @@ class AuthBrandHeader extends StatelessWidget {
               width: 64,
               height: 64,
               padding: const EdgeInsets.all(AppSpacing.spaceSm),
-              decoration: const BoxDecoration(
-                color: AppColors.canvasPure,
+              decoration: BoxDecoration(
+                color: colors.canvasPure,
                 borderRadius: AppRadii.roundedXl,
-                boxShadow: AppShadows.level1,
+                boxShadow: context.shadowsLevel1,
               ),
               child: Image.asset(AppImages.logo, fit: BoxFit.contain),
             ),
@@ -35,9 +36,9 @@ class AuthBrandHeader extends StatelessWidget {
                 width: 14,
                 height: 14,
                 decoration: BoxDecoration(
-                  color: AppColors.primaryBrand,
+                  color: colors.primaryBrand,
                   shape: BoxShape.circle,
-                  border: Border.all(color: AppColors.canvasPure, width: 2),
+                  border: Border.all(color: colors.canvasPure, width: 2),
                 ),
               ),
             ),
@@ -46,13 +47,13 @@ class AuthBrandHeader extends StatelessWidget {
         const SizedBox(height: AppSpacing.spaceSm),
         Text(
           AppLocaleKeys.authLoginTitle.tr(),
-          style: AppTypography.headlineLg(color: AppColors.onSurface),
+          style: AppTypography.headlineLg(color: colors.onSurface),
           textAlign: TextAlign.center,
         ),
         const SizedBox(height: AppSpacing.space2xs),
         Text(
           AppLocaleKeys.authLoginSubtitle.tr(),
-          style: AppTypography.bodyMd(color: AppColors.secondary),
+          style: AppTypography.bodyMd(color: colors.secondary),
           textAlign: TextAlign.center,
         ),
         const SizedBox(height: AppSpacing.spaceMd),
@@ -60,18 +61,18 @@ class AuthBrandHeader extends StatelessWidget {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
           decoration: BoxDecoration(
-            color: AppColors.brandMintSurface,
+            color: colors.brandMintSurface,
             borderRadius: AppRadii.roundedFull,
-            border: Border.all(color: AppColors.brandMintBorder, width: 1),
+            border: Border.all(color: colors.brandMintBorder, width: 1),
           ),
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Icon(Icons.verified_rounded, size: 16, color: AppColors.brandEmeraldDark),
+              Icon(Icons.verified_rounded, size: 16, color: colors.brandEmeraldDark),
               const SizedBox(width: AppSpacing.space2xs),
               Text(
                 AppLocaleKeys.authClinicalBadge.tr(),
-                style: AppTypography.labelSm(color: AppColors.brandEmeraldDark),
+                style: AppTypography.labelSm(color: colors.brandEmeraldDark),
               ),
             ],
           ),

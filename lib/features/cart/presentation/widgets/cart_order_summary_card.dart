@@ -18,13 +18,15 @@ class CartOrderSummaryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
+
     return Container(
       padding: const EdgeInsets.all(AppSpacing.spaceMd),
       decoration: BoxDecoration(
-        color: AppColors.surfaceContainerLowest,
+        color: colors.surfaceContainerLowest,
         borderRadius: AppRadii.roundedXl,
-        boxShadow: AppShadows.level1,
-        border: Border.all(color: AppColors.outlineVariant.withValues(alpha: 0.3), width: 0.5),
+        boxShadow: context.shadowsLevel1,
+        border: Border.all(color: colors.outlineVariant.withValues(alpha: 0.3), width: 0.5),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -36,10 +38,10 @@ class CartOrderSummaryCard extends StatelessWidget {
               Text(
                 AppLocaleKeys.cartSummaryTitle.tr(),
                 style: AppTypography.titleMd(
-                  color: AppColors.onSurface,
+                  color: colors.onSurface,
                 ).copyWith(fontWeight: FontWeight.bold),
               ),
-              const Icon(Icons.receipt_long_outlined, size: 20, color: AppColors.secondary),
+              Icon(Icons.receipt_long_outlined, size: 20, color: colors.secondary),
             ],
           ),
 
@@ -55,20 +57,20 @@ class CartOrderSummaryCard extends StatelessWidget {
                     AppLocaleKeys.cartItemsCount.tr(args: [totalUnitsCount.toString()]),
                   ],
                 ),
-                style: AppTypography.bodyMd(color: AppColors.onSurfaceVariant),
+                style: AppTypography.bodyMd(color: colors.onSurfaceVariant),
               ),
               Text(
                 '${subtotal.toStringAsFixed(2)} ${AppLocaleKeys.cartCurrency.tr()}',
                 style: AppTypography.bodyMd(
-                  color: AppColors.onSurface,
+                  color: colors.onSurface,
                 ).copyWith(fontWeight: FontWeight.bold),
               ),
             ],
           ),
 
-          const Padding(
-            padding: EdgeInsets.symmetric(vertical: AppSpacing.spaceSm),
-            child: Divider(color: AppColors.surfaceContainerLow, height: 1, thickness: 1),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: AppSpacing.spaceSm),
+            child: Divider(color: colors.surfaceContainerLow, height: 1, thickness: 1),
           ),
 
           // Estimated Total Row
@@ -83,13 +85,13 @@ class CartOrderSummaryCard extends StatelessWidget {
                   Text(
                     AppLocaleKeys.cartTotalLabel.tr(),
                     style: AppTypography.titleMd(
-                      color: AppColors.onSurface,
+                      color: colors.onSurface,
                     ).copyWith(fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 2),
                   Text(
                     AppLocaleKeys.cartTotalNote.tr(),
-                    style: AppTypography.labelSm(color: AppColors.secondary),
+                    style: AppTypography.labelSm(color: colors.secondary),
                   ),
                 ],
               ),
@@ -100,14 +102,14 @@ class CartOrderSummaryCard extends StatelessWidget {
                   Text(
                     subtotal.toStringAsFixed(2),
                     style: AppTypography.headlineLg(
-                      color: AppColors.primary,
+                      color: colors.primary,
                     ).copyWith(fontWeight: FontWeight.w800, fontSize: 22),
                   ),
                   const SizedBox(width: AppSpacing.space2xs),
                   Text(
                     AppLocaleKeys.cartCurrency.tr(),
                     style: AppTypography.labelMd(
-                      color: AppColors.primary,
+                      color: colors.primary,
                     ).copyWith(fontWeight: FontWeight.bold),
                   ),
                 ],
@@ -120,19 +122,19 @@ class CartOrderSummaryCard extends StatelessWidget {
           // EDA Pricing Compliance Notice
           Container(
             padding: const EdgeInsets.all(AppSpacing.spaceSm),
-            decoration: const BoxDecoration(
-              color: AppColors.surfaceContainerLow,
+            decoration: BoxDecoration(
+              color: colors.surfaceContainerLow,
               borderRadius: AppRadii.roundedLg,
             ),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Icon(Icons.verified_outlined, size: 18, color: AppColors.brandEmeraldDark),
+                Icon(Icons.verified_outlined, size: 18, color: colors.brandEmeraldDark),
                 const SizedBox(width: AppSpacing.spaceSm),
                 Expanded(
                   child: Text(
                     AppLocaleKeys.cartEdaCompliance.tr(),
-                    style: AppTypography.bodySm(color: AppColors.onSurfaceVariant),
+                    style: AppTypography.bodySm(color: colors.onSurfaceVariant),
                   ),
                 ),
               ],

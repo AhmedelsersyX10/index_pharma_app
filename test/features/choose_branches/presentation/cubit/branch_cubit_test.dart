@@ -53,6 +53,17 @@ class FakeStorageService implements StorageService {
     _onboardingSeen = seen;
     return true;
   }
+
+  String? _themeMode;
+
+  @override
+  String? get themeMode => _themeMode;
+
+  @override
+  Future<bool> setThemeMode(String mode) async {
+    _themeMode = mode;
+    return true;
+  }
 }
 
 void main() {

@@ -53,6 +53,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     final effectiveCartCubit = widget.cartCubit ?? context.read<CartCubit>();
 
     final providers = [
@@ -63,7 +64,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     return MultiBlocProvider(
       providers: providers,
       child: Scaffold(
-        backgroundColor: AppColors.background,
+        backgroundColor: colors.background,
         appBar: AppPageBar(
           title: 'checkout.title'.tr(),
           onBackPressed: () {
@@ -82,7 +83,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text(state.message),
-                  backgroundColor: AppColors.error,
+                  backgroundColor: colors.error,
                   behavior: SnackBarBehavior.floating,
                 ),
               );
@@ -176,12 +177,14 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     required String currency,
     required VoidCallback? onConfirm,
   }) {
+    final colors = context.colors;
+
     return Container(
       padding: const EdgeInsets.all(AppSpacing.spaceMd),
-      decoration: const BoxDecoration(
-        color: AppColors.canvasPure,
-        boxShadow: AppShadows.level3,
-        border: Border(top: BorderSide(color: AppColors.borderSubtle)),
+      decoration: BoxDecoration(
+        color: colors.canvasPure,
+        boxShadow: context.shadowsLevel3,
+        border: Border(top: BorderSide(color: colors.borderSubtle)),
       ),
       child: SafeArea(
         top: false,
@@ -192,9 +195,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
               key: const Key('btn_confirm_order'),
               onPressed: onConfirm,
               style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.primary,
-                foregroundColor: AppColors.onPrimary,
-                disabledBackgroundColor: AppColors.primary.withAlpha(153),
+                backgroundColor: colors.primary,
+                foregroundColor: colors.onPrimary,
+                disabledBackgroundColor: colors.primary.withAlpha(153),
                 padding: const EdgeInsets.symmetric(
                   horizontal: AppSpacing.spaceMd,
                   vertical: AppSpacing.spaceSm,
@@ -208,19 +211,19 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                   Row(
                     children: [
                       if (isSubmitting)
-                        const SizedBox(
+                        SizedBox(
                           width: 18,
                           height: 18,
                           child: CircularProgressIndicator(
                             strokeWidth: 2,
-                            color: AppColors.onPrimary,
+                            color: colors.onPrimary,
                           ),
                         )
                       else
-                        const Icon(
+                        Icon(
                           Icons.lock_outline_rounded,
                           size: 18,
-                          color: AppColors.onPrimary,
+                          color: colors.onPrimary,
                         ),
                       const SizedBox(width: AppSpacing.spaceSm),
                       Text(
@@ -235,15 +238,15 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                       vertical: 4,
                     ),
                     decoration: BoxDecoration(
-                      color: AppColors.canvasPure.withAlpha(51),
+                      color: colors.canvasPure.withAlpha(51),
                       borderRadius: BorderRadius.circular(AppRadii.sm),
                     ),
                     child: Text(
                       '${subtotal.toStringAsFixed(2)} $currency',
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.bold,
-                        color: AppColors.onPrimary,
+                        color: colors.onPrimary,
                       ),
                     ),
                   ),
@@ -254,16 +257,16 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const Icon(
+                Icon(
                   Icons.health_and_safety_outlined,
-                  color: AppColors.brandEmeraldDark,
+                  color: colors.brandEmeraldDark,
                   size: 14,
                 ),
                 const SizedBox(width: 4),
                 Flexible(
                   child: Text(
                     'checkout.disclaimer'.tr(),
-                    style: const TextStyle(fontSize: 11, color: AppColors.secondaryMuted),
+                    style: TextStyle(fontSize: 11, color: colors.secondaryMuted),
                     textAlign: TextAlign.center,
                   ),
                 ),

@@ -8,13 +8,15 @@ class CheckoutPaymentCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
+
     return Container(
       padding: const EdgeInsets.all(AppSpacing.spaceMd),
       decoration: BoxDecoration(
-        color: AppColors.canvasPure,
+        color: colors.canvasPure,
         borderRadius: BorderRadius.circular(AppRadii.xl),
-        boxShadow: AppShadows.level1,
-        border: Border.all(color: AppColors.borderSubtle),
+        boxShadow: context.shadowsLevel1,
+        border: Border.all(color: colors.borderSubtle),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -24,23 +26,23 @@ class CheckoutPaymentCard extends StatelessWidget {
               Container(
                 width: 28,
                 height: 28,
-                decoration: const BoxDecoration(
-                  color: AppColors.secondaryContainer,
+                decoration: BoxDecoration(
+                  color: colors.secondaryContainer,
                   shape: BoxShape.circle,
                 ),
-                child: const Icon(
+                child: Icon(
                   Icons.payments_rounded,
-                  color: AppColors.primary,
+                  color: colors.primary,
                   size: 16,
                 ),
               ),
               const SizedBox(width: AppSpacing.spaceSm),
               Text(
                 'checkout.payment_title'.tr(),
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
-                  color: AppColors.onSurface,
+                  color: colors.onSurface,
                 ),
               ),
             ],
@@ -49,9 +51,9 @@ class CheckoutPaymentCard extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(AppSpacing.spaceMd),
             decoration: BoxDecoration(
-              color: AppColors.brandMintSurface,
+              color: colors.brandMintSurface,
               borderRadius: BorderRadius.circular(AppRadii.lg),
-              border: Border.all(color: AppColors.brandMintBorder),
+              border: Border.all(color: colors.brandMintBorder),
             ),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -60,16 +62,16 @@ class CheckoutPaymentCard extends StatelessWidget {
                   width: 20,
                   height: 20,
                   margin: const EdgeInsets.only(top: 2),
-                  decoration: const BoxDecoration(
-                    color: AppColors.primary,
+                  decoration: BoxDecoration(
+                    color: colors.primary,
                     shape: BoxShape.circle,
                   ),
                   child: Center(
                     child: Container(
                       width: 8,
                       height: 8,
-                      decoration: const BoxDecoration(
-                        color: AppColors.canvasPure,
+                      decoration: BoxDecoration(
+                        color: colors.canvasPure,
                         shape: BoxShape.circle,
                       ),
                     ),
@@ -85,10 +87,10 @@ class CheckoutPaymentCard extends StatelessWidget {
                         children: [
                           Text(
                             'checkout.payment_cod_title'.tr(),
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.bold,
-                              color: AppColors.onSurface,
+                              color: colors.onSurface,
                             ),
                           ),
                           Container(
@@ -97,25 +99,25 @@ class CheckoutPaymentCard extends StatelessWidget {
                               vertical: 2,
                             ),
                             decoration: BoxDecoration(
-                              color: AppColors.primary,
+                              color: colors.primary,
                               borderRadius:
                                   BorderRadius.circular(AppRadii.full),
                             ),
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                const Icon(
+                                Icon(
                                   Icons.payments_outlined,
-                                  color: AppColors.onPrimary,
+                                  color: colors.onPrimary,
                                   size: 13,
                                 ),
                                 const SizedBox(width: 4),
                                 Text(
                                   'checkout.payment_cod_badge'.tr(),
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     fontSize: 11,
                                     fontWeight: FontWeight.w600,
-                                    color: AppColors.onPrimary,
+                                    color: colors.onPrimary,
                                   ),
                                 ),
                               ],
@@ -126,9 +128,9 @@ class CheckoutPaymentCard extends StatelessWidget {
                       const SizedBox(height: 6),
                       Text(
                         'checkout.payment_cod_desc'.tr(),
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 12,
-                          color: AppColors.onSurfaceVariant,
+                          color: colors.onSurfaceVariant,
                           height: 1.4,
                         ),
                       ),

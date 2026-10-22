@@ -45,7 +45,8 @@ class CartActionButton extends StatelessWidget {
 
   Widget _buildButton(BuildContext context, int count) {
     final theme = Theme.of(context);
-    final iconColor = color ?? theme.appBarTheme.foregroundColor ?? AppColors.onSurface;
+    final colors = context.colors;
+    final iconColor = color ?? theme.appBarTheme.foregroundColor ?? colors.onSurface;
 
     return Semantics(
       label: AppLocaleKeys.cartTitle.tr(),
@@ -76,8 +77,8 @@ class CartActionButton extends StatelessWidget {
                     minWidth: 16,
                     minHeight: 16,
                   ),
-                  decoration: const BoxDecoration(
-                    color: AppColors.medicalRed,
+                  decoration: BoxDecoration(
+                    color: colors.medicalRed,
                     shape: BoxShape.circle,
                   ),
                   alignment: Alignment.center,

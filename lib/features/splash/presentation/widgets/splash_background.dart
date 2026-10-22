@@ -8,17 +8,18 @@ class SplashBackground extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     return Stack(
       children: [
         // Ambient clinical background illumination
-        const Positioned.fill(
+        Positioned.fill(
           child: DecoratedBox(
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
-                colors: [AppColors.brandMintSurface, AppColors.background, AppColors.surfaceSubtle],
-                stops: [0.0, 0.55, 1.0],
+                colors: [colors.brandMintSurface, colors.background, colors.surfaceSubtle],
+                stops: const [0.0, 0.55, 1.0],
               ),
             ),
           ),
@@ -36,8 +37,8 @@ class SplashBackground extends StatelessWidget {
                   shape: BoxShape.circle,
                   gradient: RadialGradient(
                     colors: [
-                      AppColors.brandMintBorder.withValues(alpha: 0.5),
-                      AppColors.brandMintSurface.withValues(alpha: 0.15),
+                      colors.brandMintBorder.withValues(alpha: 0.5),
+                      colors.brandMintSurface.withValues(alpha: 0.15),
                       Colors.transparent,
                     ],
                     stops: const [0.0, 0.55, 1.0],

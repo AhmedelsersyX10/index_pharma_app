@@ -95,8 +95,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     final scaffold = Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: colors.background,
       appBar: ProductDetailsHeader(
         onCartTap: () => context.push(AppRouter.kCartView),
       ),
@@ -123,7 +124,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                     ),
                   ),
                 ),
-              ProductDetailsLoaded(:final product) => _buildLoadedView(product),
+              ProductDetailsLoaded(:final product) => _buildLoadedView(product, colors),
             };
           },
         ),
@@ -160,7 +161,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     );
   }
 
-  Widget _buildLoadedView(Product product) {
+  Widget _buildLoadedView(Product product, AppColorsExtension colors) {
     final unitLabel = (product.unit != null && product.unit!.trim().isNotEmpty)
         ? product.unit!.trim()
         : AppLocaleKeys.productDetailsUnitDefault.tr();
@@ -182,10 +183,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
             child: AppBadge.tone(
               label: AppLocaleKeys.productDetailsCertifiedPharmacyBadge.tr(),
               tone: AppBadgeTone.trust,
-              icon: const Icon(
+              icon: Icon(
                 Icons.verified_user_rounded,
                 size: 15,
-                color: AppColors.brandEmeraldDark,
+                color: colors.brandEmeraldDark,
               ),
             ),
           ),

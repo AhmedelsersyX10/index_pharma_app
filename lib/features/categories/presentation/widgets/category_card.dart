@@ -23,12 +23,13 @@ class CategoryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     final borderColor = isSelected
-        ? AppColors.primary
-        : AppColors.borderSubtle;
+        ? colors.primary
+        : colors.borderSubtle;
     final backgroundColor = isSelected
-        ? AppColors.brandMintSurface
-        : AppColors.canvasPure;
+        ? colors.brandMintSurface
+        : colors.canvasPure;
 
     return Semantics(
       button: true,
@@ -52,7 +53,7 @@ class CategoryCard extends StatelessWidget {
                 color: borderColor,
                 width: isSelected ? 1.5 : 1,
               ),
-              boxShadow: isSelected ? AppShadows.level2 : AppShadows.level1,
+              boxShadow: isSelected ? context.shadowsLevel2 : context.shadowsLevel1,
             ),
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -70,7 +71,7 @@ class CategoryCard extends StatelessWidget {
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: AppTypography.labelMd(
-                    color: isSelected ? AppColors.primary : AppColors.onSurface,
+                    color: isSelected ? colors.primary : colors.onSurface,
                   ),
                 ),
               ],
@@ -127,6 +128,7 @@ class _CategoryIconBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     final iconData = _resolveCategoryIcon(name);
 
     return Container(
@@ -135,18 +137,18 @@ class _CategoryIconBadge extends StatelessWidget {
       alignment: Alignment.center,
       decoration: BoxDecoration(
         color: isSelected
-            ? AppColors.primary
-            : AppColors.brandMintSurface,
+            ? colors.primary
+            : colors.brandMintSurface,
         shape: BoxShape.circle,
         border: Border.all(
-          color: isSelected ? AppColors.primary : AppColors.brandMintBorder,
+          color: isSelected ? colors.primary : colors.brandMintBorder,
           width: 1,
         ),
       ),
       child: Icon(
         iconData,
         size: 22,
-        color: isSelected ? AppColors.onPrimary : AppColors.primary,
+        color: isSelected ? colors.onPrimary : colors.primary,
       ),
     );
   }

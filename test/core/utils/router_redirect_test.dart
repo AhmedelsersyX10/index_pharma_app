@@ -59,6 +59,15 @@ class FakeStorageService implements StorageService {
 
   @override
   Future<bool> setSelectedBranchId(String branchId) async => true;
+
+  @override
+  String? themeMode;
+
+  @override
+  Future<bool> setThemeMode(String mode) async {
+    themeMode = mode;
+    return true;
+  }
 }
 
 class FakeAuthRepository implements AuthRepository {

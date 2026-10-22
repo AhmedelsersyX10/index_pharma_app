@@ -17,6 +17,7 @@ void main() {
       expect(storageService.locale, isNull);
       expect(storageService.selectedBranchId, isNull);
       expect(storageService.onboardingSeen, isFalse);
+      expect(storageService.themeMode, isNull);
     });
 
     test('reads initial values when pre-populated in SharedPreferences',
@@ -25,6 +26,7 @@ void main() {
         SharedPreferencesStorageService.keyLocale: 'ar',
         SharedPreferencesStorageService.keySelectedBranchId: 'branch-101',
         SharedPreferencesStorageService.keyOnboardingSeen: true,
+        SharedPreferencesStorageService.keyThemeMode: 'dark',
       });
       final prefs = await SharedPreferences.getInstance();
       storageService = SharedPreferencesStorageService(prefs);
@@ -32,6 +34,7 @@ void main() {
       expect(storageService.locale, equals('ar'));
       expect(storageService.selectedBranchId, equals('branch-101'));
       expect(storageService.onboardingSeen, isTrue);
+      expect(storageService.themeMode, equals('dark'));
     });
 
     group('round trip set and get', () {
@@ -71,6 +74,22 @@ void main() {
         final resultSetFalse = await storageService.setOnboardingSeen(false);
         expect(resultSetFalse, isTrue);
         expect(storageService.onboardingSeen, isFalse);
+      });
+
+      test('persists and retrieves themeMode', () async {
+        expect(storageService.themeMode, isNull);
+
+        final resultDark = await storageService.setThemeMode('dark');
+        expect(resultDark, isTrue);
+        expect(storageService.themeMode, equals('dark'));
+
+        final resultLight = await storageService.setThemeMode('light');
+        expect(resultLight, isTrue);
+        expect(storageService.themeMode, equals('light'));
+
+        final resultSystem = await storageService.setThemeMode('system');
+        expect(resultSystem, isTrue);
+        expect(storageService.themeMode, equals('system'));
       });
     });
 

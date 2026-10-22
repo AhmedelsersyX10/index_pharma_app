@@ -15,12 +15,14 @@ class CartStockAlertBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
+
     return Container(
       padding: const EdgeInsets.all(AppSpacing.spaceMd),
-      decoration: const BoxDecoration(
-        color: AppColors.errorContainer,
+      decoration: BoxDecoration(
+        color: colors.errorContainer,
         borderRadius: AppRadii.roundedXl,
-        boxShadow: AppShadows.level1,
+        boxShadow: context.shadowsLevel1,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -28,7 +30,7 @@ class CartStockAlertBanner extends StatelessWidget {
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Icon(Icons.warning_amber_rounded, color: AppColors.medicalRed, size: 24),
+              Icon(Icons.warning_amber_rounded, color: colors.medicalRed, size: 24),
               const SizedBox(width: AppSpacing.spaceSm),
               Expanded(
                 child: Column(
@@ -37,13 +39,13 @@ class CartStockAlertBanner extends StatelessWidget {
                     Text(
                       AppLocaleKeys.cartStockAlertTitle.tr(),
                       style: AppTypography.titleMd(
-                        color: AppColors.onErrorContainer,
+                        color: colors.onErrorContainer,
                       ).copyWith(fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(height: AppSpacing.space2xs),
                     Text(
                       AppLocaleKeys.cartStockAlertDesc.tr(args: [productName]),
-                      style: AppTypography.bodySm(color: AppColors.onErrorContainer),
+                      style: AppTypography.bodySm(color: colors.onErrorContainer),
                     ),
                   ],
                 ),
@@ -56,8 +58,8 @@ class CartStockAlertBanner extends StatelessWidget {
             child: TextButton(
               onPressed: onDismiss,
               style: TextButton.styleFrom(
-                backgroundColor: AppColors.surfaceContainerLowest,
-                foregroundColor: AppColors.onErrorContainer,
+                backgroundColor: colors.surfaceContainerLowest,
+                foregroundColor: colors.onErrorContainer,
                 shape: const RoundedRectangleBorder(borderRadius: AppRadii.roundedFull),
                 padding: const EdgeInsets.symmetric(
                   horizontal: AppSpacing.spaceMd,
@@ -67,7 +69,7 @@ class CartStockAlertBanner extends StatelessWidget {
               child: Text(
                 AppLocaleKeys.cartStockAlertDismiss.tr(),
                 style: AppTypography.labelSm(
-                  color: AppColors.onErrorContainer,
+                  color: colors.onErrorContainer,
                 ).copyWith(fontWeight: FontWeight.bold),
               ),
             ),

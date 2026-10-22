@@ -132,7 +132,8 @@ class _TimelineNode extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final (Color circleBg, Color iconColor, Color lineColor) = _resolveColors();
+    final colors = context.colors;
+    final (Color circleBg, Color iconColor, Color lineColor) = _resolveColors(colors);
 
     return IntrinsicHeight(
       child: Row(
@@ -150,9 +151,9 @@ class _TimelineNode extends StatelessWidget {
                     color: circleBg,
                     shape: BoxShape.circle,
                     border: isActive && !isCancelled
-                        ? Border.all(color: AppColors.brandMintBorder, width: 3)
+                        ? Border.all(color: colors.brandMintBorder, width: 3)
                         : null,
-                    boxShadow: isActive ? AppShadows.level1 : null,
+                    boxShadow: isActive ? context.shadowsLevel1 : null,
                   ),
                   child: Center(
                     child: Icon(
@@ -190,8 +191,8 @@ class _TimelineNode extends StatelessWidget {
                           fontSize: 14,
                           fontWeight: isActive ? FontWeight.bold : FontWeight.w600,
                           color: isCancelled
-                              ? AppColors.medicalRed
-                              : (isActive ? AppColors.primary : AppColors.onSurface),
+                              ? colors.medicalRed
+                              : (isActive ? colors.primary : colors.onSurface),
                         ),
                       ),
                       if (isActive && !isCancelled) ...[
@@ -202,7 +203,7 @@ class _TimelineNode extends StatelessWidget {
                             vertical: 2,
                           ),
                           decoration: BoxDecoration(
-                            color: AppColors.brandMintSurface,
+                            color: colors.brandMintSurface,
                             borderRadius: BorderRadius.circular(AppRadii.full),
                           ),
                           child: Row(
@@ -211,18 +212,18 @@ class _TimelineNode extends StatelessWidget {
                               Container(
                                 width: 5,
                                 height: 5,
-                                decoration: const BoxDecoration(
-                                  color: AppColors.brandEmeraldDark,
+                                decoration: BoxDecoration(
+                                  color: colors.brandEmeraldDark,
                                   shape: BoxShape.circle,
                                 ),
                               ),
                               const SizedBox(width: 4),
                               Text(
                                 'orders.timeline_active_stage'.tr(),
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontSize: 10,
                                   fontWeight: FontWeight.bold,
-                                  color: AppColors.brandEmeraldDark,
+                                  color: colors.brandEmeraldDark,
                                 ),
                               ),
                             ],
@@ -237,8 +238,8 @@ class _TimelineNode extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 12,
                       color: isCancelled
-                          ? AppColors.medicalRed.withValues(alpha: 0.8)
-                          : AppColors.onSurfaceVariant,
+                          ? colors.medicalRed.withValues(alpha: 0.8)
+                          : colors.onSurfaceVariant,
                       height: 1.4,
                     ),
                   ),
@@ -251,28 +252,28 @@ class _TimelineNode extends StatelessWidget {
     );
   }
 
-  (Color, Color, Color) _resolveColors() {
+  (Color, Color, Color) _resolveColors(AppColorsExtension colors) {
     if (isCancelled) {
-      return (AppColors.medicalRed, AppColors.onPrimary, AppColors.borderSubtle);
+      return (colors.medicalRed, colors.onPrimary, colors.borderSubtle);
     }
     if (isCompleted) {
       return (
-        AppColors.brandEmeraldDark,
-        AppColors.onPrimary,
-        AppColors.brandEmeraldDark
+        colors.brandEmeraldDark,
+        colors.onPrimary,
+        colors.brandEmeraldDark
       );
     }
     if (isActive) {
       return (
-        AppColors.primary,
-        AppColors.onPrimary,
-        AppColors.surfaceContainerHigh
+        colors.primary,
+        colors.onPrimary,
+        colors.surfaceContainerHigh
       );
     }
     return (
-      AppColors.surfaceContainerHigh,
-      AppColors.onSurfaceVariant,
-      AppColors.surfaceContainerHigh
+      colors.surfaceContainerHigh,
+      colors.onSurfaceVariant,
+      colors.surfaceContainerHigh
     );
   }
 }

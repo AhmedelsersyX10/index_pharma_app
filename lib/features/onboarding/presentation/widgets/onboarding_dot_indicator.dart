@@ -9,6 +9,7 @@ class OnboardingDotIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: List.generate(itemCount, (index) {
@@ -20,12 +21,12 @@ class OnboardingDotIndicator extends StatelessWidget {
           width: isSelected ? 30 : 8,
           height: 8,
           decoration: BoxDecoration(
-            color: isSelected ? AppColors.primaryBrand : AppColors.slate200,
+            color: isSelected ? colors.primaryBrand : colors.slate200,
             borderRadius: BorderRadius.circular(4),
             boxShadow: isSelected
                 ? [
                     BoxShadow(
-                      color: AppColors.primaryBrand.withValues(alpha: 0.35),
+                      color: colors.primaryBrand.withValues(alpha: 0.35),
                       blurRadius: 6,
                       offset: const Offset(0, 2),
                     ),

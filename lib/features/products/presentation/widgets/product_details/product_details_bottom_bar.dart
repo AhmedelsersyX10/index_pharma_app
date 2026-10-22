@@ -25,12 +25,14 @@ class ProductDetailsBottomBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
+
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.surfaceContainerLowest,
+        color: colors.surfaceContainerLowest,
         boxShadow: [
           BoxShadow(
-            color: AppColors.onSurface.withValues(alpha: 0.08),
+            color: colors.onSurface.withValues(alpha: 0.08),
             offset: const Offset(0, -4),
             blurRadius: 16,
           ),
@@ -52,7 +54,7 @@ class ProductDetailsBottomBar extends StatelessWidget {
               Text(
                 AppLocaleKeys.productDetailsTotalPriceLabel.tr(),
                 style: AppTypography.labelSm(
-                  color: AppColors.slate500,
+                  color: colors.neutral,
                 ),
               ),
               const SizedBox(height: 2),
@@ -63,14 +65,14 @@ class ProductDetailsBottomBar extends StatelessWidget {
                   Text(
                     _formatTotal(),
                     style: AppTypography.headlineMd(
-                      color: AppColors.primary,
+                      color: colors.primary,
                     ).copyWith(fontWeight: FontWeight.w800),
                   ),
                   const SizedBox(width: AppSpacing.space2xs),
                   Text(
                     AppLocaleKeys.productsCurrency.tr(),
                     style: AppTypography.labelSm(
-                      color: AppColors.onSurface,
+                      color: colors.onSurface,
                     ).copyWith(fontWeight: FontWeight.w600),
                   ),
                 ],
@@ -85,24 +87,24 @@ class ProductDetailsBottomBar extends StatelessWidget {
               height: 48,
               child: ElevatedButton.icon(
                 onPressed: isAvailable ? onAddToCart : null,
-                icon: const Icon(
+                icon: Icon(
                   Icons.add_shopping_cart_rounded,
                   size: 20,
-                  color: Colors.white,
+                  color: colors.onPrimary,
                 ),
                 label: Text(
                   isAvailable
                       ? AppLocaleKeys.productDetailsAddToCartCta.tr()
                       : AppLocaleKeys.productDetailsOutOfStock.tr(),
-                  style: AppTypography.labelLg(color: Colors.white).copyWith(
+                  style: AppTypography.labelLg(color: colors.onPrimary).copyWith(
                     fontWeight: FontWeight.w700,
                   ),
                 ),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.primary,
-                  foregroundColor: Colors.white,
-                  disabledBackgroundColor: AppColors.slate300,
-                  disabledForegroundColor: AppColors.slate500,
+                  backgroundColor: colors.primary,
+                  foregroundColor: colors.onPrimary,
+                  disabledBackgroundColor: colors.surfaceContainerHigh,
+                  disabledForegroundColor: colors.neutral,
                   elevation: 0,
                   shape: const RoundedRectangleBorder(
                     borderRadius: AppRadii.roundedLg,

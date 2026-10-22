@@ -11,24 +11,26 @@ class CartRxReminderCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
+
     return Container(
       padding: const EdgeInsets.symmetric(
         horizontal: AppSpacing.spaceMd,
         vertical: AppSpacing.spaceSm,
       ),
-      decoration: const BoxDecoration(
-        color: AppColors.secondaryContainer,
+      decoration: BoxDecoration(
+        color: colors.secondaryContainer,
         borderRadius: AppRadii.roundedXl,
       ),
       child: Row(
         children: [
-          const Icon(Icons.receipt_long_outlined, size: 20, color: AppColors.primary),
+          Icon(Icons.receipt_long_outlined, size: 20, color: colors.primary),
           const SizedBox(width: AppSpacing.spaceSm),
           Expanded(
             child: Text(
               AppLocaleKeys.cartRxNoticeText.tr(),
               style: AppTypography.bodySm(
-                color: AppColors.onSecondaryContainer,
+                color: colors.onSecondaryContainer,
               ).copyWith(fontWeight: FontWeight.w500),
             ),
           ),
@@ -38,14 +40,14 @@ class CartRxReminderCard extends StatelessWidget {
               horizontal: AppSpacing.spaceSm,
               vertical: AppSpacing.space2xs,
             ),
-            decoration: const BoxDecoration(
-              color: AppColors.surfaceContainerLowest,
+            decoration: BoxDecoration(
+              color: colors.surfaceContainerLowest,
               borderRadius: AppRadii.roundedFull,
             ),
             child: Text(
               AppLocaleKeys.cartRxNoticeBadge.tr(),
               style: AppTypography.labelSm(
-                color: AppColors.brandEmeraldDark,
+                color: colors.brandEmeraldDark,
               ).copyWith(fontWeight: FontWeight.bold),
             ),
           ),

@@ -202,8 +202,9 @@ class _BrowseViewState extends State<_BrowseView> {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     Widget view = Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: colors.background,
       appBar: AppPageBar.noBack(
         title: AppLocaleKeys.navBrowse.tr(),
         actions: [CartActionButton(onTap: () => context.push(AppRouter.kCartView))],
@@ -211,7 +212,7 @@ class _BrowseViewState extends State<_BrowseView> {
       body: SafeArea(
         top: false,
         child: RefreshIndicator(
-          color: AppColors.primary,
+          color: colors.primary,
           onRefresh: () async {
             await context.read<ProductsCubit>().loadFirstPage();
           },
@@ -239,7 +240,7 @@ class _BrowseViewState extends State<_BrowseView> {
                       const SizedBox(height: AppSpacing.spaceSm),
 
                       // Live Stock & Availability Notice (Stitch Frame B3)
-                      _buildLiveStockNotice(),
+                      _buildLiveStockNotice(colors),
                       const SizedBox(height: AppSpacing.spaceSm),
 
                       // Category Filter Chips
@@ -247,7 +248,7 @@ class _BrowseViewState extends State<_BrowseView> {
                       const SizedBox(height: AppSpacing.spaceMd),
 
                       // Section Title & Total Count Header
-                      _buildSectionHeader(),
+                      _buildSectionHeader(colors),
                     ],
                   ),
                 ),
@@ -256,7 +257,7 @@ class _BrowseViewState extends State<_BrowseView> {
               // Products Content Grid, Skeleton, Empty, or Error
               SliverPadding(
                 padding: const EdgeInsets.symmetric(horizontal: AppSpacing.marginMobile),
-                sliver: SliverToBoxAdapter(child: _buildBody()),
+                sliver: SliverToBoxAdapter(child: _buildBody(colors)),
               ),
 
               const SliverToBoxAdapter(child: SizedBox(height: AppSpacing.space2xl)),
@@ -282,7 +283,7 @@ class _BrowseViewState extends State<_BrowseView> {
     return view;
   }
 
-  Widget _buildLiveStockNotice() {
+  Widget _buildLiveStockNotice(AppColorsExtension colors) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.space2xs),
       child: Row(
@@ -290,8 +291,8 @@ class _BrowseViewState extends State<_BrowseView> {
           Container(
             width: 8,
             height: 8,
-            decoration: const BoxDecoration(
-              color: AppColors.brandEmeraldDark,
+            decoration: BoxDecoration(
+              color: colors.brandEmeraldDark,
               shape: BoxShape.circle,
             ),
           ),
@@ -300,7 +301,7 @@ class _BrowseViewState extends State<_BrowseView> {
             child: Text(
               AppLocaleKeys.productsLiveStock.tr(),
               style: AppTypography.labelSm(
-                color: AppColors.brandEmeraldDark,
+                color: colors.brandEmeraldDark,
               ).copyWith(fontWeight: FontWeight.w600),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
@@ -309,7 +310,7 @@ class _BrowseViewState extends State<_BrowseView> {
           const SizedBox(width: AppSpacing.spaceSm),
           Text(
             AppLocaleKeys.productsAvailableOnly.tr(),
-            style: AppTypography.labelSm(color: AppColors.slate500),
+            style: AppTypography.labelSm(color: colors.neutral),
           ),
         ],
       ),
@@ -344,7 +345,7 @@ class _BrowseViewState extends State<_BrowseView> {
     );
   }
 
-  Widget _buildSectionHeader() {
+  Widget _buildSectionHeader(AppColorsExtension colors) {
     return BlocSelector<ProductsCubit, ProductsState, int?>(
       selector: (state) {
         if (state is ProductsLoaded) return state.total;
@@ -357,7 +358,7 @@ class _BrowseViewState extends State<_BrowseView> {
             Text(
               AppLocaleKeys.productsTitle.tr(),
               style: AppTypography.titleMd(
-                color: AppColors.onSurface,
+                color: colors.onSurface,
               ).copyWith(fontWeight: FontWeight.bold),
             ),
             if (totalCount != null)
@@ -366,14 +367,14 @@ class _BrowseViewState extends State<_BrowseView> {
                   horizontal: AppSpacing.spaceSm,
                   vertical: AppSpacing.space2xs,
                 ),
-                decoration: const BoxDecoration(
-                  color: AppColors.surfaceContainerLow,
+                decoration: BoxDecoration(
+                  color: colors.surfaceContainerLow,
                   borderRadius: AppRadii.roundedFull,
                 ),
                 child: Text(
                   AppLocaleKeys.productsTotalCount.tr(args: [totalCount.toString()]),
                   style: AppTypography.labelSm(
-                    color: AppColors.onSurfaceVariant,
+                    color: colors.onSurfaceVariant,
                   ).copyWith(fontWeight: FontWeight.w600),
                 ),
               ),
@@ -383,7 +384,7 @@ class _BrowseViewState extends State<_BrowseView> {
     );
   }
 
-  Widget _buildBody() {
+  Widget _buildBody(AppColorsExtension colors) {
     return BlocBuilder<ProductsCubit, ProductsState>(
       buildWhen: (previous, current) {
         if (previous is ProductsLoaded && current is ProductsLoaded) {
@@ -411,14 +412,14 @@ class _BrowseViewState extends State<_BrowseView> {
               );
             },
           ),
-          ProductsEmpty() => _buildEmptyState(),
+          ProductsEmpty() => _buildEmptyState(colors),
           ProductsFailure() => _buildFailureState(state),
         };
       },
     );
   }
 
-  Widget _buildEmptyState() {
+  Widget _buildEmptyState(AppColorsExtension colors) {
     return Padding(
       padding: const EdgeInsets.symmetric(
         vertical: AppSpacing.spaceLg,
@@ -430,26 +431,26 @@ class _BrowseViewState extends State<_BrowseView> {
           Container(
             width: 72,
             height: 72,
-            decoration: const BoxDecoration(
-              color: AppColors.surfaceContainer,
+            decoration: BoxDecoration(
+              color: colors.surfaceContainer,
               shape: BoxShape.circle,
             ),
-            child: const Center(
-              child: Icon(Icons.inventory_2_outlined, size: 36, color: AppColors.primary),
+            child: Center(
+              child: Icon(Icons.inventory_2_outlined, size: 36, color: colors.primary),
             ),
           ),
           const SizedBox(height: AppSpacing.spaceMd),
           Text(
             AppLocaleKeys.productsEmptyTitle.tr(),
             style: AppTypography.headlineMd(
-              color: AppColors.onSurface,
+              color: colors.onSurface,
             ).copyWith(fontWeight: FontWeight.bold),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: AppSpacing.spaceXs),
           Text(
             AppLocaleKeys.productsEmptyDesc.tr(),
-            style: AppTypography.bodyMd(color: AppColors.onSurfaceVariant),
+            style: AppTypography.bodyMd(color: colors.onSurfaceVariant),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: AppSpacing.spaceLg),
@@ -462,25 +463,25 @@ class _BrowseViewState extends State<_BrowseView> {
               width: double.infinity,
               padding: const EdgeInsets.all(AppSpacing.spaceMd),
               decoration: BoxDecoration(
-                color: AppColors.brandMintSurface,
+                color: colors.brandMintSurface,
                 borderRadius: AppRadii.roundedXl,
-                border: Border.all(color: AppColors.brandMintBorder, width: 1),
+                border: Border.all(color: colors.brandMintBorder, width: 1),
               ),
               child: Column(
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Icon(
+                      Icon(
                         Icons.receipt_long_rounded,
                         size: 20,
-                        color: AppColors.brandEmeraldDark,
+                        color: colors.brandEmeraldDark,
                       ),
                       const SizedBox(width: AppSpacing.spaceXs),
                       Text(
                         AppLocaleKeys.productsPrescriptionHelpTitle.tr(),
                         style: AppTypography.titleMd(
-                          color: AppColors.brandEmeraldDark,
+                          color: colors.brandEmeraldDark,
                         ).copyWith(fontWeight: FontWeight.bold),
                       ),
                     ],
@@ -488,7 +489,7 @@ class _BrowseViewState extends State<_BrowseView> {
                   const SizedBox(height: AppSpacing.spaceXs),
                   Text(
                     AppLocaleKeys.productsPrescriptionHelpDesc.tr(),
-                    style: AppTypography.bodySm(color: AppColors.onSurface),
+                    style: AppTypography.bodySm(color: colors.onSurface),
                     textAlign: TextAlign.center,
                   ),
                 ],
@@ -502,7 +503,7 @@ class _BrowseViewState extends State<_BrowseView> {
             label: Text(
               AppLocaleKeys.commonRetry.tr(),
               style: AppTypography.labelMd(
-                color: AppColors.primary,
+                color: colors.primary,
               ).copyWith(fontWeight: FontWeight.w600),
             ),
           ),

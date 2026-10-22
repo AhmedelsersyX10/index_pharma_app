@@ -10,6 +10,7 @@ class SplashLogo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     return AnimatedBuilder(
       animation: Listenable.merge([logoFade, logoScale]),
       builder: (context, child) {
@@ -25,13 +26,13 @@ class SplashLogo extends StatelessWidget {
           borderRadius: BorderRadius.circular(32),
           boxShadow: [
             BoxShadow(
-              color: AppColors.primaryBrand.withValues(alpha: 0.22),
+              color: colors.primaryBrand.withValues(alpha: 0.22),
               blurRadius: 36,
               spreadRadius: 2,
               offset: const Offset(0, 14),
             ),
             BoxShadow(
-              color: AppColors.secondary.withValues(alpha: 0.05),
+              color: colors.secondary.withValues(alpha: 0.05),
               blurRadius: 12,
               offset: const Offset(0, 4),
             ),

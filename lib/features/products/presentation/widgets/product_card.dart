@@ -25,6 +25,7 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     final hasImage = product.image != null && product.image!.trim().isNotEmpty;
     final resolvedImageUrl = hasImage ? AppConfig.mediaUrl(product.image!.trim()) : '';
 
@@ -43,8 +44,8 @@ class ProductCard extends StatelessWidget {
               children: [
                 Positioned.fill(
                   child: Container(
-                    decoration: const BoxDecoration(
-                      color: AppColors.surfaceContainerLow,
+                    decoration: BoxDecoration(
+                      color: colors.surfaceContainerLow,
                       borderRadius: AppRadii.roundedLg,
                     ),
                     clipBehavior: Clip.antiAlias,
@@ -55,22 +56,22 @@ class ProductCard extends StatelessWidget {
                             ? Image.network(
                                 resolvedImageUrl,
                                 fit: BoxFit.contain,
-                                errorBuilder: (context, error, stackTrace) => _buildFallbackImage(),
+                                errorBuilder: (context, error, stackTrace) => _buildFallbackImage(colors),
                                 loadingBuilder: (context, child, progress) {
                                   if (progress == null) return child;
-                                  return const Center(
+                                  return Center(
                                     child: SizedBox(
                                       width: 24,
                                       height: 24,
                                       child: CircularProgressIndicator(
                                         strokeWidth: 2,
-                                        color: AppColors.primary,
+                                        color: colors.primary,
                                       ),
                                     ),
                                   );
                                 },
                               )
-                            : _buildFallbackImage(),
+                            : _buildFallbackImage(colors),
                       ),
                     ),
                   ),
@@ -91,10 +92,10 @@ class ProductCard extends StatelessWidget {
                         )
                       : AppBadge.trust(
                           label: AppLocaleKeys.productsOtc.tr(),
-                          icon: const Icon(
+                          icon: Icon(
                             Icons.verified_outlined,
                             size: 13,
-                            color: AppColors.brandEmeraldDark,
+                            color: colors.brandEmeraldDark,
                           ),
                         ),
                 ),
@@ -107,7 +108,7 @@ class ProductCard extends StatelessWidget {
           Text(
             product.name,
             style: AppTypography.titleMd(
-              color: AppColors.onSurface,
+              color: colors.onSurface,
             ).copyWith(fontWeight: FontWeight.bold),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
@@ -118,7 +119,7 @@ class ProductCard extends StatelessWidget {
             const SizedBox(height: 2),
             Text(
               product.scientificName!,
-              style: AppTypography.bodySm(color: AppColors.slate500),
+              style: AppTypography.bodySm(color: colors.neutral),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
             ),
@@ -128,13 +129,13 @@ class ProductCard extends StatelessWidget {
           // Available Stock Indicator with inventory_2 icon
           Row(
             children: [
-              const Icon(Icons.inventory_2_outlined, size: 14, color: AppColors.brandEmeraldDark),
+              Icon(Icons.inventory_2_outlined, size: 14, color: colors.brandEmeraldDark),
               const SizedBox(width: AppSpacing.space2xs),
               Expanded(
                 child: Text(
                   AppLocaleKeys.productsInStock.tr(args: [product.stockQuantity.toString()]),
                   style: AppTypography.labelSm(
-                    color: AppColors.brandEmeraldDark,
+                    color: colors.brandEmeraldDark,
                   ).copyWith(fontWeight: FontWeight.w600),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -152,14 +153,14 @@ class ProductCard extends StatelessWidget {
               Text(
                 product.sellingPrice.toStringAsFixed(2),
                 style: AppTypography.titleLg(
-                  color: AppColors.primary,
+                  color: colors.primary,
                 ).copyWith(fontWeight: FontWeight.w800),
               ),
               const SizedBox(width: AppSpacing.space2xs),
               Text(
                 AppLocaleKeys.productsCurrency.tr(),
                 style: AppTypography.labelSm(
-                  color: AppColors.slate600,
+                  color: colors.onSurfaceVariant,
                 ).copyWith(fontWeight: FontWeight.w600),
               ),
             ],
@@ -179,7 +180,7 @@ class ProductCard extends StatelessWidget {
                 ).copyWith(fontWeight: FontWeight.w700),
               ),
               style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.primary,
+                backgroundColor: colors.primary,
                 foregroundColor: Colors.white,
                 elevation: 0,
                 shape: const RoundedRectangleBorder(borderRadius: AppRadii.roundedLg),
@@ -192,7 +193,7 @@ class ProductCard extends StatelessWidget {
     );
   }
 
-  Widget _buildFallbackImage() {
-    return const Icon(Icons.medication_outlined, size: 48, color: AppColors.slate300);
+  Widget _buildFallbackImage(AppColorsExtension colors) {
+    return Icon(Icons.medication_outlined, size: 48, color: colors.outlineVariant);
   }
 }

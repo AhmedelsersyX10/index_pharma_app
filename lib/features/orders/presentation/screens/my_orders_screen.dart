@@ -89,8 +89,9 @@ class _MyOrdersViewState extends State<_MyOrdersView> {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     return Scaffold(
-      backgroundColor: AppColors.surface,
+      backgroundColor: colors.surface,
       appBar: AppPageBar(
         title: 'orders.title'.tr(),
         onBackPressed: () {
@@ -110,18 +111,18 @@ class _MyOrdersViewState extends State<_MyOrdersView> {
               onRetry: () => context.read<MyOrdersCubit>().fetchMyOrders(refresh: true),
             ),
             MyOrdersEmpty() => AppEmptyState(
-              icon: const Icon(
+              icon: Icon(
                 Icons.receipt_long_outlined,
                 size: 42,
-                color: AppColors.brandEmeraldDark,
+                color: colors.brandEmeraldDark,
               ),
               title: 'orders.empty_title'.tr(),
               message: 'orders.empty_desc'.tr(),
               action: ElevatedButton.icon(
                 onPressed: () => context.go(AppRouter.kStoreView),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.primary,
-                  foregroundColor: AppColors.onPrimary,
+                  backgroundColor: colors.primary,
+                  foregroundColor: colors.onPrimary,
                   padding: const EdgeInsets.symmetric(
                     horizontal: AppSpacing.spaceLg,
                     vertical: AppSpacing.spaceSm + 2,
@@ -135,7 +136,7 @@ class _MyOrdersViewState extends State<_MyOrdersView> {
                 ),
               ),
             ),
-            MyOrdersLoaded() => _buildLoadedView(context, state),
+            MyOrdersLoaded() => _buildLoadedView(context, state, colors),
           };
         },
       ),
@@ -144,14 +145,18 @@ class _MyOrdersViewState extends State<_MyOrdersView> {
     );
   }
 
-  Widget _buildLoadedView(BuildContext context, MyOrdersLoaded state) {
+  Widget _buildLoadedView(
+    BuildContext context,
+    MyOrdersLoaded state,
+    AppColorsExtension colors,
+  ) {
     final filteredOrders = state.filteredOrders;
 
     return Column(
       children: [
         // Filter Chips Row
         Container(
-          color: AppColors.canvasPure,
+          color: colors.canvasPure,
           padding: const EdgeInsets.symmetric(vertical: AppSpacing.spaceXs),
           child: OrderFilterChips(
             selectedFilter: state.filter,
@@ -161,23 +166,23 @@ class _MyOrdersViewState extends State<_MyOrdersView> {
             onFilterSelected: (filter) => context.read<MyOrdersCubit>().setFilter(filter),
           ),
         ),
-        const Divider(height: 1, color: AppColors.borderSubtle),
+        Divider(height: 1, color: colors.borderSubtle),
 
         // Orders List or Empty Filter View
         Expanded(
           child: RefreshIndicator(
             onRefresh: () => context.read<MyOrdersCubit>().fetchMyOrders(refresh: true),
-            color: AppColors.primary,
+            color: colors.primary,
             child: filteredOrders.isEmpty
                 ? SingleChildScrollView(
                     physics: const AlwaysScrollableScrollPhysics(),
                     child: Padding(
                       padding: const EdgeInsets.only(top: 80),
                       child: AppEmptyState(
-                        icon: const Icon(
+                        icon: Icon(
                           Icons.filter_list_off_rounded,
                           size: 40,
-                          color: AppColors.secondaryMuted,
+                          color: colors.secondaryMuted,
                         ),
                         title: 'orders.empty_title'.tr(),
                         message: 'orders.empty_desc'.tr(),
@@ -195,7 +200,7 @@ class _MyOrdersViewState extends State<_MyOrdersView> {
                         const SizedBox(height: AppSpacing.spaceMd),
                     itemBuilder: (context, index) {
                       if (index >= filteredOrders.length) {
-                        return _buildLoadingMoreIndicator(context, state);
+                        return _buildLoadingMoreIndicator(context, state, colors);
                       }
 
                       final order = filteredOrders[index];
@@ -211,15 +216,19 @@ class _MyOrdersViewState extends State<_MyOrdersView> {
     );
   }
 
-  Widget _buildLoadingMoreIndicator(BuildContext context, MyOrdersLoaded state) {
+  Widget _buildLoadingMoreIndicator(
+    BuildContext context,
+    MyOrdersLoaded state,
+    AppColorsExtension colors,
+  ) {
     if (state.isLoadingMore) {
-      return const Padding(
-        padding: EdgeInsets.symmetric(vertical: AppSpacing.spaceMd),
+      return Padding(
+        padding: const EdgeInsets.symmetric(vertical: AppSpacing.spaceMd),
         child: Center(
           child: SizedBox(
             width: 24,
             height: 24,
-            child: CircularProgressIndicator(strokeWidth: 2.5, color: AppColors.primary),
+            child: CircularProgressIndicator(strokeWidth: 2.5, color: colors.primary),
           ),
         ),
       );

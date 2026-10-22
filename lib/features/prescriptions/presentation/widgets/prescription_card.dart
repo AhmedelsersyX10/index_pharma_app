@@ -3,8 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:index_pharma/core/constants/app_config.dart';
 import 'package:index_pharma/core/localization/app_locale_keys.dart';
-import 'package:index_pharma/core/theme/app_colors.dart';
-import 'package:index_pharma/core/theme/app_spacing.dart';
+import 'package:index_pharma/core/theme/theme.dart';
 import '../../domain/entities/prescription_entity.dart';
 import 'prescription_status_badge.dart';
 
@@ -21,6 +20,7 @@ class PrescriptionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     final fullImageUrl = AppConfig.mediaUrl(prescription.imageUrl);
     final dateStr = prescription.createdAt != null
         ? DateFormat('d MMMM yyyy', context.locale.languageCode)
@@ -30,15 +30,9 @@ class PrescriptionCard extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(bottom: AppSpacing.spaceSm),
       decoration: BoxDecoration(
-        color: AppColors.canvasPure,
+        color: colors.canvasPure,
         borderRadius: BorderRadius.circular(16),
-        boxShadow: const [
-          BoxShadow(
-            color: Color(0x0A0F172A),
-            blurRadius: 8,
-            offset: Offset(0, 2),
-          ),
-        ],
+        boxShadow: context.shadowsLevel1,
       ),
       child: Material(
         color: Colors.transparent,
@@ -61,30 +55,30 @@ class PrescriptionCard extends StatelessWidget {
                       child: Container(
                         width: 64,
                         height: 64,
-                        color: AppColors.surfaceContainerLow,
+                        color: colors.surfaceContainerLow,
                         child: fullImageUrl.isNotEmpty
                             ? CachedNetworkImage(
                                 imageUrl: fullImageUrl,
                                 fit: BoxFit.cover,
-                                placeholder: (context, url) => const Center(
+                                placeholder: (context, url) => Center(
                                   child: SizedBox(
                                     width: 20,
                                     height: 20,
                                     child: CircularProgressIndicator(
                                       strokeWidth: 2,
-                                      color: AppColors.primary,
+                                      color: colors.primary,
                                     ),
                                   ),
                                 ),
-                                errorWidget: (context, url, error) => const Icon(
+                                errorWidget: (context, url, error) => Icon(
                                   Icons.receipt_long,
-                                  color: AppColors.neutral,
+                                  color: colors.neutral,
                                   size: 28,
                                 ),
                               )
-                            : const Icon(
+                            : Icon(
                                 Icons.receipt_long,
-                                color: AppColors.neutral,
+                                color: colors.neutral,
                                 size: 28,
                               ),
                       ),
@@ -98,19 +92,19 @@ class PrescriptionCard extends StatelessWidget {
                         children: [
                           Text(
                             AppLocaleKeys.prescriptionsRxRefLabel.tr(),
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 11,
-                              color: AppColors.neutral,
+                              color: colors.neutral,
                               fontWeight: FontWeight.w500,
                             ),
                           ),
                           const SizedBox(height: 2),
                           Text(
                             prescription.prescriptionNumber,
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.w700,
-                              color: AppColors.onSurface,
+                              color: colors.onSurface,
                               fontFamily: 'monospace',
                             ),
                             maxLines: 1,
@@ -120,17 +114,17 @@ class PrescriptionCard extends StatelessWidget {
                             const SizedBox(height: 4),
                             Row(
                               children: [
-                                const Icon(
+                                Icon(
                                   Icons.calendar_today,
                                   size: 13,
-                                  color: AppColors.neutral,
+                                  color: colors.neutral,
                                 ),
                                 const SizedBox(width: 4),
                                 Text(
                                   dateStr,
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     fontSize: 12,
-                                    color: AppColors.neutral,
+                                    color: colors.neutral,
                                   ),
                                 ),
                               ],
@@ -157,7 +151,7 @@ class PrescriptionCard extends StatelessWidget {
                       vertical: 8,
                     ),
                     decoration: BoxDecoration(
-                      color: AppColors.surfaceContainerLow,
+                      color: colors.surfaceContainerLow,
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: Row(
@@ -165,27 +159,27 @@ class PrescriptionCard extends StatelessWidget {
                       children: [
                         Row(
                           children: [
-                            const Icon(
+                            Icon(
                               Icons.payments_outlined,
                               size: 18,
-                              color: AppColors.tertiary,
+                              color: colors.tertiary,
                             ),
                             const SizedBox(width: 6),
                             Text(
                               AppLocaleKeys.prescriptionsQuotedPriceTitle.tr(),
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontSize: 13,
-                                color: AppColors.onSurfaceVariant,
+                                color: colors.onSurfaceVariant,
                               ),
                             ),
                           ],
                         ),
                         Text(
                           '${prescription.quotedPrice!.toStringAsFixed(2)} ${AppLocaleKeys.prescriptionsCurrency.tr()}',
-                          style: const TextStyle(
+                          style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w700,
-                            color: AppColors.primary,
+                            color: colors.primary,
                           ),
                         ),
                       ],
@@ -195,7 +189,7 @@ class PrescriptionCard extends StatelessWidget {
 
                 // Bottom Action Bar: View Details
                 const SizedBox(height: AppSpacing.spaceSm),
-                const Divider(height: 1, color: Color(0xFFF1F5F9)),
+                Divider(height: 1, color: colors.outlineVariant.withValues(alpha: 0.3)),
                 const SizedBox(height: AppSpacing.spaceXs),
                 Align(
                   alignment: AlignmentDirectional.centerEnd,
@@ -204,17 +198,17 @@ class PrescriptionCard extends StatelessWidget {
                     children: [
                       Text(
                         AppLocaleKeys.prescriptionsViewDetailsBtn.tr(),
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.w600,
-                          color: AppColors.primary,
+                          color: colors.primary,
                         ),
                       ),
                       const SizedBox(width: 4),
-                      const Icon(
+                      Icon(
                         Icons.arrow_forward_ios,
                         size: 13,
-                        color: AppColors.primary,
+                        color: colors.primary,
                       ),
                     ],
                   ),

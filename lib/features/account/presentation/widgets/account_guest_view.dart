@@ -30,6 +30,7 @@ class AccountGuestView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     final isArabic = context.locale.languageCode == 'ar';
     final langBadgeText = isArabic
         ? AppLocaleKeys.accountLangArabic.tr()
@@ -42,10 +43,10 @@ class AccountGuestView extends StatelessWidget {
         Container(
           padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
-            color: AppColors.surfaceContainerLowest,
+            color: colors.surfaceContainerLowest,
             borderRadius: BorderRadius.circular(16),
             border: Border.all(
-              color: AppColors.borderSubtle.withValues(alpha: 0.6),
+              color: colors.borderSubtle.withValues(alpha: 0.6),
               width: 1,
             ),
             boxShadow: const [
@@ -61,21 +62,21 @@ class AccountGuestView extends StatelessWidget {
               Container(
                 width: 60,
                 height: 60,
-                decoration: const BoxDecoration(
-                  color: AppColors.brandMintSurface,
+                decoration: BoxDecoration(
+                  color: colors.brandMintSurface,
                   shape: BoxShape.circle,
                 ),
-                child: const Icon(
+                child: Icon(
                   Icons.local_pharmacy_rounded,
                   size: 30,
-                  color: AppColors.primary,
+                  color: colors.primary,
                 ),
               ),
               const SizedBox(height: 14),
               Text(
                 AppLocaleKeys.accountGuestWelcomeTitle.tr(),
                 style: AppTypography.headlineMd(
-                  color: AppColors.onSurface,
+                  color: colors.onSurface,
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -83,7 +84,7 @@ class AccountGuestView extends StatelessWidget {
               Text(
                 AppLocaleKeys.accountGuestWelcomeDesc.tr(),
                 style: AppTypography.bodyMd(
-                  color: AppColors.onSurfaceVariant,
+                  color: colors.onSurfaceVariant,
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -104,7 +105,7 @@ class AccountGuestView extends StatelessWidget {
                     style: AppTypography.labelLg(color: Colors.white),
                   ),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.primary,
+                    backgroundColor: colors.primary,
                     foregroundColor: Colors.white,
                     elevation: 0,
                     shape: RoundedRectangleBorder(
@@ -126,12 +127,12 @@ class AccountGuestView extends StatelessWidget {
                   label: Text(
                     AppLocaleKeys.accountGuestRegisterBtn.tr(),
                     style: AppTypography.labelLg(
-                      color: AppColors.primary,
+                      color: colors.primary,
                     ),
                   ),
                   style: OutlinedButton.styleFrom(
-                    side: const BorderSide(
-                      color: AppColors.primary,
+                    side: BorderSide(
+                      color: colors.primary,
                       width: 1.5,
                     ),
                     shape: RoundedRectangleBorder(
@@ -175,17 +176,17 @@ class AccountGuestView extends StatelessWidget {
           child: Text(
             AppLocaleKeys.accountGuestSectionInfo.tr(),
             style: AppTypography.labelMd(
-              color: AppColors.onSurfaceVariant,
+              color: colors.onSurfaceVariant,
             ),
           ),
         ),
         const SizedBox(height: 8),
         Container(
           decoration: BoxDecoration(
-            color: AppColors.surfaceContainerLowest,
+            color: colors.surfaceContainerLowest,
             borderRadius: BorderRadius.circular(16),
             border: Border.all(
-              color: AppColors.borderSubtle.withValues(alpha: 0.6),
+              color: colors.borderSubtle.withValues(alpha: 0.6),
               width: 1,
             ),
             boxShadow: const [
@@ -211,12 +212,12 @@ class AccountGuestView extends StatelessWidget {
                         width: 38,
                         height: 38,
                         decoration: BoxDecoration(
-                          color: AppColors.secondaryContainer,
+                          color: colors.secondaryContainer,
                           borderRadius: BorderRadius.circular(8),
                         ),
-                        child: const Icon(
+                        child: Icon(
                           Icons.translate_rounded,
-                          color: AppColors.onSecondaryContainer,
+                          color: colors.onSecondaryContainer,
                           size: 20,
                         ),
                       ),
@@ -228,14 +229,14 @@ class AccountGuestView extends StatelessWidget {
                             Text(
                               AppLocaleKeys.accountLanguageTitle.tr(),
                               style: AppTypography.titleMd(
-                                color: AppColors.onSurface,
+                                color: colors.onSurface,
                               ),
                             ),
                             const SizedBox(height: 2),
                             Text(
                               AppLocaleKeys.accountLanguageDesc.tr(),
                               style: AppTypography.bodySm(
-                                color: AppColors.onSurfaceVariant,
+                                color: colors.onSurfaceVariant,
                               ),
                             ),
                           ],
@@ -248,10 +249,10 @@ class AccountGuestView extends StatelessWidget {
                           vertical: 4,
                         ),
                         decoration: BoxDecoration(
-                          color: AppColors.brandMintSurface,
+                          color: colors.brandMintSurface,
                           borderRadius: BorderRadius.circular(20),
                           border: Border.all(
-                            color: AppColors.brandMintBorder,
+                            color: colors.brandMintBorder,
                             width: 1,
                           ),
                         ),
@@ -261,14 +262,14 @@ class AccountGuestView extends StatelessWidget {
                             Text(
                               langBadgeText,
                               style: AppTypography.labelSm(
-                                color: AppColors.brandEmeraldDark,
+                                color: colors.brandEmeraldDark,
                               ).copyWith(fontWeight: FontWeight.bold),
                             ),
                             const SizedBox(width: 4),
-                            const Icon(
+                            Icon(
                               Icons.swap_horiz_rounded,
                               size: 16,
-                              color: AppColors.brandEmeraldDark,
+                              color: colors.brandEmeraldDark,
                             ),
                           ],
                         ),
@@ -277,7 +278,7 @@ class AccountGuestView extends StatelessWidget {
                   ),
                 ),
               ),
-              const Divider(height: 1, color: AppColors.surfaceContainerLow),
+              Divider(height: 1, color: colors.surfaceContainerLow),
 
               // About Index Pharma
               Padding(
@@ -288,12 +289,12 @@ class AccountGuestView extends StatelessWidget {
                       width: 38,
                       height: 38,
                       decoration: BoxDecoration(
-                        color: AppColors.surfaceContainer,
+                        color: colors.surfaceContainer,
                         borderRadius: BorderRadius.circular(8),
                       ),
-                      child: const Icon(
+                      child: Icon(
                         Icons.info_outline_rounded,
-                        color: AppColors.primary,
+                        color: colors.primary,
                         size: 20,
                       ),
                     ),
@@ -305,14 +306,14 @@ class AccountGuestView extends StatelessWidget {
                           Text(
                             AppLocaleKeys.accountGuestAboutTitle.tr(),
                             style: AppTypography.titleMd(
-                              color: AppColors.onSurface,
+                              color: colors.onSurface,
                             ),
                           ),
                           const SizedBox(height: 2),
                           Text(
                             AppLocaleKeys.accountGuestAboutDesc.tr(),
                             style: AppTypography.bodySm(
-                              color: AppColors.onSurfaceVariant,
+                              color: colors.onSurfaceVariant,
                             ),
                           ),
                         ],
@@ -321,7 +322,7 @@ class AccountGuestView extends StatelessWidget {
                   ],
                 ),
               ),
-              const Divider(height: 1, color: AppColors.surfaceContainerLow),
+              Divider(height: 1, color: colors.surfaceContainerLow),
 
               // Licensing info
               Padding(
@@ -332,12 +333,12 @@ class AccountGuestView extends StatelessWidget {
                       width: 38,
                       height: 38,
                       decoration: BoxDecoration(
-                        color: AppColors.surfaceContainer,
+                        color: colors.surfaceContainer,
                         borderRadius: BorderRadius.circular(8),
                       ),
-                      child: const Icon(
+                      child: Icon(
                         Icons.gavel_rounded,
-                        color: AppColors.primary,
+                        color: colors.primary,
                         size: 20,
                       ),
                     ),
@@ -349,14 +350,14 @@ class AccountGuestView extends StatelessWidget {
                           Text(
                             AppLocaleKeys.accountLicensingTitle.tr(),
                             style: AppTypography.titleMd(
-                              color: AppColors.onSurface,
+                              color: colors.onSurface,
                             ),
                           ),
                           const SizedBox(height: 2),
                           Text(
                             AppLocaleKeys.accountLicensingDesc.tr(),
                             style: AppTypography.bodySm(
-                              color: AppColors.onSurfaceVariant,
+                              color: colors.onSurfaceVariant,
                             ),
                           ),
                         ],
@@ -375,7 +376,7 @@ class AccountGuestView extends StatelessWidget {
         Text(
           AppLocaleKeys.accountGuestSupportFooter.tr(),
           style: AppTypography.bodySm(
-            color: AppColors.onSurfaceVariant,
+            color: colors.onSurfaceVariant,
           ),
           textAlign: TextAlign.center,
         ),
@@ -383,7 +384,7 @@ class AccountGuestView extends StatelessWidget {
         Text(
           AppLocaleKeys.accountVersionFooter.tr(),
           style: AppTypography.labelSm(
-            color: AppColors.outline,
+            color: colors.outline,
           ),
           textAlign: TextAlign.center,
         ),
@@ -405,13 +406,15 @@ class _BenefitCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
+
     return Container(
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
-        color: AppColors.surfaceContainerLowest,
+        color: colors.surfaceContainerLowest,
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: AppColors.borderSubtle.withValues(alpha: 0.6),
+          color: colors.borderSubtle.withValues(alpha: 0.6),
           width: 1,
         ),
         boxShadow: const [
@@ -427,22 +430,22 @@ class _BenefitCard extends StatelessWidget {
           Container(
             width: 40,
             height: 40,
-            decoration: const BoxDecoration(
-              color: AppColors.brandMintSurface,
+            decoration: BoxDecoration(
+              color: colors.brandMintSurface,
               shape: BoxShape.circle,
             ),
-            child: Icon(icon, color: AppColors.brandEmeraldDark, size: 20),
+            child: Icon(icon, color: colors.brandEmeraldDark, size: 20),
           ),
           const SizedBox(height: 8),
           Text(
             title,
-            style: AppTypography.titleMd(color: AppColors.onSurface),
+            style: AppTypography.titleMd(color: colors.onSurface),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 4),
           Text(
             desc,
-            style: AppTypography.bodySm(color: AppColors.onSurfaceVariant),
+            style: AppTypography.bodySm(color: colors.onSurfaceVariant),
             textAlign: TextAlign.center,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,

@@ -10,6 +10,7 @@ class OnboardingPageItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: AppSpacing.spaceLg),
       child: Column(
@@ -23,10 +24,10 @@ class OnboardingPageItem extends StatelessWidget {
                 child: Container(
                   constraints: const BoxConstraints(maxWidth: 380),
                   decoration: BoxDecoration(
-                    color: AppColors.canvasPure,
+                    color: colors.canvasPure,
                     borderRadius: BorderRadius.circular(28),
-                    border: Border.all(color: AppColors.brandMintBorder, width: 1.2),
-                    boxShadow: AppShadows.level1,
+                    border: Border.all(color: colors.brandMintBorder, width: 1.2),
+                    boxShadow: context.shadowsLevel1,
                   ),
                   padding: const EdgeInsets.all(AppSpacing.spaceLg),
                   child: ClipRRect(
@@ -46,7 +47,7 @@ class OnboardingPageItem extends StatelessWidget {
               children: [
                 AppBadge.trust(
                   label: model.badgeLabel,
-                  icon: Icon(model.badgeIcon, size: 14, color: AppColors.brandEmeraldDark),
+                  icon: Icon(model.badgeIcon, size: 14, color: colors.brandEmeraldDark),
                 ),
 
                 AppSpacing.vSpaceSm,
@@ -55,7 +56,7 @@ class OnboardingPageItem extends StatelessWidget {
                   model.title,
                   textAlign: TextAlign.center,
                   style: AppTypography.displayLgMobile(
-                    color: AppColors.secondary,
+                    color: colors.secondary,
                   ).copyWith(height: 1.22),
                 ),
 
@@ -64,7 +65,7 @@ class OnboardingPageItem extends StatelessWidget {
                 Text(
                   model.description,
                   textAlign: TextAlign.center,
-                  style: AppTypography.bodyMd(color: AppColors.slate500).copyWith(height: 1.45),
+                  style: AppTypography.bodyMd(color: colors.slate500).copyWith(height: 1.45),
                 ),
 
                 AppSpacing.vSpaceSm,
@@ -72,7 +73,7 @@ class OnboardingPageItem extends StatelessWidget {
                 Text(
                   model.perkText,
                   textAlign: TextAlign.center,
-                  style: AppTypography.labelSm(color: AppColors.brandEmeraldDark),
+                  style: AppTypography.labelSm(color: colors.brandEmeraldDark),
                 ),
               ],
             ),

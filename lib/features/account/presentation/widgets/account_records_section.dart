@@ -18,6 +18,7 @@ class AccountRecordsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     final activeBranch = branchName ?? AppLocaleKeys.accountNotSet.tr();
 
     return Column(
@@ -28,17 +29,17 @@ class AccountRecordsSection extends StatelessWidget {
           child: Text(
             AppLocaleKeys.accountSectionRecords.tr(),
             style: AppTypography.labelMd(
-              color: AppColors.onSurfaceVariant,
+              color: colors.onSurfaceVariant,
             ),
           ),
         ),
         const SizedBox(height: 8),
         Container(
           decoration: BoxDecoration(
-            color: AppColors.surfaceContainerLowest,
+            color: colors.surfaceContainerLowest,
             borderRadius: BorderRadius.circular(16),
             border: Border.all(
-              color: AppColors.borderSubtle.withValues(alpha: 0.6),
+              color: colors.borderSubtle.withValues(alpha: 0.6),
               width: 1,
             ),
             boxShadow: const [
@@ -59,7 +60,7 @@ class AccountRecordsSection extends StatelessWidget {
                 subtitle: AppLocaleKeys.accountMyOrdersDesc.tr(),
                 onTap: () => context.push(AppRouter.kOrdersView),
               ),
-              const Divider(height: 1, color: AppColors.surfaceContainerLow),
+              Divider(height: 1, color: colors.surfaceContainerLow),
 
               // Prescriptions Link
               _ActionTile(
@@ -69,7 +70,7 @@ class AccountRecordsSection extends StatelessWidget {
                 subtitle: AppLocaleKeys.accountPrescriptionsDesc.tr(),
                 onTap: () => context.push(AppRouter.kPrescriptionView),
               ),
-              const Divider(height: 1, color: AppColors.surfaceContainerLow),
+              Divider(height: 1, color: colors.surfaceContainerLow),
 
               // Preferred Branch
               Padding(
@@ -83,12 +84,12 @@ class AccountRecordsSection extends StatelessWidget {
                           width: 38,
                           height: 38,
                           decoration: BoxDecoration(
-                            color: AppColors.surfaceContainer,
+                            color: colors.surfaceContainer,
                             borderRadius: BorderRadius.circular(8),
                           ),
-                          child: const Icon(
+                          child: Icon(
                             Icons.storefront_outlined,
-                            color: AppColors.primary,
+                            color: colors.primary,
                             size: 20,
                           ),
                         ),
@@ -100,14 +101,14 @@ class AccountRecordsSection extends StatelessWidget {
                               Text(
                                 AppLocaleKeys.accountPreferredBranchTitle.tr(),
                                 style: AppTypography.titleMd(
-                                  color: AppColors.onSurface,
+                                  color: colors.onSurface,
                                 ),
                               ),
                               const SizedBox(height: 2),
                               Text(
                                 AppLocaleKeys.accountPreferredBranchDesc.tr(),
                                 style: AppTypography.bodySm(
-                                  color: AppColors.onSurfaceVariant,
+                                  color: colors.onSurfaceVariant,
                                 ),
                               ),
                             ],
@@ -122,22 +123,22 @@ class AccountRecordsSection extends StatelessWidget {
                         vertical: 8,
                       ),
                       decoration: BoxDecoration(
-                        color: AppColors.surfaceSubtle,
+                        color: colors.surfaceSubtle,
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Row(
                         children: [
-                          const Icon(
+                          Icon(
                             Icons.location_on_outlined,
                             size: 18,
-                            color: AppColors.primary,
+                            color: colors.primary,
                           ),
                           const SizedBox(width: 6),
                           Expanded(
                             child: Text(
                               activeBranch,
                               style: AppTypography.labelMd(
-                                color: AppColors.onSurface,
+                                color: colors.onSurface,
                               ),
                               overflow: TextOverflow.ellipsis,
                             ),
@@ -147,7 +148,7 @@ class AccountRecordsSection extends StatelessWidget {
                             onPressed: onChangeBranchTap ??
                                 () => context.push(AppRouter.kBranchSelectionView),
                             style: TextButton.styleFrom(
-                              foregroundColor: AppColors.primary,
+                              foregroundColor: colors.primary,
                               padding: const EdgeInsets.symmetric(
                                 horizontal: 10,
                                 vertical: 4,
@@ -158,7 +159,7 @@ class AccountRecordsSection extends StatelessWidget {
                             child: Text(
                               AppLocaleKeys.accountChangeBranch.tr(),
                               style: AppTypography.labelSm(
-                                color: AppColors.primary,
+                                color: colors.primary,
                               ).copyWith(fontWeight: FontWeight.bold),
                             ),
                           ),
@@ -192,6 +193,8 @@ class _ActionTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
+
     return InkWell(
       onTap: onTap,
       borderRadius: BorderRadius.circular(16),
@@ -203,10 +206,10 @@ class _ActionTile extends StatelessWidget {
               width: 38,
               height: 38,
               decoration: BoxDecoration(
-                color: AppColors.surfaceContainer,
+                color: colors.surfaceContainer,
                 borderRadius: BorderRadius.circular(8),
               ),
-              child: Icon(icon, color: AppColors.primary, size: 20),
+              child: Icon(icon, color: colors.primary, size: 20),
             ),
             const SizedBox(width: 12),
             Expanded(
@@ -216,14 +219,14 @@ class _ActionTile extends StatelessWidget {
                   Text(
                     title,
                     style: AppTypography.titleMd(
-                      color: AppColors.onSurface,
+                      color: colors.onSurface,
                     ),
                   ),
                   const SizedBox(height: 2),
                   Text(
                     subtitle,
                     style: AppTypography.bodySm(
-                      color: AppColors.onSurfaceVariant,
+                      color: colors.onSurfaceVariant,
                     ),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
@@ -232,9 +235,9 @@ class _ActionTile extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 8),
-            const Icon(
+            Icon(
               Icons.chevron_left_rounded,
-              color: AppColors.onSurfaceVariant,
+              color: colors.onSurfaceVariant,
               size: 20,
             ),
           ],

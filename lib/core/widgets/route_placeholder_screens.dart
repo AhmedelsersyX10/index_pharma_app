@@ -12,9 +12,10 @@ class StorePlaceholderScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      backgroundColor: AppColors.background,
-      appBar: AppPageBar(
+    final colors = context.colors;
+    return Scaffold(
+      backgroundColor: colors.background,
+      appBar: const AppPageBar(
         title: 'Index Pharma Store',
       ),
       body: Center(
@@ -23,7 +24,7 @@ class StorePlaceholderScreen extends StatelessWidget {
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w600,
-            color: AppColors.onSurface,
+            color: colors.onSurface,
           ),
         ),
       ),
@@ -39,9 +40,10 @@ class StaffDashboardPlaceholderScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      backgroundColor: AppColors.background,
-      appBar: AppPageBar(
+    final colors = context.colors;
+    return Scaffold(
+      backgroundColor: colors.background,
+      appBar: const AppPageBar(
         title: 'Staff Dashboard',
       ),
       body: Center(
@@ -50,7 +52,7 @@ class StaffDashboardPlaceholderScreen extends StatelessWidget {
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w600,
-            color: AppColors.onSurface,
+            color: colors.onSurface,
           ),
         ),
       ),
@@ -66,9 +68,10 @@ class BranchManagementPlaceholderScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      backgroundColor: AppColors.background,
-      appBar: AppPageBar(
+    final colors = context.colors;
+    return Scaffold(
+      backgroundColor: colors.background,
+      appBar: const AppPageBar(
         title: 'Branch Management',
       ),
       body: Center(
@@ -77,7 +80,7 @@ class BranchManagementPlaceholderScreen extends StatelessWidget {
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w600,
-            color: AppColors.onSurface,
+            color: colors.onSurface,
           ),
         ),
       ),
@@ -91,18 +94,19 @@ class BrowsePlaceholderScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: colors.background,
       appBar: AppPageBar(
         title: AppLocaleKeys.navBrowse.tr(),
       ),
-      body: const Center(
+      body: Center(
         child: Text(
           'Browse Screen (Placeholder)',
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w600,
-            color: AppColors.onSurface,
+            color: colors.onSurface,
           ),
         ),
       ),
@@ -116,18 +120,19 @@ class PrescriptionPlaceholderScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: colors.background,
       appBar: AppPageBar(
         title: AppLocaleKeys.navPrescription.tr(),
       ),
-      body: const Center(
+      body: Center(
         child: Text(
           'Prescription Screen (Placeholder)',
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w600,
-            color: AppColors.onSurface,
+            color: colors.onSurface,
           ),
         ),
       ),
@@ -141,18 +146,19 @@ class MyOrdersPlaceholderScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: colors.background,
       appBar: AppPageBar(
         title: AppLocaleKeys.navOrders.tr(),
       ),
-      body: const Center(
+      body: Center(
         child: Text(
           'My Orders Screen (Placeholder)',
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w600,
-            color: AppColors.onSurface,
+            color: colors.onSurface,
           ),
         ),
       ),
@@ -166,18 +172,19 @@ class AccountPlaceholderScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: colors.background,
       appBar: AppPageBar(
         title: AppLocaleKeys.navAccount.tr(),
       ),
-      body: const Center(
+      body: Center(
         child: Text(
           'Account Screen (Placeholder)',
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w600,
-            color: AppColors.onSurface,
+            color: colors.onSurface,
           ),
         ),
       ),
@@ -191,18 +198,19 @@ class CartPlaceholderScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: colors.background,
       appBar: AppPageBar(
         title: AppLocaleKeys.cartTitle.tr(),
       ),
-      body: const Center(
+      body: Center(
         child: Text(
           'Cart Screen (Placeholder)',
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w600,
-            color: AppColors.onSurface,
+            color: colors.onSurface,
           ),
         ),
       ),
@@ -216,18 +224,19 @@ class CheckoutPlaceholderScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     return Scaffold(
-      backgroundColor: AppColors.background,
+      backgroundColor: colors.background,
       appBar: AppPageBar(
         title: AppLocaleKeys.checkoutTitle.tr(),
       ),
-      body: const Center(
+      body: Center(
         child: Text(
           'Checkout Screen (Placeholder)',
           style: TextStyle(
             fontSize: 18,
             fontWeight: FontWeight.w600,
-            color: AppColors.onSurface,
+            color: colors.onSurface,
           ),
         ),
       ),

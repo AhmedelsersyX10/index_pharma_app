@@ -29,6 +29,7 @@ class CartItemCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     final product = item.product;
     final isMaxStock = item.quantity >= product.stockQuantity;
     final isMinQty = item.quantity <= 1;
@@ -38,13 +39,13 @@ class CartItemCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(AppSpacing.spaceMd),
       decoration: BoxDecoration(
-        color: AppColors.surfaceContainerLowest,
+        color: colors.surfaceContainerLowest,
         borderRadius: AppRadii.roundedXl,
-        boxShadow: AppShadows.level1,
+        boxShadow: context.shadowsLevel1,
         border: Border.all(
           color: isMaxStock
-              ? AppColors.medicalAmber.withValues(alpha: 0.3)
-              : AppColors.outlineVariant.withValues(alpha: 0.4),
+              ? colors.medicalAmber.withValues(alpha: 0.3)
+              : colors.outlineVariant.withValues(alpha: 0.4),
           width: 1,
         ),
       ),
@@ -65,10 +66,10 @@ class CartItemCard extends StatelessWidget {
                       width: 68,
                       height: 68,
                       decoration: BoxDecoration(
-                        color: AppColors.surfaceSubtle,
+                        color: colors.surfaceSubtle,
                         borderRadius: AppRadii.roundedLg,
                         border: Border.all(
-                          color: AppColors.outlineVariant.withValues(alpha: 0.3),
+                          color: colors.outlineVariant.withValues(alpha: 0.3),
                           width: 0.5,
                         ),
                       ),
@@ -78,19 +79,19 @@ class CartItemCard extends StatelessWidget {
                             ? CachedNetworkImage(
                                 imageUrl: imageUrl,
                                 fit: BoxFit.cover,
-                                placeholder: (context, url) => const Center(
+                                placeholder: (context, url) => Center(
                                   child: SizedBox(
                                     width: 20,
                                     height: 20,
                                     child: CircularProgressIndicator(
                                       strokeWidth: 2,
-                                      color: AppColors.primary,
+                                      color: colors.primary,
                                     ),
                                   ),
                                 ),
-                                errorWidget: (context, url, error) => _buildFallbackImage(),
+                                errorWidget: (context, url, error) => _buildFallbackImage(colors),
                               )
-                            : _buildFallbackImage(),
+                            : _buildFallbackImage(colors),
                       ),
                     ),
 
@@ -101,14 +102,14 @@ class CartItemCard extends StatelessWidget {
                         end: 0,
                         child: Container(
                           padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
-                          decoration: const BoxDecoration(
-                            color: AppColors.brandEmeraldDark,
-                            borderRadius: BorderRadius.only(topLeft: Radius.circular(4)),
+                          decoration: BoxDecoration(
+                            color: colors.brandEmeraldDark,
+                            borderRadius: const BorderRadius.only(topLeft: Radius.circular(4)),
                           ),
-                          child: const Text(
+                          child: Text(
                             'Rx',
                             style: TextStyle(
-                              color: Colors.white,
+                              color: colors.onPrimary,
                               fontSize: 9,
                               fontWeight: FontWeight.bold,
                             ),
@@ -123,14 +124,14 @@ class CartItemCard extends StatelessWidget {
                         start: 0,
                         child: Container(
                           padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
-                          decoration: const BoxDecoration(
-                            color: AppColors.medicalAmber,
-                            borderRadius: BorderRadius.only(bottomRight: Radius.circular(4)),
+                          decoration: BoxDecoration(
+                            color: colors.medicalAmber,
+                            borderRadius: const BorderRadius.only(bottomRight: Radius.circular(4)),
                           ),
                           child: Text(
                             AppLocaleKeys.cartLimitedStockBadge.tr(),
-                            style: const TextStyle(
-                              color: Colors.white,
+                            style: TextStyle(
+                              color: colors.onPrimary,
                               fontSize: 8,
                               fontWeight: FontWeight.bold,
                             ),
@@ -151,7 +152,7 @@ class CartItemCard extends StatelessWidget {
                     Text(
                       product.name,
                       style: AppTypography.titleMd(
-                        color: AppColors.onSurface,
+                        color: colors.onSurface,
                       ).copyWith(fontWeight: FontWeight.bold),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
@@ -161,7 +162,7 @@ class CartItemCard extends StatelessWidget {
                       const SizedBox(height: 2),
                       Text(
                         product.scientificName!,
-                        style: AppTypography.bodySm(color: AppColors.slate500),
+                        style: AppTypography.bodySm(color: colors.slate500),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -170,7 +171,7 @@ class CartItemCard extends StatelessWidget {
                       const SizedBox(height: AppSpacing.space2xs),
                       Text(
                         product.unit!,
-                        style: AppTypography.labelSm(color: AppColors.onSurfaceVariant),
+                        style: AppTypography.labelSm(color: colors.onSurfaceVariant),
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -181,10 +182,10 @@ class CartItemCard extends StatelessWidget {
 
               // Delete button
               IconButton(
-                icon: const Icon(
+                icon: Icon(
                   Icons.delete_outline_rounded,
                   size: 20,
-                  color: AppColors.secondary,
+                  color: colors.secondary,
                 ),
                 tooltip: AppLocaleKeys.cartDeleteItemTooltip.tr(),
                 splashRadius: 20,
@@ -206,7 +207,7 @@ class CartItemCard extends StatelessWidget {
                 children: [
                   Text(
                     AppLocaleKeys.cartUnitPriceLabel.tr(),
-                    style: AppTypography.labelSm(color: AppColors.secondary),
+                    style: AppTypography.labelSm(color: colors.secondary),
                   ),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.baseline,
@@ -215,13 +216,13 @@ class CartItemCard extends StatelessWidget {
                       Text(
                         product.sellingPrice.toStringAsFixed(2),
                         style: AppTypography.titleMd(
-                          color: AppColors.primary,
+                          color: colors.primary,
                         ).copyWith(fontWeight: FontWeight.w800),
                       ),
                       const SizedBox(width: AppSpacing.space2xs),
                       Text(
                         AppLocaleKeys.cartCurrency.tr(),
-                        style: AppTypography.labelSm(color: AppColors.onSurfaceVariant),
+                        style: AppTypography.labelSm(color: colors.onSurfaceVariant),
                       ),
                     ],
                   ),
@@ -230,8 +231,8 @@ class CartItemCard extends StatelessWidget {
 
               // Stepper: [-] [qty] [+]
               Container(
-                decoration: const BoxDecoration(
-                  color: AppColors.surfaceContainerLow,
+                decoration: BoxDecoration(
+                  color: colors.surfaceContainerLow,
                   borderRadius: AppRadii.roundedLg,
                 ),
                 padding: const EdgeInsets.all(AppSpacing.space2xs),
@@ -254,7 +255,7 @@ class CartItemCard extends StatelessWidget {
                         item.quantity.toString(),
                         textAlign: TextAlign.center,
                         style: AppTypography.titleMd(
-                          color: AppColors.onSurface,
+                          color: colors.onSurface,
                         ).copyWith(fontWeight: FontWeight.bold),
                       ),
                     ),
@@ -277,13 +278,14 @@ class CartItemCard extends StatelessWidget {
     );
   }
 
-  Widget _buildFallbackImage() {
-    return const Center(
-      child: Icon(Icons.medication_outlined, size: 32, color: AppColors.slate300),
+  Widget _buildFallbackImage(AppColorsExtension colors) {
+    return Center(
+      child: Icon(Icons.medication_outlined, size: 32, color: colors.slate300),
     );
   }
 
   void _confirmRemove(BuildContext context) {
+    final colors = context.colors;
     showDialog<bool>(
       context: context,
       builder: (dialogContext) => AlertDialog(
@@ -302,8 +304,8 @@ class CartItemCard extends StatelessWidget {
           ),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.medicalRed,
-              foregroundColor: Colors.white,
+              backgroundColor: colors.medicalRed,
+              foregroundColor: colors.onPrimary,
             ),
             onPressed: () {
               Navigator.of(dialogContext).pop(true);
@@ -334,6 +336,7 @@ class _StepperButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     final button = Material(
       color: Colors.transparent,
       child: InkWell(
@@ -344,18 +347,18 @@ class _StepperButton extends StatelessWidget {
           height: 32,
           decoration: BoxDecoration(
             color: !isEnabled
-                ? AppColors.surfaceDim.withValues(alpha: 0.4)
-                : (isPrimary ? AppColors.primary : AppColors.surfaceContainerLowest),
+                ? colors.surfaceDim.withValues(alpha: 0.4)
+                : (isPrimary ? colors.primary : colors.surfaceContainerLowest),
             borderRadius: AppRadii.roundedMd,
-            boxShadow: isEnabled && !isPrimary ? AppShadows.level1 : null,
+            boxShadow: isEnabled && !isPrimary ? context.shadowsLevel1 : null,
           ),
           alignment: Alignment.center,
           child: Icon(
             icon,
             size: 18,
             color: !isEnabled
-                ? AppColors.onSurface.withValues(alpha: 0.3)
-                : (isPrimary ? Colors.white : AppColors.onSurface),
+                ? colors.onSurface.withValues(alpha: 0.3)
+                : (isPrimary ? colors.onPrimary : colors.onSurface),
           ),
         ),
       ),

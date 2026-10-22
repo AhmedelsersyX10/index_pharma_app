@@ -11,7 +11,7 @@ import 'package:index_pharma/features/settings/presentation/cubit/settings_state
 /// Hero Clinical Banner widget for B2 Home Screen.
 ///
 /// Features:
-/// - Gradient container from `AppColors.primary` to `AppColors.brandEmeraldDark`.
+/// - Gradient container from `primary` to `brandEmeraldDark`.
 /// - Regulatory compliance badge.
 /// - Title and description dynamically provided by [SettingsCubit] with localized defaults.
 /// - "Shop Medications Now" CTA button with navigation to `/browse`.
@@ -23,6 +23,9 @@ class HomeHeroBanner extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
+    final shadows = context.isDarkMode ? AppShadows.darkLevel2 : AppShadows.level2;
+
     return BlocBuilder<SettingsCubit, SettingsState>(
       builder: (context, state) {
         String title = AppLocaleKeys.homeHeroTitleDefault.tr();
@@ -40,14 +43,14 @@ class HomeHeroBanner extends StatelessWidget {
         }
 
         return Container(
-          decoration: const BoxDecoration(
+          decoration: BoxDecoration(
             gradient: LinearGradient(
-              colors: [AppColors.primary, AppColors.primaryContainer, AppColors.brandEmeraldDark],
+              colors: [colors.primary, colors.primaryContainer, colors.brandEmeraldDark],
               begin: AlignmentDirectional.topStart,
               end: AlignmentDirectional.bottomEnd,
             ),
             borderRadius: AppRadii.roundedXl,
-            boxShadow: AppShadows.level2,
+            boxShadow: shadows,
           ),
           clipBehavior: Clip.antiAlias,
           child: Stack(
@@ -83,16 +86,16 @@ class HomeHeroBanner extends StatelessWidget {
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          const Icon(
+                          Icon(
                             Icons.verified_outlined,
                             size: 14,
-                            color: AppColors.brandTealBright,
+                            color: colors.brandTealBright,
                           ),
                           const SizedBox(width: AppSpacing.space2xs),
                           Text(
                             AppLocaleKeys.homeHeroBadge.tr(),
                             style: AppTypography.labelSm(
-                              color: AppColors.brandTealBright,
+                              color: colors.brandTealBright,
                             ).copyWith(fontWeight: FontWeight.w600),
                           ),
                         ],
@@ -113,7 +116,7 @@ class HomeHeroBanner extends StatelessWidget {
                     Text(
                       desc,
                       style: AppTypography.bodySm(
-                        color: AppColors.surfaceContainerLow,
+                        color: colors.surfaceContainerLow,
                       ).copyWith(height: 1.4),
                     ),
                     const SizedBox(height: AppSpacing.spaceMd),
@@ -127,8 +130,8 @@ class HomeHeroBanner extends StatelessWidget {
                         ElevatedButton(
                           onPressed: onShopNow ?? () => context.go(AppRouter.browsePath()),
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: AppColors.surfaceContainerLowest,
-                            foregroundColor: AppColors.primary,
+                            backgroundColor: colors.surfaceContainerLowest,
+                            foregroundColor: colors.primary,
                             elevation: 0,
                             shape: const RoundedRectangleBorder(borderRadius: AppRadii.roundedFull),
                             padding: const EdgeInsets.symmetric(
@@ -142,14 +145,14 @@ class HomeHeroBanner extends StatelessWidget {
                               Text(
                                 AppLocaleKeys.homeHeroCta.tr(),
                                 style: AppTypography.labelMd(
-                                  color: AppColors.primary,
+                                  color: colors.primary,
                                 ).copyWith(fontWeight: FontWeight.bold),
                               ),
                               const SizedBox(width: AppSpacing.space2xs),
-                              const Icon(
+                              Icon(
                                 Icons.arrow_forward_rounded,
                                 size: 16,
-                                color: AppColors.primary,
+                                color: colors.primary,
                               ),
                             ],
                           ),
@@ -157,7 +160,7 @@ class HomeHeroBanner extends StatelessWidget {
                         Text(
                           AppLocaleKeys.homeHeroCoverage.tr(),
                           style: AppTypography.labelSm(
-                            color: AppColors.tertiaryFixed,
+                            color: colors.tertiaryFixed,
                           ).copyWith(fontWeight: FontWeight.w500),
                         ),
                       ],

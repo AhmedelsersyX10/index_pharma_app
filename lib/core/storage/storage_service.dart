@@ -27,4 +27,10 @@ abstract class StorageService {
 
   /// Persists whether onboarding has been seen.
   Future<bool> setOnboardingSeen(bool seen);
+
+  /// The persisted theme mode preference ('system', 'light', 'dark'), or null if not set.
+  String? get themeMode;
+
+  /// Persists the theme mode preference.
+  Future<bool> setThemeMode(String mode);
 }

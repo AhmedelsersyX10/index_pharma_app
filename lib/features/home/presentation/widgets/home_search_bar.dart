@@ -51,14 +51,17 @@ class _HomeSearchBarState extends State<HomeSearchBar> {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
+    final shadows = context.isDarkMode ? AppShadows.darkLevel1 : AppShadows.level1;
+
     return Container(
       height: 46,
       decoration: BoxDecoration(
-        color: AppColors.surfaceContainerLowest,
+        color: colors.surfaceContainerLowest,
         borderRadius: AppRadii.roundedLg,
-        boxShadow: AppShadows.level1,
+        boxShadow: shadows,
         border: Border.all(
-          color: AppColors.borderSubtle,
+          color: colors.borderSubtle,
           width: 1,
         ),
       ),
@@ -68,9 +71,9 @@ class _HomeSearchBarState extends State<HomeSearchBar> {
       child: Row(
         children: [
           IconButton(
-            icon: const Icon(
+            icon: Icon(
               Icons.search_rounded,
-              color: AppColors.onSurfaceVariant,
+              color: colors.onSurfaceVariant,
               size: 20,
             ),
             splashRadius: 18,
@@ -86,12 +89,12 @@ class _HomeSearchBarState extends State<HomeSearchBar> {
               onTap: widget.onTap,
               textInputAction: TextInputAction.search,
               style: AppTypography.bodyMd(
-                color: AppColors.onSurface,
+                color: colors.onSurface,
               ),
               decoration: InputDecoration(
                 hintText: AppLocaleKeys.homeSearchHint.tr(),
                 hintStyle: AppTypography.bodyMd(
-                  color: AppColors.onSurfaceVariant,
+                  color: colors.onSurfaceVariant,
                 ),
                 border: InputBorder.none,
                 isDense: true,
@@ -104,10 +107,10 @@ class _HomeSearchBarState extends State<HomeSearchBar> {
             builder: (context, value, _) {
               if (value.text.isEmpty) return const SizedBox.shrink();
               return IconButton(
-                icon: const Icon(
+                icon: Icon(
                   Icons.close_rounded,
                   size: 18,
-                  color: AppColors.slate400,
+                  color: colors.slate400,
                 ),
                 onPressed: () => _controller.clear(),
                 splashRadius: 18,

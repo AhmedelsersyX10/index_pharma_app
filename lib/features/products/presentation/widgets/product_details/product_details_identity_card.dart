@@ -20,6 +20,7 @@ class ProductDetailsIdentityCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     final hasScientificName =
         product.scientificName != null && product.scientificName!.trim().isNotEmpty;
     final hasBarcode = product.barcode != null && product.barcode!.trim().isNotEmpty;
@@ -42,7 +43,7 @@ class ProductDetailsIdentityCard extends StatelessWidget {
           Text(
             product.name,
             style: AppTypography.headlineMd(
-              color: AppColors.onSurface,
+              color: colors.onSurface,
             ).copyWith(fontWeight: FontWeight.w700),
           ),
           const SizedBox(height: AppSpacing.spaceSm),
@@ -52,9 +53,9 @@ class ProductDetailsIdentityCard extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(AppSpacing.spaceSm),
               decoration: BoxDecoration(
-                color: AppColors.surfaceSubtle,
+                color: colors.surfaceSubtle,
                 borderRadius: AppRadii.roundedMd,
-                border: Border.all(color: AppColors.slate200.withValues(alpha: 0.6)),
+                border: Border.all(color: colors.outlineVariant.withValues(alpha: 0.6)),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -62,7 +63,7 @@ class ProductDetailsIdentityCard extends StatelessWidget {
                   Text(
                     AppLocaleKeys.productDetailsActiveIngredientLabel.tr(),
                     style: AppTypography.labelSm(
-                      color: AppColors.slate500,
+                      color: colors.neutral,
                     ).copyWith(fontWeight: FontWeight.w600),
                   ),
                   const SizedBox(height: 2),
@@ -71,7 +72,7 @@ class ProductDetailsIdentityCard extends StatelessWidget {
                     child: Text(
                       product.scientificName!.trim(),
                       style: AppTypography.bodyMd(
-                        color: AppColors.onSurface,
+                        color: colors.onSurface,
                       ).copyWith(fontWeight: FontWeight.w600),
                     ),
                   ),
@@ -88,8 +89,8 @@ class ProductDetailsIdentityCard extends StatelessWidget {
                 horizontal: AppSpacing.spaceSm,
                 vertical: AppSpacing.spaceXs + 2,
               ),
-              decoration: const BoxDecoration(
-                color: AppColors.surfaceContainerLow,
+              decoration: BoxDecoration(
+                color: colors.surfaceContainerLow,
                 borderRadius: AppRadii.roundedMd,
               ),
               child: Row(
@@ -101,14 +102,14 @@ class ProductDetailsIdentityCard extends StatelessWidget {
                       children: [
                         Text(
                           AppLocaleKeys.productDetailsBarcodeGtinLabel.tr(),
-                          style: AppTypography.labelSm(color: AppColors.slate500),
+                          style: AppTypography.labelSm(color: colors.neutral),
                         ),
                         const SizedBox(height: 2),
                         Directionality(
                           textDirection: TextDirection.ltr,
                           child: Text(
                             product.barcode!.trim(),
-                            style: AppTypography.bodySm(color: AppColors.onSurface).copyWith(
+                            style: AppTypography.bodySm(color: colors.onSurface).copyWith(
                               fontFamily: 'monospace',
                               fontWeight: FontWeight.w700,
                               letterSpacing: 1.2,
@@ -118,7 +119,7 @@ class ProductDetailsIdentityCard extends StatelessWidget {
                       ],
                     ),
                   ),
-                  const Icon(Icons.qr_code_scanner_rounded, size: 26, color: AppColors.slate500),
+                  Icon(Icons.qr_code_scanner_rounded, size: 26, color: colors.neutral),
                 ],
               ),
             ),

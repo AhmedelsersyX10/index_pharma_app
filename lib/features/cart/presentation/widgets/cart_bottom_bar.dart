@@ -18,6 +18,7 @@ class CartBottomBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     final isRtl = Directionality.of(context) == TextDirection.rtl;
 
     return Container(
@@ -28,11 +29,11 @@ class CartBottomBar extends StatelessWidget {
         bottom: MediaQuery.paddingOf(context).bottom + AppSpacing.spaceSm,
       ),
       decoration: BoxDecoration(
-        color: AppColors.surface.withValues(alpha: 0.95),
-        boxShadow: AppShadows.level3,
+        color: colors.surface.withValues(alpha: 0.95),
+        boxShadow: context.shadowsLevel3,
         border: Border(
           top: BorderSide(
-            color: AppColors.outlineVariant.withValues(alpha: 0.3),
+            color: colors.outlineVariant.withValues(alpha: 0.3),
             width: 0.5,
           ),
         ),
@@ -47,7 +48,7 @@ class CartBottomBar extends StatelessWidget {
             children: [
               Text(
                 AppLocaleKeys.cartStickyTotalLabel.tr(),
-                style: AppTypography.labelSm(color: AppColors.secondary),
+                style: AppTypography.labelSm(color: colors.secondary),
               ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.baseline,
@@ -56,14 +57,14 @@ class CartBottomBar extends StatelessWidget {
                   Text(
                     totalAmount.toStringAsFixed(2),
                     style: AppTypography.titleLg(
-                      color: AppColors.primary,
+                      color: colors.primary,
                     ).copyWith(fontWeight: FontWeight.w800),
                   ),
                   const SizedBox(width: AppSpacing.space2xs),
                   Text(
                     AppLocaleKeys.cartCurrency.tr(),
                     style: AppTypography.labelSm(
-                      color: AppColors.primary,
+                      color: colors.primary,
                     ).copyWith(fontWeight: FontWeight.bold),
                   ),
                 ],
@@ -80,8 +81,8 @@ class CartBottomBar extends StatelessWidget {
               child: ElevatedButton(
                 onPressed: isLoading ? null : onCheckout,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.primary,
-                  foregroundColor: Colors.white,
+                  backgroundColor: colors.primary,
+                  foregroundColor: colors.onPrimary,
                   elevation: 0,
                   shape: const RoundedRectangleBorder(
                     borderRadius: AppRadii.roundedLg,
@@ -91,12 +92,12 @@ class CartBottomBar extends StatelessWidget {
                   ),
                 ),
                 child: isLoading
-                    ? const SizedBox(
+                    ? SizedBox(
                         width: 20,
                         height: 20,
                         child: CircularProgressIndicator(
                           strokeWidth: 2,
-                          color: Colors.white,
+                          color: colors.onPrimary,
                         ),
                       )
                     : Row(
@@ -105,7 +106,7 @@ class CartBottomBar extends StatelessWidget {
                           Text(
                             AppLocaleKeys.cartCheckoutBtn.tr(),
                             style: AppTypography.labelLg(
-                              color: Colors.white,
+                              color: colors.onPrimary,
                             ).copyWith(fontWeight: FontWeight.bold),
                           ),
                           const SizedBox(width: AppSpacing.spaceXs),
@@ -114,7 +115,7 @@ class CartBottomBar extends StatelessWidget {
                                 ? Icons.arrow_back_rounded
                                 : Icons.arrow_forward_rounded,
                             size: 18,
-                            color: Colors.white,
+                            color: colors.onPrimary,
                           ),
                         ],
                       ),

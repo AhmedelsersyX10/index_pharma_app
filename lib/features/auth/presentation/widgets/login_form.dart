@@ -68,6 +68,7 @@ class _LoginFormState extends State<LoginForm> {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     return BlocListener<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state is AuthFailure && state.failure is Unauthorized) {
@@ -78,10 +79,10 @@ class _LoginFormState extends State<LoginForm> {
       },
       child: Container(
         padding: const EdgeInsets.all(AppSpacing.spaceLg),
-        decoration: const BoxDecoration(
-          color: AppColors.canvasPure,
+        decoration: BoxDecoration(
+          color: colors.canvasPure,
           borderRadius: AppRadii.roundedXl,
-          boxShadow: AppShadows.level1,
+          boxShadow: context.shadowsLevel1,
         ),
         child: Form(
           key: _formKey,
@@ -97,17 +98,17 @@ class _LoginFormState extends State<LoginForm> {
                       children: [
                         Text(
                           AppLocaleKeys.authLoginCardTitle.tr(),
-                          style: AppTypography.titleLg(color: AppColors.onSurface),
+                          style: AppTypography.titleLg(color: colors.onSurface),
                         ),
                         const SizedBox(height: 2),
                         Text(
                           AppLocaleKeys.authLoginCardSubtitle.tr(),
-                          style: AppTypography.bodySm(color: AppColors.secondary),
+                          style: AppTypography.bodySm(color: colors.secondary),
                         ),
                       ],
                     ),
                   ),
-                  const Icon(Icons.lock_outline_rounded, color: AppColors.primaryBrand, size: 24),
+                  Icon(Icons.lock_outline_rounded, color: colors.primaryBrand, size: 24),
                 ],
               ),
               const SizedBox(height: AppSpacing.spaceLg),
@@ -126,9 +127,9 @@ class _LoginFormState extends State<LoginForm> {
                     : null,
                 onChanged: (_) => _onFieldChanged(),
                 validator: (val) => AuthValidators.validateEmail(val)?.tr(),
-                prefix: const Padding(
-                  padding: EdgeInsetsDirectional.only(start: 12, end: 8),
-                  child: Icon(Icons.mail_outline_rounded, color: AppColors.slate400, size: 20),
+                prefix: Padding(
+                  padding: const EdgeInsetsDirectional.only(start: 12, end: 8),
+                  child: Icon(Icons.mail_outline_rounded, color: colors.slate400, size: 20),
                 ),
               ),
               const SizedBox(height: AppSpacing.spaceMd),
@@ -141,7 +142,7 @@ class _LoginFormState extends State<LoginForm> {
                 errorText: _credentialsError,
                 trailingLabelWidget: Text(
                   AppLocaleKeys.authPasswordSecureHint.tr(),
-                  style: AppTypography.labelSm(color: AppColors.secondary),
+                  style: AppTypography.labelSm(color: colors.secondary),
                 ),
                 textInputAction: TextInputAction.done,
                 validator: (val) => AuthValidators.validatePassword(val)?.tr(),
@@ -172,15 +173,15 @@ class _LoginFormState extends State<LoginForm> {
                   horizontal: AppSpacing.spaceMd,
                   vertical: AppSpacing.spaceSm,
                 ),
-                decoration: const BoxDecoration(
-                  color: AppColors.surfaceContainerLow,
+                decoration: BoxDecoration(
+                  color: colors.surfaceContainerLow,
                   borderRadius: AppRadii.roundedXl,
                 ),
                 child: Column(
                   children: [
                     Text(
                       AppLocaleKeys.authNoAccountPrompt.tr(),
-                      style: AppTypography.bodySm(color: AppColors.secondary),
+                      style: AppTypography.bodySm(color: colors.secondary),
                     ),
                     const SizedBox(height: AppSpacing.space2xs),
                     InkWell(
@@ -193,13 +194,13 @@ class _LoginFormState extends State<LoginForm> {
                           children: [
                             Text(
                               AppLocaleKeys.authCreateAccountLink.tr(),
-                              style: AppTypography.labelMd(color: AppColors.primaryBrand),
+                              style: AppTypography.labelMd(color: colors.primaryBrand),
                             ),
                             const SizedBox(width: AppSpacing.space2xs),
-                            const Icon(
+                            Icon(
                               Icons.person_add_alt_1_outlined,
                               size: 16,
-                              color: AppColors.primaryBrand,
+                              color: colors.primaryBrand,
                             ),
                           ],
                         ),

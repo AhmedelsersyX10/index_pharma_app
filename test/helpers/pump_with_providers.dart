@@ -120,6 +120,15 @@ class FakeTestStorageService implements StorageService {
     selectedBranchId = branchId;
     return true;
   }
+
+  @override
+  String? themeMode;
+
+  @override
+  Future<bool> setThemeMode(String mode) async {
+    themeMode = mode;
+    return true;
+  }
 }
 
 class FakeTestAuthRepository implements AuthRepository {
@@ -387,6 +396,7 @@ Widget buildAppWithProviders({
   RouterConfig<Object>? routerConfig,
   AuthCubit? authCubit,
   CartCubit? cartCubit,
+  ThemeCubit? themeCubit,
   StorageService? storageService,
   PermissionService? permissionService,
   Locale locale = const Locale('ar'),
@@ -408,6 +418,11 @@ Widget buildAppWithProviders({
               cartRepository: FakeTestCartRepository(),
               storageService: effectiveStorage,
             ));
+
+  final effectiveTheme = themeCubit ??
+      (getIt.isRegistered<ThemeCubit>()
+          ? getIt<ThemeCubit>()
+          : ThemeCubit(storageService: effectiveStorage));
 
   final effectivePermission = permissionService ??
       (getIt.isRegistered<PermissionService>()
@@ -436,22 +451,32 @@ Widget buildAppWithProviders({
             providers: [
               BlocProvider<AuthCubit>.value(value: effectiveAuth),
               BlocProvider<CartCubit>.value(value: effectiveCart),
+              BlocProvider<ThemeCubit>.value(value: effectiveTheme),
             ],
-            child: routerConfig != null
-                ? MaterialApp.router(
-                    localizationsDelegates: context.localizationDelegates,
-                    supportedLocales: context.supportedLocales,
-                    locale: context.locale,
-                    theme: AppTheme.lightTheme,
-                    routerConfig: routerConfig,
-                  )
-                : MaterialApp(
-                    localizationsDelegates: context.localizationDelegates,
-                    supportedLocales: context.supportedLocales,
-                    locale: context.locale,
-                    theme: AppTheme.lightTheme,
-                    home: child,
-                  ),
+            child: BlocBuilder<ThemeCubit, ThemeMode>(
+              bloc: effectiveTheme,
+              builder: (context, themeMode) {
+                return routerConfig != null
+                    ? MaterialApp.router(
+                        localizationsDelegates: context.localizationDelegates,
+                        supportedLocales: context.supportedLocales,
+                        locale: context.locale,
+                        theme: AppTheme.lightTheme,
+                        darkTheme: AppTheme.darkTheme,
+                        themeMode: themeMode,
+                        routerConfig: routerConfig,
+                      )
+                    : MaterialApp(
+                        localizationsDelegates: context.localizationDelegates,
+                        supportedLocales: context.supportedLocales,
+                        locale: context.locale,
+                        theme: AppTheme.lightTheme,
+                        darkTheme: AppTheme.darkTheme,
+                        themeMode: themeMode,
+                        home: child,
+                      );
+              },
+            ),
           ),
         );
       },

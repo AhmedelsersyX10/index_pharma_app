@@ -67,6 +67,7 @@ class AppButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     final String displayText = text ??
         (variant == AppButtonStyle.prescriptionUpload
             ? AppLocaleKeys.commonUploadPrescription.tr()
@@ -78,7 +79,7 @@ class AppButton extends StatelessWidget {
             width: 22,
             child: CircularProgressIndicator(
               strokeWidth: 2.5,
-              valueColor: AlwaysStoppedAnimation<Color>(_getLoadingColor()),
+              valueColor: AlwaysStoppedAnimation<Color>(_getLoadingColor(colors)),
             ),
           )
         : Row(
@@ -86,7 +87,7 @@ class AppButton extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               if (icon != null) ...[icon!, const SizedBox(width: AppSpacing.spaceSm)],
-              Text(displayText, style: _getTextStyle()),
+              Text(displayText, style: _getTextStyle(colors)),
             ],
           );
 
@@ -94,10 +95,10 @@ class AppButton extends StatelessWidget {
       AppButtonStyle.primary => ElevatedButton(
         onPressed: isLoading ? null : onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.primaryBrand,
-          foregroundColor: AppColors.onPrimary,
-          disabledBackgroundColor: AppColors.slate200,
-          disabledForegroundColor: AppColors.slate400,
+          backgroundColor: colors.primaryBrand,
+          foregroundColor: colors.onPrimary,
+          disabledBackgroundColor: colors.slate200,
+          disabledForegroundColor: colors.slate400,
           minimumSize: Size(isFullWidth ? double.infinity : AppSpacing.minTouchTarget, height),
           shape: const StadiumBorder(),
           elevation: 0,
@@ -107,10 +108,10 @@ class AppButton extends StatelessWidget {
       AppButtonStyle.secondary => ElevatedButton(
         onPressed: isLoading ? null : onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: AppColors.secondary,
-          foregroundColor: AppColors.onSecondary,
-          disabledBackgroundColor: AppColors.slate200,
-          disabledForegroundColor: AppColors.slate400,
+          backgroundColor: colors.secondary,
+          foregroundColor: colors.onSecondary,
+          disabledBackgroundColor: colors.slate200,
+          disabledForegroundColor: colors.slate400,
           minimumSize: Size(isFullWidth ? double.infinity : AppSpacing.minTouchTarget, height),
           shape: const StadiumBorder(),
           elevation: 0,
@@ -120,8 +121,8 @@ class AppButton extends StatelessWidget {
       AppButtonStyle.outlined => OutlinedButton(
         onPressed: isLoading ? null : onPressed,
         style: OutlinedButton.styleFrom(
-          foregroundColor: AppColors.primaryBrand,
-          side: const BorderSide(color: AppColors.primaryBrand, width: 1.5),
+          foregroundColor: colors.primaryBrand,
+          side: BorderSide(color: colors.primaryBrand, width: 1.5),
           minimumSize: Size(isFullWidth ? double.infinity : AppSpacing.minTouchTarget, height),
           shape: const StadiumBorder(),
         ),
@@ -129,9 +130,9 @@ class AppButton extends StatelessWidget {
       ),
       AppButtonStyle.prescriptionUpload => Container(
         decoration: BoxDecoration(
-          color: AppColors.brandMintSurface,
+          color: colors.brandMintSurface,
           borderRadius: AppRadii.roundedFull,
-          border: Border.all(color: AppColors.primaryBrand, width: 1.5),
+          border: Border.all(color: colors.primaryBrand, width: 1.5),
         ),
         child: Material(
           color: Colors.transparent,
@@ -159,26 +160,26 @@ class AppButton extends StatelessWidget {
     return SizedBox(height: height, child: buttonWidget);
   }
 
-  Color _getLoadingColor() {
+  Color _getLoadingColor(AppColorsExtension colors) {
     switch (variant) {
       case AppButtonStyle.primary:
       case AppButtonStyle.secondary:
         return Colors.white;
       case AppButtonStyle.outlined:
       case AppButtonStyle.prescriptionUpload:
-        return AppColors.brandEmeraldDark;
+        return colors.brandEmeraldDark;
     }
   }
 
-  TextStyle _getTextStyle() {
+  TextStyle _getTextStyle(AppColorsExtension colors) {
     switch (variant) {
       case AppButtonStyle.primary:
       case AppButtonStyle.secondary:
         return AppTypography.labelLg(color: Colors.white);
       case AppButtonStyle.outlined:
-        return AppTypography.labelLg(color: AppColors.primaryBrand);
+        return AppTypography.labelLg(color: colors.primaryBrand);
       case AppButtonStyle.prescriptionUpload:
-        return AppTypography.labelLg(color: AppColors.brandEmeraldDark);
+        return AppTypography.labelLg(color: colors.brandEmeraldDark);
     }
   }
 }

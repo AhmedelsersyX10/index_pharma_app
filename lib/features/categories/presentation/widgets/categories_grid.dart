@@ -61,7 +61,7 @@ class CategoriesGrid extends StatelessWidget {
                 CategoriesEmpty() => AppEmptyState(
                   title: AppLocaleKeys.categoriesEmptyTitle.tr(),
                   message: AppLocaleKeys.categoriesEmptyDesc.tr(),
-                  icon: const Icon(Icons.category_outlined, size: 36, color: AppColors.slate400),
+                  icon: Icon(Icons.category_outlined, size: 36, color: context.colors.slate400),
                 ),
                 CategoriesFailure(:final message) => AppErrorView(
                   title: AppLocaleKeys.categoriesErrorTitle.tr(),
@@ -92,6 +92,7 @@ class _CategoriesSectionHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -101,15 +102,15 @@ class _CategoriesSectionHeader extends StatelessWidget {
             Container(
               width: 4,
               height: 18,
-              decoration: const BoxDecoration(
-                color: AppColors.primary,
+              decoration: BoxDecoration(
+                color: colors.primary,
                 borderRadius: AppRadii.roundedFull,
               ),
             ),
             const SizedBox(width: AppSpacing.spaceSm),
             Text(
               AppLocaleKeys.categoriesTitle.tr(),
-              style: AppTypography.titleMd(color: AppColors.onSurface),
+              style: AppTypography.titleMd(color: colors.onSurface),
             ),
           ],
         ),
@@ -126,10 +127,10 @@ class _CategoriesSectionHeader extends StatelessWidget {
               children: [
                 Text(
                   AppLocaleKeys.categoriesViewAll.tr(),
-                  style: AppTypography.labelMd(color: AppColors.primary),
+                  style: AppTypography.labelMd(color: colors.primary),
                 ),
                 const SizedBox(width: AppSpacing.space2xs),
-                const Icon(Icons.arrow_forward_ios_rounded, size: 12, color: AppColors.primary),
+                Icon(Icons.arrow_forward_ios_rounded, size: 12, color: colors.primary),
               ],
             ),
           ),
@@ -193,6 +194,7 @@ class _CategoriesSkeletonGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
     return GridView.builder(
       physics: physics,
       shrinkWrap: shrinkWrap,
@@ -206,9 +208,9 @@ class _CategoriesSkeletonGrid extends StatelessWidget {
       itemBuilder: (context, index) {
         return Container(
           decoration: BoxDecoration(
-            color: AppColors.surfaceContainerLow,
+            color: colors.surfaceContainerLow,
             borderRadius: AppRadii.roundedXl,
-            border: Border.all(color: AppColors.borderSubtle, width: 1),
+            border: Border.all(color: colors.borderSubtle, width: 1),
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -216,14 +218,14 @@ class _CategoriesSkeletonGrid extends StatelessWidget {
               Container(
                 width: 44,
                 height: 44,
-                decoration: const BoxDecoration(color: AppColors.slate200, shape: BoxShape.circle),
+                decoration: BoxDecoration(color: colors.slate200, shape: BoxShape.circle),
               ),
               const SizedBox(height: AppSpacing.spaceSm),
               Container(
                 width: 50,
                 height: 12,
-                decoration: const BoxDecoration(
-                  color: AppColors.slate200,
+                decoration: BoxDecoration(
+                  color: colors.slate200,
                   borderRadius: AppRadii.roundedSm,
                 ),
               ),

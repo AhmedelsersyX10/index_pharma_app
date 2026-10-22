@@ -13,6 +13,8 @@ class CartEmptyView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = context.colors;
+
     return Center(
       child: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(
@@ -26,24 +28,24 @@ class CartEmptyView extends StatelessWidget {
             Container(
               width: 130,
               height: 130,
-              decoration: const BoxDecoration(
-                color: AppColors.brandMintSurface,
+              decoration: BoxDecoration(
+                color: colors.brandMintSurface,
                 shape: BoxShape.circle,
               ),
               alignment: Alignment.center,
               child: Container(
                 width: 90,
                 height: 90,
-                decoration: const BoxDecoration(
-                  color: AppColors.surfaceContainerLowest,
+                decoration: BoxDecoration(
+                  color: colors.surfaceContainerLowest,
                   shape: BoxShape.circle,
-                  boxShadow: AppShadows.level2,
+                  boxShadow: context.shadowsLevel2,
                 ),
                 alignment: Alignment.center,
-                child: const Icon(
+                child: Icon(
                   Icons.remove_shopping_cart_outlined,
                   size: 44,
-                  color: AppColors.brandEmeraldDark,
+                  color: colors.brandEmeraldDark,
                 ),
               ),
             ),
@@ -54,7 +56,7 @@ class CartEmptyView extends StatelessWidget {
             Text(
               AppLocaleKeys.cartEmptyTitle.tr(),
               style: AppTypography.headlineMd(
-                color: AppColors.onSurface,
+                color: colors.onSurface,
               ).copyWith(fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,
             ),
@@ -66,7 +68,7 @@ class CartEmptyView extends StatelessWidget {
               constraints: const BoxConstraints(maxWidth: 280),
               child: Text(
                 AppLocaleKeys.cartEmptyDesc.tr(),
-                style: AppTypography.bodyMd(color: AppColors.secondary),
+                style: AppTypography.bodyMd(color: colors.secondary),
                 textAlign: TextAlign.center,
               ),
             ),
@@ -91,12 +93,12 @@ class CartEmptyView extends StatelessWidget {
                 label: Text(
                   AppLocaleKeys.cartBrowseBtn.tr(),
                   style: AppTypography.labelLg(
-                    color: Colors.white,
+                    color: colors.onPrimary,
                   ).copyWith(fontWeight: FontWeight.bold),
                 ),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColors.primary,
-                  foregroundColor: Colors.white,
+                  backgroundColor: colors.primary,
+                  foregroundColor: colors.onPrimary,
                   elevation: 0,
                   shape: const RoundedRectangleBorder(borderRadius: AppRadii.roundedLg),
                 ),
