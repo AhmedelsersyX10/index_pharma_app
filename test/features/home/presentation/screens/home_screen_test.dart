@@ -38,6 +38,7 @@ import 'package:index_pharma/features/products/presentation/cubit/products_cubit
 import 'package:index_pharma/features/settings/domain/entities/public_settings.dart';
 import 'package:index_pharma/features/settings/domain/repositories/settings_repository.dart';
 import 'package:index_pharma/features/settings/presentation/cubit/settings_cubit.dart';
+import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 late final Map<String, dynamic> _arTranslations;
@@ -499,6 +500,127 @@ void main() {
         ),
         findsOneWidget,
       );
+    });
+    testWidgets(
+        'submitting non-empty query on HomeSearchBar navigates to /browse?q=panadol',
+        (tester) async {
+      // Wrap HomeScreen in a real GoRouter so context.go() works.
+      final router = GoRouter(
+        initialLocation: '/',
+        routes: [
+          GoRoute(
+            path: '/',
+            builder: (context, state) => HomeScreen(
+              branchCubit: branchCubit,
+              settingsCubit: settingsCubit,
+              categoriesCubit: categoriesCubit,
+              productsCubit: productsCubit,
+              cartCubit: cartCubit,
+            ),
+          ),
+          GoRoute(
+            path: '/browse',
+            builder: (context, state) => Scaffold(
+              body: Text('Browse:${state.uri}'),
+            ),
+          ),
+        ],
+      );
+
+      await tester.pumpWidget(
+        EasyLocalization(
+          supportedLocales: const [Locale('ar'), Locale('en')],
+          path: 'assets/translations',
+          assetLoader: const SynchronousDiskAssetLoader(),
+          startLocale: const Locale('ar'),
+          saveLocale: false,
+          child: Builder(
+            builder: (ctx) => MaterialApp.router(
+              locale: ctx.locale,
+              localizationsDelegates: ctx.localizationDelegates,
+              supportedLocales: ctx.supportedLocales,
+              theme: AppTheme.lightTheme,
+              routerConfig: router,
+            ),
+          ),
+        ),
+      );
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 500));
+      await tester.pumpAndSettle();
+
+      // Confirm HomeSearchBar is present.
+      expect(find.byType(HomeSearchBar), findsOneWidget);
+
+      // Enter 'panadol' in the TextField inside HomeSearchBar.
+      await tester.enterText(
+        find.descendant(
+          of: find.byType(HomeSearchBar),
+          matching: find.byType(TextField),
+        ),
+        'panadol',
+      );
+      await tester.testTextInput.receiveAction(TextInputAction.search);
+      await tester.pumpAndSettle();
+
+      // Should have navigated to /browse?q=panadol.
+      expect(find.textContaining('/browse?q=panadol'), findsOneWidget);
+    });
+
+    testWidgets(
+        'submitting empty query on HomeSearchBar does NOT navigate',
+        (tester) async {
+      final router = GoRouter(
+        initialLocation: '/',
+        routes: [
+          GoRoute(
+            path: '/',
+            builder: (context, state) => HomeScreen(
+              branchCubit: branchCubit,
+              settingsCubit: settingsCubit,
+              categoriesCubit: categoriesCubit,
+              productsCubit: productsCubit,
+              cartCubit: cartCubit,
+            ),
+          ),
+          GoRoute(
+            path: '/browse',
+            builder: (context, state) =>
+                const Scaffold(body: Text('Browse Screen')),
+          ),
+        ],
+      );
+
+      await tester.pumpWidget(
+        EasyLocalization(
+          supportedLocales: const [Locale('ar'), Locale('en')],
+          path: 'assets/translations',
+          assetLoader: const SynchronousDiskAssetLoader(),
+          startLocale: const Locale('ar'),
+          saveLocale: false,
+          child: Builder(
+            builder: (ctx) => MaterialApp.router(
+              locale: ctx.locale,
+              localizationsDelegates: ctx.localizationDelegates,
+              supportedLocales: ctx.supportedLocales,
+              theme: AppTheme.lightTheme,
+              routerConfig: router,
+            ),
+          ),
+        ),
+      );
+      await tester.pump();
+      await tester.pump(const Duration(milliseconds: 500));
+      await tester.pumpAndSettle();
+
+      // Do NOT enter any text — field is empty.
+      await tester.testTextInput.receiveAction(TextInputAction.search);
+      await tester.pumpAndSettle();
+
+      // Browse Screen must NOT appear — no navigation.
+      expect(find.text('Browse Screen'), findsNothing);
+      // HomeSearchBar is still rendered (we are still on Home).
+      expect(find.byType(HomeSearchBar), findsOneWidget);
     });
   });
 }

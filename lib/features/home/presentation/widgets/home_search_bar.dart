@@ -2,16 +2,17 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:index_pharma/core/localization/app_locale_keys.dart';
-import 'package:index_pharma/core/theme/theme.dart';
 import 'package:index_pharma/core/utils/app_router.dart';
+import 'package:index_pharma/core/widgets/app_text_fields.dart';
 
 /// Clinical Search Bar for B2 Home Screen.
 ///
 /// Complies with design constraints:
 /// - Barcode scanner icon is REMOVED (deferred).
-/// - Clean, accessible search field with search icon.
-/// - Submitting with query navigates to `/browse?q={query}`.
-/// - Tapping without query navigates to `/browse`.
+/// - Clean, accessible search field built on [AppSearchBar] for shared styling.
+/// - Submitting with a non-empty (trimmed) query navigates to
+///   `/browse?q={query}`. Empty input does nothing.
+/// - Callers can override navigation by providing [onSubmitted].
 class HomeSearchBar extends StatefulWidget {
   const HomeSearchBar({
     super.key,
@@ -41,7 +42,9 @@ class _HomeSearchBarState extends State<HomeSearchBar> {
     super.dispose();
   }
 
-  void _handleSubmit(String query) {
+  void _handleSubmit(String raw) {
+    final query = raw.trim();
+    if (query.isEmpty) return;
     if (widget.onSubmitted != null) {
       widget.onSubmitted!(query);
     } else {
@@ -51,76 +54,12 @@ class _HomeSearchBarState extends State<HomeSearchBar> {
 
   @override
   Widget build(BuildContext context) {
-    final colors = context.colors;
-    final shadows = context.isDarkMode ? AppShadows.darkLevel1 : AppShadows.level1;
-
-    return Container(
-      height: 46,
-      decoration: BoxDecoration(
-        color: colors.surfaceContainerLowest,
-        borderRadius: AppRadii.roundedLg,
-        boxShadow: shadows,
-        border: Border.all(
-          color: colors.borderSubtle,
-          width: 1,
-        ),
-      ),
-      padding: const EdgeInsets.symmetric(
-        horizontal: AppSpacing.spaceSm,
-      ),
-      child: Row(
-        children: [
-          IconButton(
-            icon: Icon(
-              Icons.search_rounded,
-              color: colors.onSurfaceVariant,
-              size: 20,
-            ),
-            splashRadius: 18,
-            padding: EdgeInsets.zero,
-            constraints: const BoxConstraints(),
-            onPressed: () => _handleSubmit(_controller.text),
-          ),
-          const SizedBox(width: AppSpacing.spaceSm),
-          Expanded(
-            child: TextField(
-              controller: _controller,
-              onSubmitted: _handleSubmit,
-              onTap: widget.onTap,
-              textInputAction: TextInputAction.search,
-              style: AppTypography.bodyMd(
-                color: colors.onSurface,
-              ),
-              decoration: InputDecoration(
-                hintText: AppLocaleKeys.homeSearchHint.tr(),
-                hintStyle: AppTypography.bodyMd(
-                  color: colors.onSurfaceVariant,
-                ),
-                border: InputBorder.none,
-                isDense: true,
-                contentPadding: const EdgeInsets.symmetric(vertical: 10),
-              ),
-            ),
-          ),
-          ValueListenableBuilder<TextEditingValue>(
-            valueListenable: _controller,
-            builder: (context, value, _) {
-              if (value.text.isEmpty) return const SizedBox.shrink();
-              return IconButton(
-                icon: Icon(
-                  Icons.close_rounded,
-                  size: 18,
-                  color: colors.slate400,
-                ),
-                onPressed: () => _controller.clear(),
-                splashRadius: 18,
-                padding: EdgeInsets.zero,
-                constraints: const BoxConstraints(),
-              );
-            },
-          ),
-        ],
-      ),
+    return AppSearchBar(
+      controller: _controller,
+      hintText: AppLocaleKeys.homeSearchHint.tr(),
+      textInputAction: TextInputAction.search,
+      onSubmitted: _handleSubmit,
+      onChanged: (_) {},
     );
   }
 }

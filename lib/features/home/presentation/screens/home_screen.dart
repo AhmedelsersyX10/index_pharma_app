@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:index_pharma/core/theme/theme.dart';
-import 'package:index_pharma/core/widgets/app_text_fields.dart';
+import 'package:index_pharma/features/home/presentation/widgets/home_search_bar.dart';
 import 'package:index_pharma/features/choose_branches/presentation/cubit/branch_cubit.dart';
 import 'package:index_pharma/features/choose_branches/presentation/cubit/branch_state.dart';
 import 'package:index_pharma/features/categories/presentation/cubit/categories_cubit.dart';
@@ -209,7 +209,7 @@ class _HomeViewState extends State<_HomeView> {
                 const SizedBox(height: AppSpacing.spaceSm),
 
                 // 2. Search Bar (without barcode icon)
-                const AppSearchBar(),
+                const HomeSearchBar(),
                 const SizedBox(height: AppSpacing.spaceMd),
 
                 // 3. Hero Clinical Banner

@@ -8,19 +8,23 @@ import 'package:index_pharma/core/theme/theme.dart';
 class AppSearchBar extends StatelessWidget {
   final TextEditingController? controller;
   final ValueChanged<String>? onChanged;
+  final ValueChanged<String>? onSubmitted;
   final VoidCallback? onFilterTap;
   final VoidCallback? onClear;
   final String? hintText;
   final bool autoFocus;
+  final TextInputAction textInputAction;
 
   const AppSearchBar({
     super.key,
     this.controller,
     this.onChanged,
+    this.onSubmitted,
     this.onFilterTap,
     this.onClear,
     this.hintText,
     this.autoFocus = false,
+    this.textInputAction = TextInputAction.search,
   });
 
   @override
@@ -34,6 +38,8 @@ class AppSearchBar extends StatelessWidget {
         controller: controller,
         autofocus: autoFocus,
         onChanged: onChanged,
+        onSubmitted: onSubmitted,
+        textInputAction: textInputAction,
         style: AppTypography.bodyMd(color: colors.onSurface),
         decoration: InputDecoration(
           hintText: hintText ?? AppLocaleKeys.commonSearchHint.tr(),
