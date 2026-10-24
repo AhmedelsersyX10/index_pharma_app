@@ -58,120 +58,135 @@ void main() {
     TestWidgetsFlutterBinding.ensureInitialized();
     SharedPreferences.setMockInitialValues({});
     _arTranslations =
-        json.decode(File('assets/translations/ar.json').readAsStringSync()) as Map<String, dynamic>;
+        json.decode(File('assets/translations/ar.json').readAsStringSync())
+            as Map<String, dynamic>;
     _enTranslations =
-        json.decode(File('assets/translations/en.json').readAsStringSync()) as Map<String, dynamic>;
+        json.decode(File('assets/translations/en.json').readAsStringSync())
+            as Map<String, dynamic>;
     await EasyLocalization.ensureInitialized();
   });
 
   group('EasyLocalization & RTL/LTR Tests', () {
-    testWidgets('Arabic Locale (ar) sets RTL directionality and renders Arabic strings', (
+    testWidgets(
+      'Arabic Locale (ar) sets RTL directionality and renders Arabic strings',
+      (tester) async {
+        await tester.pumpWidget(
+          createTestLocalizedApp(
+            locale: const Locale('ar'),
+            child: Column(
+              children: [
+                const SplashBrandText(
+                  textFade: AlwaysStoppedAnimation(1.0),
+                  textSlide: AlwaysStoppedAnimation(0.0),
+                ),
+                const SplashFooter(footerFade: AlwaysStoppedAnimation(1.0)),
+                OnboardingTopBar(currentPage: 0, totalPages: 3, onSkip: () {}),
+                OnboardingBottomSection(
+                  currentPage: 0,
+                  totalPages: 3,
+                  onNext: () {},
+                  onPrevious: () {},
+                  onDone: () {},
+                  onSignIn: () {},
+                ),
+              ],
+            ),
+          ),
+        );
+        await tester.pump();
+        await tester.pump();
+
+        // App text direction inside MaterialApp must be RTL for Arabic
+        final scaffoldElement = tester.element(find.byType(Scaffold).first);
+        expect(Directionality.of(scaffoldElement), TextDirection.rtl);
+
+        // Splash Arabic strings rendered
+        expect(find.text('صيدلية إندكس فارما'), findsOneWidget);
+        expect(find.text('تصفح المنتجات وتابع طلباتك'), findsOneWidget);
+
+        // Onboarding Arabic strings rendered
+        expect(find.text('تخطي'), findsOneWidget);
+        expect(find.text('الخطوة 1 من 3'), findsOneWidget);
+        expect(find.text('ابدأ الآن'), findsOneWidget);
+
+        // Splash brand Latin logo row is kept LTR
+        final ltrFinder = find.byWidgetPredicate(
+          (widget) =>
+              widget is Directionality &&
+              widget.textDirection == TextDirection.ltr,
+        );
+        expect(ltrFinder, findsWidgets);
+
+        // In RTL, the navigation forward arrow in OnboardingBottomSection is flipped (scaleX == -1)
+        final arrowFinder = find.byIcon(Icons.arrow_forward_rounded);
+        final transformWidget = tester.widget<Transform>(
+          find
+              .ancestor(of: arrowFinder, matching: find.byType(Transform))
+              .first,
+        );
+        expect(transformWidget.transform.storage[0], -1.0);
+      },
+    );
+
+    testWidgets(
+      'English Locale (en) sets LTR directionality and renders English strings',
+      (tester) async {
+        await tester.pumpWidget(
+          createTestLocalizedApp(
+            locale: const Locale('en'),
+            child: Column(
+              children: [
+                const SplashBrandText(
+                  textFade: AlwaysStoppedAnimation(1.0),
+                  textSlide: AlwaysStoppedAnimation(0.0),
+                ),
+                const SplashFooter(footerFade: AlwaysStoppedAnimation(1.0)),
+                OnboardingTopBar(currentPage: 0, totalPages: 3, onSkip: () {}),
+                OnboardingBottomSection(
+                  currentPage: 0,
+                  totalPages: 3,
+                  onNext: () {},
+                  onPrevious: () {},
+                  onDone: () {},
+                  onSignIn: () {},
+                ),
+              ],
+            ),
+          ),
+        );
+        await tester.pump();
+        await tester.pump();
+
+        // App text direction inside MaterialApp must be LTR for English
+        final scaffoldElement = tester.element(find.byType(Scaffold).first);
+        expect(Directionality.of(scaffoldElement), TextDirection.ltr);
+
+        // Splash English strings rendered
+        expect(find.text('Index Pharma Pharmacy'), findsOneWidget);
+        expect(
+          find.text('Browse products and track your orders'),
+          findsOneWidget,
+        );
+
+        // Onboarding English strings rendered
+        expect(find.text('Skip'), findsOneWidget);
+        expect(find.text('Step 1 of 3'), findsOneWidget);
+        expect(find.text('Get Started'), findsOneWidget);
+
+        // In LTR, the navigation forward arrow in OnboardingBottomSection is not flipped (scaleX == 1)
+        final arrowFinder = find.byIcon(Icons.arrow_forward_rounded);
+        final transformWidget = tester.widget<Transform>(
+          find
+              .ancestor(of: arrowFinder, matching: find.byType(Transform))
+              .first,
+        );
+        expect(transformWidget.transform.storage[0], 1.0);
+      },
+    );
+
+    testWidgets('OnboardingPageItem renders correct translations in Arabic', (
       tester,
     ) async {
-      await tester.pumpWidget(
-        createTestLocalizedApp(
-          locale: const Locale('ar'),
-          child: Column(
-            children: [
-              const SplashBrandText(
-                textFade: AlwaysStoppedAnimation(1.0),
-                textSlide: AlwaysStoppedAnimation(0.0),
-              ),
-              const SplashFooter(footerFade: AlwaysStoppedAnimation(1.0)),
-              OnboardingTopBar(currentPage: 0, totalPages: 3, onSkip: () {}),
-              OnboardingBottomSection(
-                currentPage: 0,
-                totalPages: 3,
-                onNext: () {},
-                onPrevious: () {},
-                onDone: () {},
-                onSignIn: () {},
-              ),
-            ],
-          ),
-        ),
-      );
-      await tester.pump();
-      await tester.pump();
-
-      // App text direction inside MaterialApp must be RTL for Arabic
-      final scaffoldElement = tester.element(find.byType(Scaffold).first);
-      expect(Directionality.of(scaffoldElement), TextDirection.rtl);
-
-      // Splash Arabic strings rendered
-      expect(find.text('وضوح ورعاية'), findsOneWidget);
-      expect(find.text('منصة رعاية صحية معتمدة'), findsOneWidget);
-
-      // Onboarding Arabic strings rendered
-      expect(find.text('تخطي'), findsOneWidget);
-      expect(find.text('الخطوة 1 من 3'), findsOneWidget);
-      expect(find.text('ابدأ الآن'), findsOneWidget);
-
-      // Splash brand Latin logo row is kept LTR
-      final ltrFinder = find.byWidgetPredicate(
-        (widget) => widget is Directionality && widget.textDirection == TextDirection.ltr,
-      );
-      expect(ltrFinder, findsWidgets);
-
-      // In RTL, the navigation forward arrow in OnboardingBottomSection is flipped (scaleX == -1)
-      final arrowFinder = find.byIcon(Icons.arrow_forward_rounded);
-      final transformWidget = tester.widget<Transform>(
-        find.ancestor(of: arrowFinder, matching: find.byType(Transform)).first,
-      );
-      expect(transformWidget.transform.storage[0], -1.0);
-    });
-
-    testWidgets('English Locale (en) sets LTR directionality and renders English strings', (
-      tester,
-    ) async {
-      await tester.pumpWidget(
-        createTestLocalizedApp(
-          locale: const Locale('en'),
-          child: Column(
-            children: [
-              const SplashBrandText(
-                textFade: AlwaysStoppedAnimation(1.0),
-                textSlide: AlwaysStoppedAnimation(0.0),
-              ),
-              const SplashFooter(footerFade: AlwaysStoppedAnimation(1.0)),
-              OnboardingTopBar(currentPage: 0, totalPages: 3, onSkip: () {}),
-              OnboardingBottomSection(
-                currentPage: 0,
-                totalPages: 3,
-                onNext: () {},
-                onPrevious: () {},
-                onDone: () {},
-                onSignIn: () {},
-              ),
-            ],
-          ),
-        ),
-      );
-      await tester.pump();
-      await tester.pump();
-
-      // App text direction inside MaterialApp must be LTR for English
-      final scaffoldElement = tester.element(find.byType(Scaffold).first);
-      expect(Directionality.of(scaffoldElement), TextDirection.ltr);
-
-      // Splash English strings rendered
-      expect(find.text('Clinical Clarity & Care'), findsOneWidget);
-      expect(find.text('Certified Healthcare Platform'), findsOneWidget);
-
-      // Onboarding English strings rendered
-      expect(find.text('Skip'), findsOneWidget);
-      expect(find.text('Step 1 of 3'), findsOneWidget);
-      expect(find.text('Get Started'), findsOneWidget);
-
-      // In LTR, the navigation forward arrow in OnboardingBottomSection is not flipped (scaleX == 1)
-      final arrowFinder = find.byIcon(Icons.arrow_forward_rounded);
-      final transformWidget = tester.widget<Transform>(
-        find.ancestor(of: arrowFinder, matching: find.byType(Transform)).first,
-      );
-      expect(transformWidget.transform.storage[0], 1.0);
-    });
-
-    testWidgets('OnboardingPageItem renders correct translations in Arabic', (tester) async {
       final page1 = OnboardingModel.defaultPages[0];
 
       await tester.pumpWidget(
@@ -183,12 +198,14 @@ void main() {
       await tester.pump();
       await tester.pump();
 
-      expect(find.text('رعاية صحية موثقة'), findsOneWidget);
-      expect(find.text('صيدليتك المتكاملة،\nفي أي وقت وأي مكان'), findsOneWidget);
-      expect(find.text('✓ +10,000 منتج أصلي  •  ✓ دعم صيدلي مرخص'), findsOneWidget);
+      expect(find.text('تصفح المنتجات'), findsOneWidget);
+      expect(find.text('منتجات الفرع\nفي مكان واحد'), findsOneWidget);
+      expect(find.text('تصفح المنتجات وابحث بالاسم'), findsOneWidget);
     });
 
-    testWidgets('OnboardingPageItem renders correct translations in English', (tester) async {
+    testWidgets('OnboardingPageItem renders correct translations in English', (
+      tester,
+    ) async {
       final page1 = OnboardingModel.defaultPages[0];
 
       await tester.pumpWidget(
@@ -200,12 +217,14 @@ void main() {
       await tester.pump();
       await tester.pump();
 
-      expect(find.text('Verified Healthcare'), findsOneWidget);
-      expect(find.text('Your Pharmacy,\nAnytime & Anywhere'), findsOneWidget);
-      expect(find.text('✓ 10,000+ Genuine Products  •  ✓ Licensed Support'), findsOneWidget);
+      expect(find.text('Browse products'), findsOneWidget);
+      expect(find.text('Branch products\nin one place'), findsOneWidget);
+      expect(find.text('Browse products and search by name'), findsOneWidget);
     });
 
-    testWidgets('Dynamic locale switching updates text and Directionality', (tester) async {
+    testWidgets('Dynamic locale switching updates text and Directionality', (
+      tester,
+    ) async {
       late BuildContext capturedContext;
 
       await tester.pumpWidget(
@@ -228,7 +247,9 @@ void main() {
                 home: Scaffold(
                   body: Builder(
                     builder: (scaffoldContext) {
-                      return Text(scaffoldContext.tr(AppLocaleKeys.onboardingGetStarted));
+                      return Text(
+                        scaffoldContext.tr(AppLocaleKeys.onboardingGetStarted),
+                      );
                     },
                   ),
                 ),

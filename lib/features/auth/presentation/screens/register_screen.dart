@@ -11,7 +11,6 @@ import 'package:index_pharma/features/auth/domain/entities/user.dart';
 import 'package:index_pharma/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:index_pharma/features/auth/presentation/cubit/auth_state.dart';
 import '../widgets/auth_failure_banner.dart';
-import '../widgets/clinical_trust_footer.dart';
 import '../widgets/register_form.dart';
 
 /// Clinical Customer Registration Screen adhering to Stitch Design specifications (A2_Register).
@@ -52,13 +51,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
               if (state is AuthAuthenticated) {
                 widget.onRegisterSuccess?.call(state.user);
                 final role = state.user.role;
-                final isStaff = role == UserRole.pharmacist ||
+                final isStaff =
+                    role == UserRole.pharmacist ||
                     role == UserRole.admin ||
                     role == UserRole.superadmin;
                 final safeFrom = widget.from != null
                     ? AppRouter.sanitizeReturnRoute(widget.from!, role)
                     : null;
-                final target = safeFrom ??
+                final target =
+                    safeFrom ??
                     (isStaff
                         ? AppRouter.kStaffDashboardView
                         : AppRouter.kStoreView);
@@ -66,7 +67,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
               }
             },
             builder: (context, state) {
-              final activeFailure = (state is AuthFailure && state.failure != _dismissedFailure)
+              final activeFailure =
+                  (state is AuthFailure && state.failure != _dismissedFailure)
                   ? state.failure
                   : null;
 
@@ -80,7 +82,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   children: [
                     // Header Badge & Clinical Portal Title
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 4,
+                      ),
                       decoration: BoxDecoration(
                         color: colors.brandMintSurface,
                         borderRadius: AppRadii.roundedFull,
@@ -99,7 +104,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           const SizedBox(width: AppSpacing.space2xs),
                           Text(
                             AppLocaleKeys.authRegisterBadge.tr(),
-                            style: AppTypography.labelSm(color: colors.brandEmeraldDark),
+                            style: AppTypography.labelSm(
+                              color: colors.brandEmeraldDark,
+                            ),
                           ),
                         ],
                       ),
@@ -134,7 +141,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     const SizedBox(height: AppSpacing.spaceLg),
 
                     // Medical Confidentiality & Security Reassurance
-                    const ClinicalTrustFooter(isDetailed: true),
                     const SizedBox(height: AppSpacing.spaceLg),
 
                     // Footer Link Back to Login
@@ -144,19 +150,26 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         children: [
                           Text(
                             AppLocaleKeys.authAlreadyHaveAccount.tr(),
-                            style: AppTypography.bodyMd(color: colors.secondary),
+                            style: AppTypography.bodyMd(
+                              color: colors.secondary,
+                            ),
                           ),
                           InkWell(
                             onTap: widget.onNavigateToLogin,
                             borderRadius: AppRadii.roundedSm,
                             child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 4,
+                                vertical: 2,
+                              ),
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   Text(
                                     AppLocaleKeys.authSignInLink.tr(),
-                                    style: AppTypography.labelLg(color: colors.primaryBrand),
+                                    style: AppTypography.labelLg(
+                                      color: colors.primaryBrand,
+                                    ),
                                   ),
                                   const SizedBox(width: 2),
                                   Icon(

@@ -81,47 +81,51 @@ void main() {
     );
   }
 
-  testWidgets('renders celebration banner, order number, status, payment, total, and actions in Arabic',
-      (tester) async {
-    await tester.pumpWidget(createWidgetUnderTest(order: sampleOrder));
-    await tester.pumpAndSettle();
+  testWidgets(
+    'renders celebration banner, order number, status, payment, total, and actions in Arabic',
+    (tester) async {
+      await tester.pumpWidget(createWidgetUnderTest(order: sampleOrder));
+      await tester.pumpAndSettle();
 
-    expect(find.text('تم استلام طلبك بنجاح!'), findsOneWidget);
-    expect(find.text('ONL-20261018-001'), findsOneWidget);
-    expect(find.text('قيد الانتظار'), findsOneWidget);
-    expect(find.text('الدفع نقداً عند الاستلام (كاش)'), findsOneWidget);
-    expect(find.text('170.00'), findsOneWidget);
-    expect(find.text('إجراءات المراجعة الدوائية'), findsOneWidget);
-    expect(find.byKey(const Key('btn_view_order_details')), findsOneWidget);
-    expect(find.byKey(const Key('btn_continue_shopping')), findsOneWidget);
-  });
+      expect(find.text('تم استلام طلبك بنجاح!'), findsOneWidget);
+      expect(find.text('ONL-20261018-001'), findsOneWidget);
+      expect(find.text('قيد الانتظار'), findsOneWidget);
+      expect(find.text('الدفع نقداً عند الاستلام (كاش)'), findsOneWidget);
+      expect(find.text('170.00'), findsOneWidget);
+      expect(find.text('متابعة الطلب'), findsOneWidget);
+      expect(find.byKey(const Key('btn_view_order_details')), findsOneWidget);
+      expect(find.byKey(const Key('btn_continue_shopping')), findsOneWidget);
+    },
+  );
 
-  testWidgets('copy order number button copies to clipboard and gives feedback',
-      (tester) async {
-    // Intercept clipboard calls
-    final log = <String>[];
-    tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
-      SystemChannels.platform,
-      (MethodCall methodCall) async {
-        if (methodCall.method == 'Clipboard.setData') {
-          log.add(methodCall.arguments['text'] as String);
-        }
-        return null;
-      },
-    );
+  testWidgets(
+    'copy order number button copies to clipboard and gives feedback',
+    (tester) async {
+      // Intercept clipboard calls
+      final log = <String>[];
+      tester.binding.defaultBinaryMessenger.setMockMethodCallHandler(
+        SystemChannels.platform,
+        (MethodCall methodCall) async {
+          if (methodCall.method == 'Clipboard.setData') {
+            log.add(methodCall.arguments['text'] as String);
+          }
+          return null;
+        },
+      );
 
-    await tester.pumpWidget(createWidgetUnderTest(order: sampleOrder));
-    await tester.pumpAndSettle();
+      await tester.pumpWidget(createWidgetUnderTest(order: sampleOrder));
+      await tester.pumpAndSettle();
 
-    expect(find.text('نسخ'), findsOneWidget);
+      expect(find.text('نسخ'), findsOneWidget);
 
-    await tester.tap(find.byKey(const Key('btn_copy_order_number')));
-    await tester.pump();
+      await tester.tap(find.byKey(const Key('btn_copy_order_number')));
+      await tester.pump();
 
-    expect(log, contains('ONL-20261018-001'));
-    expect(find.text('تم النسخ'), findsOneWidget);
+      expect(log, contains('ONL-20261018-001'));
+      expect(find.text('تم النسخ'), findsOneWidget);
 
-    // Advance 2-second timer to clean up pending timers
-    await tester.pump(const Duration(seconds: 2));
-  });
+      // Advance 2-second timer to clean up pending timers
+      await tester.pump(const Duration(seconds: 2));
+    },
+  );
 }

@@ -10,7 +10,6 @@ import 'package:index_pharma/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:index_pharma/features/auth/presentation/cubit/auth_state.dart';
 import '../widgets/auth_brand_header.dart';
 import '../widgets/auth_failure_banner.dart';
-import '../widgets/clinical_trust_footer.dart';
 import '../widgets/guest_access_card.dart';
 import '../widgets/login_form.dart';
 
@@ -53,13 +52,15 @@ class _LoginScreenState extends State<LoginScreen> {
               if (state is AuthAuthenticated) {
                 widget.onLoginSuccess?.call(state.user);
                 final role = state.user.role;
-                final isStaff = role == UserRole.pharmacist ||
+                final isStaff =
+                    role == UserRole.pharmacist ||
                     role == UserRole.admin ||
                     role == UserRole.superadmin;
                 final safeFrom = widget.from != null
                     ? AppRouter.sanitizeReturnRoute(widget.from!, role)
                     : null;
-                final target = safeFrom ??
+                final target =
+                    safeFrom ??
                     (isStaff
                         ? AppRouter.kStaffDashboardView
                         : AppRouter.kStoreView);
@@ -67,7 +68,8 @@ class _LoginScreenState extends State<LoginScreen> {
               }
             },
             builder: (context, state) {
-              final activeFailure = (state is AuthFailure &&
+              final activeFailure =
+                  (state is AuthFailure &&
                       state.failure != _dismissedFailure &&
                       state.failure is! Unauthorized)
                   ? state.failure
@@ -102,12 +104,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     const SizedBox(height: AppSpacing.spaceLg),
 
                     // Guest Browsing Card
-                    GuestAccessCard(
-                      onGuestTap: widget.onNavigateToGuest,
-                    ),
+                    GuestAccessCard(onGuestTap: widget.onNavigateToGuest),
 
                     // Security & Encryption Reassurance
-                    const ClinicalTrustFooter(),
                   ],
                 ),
               );

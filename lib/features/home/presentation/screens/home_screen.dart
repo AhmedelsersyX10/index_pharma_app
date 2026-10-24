@@ -23,7 +23,6 @@ import '../widgets/home_featured_products_section.dart';
 import '../widgets/home_header_bar.dart';
 import '../widgets/home_hero_banner.dart';
 import '../widgets/home_prescription_upload_card.dart';
-import '../widgets/home_storage_guarantee_footer.dart';
 
 /// Full customer Home screen adhering to Stitch design B2 (Arabic RTL / English LTR).
 ///
@@ -66,7 +65,8 @@ class HomeScreen extends StatelessWidget {
         providers: [
           if (branchCubit != null) BlocProvider.value(value: branchCubit!),
           if (settingsCubit != null) BlocProvider.value(value: settingsCubit!),
-          if (categoriesCubit != null) BlocProvider.value(value: categoriesCubit!),
+          if (categoriesCubit != null)
+            BlocProvider.value(value: categoriesCubit!),
           if (productsCubit != null) BlocProvider.value(value: productsCubit!),
           if (cartCubit != null) BlocProvider.value(value: cartCubit!),
         ],
@@ -121,20 +121,25 @@ class _HomeViewState extends State<_HomeView> {
         context.read<ProductsCubit>().loadFirstPage(branchId: currentBranchId);
       }
     } else {
-      context.read<ProductsCubit>().loadFirstPage();
+      _lastLoadedBranchId = null;
+      context.read<ProductsCubit>().clearBranchScope();
     }
   }
 
   Future<void> _onRefresh() async {
-    final branchState = context.read<BranchCubit>().state;
-    final branchId = branchState is BranchLoaded ? branchState.selectedBranchId : null;
-
     await Future.wait<dynamic>([
       context.read<BranchCubit>().fetchBranches(),
       context.read<SettingsCubit>().fetchSettings(),
       context.read<CategoriesCubit>().fetchCategories(),
-      context.read<ProductsCubit>().loadFirstPage(branchId: branchId),
     ]);
+    if (!mounted) return;
+    final state = context.read<BranchCubit>().state;
+    if (state is BranchLoaded && state.selectedBranch != null) {
+      _lastLoadedBranchId = state.selectedBranchId;
+      await context.read<ProductsCubit>().loadFirstPage(
+        branchId: state.selectedBranchId,
+      );
+    }
   }
 
   void _handleProtectedNav(String route) {
@@ -182,7 +187,12 @@ class _HomeViewState extends State<_HomeView> {
             state.selectedBranchId != null &&
             state.selectedBranchId != _lastLoadedBranchId) {
           _lastLoadedBranchId = state.selectedBranchId;
-          context.read<ProductsCubit>().loadFirstPage(branchId: state.selectedBranchId);
+          context.read<ProductsCubit>().loadFirstPage(
+            branchId: state.selectedBranchId,
+          );
+        } else if (state is! BranchLoaded || state.selectedBranch == null) {
+          _lastLoadedBranchId = null;
+          context.read<ProductsCubit>().clearBranchScope();
         }
       },
       child: Scaffold(
@@ -218,7 +228,8 @@ class _HomeViewState extends State<_HomeView> {
 
                 // 4. Prescription Upload Card
                 HomePrescriptionUploadCard(
-                  onUploadTap: () => _handleProtectedNav(AppRouter.kPrescriptionView),
+                  onUploadTap: () =>
+                      _handleProtectedNav(AppRouter.kPrescriptionView),
                 ),
                 const SizedBox(height: AppSpacing.spaceLg),
 
@@ -236,16 +247,15 @@ class _HomeViewState extends State<_HomeView> {
                     );
                   },
                 ),
-                const SizedBox(height: AppSpacing.spaceLg),
-
-                // 7. Clinical Quality & Storage Guarantee Footer
-                const HomeStorageGuaranteeFooter(),
                 const SizedBox(height: AppSpacing.space2xl),
               ],
             ),
           ),
         ),
-        bottomNavigationBar: CustomerBottomNav(currentIndex: 0, onTap: _onBottomNavTapped),
+        bottomNavigationBar: CustomerBottomNav(
+          currentIndex: 0,
+          onTap: _onBottomNavTapped,
+        ),
       ),
     );
   }

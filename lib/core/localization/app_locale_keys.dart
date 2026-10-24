@@ -64,7 +64,8 @@ abstract class AppLocaleKeys {
   static const onboardingAlreadyHaveAccount = 'onboarding.already_have_account';
   static const onboardingSignIn = 'onboarding.sign_in';
   static const onboardingWelcomeMessage = 'onboarding.welcome_message';
-  static const onboardingNavigatingToSignIn = 'onboarding.navigating_to_sign_in';
+  static const onboardingNavigatingToSignIn =
+      'onboarding.navigating_to_sign_in';
 
   static const onboardingPage1Badge = 'onboarding.page1.badge';
   static const onboardingPage1Title = 'onboarding.page1.title';
@@ -84,7 +85,6 @@ abstract class AppLocaleKeys {
   // Auth - General & Login
   static const authLoginTitle = 'auth.login_title';
   static const authLoginSubtitle = 'auth.login_subtitle';
-  static const authClinicalBadge = 'auth.clinical_badge';
   static const authLoginCardTitle = 'auth.login_card_title';
   static const authLoginCardSubtitle = 'auth.login_card_subtitle';
   static const authEmailLabel = 'auth.email_label';
@@ -100,17 +100,18 @@ abstract class AppLocaleKeys {
   static const authGuestTitle = 'auth.guest_title';
   static const authGuestSubtitle = 'auth.guest_subtitle';
   static const authGuestButton = 'auth.guest_button';
-  static const authDataSecurityNote = 'auth.data_security_note';
-  static const authLoginRequiredBadge = 'auth.login_required_badge';
   static const authLoginRequiredTitle = 'auth.login_required_title';
   static const authLoginRequiredDesc = 'auth.login_required_desc';
   static const authLoginRequiredSaveRx = 'auth.login_required_save_rx';
-  static const authLoginRequiredTrackOrders = 'auth.login_required_track_orders';
-  static const authLoginRequiredGenuineMeds = 'auth.login_required_genuine_meds';
+  static const authLoginRequiredTrackOrders =
+      'auth.login_required_track_orders';
+  static const authLoginRequiredGenuineMeds =
+      'auth.login_required_genuine_meds';
   static const authLoginRequiredBtnLogin = 'auth.login_required_btn_login';
-  static const authLoginRequiredBtnRegister = 'auth.login_required_btn_register';
-  static const authLoginRequiredBtnContinueGuest = 'auth.login_required_btn_continue_guest';
-  static const authLoginRequiredPrivacyPill = 'auth.login_required_privacy_pill';
+  static const authLoginRequiredBtnRegister =
+      'auth.login_required_btn_register';
+  static const authLoginRequiredBtnContinueGuest =
+      'auth.login_required_btn_continue_guest';
 
   // Auth - Register
   static const authRegisterBadge = 'auth.register_badge';
@@ -128,25 +129,29 @@ abstract class AppLocaleKeys {
   static const authRegisterButton = 'auth.register_button';
   static const authAlreadyHaveAccount = 'auth.already_have_account';
   static const authSignInLink = 'auth.sign_in_link';
-  static const authMedicalConfidentialityTitle = 'auth.medical_confidentiality_title';
-  static const authMedicalConfidentialityDesc = 'auth.medical_confidentiality_desc';
 
   // Auth - Validation
   static const authValidationEmailRequired = 'auth.validation.email_required';
   static const authValidationEmailInvalid = 'auth.validation.email_invalid';
-  static const authValidationPasswordRequired = 'auth.validation.password_required';
-  static const authValidationPasswordTooShort = 'auth.validation.password_too_short';
+  static const authValidationPasswordRequired =
+      'auth.validation.password_required';
+  static const authValidationPasswordTooShort =
+      'auth.validation.password_too_short';
   static const authValidationNameRequired = 'auth.validation.name_required';
   static const authValidationPhoneRequired = 'auth.validation.phone_required';
   static const authValidationPhoneInvalid = 'auth.validation.phone_invalid';
-  static const authValidationAddressRequired = 'auth.validation.address_required';
+  static const authValidationAddressRequired =
+      'auth.validation.address_required';
 
   // Auth - Errors & Failures
   static const authErrorLoginFailedTitle = 'auth.error.login_failed_title';
   static const authErrorInvalidCredentials = 'auth.error.invalid_credentials';
-  static const authErrorRegisterFailedTitle = 'auth.error.register_failed_title';
-  static const authErrorEmailAlreadyExistsTitle = 'auth.error.email_already_exists_title';
-  static const authErrorEmailAlreadyExistsDesc = 'auth.error.email_already_exists_desc';
+  static const authErrorRegisterFailedTitle =
+      'auth.error.register_failed_title';
+  static const authErrorEmailAlreadyExistsTitle =
+      'auth.error.email_already_exists_title';
+  static const authErrorEmailAlreadyExistsDesc =
+      'auth.error.email_already_exists_desc';
   static const authErrorNetwork = 'auth.error.network';
   static const authErrorTimeout = 'auth.error.timeout';
   static const authErrorServer = 'auth.error.server';
@@ -179,9 +184,11 @@ abstract class AppLocaleKeys {
   static const productsTotalCount = 'products.total_count';
   static const productsLiveStock = 'products.live_stock';
   static const productsAvailableOnly = 'products.available_only';
-  static const productsPrescriptionHelpTitle = 'products.prescription_help_title';
+  static const productsPrescriptionHelpTitle =
+      'products.prescription_help_title';
   static const productsPrescriptionHelpDesc = 'products.prescription_help_desc';
-  static const productsUploadPrescriptionAction = 'products.upload_prescription_action';
+  static const productsUploadPrescriptionAction =
+      'products.upload_prescription_action';
 
   // Home
   static const homeTitle = 'home.title';
@@ -189,11 +196,9 @@ abstract class AppLocaleKeys {
   static const homeSelectBranch = 'home.select_branch';
   static const homeLiveStock = 'home.live_stock';
   static const homeSearchHint = 'home.search_hint';
-  static const homeHeroBadge = 'home.hero_badge';
   static const homeHeroTitleDefault = 'home.hero_title_default';
   static const homeHeroDescDefault = 'home.hero_desc_default';
   static const homeHeroCta = 'home.hero_cta';
-  static const homeHeroCoverage = 'home.hero_coverage';
   static const homeRxServiceTitle = 'home.rx_service_title';
   static const homeRxServiceSubtitle = 'home.rx_service_subtitle';
   static const homeRxBadgeSecure = 'home.rx_badge_secure';
@@ -202,8 +207,6 @@ abstract class AppLocaleKeys {
   static const homeRxCta = 'home.rx_cta';
   static const homeFeaturedTitle = 'home.featured_title';
   static const homeFeaturedSubtitle = 'home.featured_subtitle';
-  static const homeGuaranteeTitle = 'home.guarantee_title';
-  static const homeGuaranteeDesc = 'home.guarantee_desc';
   static const homeCartAdded = 'home.cart_added';
 
   // Navigation
@@ -216,30 +219,42 @@ abstract class AppLocaleKeys {
 
   // Placeholders
   static const placeholdersBrowseTitle = 'placeholders.browse_title';
-  static const placeholdersPrescriptionTitle = 'placeholders.prescription_title';
+  static const placeholdersPrescriptionTitle =
+      'placeholders.prescription_title';
   static const placeholdersOrdersTitle = 'placeholders.orders_title';
   static const placeholdersAccountTitle = 'placeholders.account_title';
   static const placeholdersCartTitle = 'placeholders.cart_title';
-  static const placeholdersUnderConstruction = 'placeholders.under_construction';
+  static const placeholdersUnderConstruction =
+      'placeholders.under_construction';
 
   // Product Details (Stitch B4)
   static const productDetailsTitle = 'product_details.title';
-  static const productDetailsCertifiedPharmacyBadge = 'product_details.certified_pharmacy_badge';
-  static const productDetailsMohRegisteredPill = 'product_details.moh_registered_pill';
-  static const productDetailsExpiryDateLabel = 'product_details.expiry_date_label';
-  static const productDetailsDispensingBranch = 'product_details.dispensing_branch';
+  static const productDetailsExpiryDateLabel =
+      'product_details.expiry_date_label';
+  static const productDetailsDispensingBranch =
+      'product_details.dispensing_branch';
   static const productDetailsAvailableUnits = 'product_details.available_units';
-  static const productDetailsRxRequiredTitle = 'product_details.rx_required_title';
-  static const productDetailsRxRequiredDesc = 'product_details.rx_required_desc';
-  static const productDetailsUploadPrescriptionBtn = 'product_details.upload_prescription_btn';
-  static const productDetailsActiveIngredientLabel = 'product_details.active_ingredient_label';
-  static const productDetailsBarcodeGtinLabel = 'product_details.barcode_gtin_label';
-  static const productDetailsUsageGuidelinesTitle = 'product_details.usage_guidelines_title';
-  static const productDetailsRequestedQuantity = 'product_details.requested_quantity';
-  static const productDetailsMaxAvailableStock = 'product_details.max_available_stock';
-  static const productDetailsTotalPriceLabel = 'product_details.total_price_label';
+  static const productDetailsRxRequiredTitle =
+      'product_details.rx_required_title';
+  static const productDetailsRxRequiredDesc =
+      'product_details.rx_required_desc';
+  static const productDetailsUploadPrescriptionBtn =
+      'product_details.upload_prescription_btn';
+  static const productDetailsActiveIngredientLabel =
+      'product_details.active_ingredient_label';
+  static const productDetailsBarcodeGtinLabel =
+      'product_details.barcode_gtin_label';
+  static const productDetailsUsageGuidelinesTitle =
+      'product_details.usage_guidelines_title';
+  static const productDetailsRequestedQuantity =
+      'product_details.requested_quantity';
+  static const productDetailsMaxAvailableStock =
+      'product_details.max_available_stock';
+  static const productDetailsTotalPriceLabel =
+      'product_details.total_price_label';
   static const productDetailsAddToCartCta = 'product_details.add_to_cart_cta';
-  static const productDetailsAddedToCartSuccess = 'product_details.added_to_cart_success';
+  static const productDetailsAddedToCartSuccess =
+      'product_details.added_to_cart_success';
   static const productDetailsViewCart = 'product_details.view_cart';
   static const productDetailsNotFoundDesc = 'product_details.not_found_desc';
   static const productDetailsOutOfStock = 'product_details.out_of_stock';
@@ -268,7 +283,6 @@ abstract class AppLocaleKeys {
   static const cartTotalLabel = 'cart.total_label';
   static const cartTotalNote = 'cart.total_note';
   static const cartCurrency = 'cart.currency';
-  static const cartEdaCompliance = 'cart.eda_compliance';
   static const cartStickyTotalLabel = 'cart.sticky_total_label';
   static const cartCheckoutBtn = 'cart.checkout_btn';
   static const cartEmptyTitle = 'cart.empty_title';
@@ -301,10 +315,10 @@ abstract class AppLocaleKeys {
   static const prescriptionsPreviewTitle = 'prescriptions.preview_title';
   static const prescriptionsReplaceImage = 'prescriptions.replace_image';
   static const prescriptionsDeleteImage = 'prescriptions.delete_image';
-  static const prescriptionsQualityExcellent = 'prescriptions.quality_excellent';
   static const prescriptionsErrorSizeTitle = 'prescriptions.error_size_title';
   static const prescriptionsErrorSizeDesc = 'prescriptions.error_size_desc';
-  static const prescriptionsErrorUploadTitle = 'prescriptions.error_upload_title';
+  static const prescriptionsErrorUploadTitle =
+      'prescriptions.error_upload_title';
   static const prescriptionsRetryUpload = 'prescriptions.retry_upload';
   static const prescriptionsCancel = 'prescriptions.cancel';
   static const prescriptionsUploadingTitle = 'prescriptions.uploading_title';
@@ -312,7 +326,8 @@ abstract class AppLocaleKeys {
   static const prescriptionsNotesLabel = 'prescriptions.notes_label';
   static const prescriptionsNotesHint = 'prescriptions.notes_hint';
   static const prescriptionsNotesDesc = 'prescriptions.notes_desc';
-  static const prescriptionsChipAlternatives = 'prescriptions.chip_alternatives';
+  static const prescriptionsChipAlternatives =
+      'prescriptions.chip_alternatives';
   static const prescriptionsChipDosage = 'prescriptions.chip_dosage';
   static const prescriptionsChipUrgent = 'prescriptions.chip_urgent';
   static const prescriptionsStepsTitle = 'prescriptions.steps_title';
@@ -320,42 +335,55 @@ abstract class AppLocaleKeys {
   static const prescriptionsStep2 = 'prescriptions.step_2';
   static const prescriptionsStep3 = 'prescriptions.step_3';
   static const prescriptionsSubmitBtn = 'prescriptions.submit_btn';
-  static const prescriptionsConfirmationTitle = 'prescriptions.confirmation_title';
-  static const prescriptionsConfirmationBadge = 'prescriptions.confirmation_badge';
-  static const prescriptionsConfirmationDesc = 'prescriptions.confirmation_desc';
+  static const prescriptionsConfirmationTitle =
+      'prescriptions.confirmation_title';
+  static const prescriptionsConfirmationBadge =
+      'prescriptions.confirmation_badge';
+  static const prescriptionsConfirmationDesc =
+      'prescriptions.confirmation_desc';
   static const prescriptionsRxRefLabel = 'prescriptions.rx_ref_label';
   static const prescriptionsCopyCode = 'prescriptions.copy_code';
   static const prescriptionsCopied = 'prescriptions.copied';
   static const prescriptionsDateLabel = 'prescriptions.date_label';
   static const prescriptionsStatusLabel = 'prescriptions.status_label';
-  static const prescriptionsViewMyPrescriptionsBtn = 'prescriptions.view_my_prescriptions_btn';
+  static const prescriptionsViewMyPrescriptionsBtn =
+      'prescriptions.view_my_prescriptions_btn';
   static const prescriptionsBackToHomeBtn = 'prescriptions.back_to_home_btn';
-  static const prescriptionsMyPrescriptionsTitle = 'prescriptions.my_prescriptions_title';
+  static const prescriptionsMyPrescriptionsTitle =
+      'prescriptions.my_prescriptions_title';
   static const prescriptionsCountBadge = 'prescriptions.count_badge';
-  static const prescriptionsSingleCountBadge = 'prescriptions.single_count_badge';
+  static const prescriptionsSingleCountBadge =
+      'prescriptions.single_count_badge';
   static const prescriptionsUploadNewBtn = 'prescriptions.upload_new_btn';
   static const prescriptionsViewDetailsBtn = 'prescriptions.view_details_btn';
   static const prescriptionsEmptyTitle = 'prescriptions.empty_title';
   static const prescriptionsEmptyDesc = 'prescriptions.empty_desc';
   static const prescriptionsEmptyAction = 'prescriptions.empty_action';
   static const prescriptionsDetailsTitle = 'prescriptions.details_title';
-  static const prescriptionsUploadedImageTitle = 'prescriptions.uploaded_image_title';
+  static const prescriptionsUploadedImageTitle =
+      'prescriptions.uploaded_image_title';
   static const prescriptionsZoomHint = 'prescriptions.zoom_hint';
-  static const prescriptionsCustomerNotesTitle = 'prescriptions.customer_notes_title';
-  static const prescriptionsPharmacistNotesTitle = 'prescriptions.pharmacist_notes_title';
+  static const prescriptionsCustomerNotesTitle =
+      'prescriptions.customer_notes_title';
+  static const prescriptionsPharmacistNotesTitle =
+      'prescriptions.pharmacist_notes_title';
   static const prescriptionsRejectionTitle = 'prescriptions.rejection_title';
-  static const prescriptionsRejectionReasonLabel = 'prescriptions.rejection_reason_label';
-  static const prescriptionsQuotedPriceTitle = 'prescriptions.quoted_price_title';
+  static const prescriptionsRejectionReasonLabel =
+      'prescriptions.rejection_reason_label';
+  static const prescriptionsQuotedPriceTitle =
+      'prescriptions.quoted_price_title';
   static const prescriptionsTotalPriceLabel = 'prescriptions.total_price_label';
   static const prescriptionsCurrency = 'prescriptions.currency';
   static const prescriptionsReuploadBtn = 'prescriptions.reupload_btn';
   static const prescriptionsTapToZoom = 'prescriptions.tap_to_zoom';
   static const prescriptionsAssignedBranch = 'prescriptions.assigned_branch';
   static const prescriptionsPrivacyNotice = 'prescriptions.privacy_notice';
-  static const prescriptionsChipAlternativesText = 'prescriptions.chip_alternatives_text';
+  static const prescriptionsChipAlternativesText =
+      'prescriptions.chip_alternatives_text';
   static const prescriptionsChipDosageText = 'prescriptions.chip_dosage_text';
   static const prescriptionsChipUrgentText = 'prescriptions.chip_urgent_text';
-  static const prescriptionsDefaultRejectionReason = 'prescriptions.default_rejection_reason';
+  static const prescriptionsDefaultRejectionReason =
+      'prescriptions.default_rejection_reason';
 
   // Account & Profile
   static const accountTitle = 'account.title';
@@ -373,7 +401,6 @@ abstract class AppLocaleKeys {
   static const accountPreferredBranchTitle = 'account.preferred_branch_title';
   static const accountPreferredBranchDesc = 'account.preferred_branch_desc';
   static const accountChangeBranch = 'account.change_branch';
-  static const accountOpen247 = 'account.open_24_7';
   static const accountSectionPreferences = 'account.section_preferences';
   static const accountLanguageTitle = 'account.language_title';
   static const accountLanguageDesc = 'account.language_desc';
@@ -384,32 +411,28 @@ abstract class AppLocaleKeys {
   static const accountThemeLight = 'account.theme_light';
   static const accountThemeDark = 'account.theme_dark';
   static const accountThemeSystem = 'account.theme_system';
-  static const accountPrivacyPolicyTitle = 'account.privacy_policy_title';
-  static const accountPrivacyPolicyDesc = 'account.privacy_policy_desc';
-  static const accountEdaBadge = 'account.eda_badge';
-  static const accountLicensingTitle = 'account.licensing_title';
-  static const accountLicensingDesc = 'account.licensing_desc';
   static const accountLogoutBtn = 'account.logout_btn';
   static const accountLogoutModalTitle = 'account.logout_modal_title';
   static const accountLogoutModalDesc = 'account.logout_modal_desc';
   static const accountLogoutConfirm = 'account.logout_confirm';
   static const accountLogoutCancel = 'account.logout_cancel';
-  static const accountHotlineFooter = 'account.hotline_footer';
-  static const accountVersionFooter = 'account.version_footer';
 
   // Account Guest Mode
   static const accountGuestWelcomeTitle = 'account.guest_welcome_title';
   static const accountGuestWelcomeDesc = 'account.guest_welcome_desc';
   static const accountGuestLoginBtn = 'account.guest_login_btn';
   static const accountGuestRegisterBtn = 'account.guest_register_btn';
-  static const accountGuestBenefitRemindersTitle = 'account.guest_benefit_reminders_title';
-  static const accountGuestBenefitRemindersDesc = 'account.guest_benefit_reminders_desc';
-  static const accountGuestBenefitArchiveTitle = 'account.guest_benefit_archive_title';
-  static const accountGuestBenefitArchiveDesc = 'account.guest_benefit_archive_desc';
+  static const accountGuestBenefitRemindersTitle =
+      'account.guest_benefit_reminders_title';
+  static const accountGuestBenefitRemindersDesc =
+      'account.guest_benefit_reminders_desc';
+  static const accountGuestBenefitArchiveTitle =
+      'account.guest_benefit_archive_title';
+  static const accountGuestBenefitArchiveDesc =
+      'account.guest_benefit_archive_desc';
   static const accountGuestSectionInfo = 'account.guest_section_info';
   static const accountGuestAboutTitle = 'account.guest_about_title';
   static const accountGuestAboutDesc = 'account.guest_about_desc';
-  static const accountGuestSupportFooter = 'account.guest_support_footer';
 
   // Edit Profile (D6)
   static const editProfileTitle = 'account.edit_profile_title';
@@ -423,7 +446,6 @@ abstract class AppLocaleKeys {
   static const editProfilePhoneHint = 'account.edit_phone_hint';
   static const editProfileAddressLabel = 'account.edit_address_label';
   static const editProfileAddressHint = 'account.edit_address_hint';
-  static const editProfilePrivacyShield = 'account.edit_privacy_shield';
   static const editProfileBranchCardTitle = 'account.edit_branch_card_title';
   static const editProfileBranchVerified = 'account.edit_branch_verified';
   static const editProfileSaveBtn = 'account.edit_save_btn';
@@ -442,17 +464,21 @@ abstract class AppLocaleKeys {
   static const languageEnglishBadge = 'language.english_badge';
   static const languageContinueArabic = 'language.continue_arabic';
   static const languageContinueEnglish = 'language.continue_english';
-  static const languageArabicIcon = 'language.arabic_icon';
 
   // Prescriptions Extensions
-  static const prescriptionsSubmittedStep1Title = 'prescriptions.submitted_step1_title';
-  static const prescriptionsSubmittedStep2Title = 'prescriptions.submitted_step2_title';
-  static const prescriptionsSubmittedStep3Title = 'prescriptions.submitted_step3_title';
+  static const prescriptionsSubmittedStep1Title =
+      'prescriptions.submitted_step1_title';
+  static const prescriptionsSubmittedStep2Title =
+      'prescriptions.submitted_step2_title';
+  static const prescriptionsSubmittedStep3Title =
+      'prescriptions.submitted_step3_title';
   static const prescriptionsStepNum1 = 'prescriptions.step_num_1';
   static const prescriptionsStepNum2 = 'prescriptions.step_num_2';
   static const prescriptionsStepNum3 = 'prescriptions.step_num_3';
-  static const prescriptionsSelectImageFirst = 'prescriptions.select_image_first';
-  static const prescriptionsErrorLoadingList = 'prescriptions.error_loading_list';
+  static const prescriptionsSelectImageFirst =
+      'prescriptions.select_image_first';
+  static const prescriptionsErrorLoadingList =
+      'prescriptions.error_loading_list';
   static const prescriptionsUploadError = 'prescriptions.upload_error';
   static const prescriptionsSubmitError = 'prescriptions.submit_error';
 
@@ -462,11 +488,13 @@ abstract class AppLocaleKeys {
 
   // Checkout Extensions
   static const checkoutTitle = 'checkout.title';
-  static const checkoutConflictItemUnavailable = 'checkout.conflict_item_unavailable';
+  static const checkoutConflictItemUnavailable =
+      'checkout.conflict_item_unavailable';
   static const checkoutConflictStockChanged = 'checkout.conflict_stock_changed';
   static const checkoutErrorEmptyCart = 'checkout.error_empty_cart';
   static const checkoutErrorAddressRequired = 'checkout.error_address_required';
-  static const checkoutErrorAddressTooShort = 'checkout.error_address_too_short';
+  static const checkoutErrorAddressTooShort =
+      'checkout.error_address_too_short';
   static const checkoutErrorPhoneRequired = 'checkout.error_phone_required';
   static const checkoutErrorPhoneInvalid = 'checkout.error_phone_invalid';
   static const checkoutErrorSubmitFailed = 'checkout.error_submit_failed';
@@ -488,8 +516,10 @@ abstract class AppLocaleKeys {
 
   // Staff Placeholders
   static const staffOrdersPlaceholderTitle = 'staff.orders_placeholder_title';
-  static const staffPrescriptionsPlaceholderTitle = 'staff.prescriptions_placeholder_title';
-  static const staffProductsPlaceholderTitle = 'staff.products_placeholder_title';
+  static const staffPrescriptionsPlaceholderTitle =
+      'staff.prescriptions_placeholder_title';
+  static const staffProductsPlaceholderTitle =
+      'staff.products_placeholder_title';
 
   // Staff Home (E1)
   static const staffHomeTitle = 'staff.home.title';

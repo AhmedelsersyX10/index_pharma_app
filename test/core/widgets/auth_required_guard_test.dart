@@ -38,8 +38,12 @@ class SynchronousDiskAssetLoader extends AssetLoader {
 
 class FakeOrdersRepoForGuardTest implements OrdersRepository {
   @override
-  Future<ApiResult<MyOrdersPage>> getMyOrders({int page = 1, int limit = 20}) async =>
-      const Success(MyOrdersPage(orders: [], total: 0, page: 1, limit: 20, totalPages: 0));
+  Future<ApiResult<MyOrdersPage>> getMyOrders({
+    int page = 1,
+    int limit = 20,
+  }) async => const Success(
+    MyOrdersPage(orders: [], total: 0, page: 1, limit: 20, totalPages: 0),
+  );
 }
 
 class FakeAuthRepository implements AuthRepository {
@@ -53,7 +57,10 @@ class FakeAuthRepository implements AuthRepository {
   );
 
   @override
-  Future<ApiResult<UserEntity>> login({required String email, required String password}) async {
+  Future<ApiResult<UserEntity>> login({
+    required String email,
+    required String password,
+  }) async {
     return loginResult;
   }
 
@@ -79,14 +86,10 @@ class FakeAuthRepository implements AuthRepository {
     String? name,
     String? phone,
     String? address,
-  }) async =>
-      loginResult;
+  }) async => loginResult;
 }
 
-Widget createTestLocalizedApp({
-  required Locale locale,
-  required Widget child,
-}) {
+Widget createTestLocalizedApp({required Locale locale, required Widget child}) {
   return EasyLocalization(
     key: ValueKey('EasyLocalization_${locale.languageCode}'),
     supportedLocales: const [Locale('ar'), Locale('en')],
@@ -136,56 +139,64 @@ void main() {
       authCubit.close();
     });
 
-    testWidgets('Guest is blocked: shows LoginRequiredPrompt screen and hides child', (tester) async {
-      await tester.pumpWidget(
-        createTestLocalizedApp(
-          locale: const Locale('ar'),
-          child: BlocProvider.value(
-            value: authCubit,
-            child: const AuthRequiredGuard(
-              routePath: '/orders',
-              child: Text('Secret Protected Content'),
+    testWidgets(
+      'Guest is blocked: shows LoginRequiredPrompt screen and hides child',
+      (tester) async {
+        await tester.pumpWidget(
+          createTestLocalizedApp(
+            locale: const Locale('ar'),
+            child: BlocProvider.value(
+              value: authCubit,
+              child: const AuthRequiredGuard(
+                routePath: '/orders',
+                child: Text('Secret Protected Content'),
+              ),
             ),
           ),
-        ),
-      );
-      await tester.pumpAndSettle();
+        );
+        await tester.pumpAndSettle();
 
-      // Child must NOT be rendered for guests
-      expect(find.text('Secret Protected Content'), findsNothing);
+        // Child must NOT be rendered for guests
+        expect(find.text('Secret Protected Content'), findsNothing);
 
-      // LoginRequiredPrompt screen elements must be visible
-      expect(find.byType(LoginRequiredPrompt), findsOneWidget);
-      expect(find.text('تسجيل الدخول مطلوب'), findsOneWidget);
-      expect(find.text('تسجيل الدخول'), findsOneWidget);
-      expect(find.text('إنشاء حساب جديد'), findsOneWidget);
-      expect(find.text('الاستمرار في التصفح كضيف'), findsOneWidget);
-    });
+        // LoginRequiredPrompt screen elements must be visible
+        expect(find.byType(LoginRequiredPrompt), findsOneWidget);
+        expect(find.text('تسجيل الدخول مطلوب'), findsOneWidget);
+        expect(find.text('تسجيل الدخول'), findsOneWidget);
+        expect(find.text('إنشاء حساب جديد'), findsOneWidget);
+        expect(find.text('الاستمرار في التصفح كضيف'), findsOneWidget);
+      },
+    );
 
-    testWidgets('Authenticated customer passes: renders child and hides prompt', (tester) async {
-      // Simulate authenticated state
-      await authCubit.login(email: 'test@index.com', password: 'password123');
+    testWidgets(
+      'Authenticated customer passes: renders child and hides prompt',
+      (tester) async {
+        // Simulate authenticated state
+        await authCubit.login(email: 'test@index.com', password: 'password123');
 
-      await tester.pumpWidget(
-        createTestLocalizedApp(
-          locale: const Locale('ar'),
-          child: BlocProvider.value(
-            value: authCubit,
-            child: const AuthRequiredGuard(
-              routePath: '/orders',
-              child: Text('Secret Protected Content'),
+        await tester.pumpWidget(
+          createTestLocalizedApp(
+            locale: const Locale('ar'),
+            child: BlocProvider.value(
+              value: authCubit,
+              child: const AuthRequiredGuard(
+                routePath: '/orders',
+                child: Text('Secret Protected Content'),
+              ),
             ),
           ),
-        ),
-      );
-      await tester.pumpAndSettle();
+        );
+        await tester.pumpAndSettle();
 
-      // Protected child must be rendered
-      expect(find.text('Secret Protected Content'), findsOneWidget);
-      expect(find.byType(LoginRequiredPrompt), findsNothing);
-    });
+        // Protected child must be rendered
+        expect(find.text('Secret Protected Content'), findsOneWidget);
+        expect(find.byType(LoginRequiredPrompt), findsNothing);
+      },
+    );
 
-    testWidgets('Custom fallback is rendered when user is guest', (tester) async {
+    testWidgets('Custom fallback is rendered when user is guest', (
+      tester,
+    ) async {
       await tester.pumpWidget(
         createTestLocalizedApp(
           locale: const Locale('ar'),
@@ -207,7 +218,9 @@ void main() {
   });
 
   group('LoginRequiredPrompt Unit & Interaction Tests', () {
-    testWidgets('Buttons trigger expected callbacks when tapped', (tester) async {
+    testWidgets('Buttons trigger expected callbacks when tapped', (
+      tester,
+    ) async {
       bool loginTapped = false;
       bool registerTapped = false;
       bool dismissTapped = false;
@@ -244,69 +257,81 @@ void main() {
       expect(dismissTapped, isTrue);
     });
 
-    testWidgets('RTL Arabic layout: Directionality is RTL and no insurance or English text', (tester) async {
-      await tester.pumpWidget(
-        createTestLocalizedApp(
-          locale: const Locale('ar'),
-          child: const Scaffold(
-            body: LoginRequiredPrompt(
-              returnRoute: '/prescription',
-              isBottomSheet: true,
+    testWidgets(
+      'RTL Arabic layout: Directionality is RTL and no insurance or English text',
+      (tester) async {
+        await tester.pumpWidget(
+          createTestLocalizedApp(
+            locale: const Locale('ar'),
+            child: const Scaffold(
+              body: LoginRequiredPrompt(
+                returnRoute: '/prescription',
+                isBottomSheet: true,
+              ),
             ),
           ),
-        ),
-      );
-      await tester.pumpAndSettle();
+        );
+        await tester.pumpAndSettle();
 
-      final directionality = Directionality.of(tester.element(find.byType(LoginRequiredPrompt)));
-      expect(directionality, equals(TextDirection.rtl));
+        final directionality = Directionality.of(
+          tester.element(find.byType(LoginRequiredPrompt)),
+        );
+        expect(directionality, equals(TextDirection.rtl));
 
-      // Arabic verified badges and labels
-      expect(find.text('منصة صيدلانية معتمدة وقانونية'), findsOneWidget);
-      expect(find.text('تسجيل الدخول مطلوب'), findsOneWidget);
-      expect(find.text('حفظ الروشتات'), findsOneWidget);
-      expect(find.text('تتبع الطلبات'), findsOneWidget);
-      expect(find.text('أدوية أصلية 100%'), findsOneWidget);
+        // Arabic verified badges and labels
+        expect(find.text('منصة صيدلانية معتمدة وقانونية'), findsNothing);
+        expect(find.text('تسجيل الدخول مطلوب'), findsOneWidget);
+        expect(find.text('حفظ الروشتات'), findsOneWidget);
+        expect(find.text('تتبع الطلبات'), findsOneWidget);
+        expect(find.text('تصفح المنتجات'), findsOneWidget);
 
-      // Verify no insurance wording is present
-      expect(find.textContaining('تأمين'), findsNothing);
-      expect(find.textContaining('Insurance'), findsNothing);
+        // Verify no insurance wording is present
+        expect(find.textContaining('تأمين'), findsNothing);
+        expect(find.textContaining('Insurance'), findsNothing);
 
-      // Verify no English acronym like HIPAA in Arabic mode
-      expect(find.textContaining('HIPAA'), findsNothing);
+        // Verify no English acronym like HIPAA in Arabic mode
+        expect(find.textContaining('HIPAA'), findsNothing);
 
-      // Verify privacy text in Arabic
-      expect(
-        find.text('بياناتك الصحية والطبية مشفرة ومحمية بأعلى معايير الخصوصية والأمان'),
-        findsOneWidget,
-      );
-    });
+        // Verify privacy text in Arabic
+        expect(
+          find.text(
+            'بياناتك الصحية والطبية مشفرة ومحمية بأعلى معايير الخصوصية والأمان',
+          ),
+          findsNothing,
+        );
+      },
+    );
 
-    testWidgets('LTR English layout: Directionality is LTR and renders English keys', (tester) async {
-      await tester.pumpWidget(
-        createTestLocalizedApp(
-          locale: const Locale('en'),
-          child: const Scaffold(
-            body: LoginRequiredPrompt(
-              returnRoute: '/account',
-              isBottomSheet: true,
+    testWidgets(
+      'LTR English layout: Directionality is LTR and renders English keys',
+      (tester) async {
+        await tester.pumpWidget(
+          createTestLocalizedApp(
+            locale: const Locale('en'),
+            child: const Scaffold(
+              body: LoginRequiredPrompt(
+                returnRoute: '/account',
+                isBottomSheet: true,
+              ),
             ),
           ),
-        ),
-      );
-      await tester.pumpAndSettle();
+        );
+        await tester.pumpAndSettle();
 
-      final directionality = Directionality.of(tester.element(find.byType(LoginRequiredPrompt)));
-      expect(directionality, equals(TextDirection.ltr));
+        final directionality = Directionality.of(
+          tester.element(find.byType(LoginRequiredPrompt)),
+        );
+        expect(directionality, equals(TextDirection.ltr));
 
-      expect(find.text('Login Required'), findsOneWidget);
-      expect(find.text('Sign In'), findsOneWidget);
-      expect(find.text('Create New Account'), findsOneWidget);
-      expect(find.text('Continue Browsing as Guest'), findsOneWidget);
-      expect(find.text('Save Prescriptions'), findsOneWidget);
-      expect(find.text('Track Orders'), findsOneWidget);
-      expect(find.text('100% Genuine Meds'), findsOneWidget);
-    });
+        expect(find.text('Login Required'), findsOneWidget);
+        expect(find.text('Sign In'), findsOneWidget);
+        expect(find.text('Create New Account'), findsOneWidget);
+        expect(find.text('Continue Browsing as Guest'), findsOneWidget);
+        expect(find.text('Save Prescriptions'), findsOneWidget);
+        expect(find.text('Track Orders'), findsOneWidget);
+        expect(find.text('Browse products'), findsOneWidget);
+      },
+    );
   });
 
   group('GoRouter End-to-End: Return to Original Route After Login', () {
@@ -334,42 +359,45 @@ void main() {
       await getIt.reset();
     });
 
-    testWidgets('Guest navigating to /orders is blocked; after login, returns to /orders', (tester) async {
-      tester.view.physicalSize = const Size(1080, 2400);
-      tester.view.devicePixelRatio = 2.0;
-      addTearDown(() {
-        tester.view.resetPhysicalSize();
-        tester.view.resetDevicePixelRatio();
-      });
+    testWidgets(
+      'Guest navigating to /orders is blocked; after login, returns to /orders',
+      (tester) async {
+        tester.view.physicalSize = const Size(1080, 2400);
+        tester.view.devicePixelRatio = 2.0;
+        addTearDown(() {
+          tester.view.resetPhysicalSize();
+          tester.view.resetDevicePixelRatio();
+        });
 
-      await tester.pumpWidget(
-        buildAppWithProviders(
-          routerConfig: appRouter.router,
-          authCubit: authCubit,
-          storageService: storage,
-        ),
-      );
-      await tester.pumpAndSettle();
+        await tester.pumpWidget(
+          buildAppWithProviders(
+            routerConfig: appRouter.router,
+            authCubit: authCubit,
+            storageService: storage,
+          ),
+        );
+        await tester.pumpAndSettle();
 
-      // Verified: guest is blocked, A4 prompt is rendered, MyOrdersScreen is NOT rendered
-      expect(find.byType(MyOrdersScreen), findsNothing);
-      expect(find.byType(LoginRequiredPrompt), findsOneWidget);
-      expect(find.text('تسجيل الدخول مطلوب'), findsOneWidget);
+        // Verified: guest is blocked, A4 prompt is rendered, MyOrdersScreen is NOT rendered
+        expect(find.byType(MyOrdersScreen), findsNothing);
+        expect(find.byType(LoginRequiredPrompt), findsOneWidget);
+        expect(find.text('تسجيل الدخول مطلوب'), findsOneWidget);
 
-      // 2. Tap Sign In button inside the prompt
-      await tester.tap(find.text('تسجيل الدخول'));
-      await tester.pumpAndSettle();
+        // 2. Tap Sign In button inside the prompt
+        await tester.tap(find.text('تسجيل الدخول'));
+        await tester.pumpAndSettle();
 
-      // Now on /login?from=/orders
-      expect(find.text('تسجيل الدخول الحسابي'), findsOneWidget);
+        // Now on /login?from=/orders
+        expect(find.text('تسجيل الدخول الحسابي'), findsOneWidget);
 
-      // 3. User logs in successfully
-      await authCubit.login(email: 'user@index.com', password: 'password123');
-      await tester.pumpAndSettle();
+        // 3. User logs in successfully
+        await authCubit.login(email: 'user@index.com', password: 'password123');
+        await tester.pumpAndSettle();
 
-      // 4. GoRouter should redirect customer directly to originally requested route (/orders)!
-      expect(find.byType(MyOrdersScreen), findsOneWidget);
-      expect(find.byType(LoginRequiredPrompt), findsNothing);
-    });
+        // 4. GoRouter should redirect customer directly to originally requested route (/orders)!
+        expect(find.byType(MyOrdersScreen), findsOneWidget);
+        expect(find.byType(LoginRequiredPrompt), findsNothing);
+      },
+    );
   });
 }

@@ -32,7 +32,9 @@ class ProductDetailsShowcaseCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final colors = context.colors;
     final hasImage = product.image != null && product.image!.trim().isNotEmpty;
-    final resolvedImageUrl = hasImage ? AppConfig.mediaUrl(product.image!.trim()) : '';
+    final resolvedImageUrl = hasImage
+        ? AppConfig.mediaUrl(product.image!.trim())
+        : '';
 
     final unitLabel = (product.unit != null && product.unit!.trim().isNotEmpty)
         ? product.unit!.trim()
@@ -43,29 +45,17 @@ class ProductDetailsShowcaseCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          // Top Ribbon: MOH Stamp & Optional Category Tag
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Flexible(
-                child: AppBadge.tone(
-                  label: AppLocaleKeys.productDetailsMohRegisteredPill.tr(),
-                  tone: AppBadgeTone.trust,
-                  icon: Icon(
-                    Icons.verified_rounded,
-                    size: 14,
-                    color: colors.brandEmeraldDark,
-                  ),
-                ),
+          if (product.category != null &&
+              product.category!.name.trim().isNotEmpty) ...[
+            Align(
+              alignment: AlignmentDirectional.centerStart,
+              child: AppBadge.tone(
+                label: product.category!.name.trim(),
+                tone: AppBadgeTone.neutral,
               ),
-              if (product.category != null && product.category!.name.trim().isNotEmpty) ...[
-                const SizedBox(width: AppSpacing.spaceXs),
-                AppBadge.tone(label: product.category!.name.trim(), tone: AppBadgeTone.neutral),
-              ],
-            ],
-          ),
-          const SizedBox(height: AppSpacing.spaceSm),
-
+            ),
+            AppSpacing.vSpaceSm,
+          ],
           // Main Visual Container (4:3 aspect ratio per Stitch B4)
           AspectRatio(
             aspectRatio: 4 / 3,
@@ -73,7 +63,9 @@ class ProductDetailsShowcaseCard extends StatelessWidget {
               decoration: BoxDecoration(
                 color: colors.surfaceSubtle,
                 borderRadius: AppRadii.roundedLg,
-                border: Border.all(color: colors.outlineVariant.withValues(alpha: 0.5)),
+                border: Border.all(
+                  color: colors.outlineVariant.withValues(alpha: 0.5),
+                ),
               ),
               clipBehavior: Clip.antiAlias,
               child: hasImage
@@ -90,7 +82,8 @@ class ProductDetailsShowcaseCard extends StatelessWidget {
                           ),
                         ),
                       ),
-                      errorWidget: (context, url, error) => _buildFallback(colors),
+                      errorWidget: (context, url, error) =>
+                          _buildFallback(colors),
                     )
                   : _buildFallback(colors),
             ),
@@ -113,7 +106,11 @@ class ProductDetailsShowcaseCard extends StatelessWidget {
                   ),
                   child: Row(
                     children: [
-                      Icon(Icons.calendar_today_outlined, size: 18, color: colors.primary),
+                      Icon(
+                        Icons.calendar_today_outlined,
+                        size: 18,
+                        color: colors.primary,
+                      ),
                       const SizedBox(width: AppSpacing.spaceXs),
                       Expanded(
                         child: Column(
@@ -121,7 +118,9 @@ class ProductDetailsShowcaseCard extends StatelessWidget {
                           children: [
                             Text(
                               AppLocaleKeys.productDetailsExpiryDateLabel.tr(),
-                              style: AppTypography.labelSm(color: colors.neutral),
+                              style: AppTypography.labelSm(
+                                color: colors.neutral,
+                              ),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),
@@ -155,7 +154,11 @@ class ProductDetailsShowcaseCard extends StatelessWidget {
                   ),
                   child: Row(
                     children: [
-                      Icon(Icons.inventory_2_outlined, size: 18, color: colors.primary),
+                      Icon(
+                        Icons.inventory_2_outlined,
+                        size: 18,
+                        color: colors.primary,
+                      ),
                       const SizedBox(width: AppSpacing.spaceXs),
                       Expanded(
                         child: Column(
@@ -163,15 +166,21 @@ class ProductDetailsShowcaseCard extends StatelessWidget {
                           children: [
                             Text(
                               AppLocaleKeys.productDetailsDispensingBranch.tr(),
-                              style: AppTypography.labelSm(color: colors.neutral),
+                              style: AppTypography.labelSm(
+                                color: colors.neutral,
+                              ),
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),
                             Text(
                               product.stockQuantity > 0
-                                  ? AppLocaleKeys.productDetailsAvailableUnits.tr(
-                                      args: [product.stockQuantity.toString(), unitLabel],
-                                    )
+                                  ? AppLocaleKeys.productDetailsAvailableUnits
+                                        .tr(
+                                          args: [
+                                            product.stockQuantity.toString(),
+                                            unitLabel,
+                                          ],
+                                        )
                                   : AppLocaleKeys.productDetailsOutOfStock.tr(),
                               style: AppTypography.labelMd(
                                 color: product.stockQuantity > 0
@@ -207,11 +216,15 @@ class ProductDetailsShowcaseCard extends StatelessWidget {
               color: colors.surfaceContainer,
               shape: BoxShape.circle,
             ),
-            child: Icon(Icons.medication_rounded, size: 32, color: colors.primary),
+            child: Icon(
+              Icons.medication_rounded,
+              size: 32,
+              color: colors.primary,
+            ),
           ),
           const SizedBox(height: AppSpacing.spaceXs),
           Text(
-            AppLocaleKeys.productDetailsMohRegisteredPill.tr(),
+            AppLocaleKeys.productDetailsTitle.tr(),
             style: AppTypography.labelSm(color: colors.neutral),
           ),
         ],

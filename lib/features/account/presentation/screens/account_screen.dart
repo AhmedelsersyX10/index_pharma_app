@@ -76,6 +76,16 @@ class AccountScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (branchCubit != null) {
+      return BlocBuilder<BranchCubit, BranchState>(
+        bloc: branchCubit,
+        builder: (context, state) => _buildScreen(context),
+      );
+    }
+    return _buildScreen(context);
+  }
+
+  Widget _buildScreen(BuildContext context) {
     final colors = context.colors;
     final activeAuthCubit = _resolveAuthCubit(context);
     final activeStorageService = _resolveStorageService(context);
@@ -83,17 +93,13 @@ class AccountScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: colors.background,
-      appBar: AppPageBar(
-        title: AppLocaleKeys.accountTitle.tr(),
-      ),
+      appBar: AppPageBar(title: AppLocaleKeys.accountTitle.tr()),
       body: BlocBuilder<AuthCubit, AuthState>(
         bloc: activeAuthCubit,
         builder: (context, authState) {
           if (authState is AuthLoading) {
             return Center(
-              child: CircularProgressIndicator(
-                color: colors.primary,
-              ),
+              child: CircularProgressIndicator(color: colors.primary),
             );
           }
 
@@ -130,7 +136,12 @@ class AccountScreen extends StatelessWidget {
     required BranchCubit? branchCubit,
   }) {
     // Resolve current branch name from BranchCubit if available
-    String? currentBranchName;
+    String? currentBranchName = switch (branchCubit?.state) {
+      BranchInitial() || BranchLoading() => 'branch_selection.loading'.tr(),
+      BranchFailure() => 'branch_selection.fetch_error_title'.tr(),
+      BranchEmpty() => 'branch_selection.empty_branches_title'.tr(),
+      _ => null,
+    };
     if (branchCubit != null && branchCubit.state is BranchLoaded) {
       final loadedState = branchCubit.state as BranchLoaded;
       final selectedId = loadedState.selectedBranchId;
@@ -140,7 +151,6 @@ class AccountScreen extends StatelessWidget {
           currentBranchName = match.first.name;
         }
       }
-      currentBranchName ??= loadedState.branches.isNotEmpty ? loadedState.branches.first.name : null;
     }
 
     return SingleChildScrollView(
@@ -157,15 +167,11 @@ class AccountScreen extends StatelessWidget {
           const SizedBox(height: 20),
 
           // Clinical & Orders Hub
-          AccountRecordsSection(
-            branchName: currentBranchName,
-          ),
+          AccountRecordsSection(branchName: currentBranchName),
           const SizedBox(height: 20),
 
           // Preferences & Standards
-          AccountPreferencesSection(
-            storageService: storageService,
-          ),
+          AccountPreferencesSection(storageService: storageService),
           const SizedBox(height: 20),
 
           // Logout Button
@@ -175,12 +181,16 @@ class AccountScreen extends StatelessWidget {
             child: ElevatedButton.icon(
               key: const ValueKey('account_logout_button'),
               onPressed: () => _handleLogout(context, authCubit),
-              icon: Icon(Icons.logout_rounded, color: context.colors.error, size: 20),
+              icon: Icon(
+                Icons.logout_rounded,
+                color: context.colors.error,
+                size: 20,
+              ),
               label: Text(
                 AppLocaleKeys.accountLogoutBtn.tr(),
-                style: AppTypography.labelLg(color: context.colors.error).copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
+                style: AppTypography.labelLg(
+                  color: context.colors.error,
+                ).copyWith(fontWeight: FontWeight.bold),
               ),
               style: ElevatedButton.styleFrom(
                 backgroundColor: context.colors.errorContainer,
@@ -191,25 +201,6 @@ class AccountScreen extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: 24),
-
-          // Footer info
-          Text(
-            AppLocaleKeys.accountHotlineFooter.tr(),
-            style: AppTypography.bodySm(
-              color: context.colors.onSurfaceVariant,
-            ),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 4),
-          Text(
-            AppLocaleKeys.accountVersionFooter.tr(),
-            style: AppTypography.labelSm(
-              color: context.colors.outline,
-            ),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 16),
         ],
       ),
     );

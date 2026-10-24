@@ -30,7 +30,6 @@ import 'package:index_pharma/features/home/presentation/widgets/home_header_bar.
 import 'package:index_pharma/features/home/presentation/widgets/home_hero_banner.dart';
 import 'package:index_pharma/features/home/presentation/widgets/home_prescription_upload_card.dart';
 import 'package:index_pharma/features/home/presentation/widgets/home_search_bar.dart';
-import 'package:index_pharma/features/home/presentation/widgets/home_storage_guarantee_footer.dart';
 import 'package:index_pharma/features/products/domain/entities/product.dart';
 import 'package:index_pharma/features/products/domain/entities/products_page.dart';
 import 'package:index_pharma/features/products/domain/repositories/products_repository.dart';
@@ -275,8 +274,7 @@ void main() {
       storageService: fakeStorageService,
     );
     settingsCubit = SettingsCubit(settingsRepository: fakeSettingsRepo);
-    categoriesCubit =
-        CategoriesCubit(categoriesRepository: fakeCategoriesRepo);
+    categoriesCubit = CategoriesCubit(categoriesRepository: fakeCategoriesRepo);
     productsCubit = ProductsCubit(
       productsRepository: fakeProductsRepo,
       storageService: fakeStorageService,
@@ -295,9 +293,7 @@ void main() {
     cartCubit.close();
   });
 
-  Widget createTestWidget({
-    Locale locale = const Locale('ar'),
-  }) {
+  Widget createTestWidget({Locale locale = const Locale('ar')}) {
     return EasyLocalization(
       supportedLocales: const [Locale('ar'), Locale('en')],
       path: 'assets/translations',
@@ -325,8 +321,9 @@ void main() {
   }
 
   group('HomeScreen (Stitch B2) Widget Tests', () {
-    testWidgets('renders all B2 sections cleanly in Arabic RTL',
-        (tester) async {
+    testWidgets('renders all B2 sections cleanly in Arabic RTL', (
+      tester,
+    ) async {
       await tester.pumpWidget(createTestWidget(locale: const Locale('ar')));
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 500));
@@ -340,7 +337,7 @@ void main() {
       // 2. Branch selector strip
       expect(find.byType(HomeBranchSelectorStrip), findsOneWidget);
       expect(find.text('فرع عباس العقاد - مدينة نصر'), findsAtLeastNWidgets(1));
-      expect(find.text('متاح للطلب الفوري'), findsOneWidget);
+      expect(find.text('منتجات الفرع'), findsOneWidget);
 
       // 3. Search Bar
       expect(find.byType(HomeSearchBar), findsOneWidget);
@@ -350,14 +347,14 @@ void main() {
 
       // 4. Hero Banner
       expect(find.byType(HomeHeroBanner), findsOneWidget);
-      expect(find.text('اعتماد الرقابة الدوائية'), findsOneWidget);
-      expect(find.text('صيدليتك الموثوقة في مصر'), findsOneWidget);
+      expect(find.text('اعتماد الرقابة الدوائية'), findsNothing);
+      expect(find.text('تصفح منتجات الفرع'), findsOneWidget);
       expect(find.text('تسوق الأدوية الآن'), findsOneWidget);
 
       // 5. Prescription Upload Card
       expect(find.byType(HomePrescriptionUploadCard), findsOneWidget);
-      expect(find.text('خدمة صرف الروشتات'), findsOneWidget);
-      expect(find.text('آمن وسري'), findsOneWidget);
+      expect(find.text('الروشتات'), findsAtLeastNWidgets(1));
+      expect(find.text('آمن وسري'), findsNothing);
       expect(find.text('ارفع الروشتة الطبية'), findsOneWidget);
 
       // 6. Categories Section
@@ -367,13 +364,13 @@ void main() {
 
       // 7. Featured Products Section
       expect(find.byType(HomeFeaturedProductsSection), findsOneWidget);
-      expect(find.text('أدوية مسجلة وموثوقة'), findsOneWidget);
+      expect(find.text('منتجات متاحة'), findsOneWidget);
       expect(find.text('بنادول إكسترا ٥٠٠ مجم'), findsOneWidget);
       expect(find.text('أوجمنتين ١ جم'), findsOneWidget);
 
       // 8. Storage Guarantee Footer
-      expect(find.byType(HomeStorageGuaranteeFooter), findsOneWidget);
-      expect(find.text(AppLocaleKeys.homeGuaranteeTitle.tr()), findsOneWidget);
+      expect(find.textContaining('ضمان التخزين'), findsNothing);
+      expect(find.textContaining('حاويات مبردة'), findsNothing);
 
       // 9. Customer Bottom Navigation (5 tabs, NO Deals tab per Decision 0.6)
       expect(find.byType(CustomerBottomNav), findsOneWidget);
@@ -385,8 +382,9 @@ void main() {
       expect(find.text('Deals'), findsNothing);
     });
 
-    testWidgets('renders all B2 sections cleanly in English LTR',
-        (tester) async {
+    testWidgets('renders all B2 sections cleanly in English LTR', (
+      tester,
+    ) async {
       await tester.pumpWidget(createTestWidget(locale: const Locale('en')));
       await tester.pump();
       await tester.pump(const Duration(milliseconds: 500));
@@ -394,13 +392,13 @@ void main() {
 
       expect(find.byType(HomeHeaderBar), findsOneWidget);
       expect(find.text('Home'), findsAtLeastNWidgets(1));
-      expect(find.text('Live Stock'), findsOneWidget);
-      expect(find.text('EDA Regulatory Compliance'), findsOneWidget);
+      expect(find.text('Branch products'), findsOneWidget);
+      expect(find.text('EDA Regulatory Compliance'), findsNothing);
       expect(find.text('Shop Medications Now'), findsOneWidget);
-      expect(find.text('Doctor verification'), findsOneWidget);
+      expect(find.text('Upload and follow prescriptions'), findsOneWidget);
       expect(find.text('Upload Prescription'), findsOneWidget);
-      expect(find.text('Essential Pharmaceuticals'), findsOneWidget);
-      expect(find.text('Licensed Pharmacist Care'), findsOneWidget);
+      expect(find.text('Available products'), findsOneWidget);
+      expect(find.text('Licensed Pharmacist Care'), findsNothing);
 
       // Bottom nav English
       expect(find.text('Browse'), findsOneWidget);
@@ -411,165 +409,173 @@ void main() {
     });
 
     testWidgets(
-        'isolated product failure does NOT blank the whole page, shows retry view',
-        (tester) async {
-      fakeProductsRepo.result = const Err(
-        Network(serverMessage: 'تعذر تحميل المنتجات'),
-      );
+      'isolated product failure does NOT blank the whole page, shows retry view',
+      (tester) async {
+        fakeProductsRepo.result = const Err(
+          Network(serverMessage: 'تعذر تحميل المنتجات'),
+        );
 
-      await tester.pumpWidget(createTestWidget(locale: const Locale('ar')));
-      await tester.pump();
-      await tester.pump(const Duration(milliseconds: 500));
-      await tester.pumpAndSettle();
+        await tester.pumpWidget(createTestWidget(locale: const Locale('ar')));
+        await tester.pump();
+        await tester.pump(const Duration(milliseconds: 500));
+        await tester.pumpAndSettle();
 
-      // Hero banner and categories STILL render safely
-      expect(find.byType(HomeHeroBanner), findsOneWidget);
-      expect(find.byType(HomeCategoriesSection), findsOneWidget);
-      expect(find.text('أدوية القلب والضغط'), findsOneWidget);
+        // Hero banner and categories STILL render safely
+        expect(find.byType(HomeHeroBanner), findsOneWidget);
+        expect(find.byType(HomeCategoriesSection), findsOneWidget);
+        expect(find.text('أدوية القلب والضغط'), findsOneWidget);
 
-      // Product section displays isolated error view
-      expect(find.byType(AppErrorView), findsOneWidget);
-      expect(find.text(AppLocaleKeys.errorNetwork.tr()), findsOneWidget);
-      expect(find.byType(HomeStorageGuaranteeFooter), findsOneWidget);
-    });
-
-    testWidgets(
-        'empty products list displays AppEmptyState in featured products section',
-        (tester) async {
-      fakeProductsRepo.result = const Success(
-        ProductsPage(
-          products: [],
-          total: 0,
-          totalPages: 0,
-          page: 1,
-          limit: 20,
-        ),
-      );
-
-      await tester.pumpWidget(createTestWidget(locale: const Locale('ar')));
-      await tester.pump();
-      await tester.pump(const Duration(milliseconds: 500));
-      await tester.pumpAndSettle();
-
-      // Featured products section displays AppEmptyState
-      expect(find.byType(HomeFeaturedProductsSection), findsOneWidget);
-      expect(find.byType(AppEmptyState), findsOneWidget);
-      expect(find.text('لم يتم العثور على أدوية'), findsOneWidget);
-    });
+        // Product section displays isolated error view
+        expect(find.byType(AppErrorView), findsOneWidget);
+        expect(find.text(AppLocaleKeys.errorNetwork.tr()), findsOneWidget);
+        expect(find.textContaining('ضمان التخزين'), findsNothing);
+      },
+    );
 
     testWidgets(
-        'tapping add to cart on featured product puts product in CartCubit state, updates badge, and shows success SnackBar',
-        (tester) async {
-      await tester.pumpWidget(createTestWidget(locale: const Locale('ar')));
-      await tester.pump();
-      await tester.pump(const Duration(milliseconds: 500));
-      await tester.pumpAndSettle();
+      'empty products list displays AppEmptyState in featured products section',
+      (tester) async {
+        fakeProductsRepo.result = const Success(
+          ProductsPage(
+            products: [],
+            total: 0,
+            totalPages: 0,
+            page: 1,
+            limit: 20,
+          ),
+        );
 
-      expect(cartCubit.state, isA<CartEmpty>());
+        await tester.pumpWidget(createTestWidget(locale: const Locale('ar')));
+        await tester.pump();
+        await tester.pump(const Duration(milliseconds: 500));
+        await tester.pumpAndSettle();
 
-      final addToCartFinder = find.widgetWithText(
-        ElevatedButton,
-        AppLocaleKeys.productsAddToCart.tr(),
-      );
+        // Featured products section displays AppEmptyState
+        expect(find.byType(HomeFeaturedProductsSection), findsOneWidget);
+        expect(find.byType(AppEmptyState), findsOneWidget);
+        expect(find.text('لم يتم العثور على أدوية'), findsOneWidget);
+      },
+    );
 
-      // Scroll down until the add-to-cart button itself is visible on screen
-      await tester.scrollUntilVisible(
-        addToCartFinder.first,
-        200,
-        scrollable: find.byType(Scrollable).first,
-      );
-      await tester.pumpAndSettle();
-
-      await tester.tap(addToCartFinder.first);
-      await tester.pumpAndSettle();
-
-      // Product is really added to CartCubit
-      expect(cartCubit.state, isA<CartHasItems>());
-      final cartState = cartCubit.state as CartHasItems;
-      expect(cartState.totalItemsCount, equals(1));
-      expect(cartState.items.first.product.name, equals('بنادول إكسترا ٥٠٠ مجم'));
-
-      // Cart badge in HomeHeaderBar is updated to 1
-      expect(find.text('1'), findsOneWidget);
-
-      // Success SnackBar is displayed
-      expect(find.byType(SnackBar), findsOneWidget);
-      expect(
-        find.text(
-          AppLocaleKeys.cartItemAddedSuccess.tr(args: ['بنادول إكسترا ٥٠٠ مجم']),
-        ),
-        findsOneWidget,
-      );
-    });
     testWidgets(
-        'submitting non-empty query on HomeSearchBar navigates to /browse?q=panadol',
-        (tester) async {
-      // Wrap HomeScreen in a real GoRouter so context.go() works.
-      final router = GoRouter(
-        initialLocation: '/',
-        routes: [
-          GoRoute(
-            path: '/',
-            builder: (context, state) => HomeScreen(
-              branchCubit: branchCubit,
-              settingsCubit: settingsCubit,
-              categoriesCubit: categoriesCubit,
-              productsCubit: productsCubit,
-              cartCubit: cartCubit,
+      'tapping add to cart on featured product puts product in CartCubit state, updates badge, and shows success SnackBar',
+      (tester) async {
+        await tester.pumpWidget(createTestWidget(locale: const Locale('ar')));
+        await tester.pump();
+        await tester.pump(const Duration(milliseconds: 500));
+        await tester.pumpAndSettle();
+
+        expect(cartCubit.state, isA<CartEmpty>());
+
+        final addToCartFinder = find.widgetWithText(
+          ElevatedButton,
+          AppLocaleKeys.productsAddToCart.tr(),
+        );
+
+        // Scroll down until the add-to-cart button itself is visible on screen
+        await tester.scrollUntilVisible(
+          addToCartFinder.first,
+          200,
+          scrollable: find.byType(Scrollable).first,
+        );
+        await tester.pumpAndSettle();
+
+        await tester.tap(addToCartFinder.first);
+        await tester.pumpAndSettle();
+
+        // Product is really added to CartCubit
+        expect(cartCubit.state, isA<CartHasItems>());
+        final cartState = cartCubit.state as CartHasItems;
+        expect(cartState.totalItemsCount, equals(1));
+        expect(
+          cartState.items.first.product.name,
+          equals('بنادول إكسترا ٥٠٠ مجم'),
+        );
+
+        // Cart badge in HomeHeaderBar is updated to 1
+        expect(find.text('1'), findsOneWidget);
+
+        // Success SnackBar is displayed
+        expect(find.byType(SnackBar), findsOneWidget);
+        expect(
+          find.text(
+            AppLocaleKeys.cartItemAddedSuccess.tr(
+              args: ['بنادول إكسترا ٥٠٠ مجم'],
             ),
           ),
-          GoRoute(
-            path: '/browse',
-            builder: (context, state) => Scaffold(
-              body: Text('Browse:${state.uri}'),
-            ),
-          ),
-        ],
-      );
-
-      await tester.pumpWidget(
-        EasyLocalization(
-          supportedLocales: const [Locale('ar'), Locale('en')],
-          path: 'assets/translations',
-          assetLoader: const SynchronousDiskAssetLoader(),
-          startLocale: const Locale('ar'),
-          saveLocale: false,
-          child: Builder(
-            builder: (ctx) => MaterialApp.router(
-              locale: ctx.locale,
-              localizationsDelegates: ctx.localizationDelegates,
-              supportedLocales: ctx.supportedLocales,
-              theme: AppTheme.lightTheme,
-              routerConfig: router,
-            ),
-          ),
-        ),
-      );
-      await tester.pump();
-      await tester.pump(const Duration(milliseconds: 500));
-      await tester.pumpAndSettle();
-
-      // Confirm HomeSearchBar is present.
-      expect(find.byType(HomeSearchBar), findsOneWidget);
-
-      // Enter 'panadol' in the TextField inside HomeSearchBar.
-      await tester.enterText(
-        find.descendant(
-          of: find.byType(HomeSearchBar),
-          matching: find.byType(TextField),
-        ),
-        'panadol',
-      );
-      await tester.testTextInput.receiveAction(TextInputAction.search);
-      await tester.pumpAndSettle();
-
-      // Should have navigated to /browse?q=panadol.
-      expect(find.textContaining('/browse?q=panadol'), findsOneWidget);
-    });
-
+          findsOneWidget,
+        );
+      },
+    );
     testWidgets(
-        'submitting empty query on HomeSearchBar does NOT navigate',
-        (tester) async {
+      'submitting non-empty query on HomeSearchBar navigates to /browse?q=panadol',
+      (tester) async {
+        // Wrap HomeScreen in a real GoRouter so context.go() works.
+        final router = GoRouter(
+          initialLocation: '/',
+          routes: [
+            GoRoute(
+              path: '/',
+              builder: (context, state) => HomeScreen(
+                branchCubit: branchCubit,
+                settingsCubit: settingsCubit,
+                categoriesCubit: categoriesCubit,
+                productsCubit: productsCubit,
+                cartCubit: cartCubit,
+              ),
+            ),
+            GoRoute(
+              path: '/browse',
+              builder: (context, state) =>
+                  Scaffold(body: Text('Browse:${state.uri}')),
+            ),
+          ],
+        );
+
+        await tester.pumpWidget(
+          EasyLocalization(
+            supportedLocales: const [Locale('ar'), Locale('en')],
+            path: 'assets/translations',
+            assetLoader: const SynchronousDiskAssetLoader(),
+            startLocale: const Locale('ar'),
+            saveLocale: false,
+            child: Builder(
+              builder: (ctx) => MaterialApp.router(
+                locale: ctx.locale,
+                localizationsDelegates: ctx.localizationDelegates,
+                supportedLocales: ctx.supportedLocales,
+                theme: AppTheme.lightTheme,
+                routerConfig: router,
+              ),
+            ),
+          ),
+        );
+        await tester.pump();
+        await tester.pump(const Duration(milliseconds: 500));
+        await tester.pumpAndSettle();
+
+        // Confirm HomeSearchBar is present.
+        expect(find.byType(HomeSearchBar), findsOneWidget);
+
+        // Enter 'panadol' in the TextField inside HomeSearchBar.
+        await tester.enterText(
+          find.descendant(
+            of: find.byType(HomeSearchBar),
+            matching: find.byType(TextField),
+          ),
+          'panadol',
+        );
+        await tester.testTextInput.receiveAction(TextInputAction.search);
+        await tester.pumpAndSettle();
+
+        // Should have navigated to /browse?q=panadol.
+        expect(find.textContaining('/browse?q=panadol'), findsOneWidget);
+      },
+    );
+
+    testWidgets('submitting empty query on HomeSearchBar does NOT navigate', (
+      tester,
+    ) async {
       final router = GoRouter(
         initialLocation: '/',
         routes: [

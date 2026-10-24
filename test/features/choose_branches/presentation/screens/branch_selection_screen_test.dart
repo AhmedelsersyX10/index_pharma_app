@@ -1,4 +1,7 @@
 import 'dart:async';
+import 'package:index_pharma/features/products/domain/entities/product.dart';
+import 'package:index_pharma/features/cart/presentation/cubit/cart_state.dart';
+import 'package:index_pharma/features/cart/presentation/widgets/cart_branch_conflict_dialog.dart';
 import 'dart:convert';
 import 'dart:io';
 
@@ -207,7 +210,9 @@ void main() {
     expect(find.byType(BranchCard), findsOneWidget);
   });
 
-  testWidgets('renders BranchEmptyView when no branches returned', (tester) async {
+  testWidgets('renders BranchEmptyView when no branches returned', (
+    tester,
+  ) async {
     fakeRepository.getBranchesResult = const Success([]);
 
     await tester.pumpWidget(buildTestApp());
@@ -216,8 +221,12 @@ void main() {
     expect(find.byType(BranchEmptyView), findsOneWidget);
   });
 
-  testWidgets('renders BranchErrorView on failure and can retry', (tester) async {
-    fakeRepository.getBranchesResult = const Err(Server(serverMessage: 'فشل في الاتصال'));
+  testWidgets('renders BranchErrorView on failure and can retry', (
+    tester,
+  ) async {
+    fakeRepository.getBranchesResult = const Err(
+      Server(serverMessage: 'فشل في الاتصال'),
+    );
 
     await tester.pumpWidget(buildTestApp());
     await tester.pumpAndSettle();
@@ -233,13 +242,19 @@ void main() {
     expect(find.byType(BranchCard), findsNWidgets(2));
   });
 
-  testWidgets('renders branches and allows selection and confirmation', (tester) async {
+  testWidgets('renders branches and allows selection and confirmation', (
+    tester,
+  ) async {
     fakeRepository.getBranchesResult = const Success([branch1, branch2]);
     bool confirmed = false;
 
-    await tester.pumpWidget(buildTestApp(onBranchConfirmed: () {
-      confirmed = true;
-    }));
+    await tester.pumpWidget(
+      buildTestApp(
+        onBranchConfirmed: () {
+          confirmed = true;
+        },
+      ),
+    );
     await tester.pumpAndSettle();
 
     // Verify both branch cards are rendered
@@ -248,7 +263,10 @@ void main() {
 
     // Bottom confirmation button should initially be disabled because no branch is selected yet
     final confirmButton = tester.widget<ElevatedButton>(
-      find.descendant(of: find.byType(BranchBottomBar), matching: find.byType(ElevatedButton)),
+      find.descendant(
+        of: find.byType(BranchBottomBar),
+        matching: find.byType(ElevatedButton),
+      ),
     );
     expect(confirmButton.onPressed, isNull);
 
@@ -260,12 +278,53 @@ void main() {
     expect(fakeStorageService.selectedBranchId, equals('b2'));
 
     // Confirm button is now active
-    await tester.tap(find.descendant(
-      of: find.byType(BranchBottomBar),
-      matching: find.byType(ElevatedButton),
-    ));
+    await tester.tap(
+      find.descendant(
+        of: find.byType(BranchBottomBar),
+        matching: find.byType(ElevatedButton),
+      ),
+    );
     await tester.pumpAndSettle();
 
     expect(confirmed, isTrue);
   });
+  for (final confirmClear in [false, true]) {
+    testWidgets(
+      'branch change preserves cart conflict confirmation: $confirmClear',
+      (tester) async {
+        fakeRepository.getBranchesResult = const Success([branch1, branch2]);
+        await cubit.fetchBranches();
+        await cubit.selectBranch('b1');
+        await cartCubit.addToCart(
+          const Product(
+            id: 'p',
+            name: 'Medicine',
+            branchId: 'b1',
+            sellingPrice: 10,
+            stockQuantity: 5,
+          ),
+        );
+        await tester.pumpWidget(buildTestApp());
+        await tester.pumpAndSettle();
+        await tester.tap(find.text('فرع المعادي'));
+        await tester.pumpAndSettle();
+        expect(find.byType(CartBranchConflictDialog), findsOneWidget);
+        expect(fakeStorageService.selectedBranchId, 'b1');
+        await tester.tap(
+          find.descendant(
+            of: find.byType(CartBranchConflictDialog),
+            matching: confirmClear
+                ? find.byType(ElevatedButton)
+                : find.byType(TextButton),
+          ),
+        );
+        await tester.pumpAndSettle();
+        expect(fakeStorageService.selectedBranchId, confirmClear ? 'b2' : 'b1');
+        expect(
+          cartCubit.state,
+          confirmClear ? isA<CartEmpty>() : isA<CartHasItems>(),
+        );
+      },
+    );
+  }
 }

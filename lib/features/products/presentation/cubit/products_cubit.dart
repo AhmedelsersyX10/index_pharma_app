@@ -13,15 +13,17 @@ class ProductsCubit extends Cubit<ProductsState> {
     required ProductsRepository productsRepository,
     StorageService? storageService,
     this.pageSize = 20,
-  })  : _productsRepository = productsRepository,
-        _storageService = storageService,
-        super(const ProductsInitial());
+  }) : _productsRepository = productsRepository,
+       _storageService = storageService,
+       super(const ProductsInitial());
 
   final ProductsRepository _productsRepository;
   final StorageService? _storageService;
   final int pageSize;
 
   Timer? _debounceTimer;
+  int _requestRevision = 0;
+  bool _scopeCleared = false;
 
   String? _branchId;
   String? _keyword;
@@ -29,7 +31,7 @@ class ProductsCubit extends Cubit<ProductsState> {
 
   /// The active branch ID.
   String? get currentBranchId =>
-      _branchId ?? _storageService?.selectedBranchId;
+      _scopeCleared ? null : (_branchId ?? _storageService?.selectedBranchId);
 
   /// The active search keyword filter.
   String? get currentKeyword => _keyword;
@@ -56,6 +58,7 @@ class ProductsCubit extends Cubit<ProductsState> {
     String? categoryId,
     String? keyword,
   }) async {
+    final revision = ++_requestRevision;
     if (categoryId != null) {
       final trimmedCat = categoryId.trim();
       _selectedCategory = trimmedCat.isNotEmpty ? trimmedCat : null;
@@ -66,19 +69,17 @@ class ProductsCubit extends Cubit<ProductsState> {
     }
 
     final effectiveBranchId =
-        branchId ?? _branchId ?? _storageService?.selectedBranchId;
+        branchId ??
+        (_scopeCleared
+            ? null
+            : (_branchId ?? _storageService?.selectedBranchId));
 
     if (effectiveBranchId == null || effectiveBranchId.trim().isEmpty) {
-      emit(
-        const ProductsFailure(
-          Validation(
-            serverMessage: 'branch_required',
-          ),
-        ),
-      );
+      emit(const ProductsFailure(Validation(serverMessage: 'branch_required')));
       return;
     }
 
+    _scopeCleared = false;
     _branchId = effectiveBranchId;
     emit(const ProductsLoading());
 
@@ -89,6 +90,8 @@ class ProductsCubit extends Cubit<ProductsState> {
       keyword: _keyword,
       category: _selectedCategory,
     );
+
+    if (isClosed || revision != _requestRevision) return;
 
     switch (result) {
       case Success(:final data):
@@ -139,6 +142,7 @@ class ProductsCubit extends Cubit<ProductsState> {
 
     emit(currentState.copyWith(isLoadingMore: true, loadingMoreError: null));
 
+    final revision = _requestRevision;
     final nextPage = currentState.page + 1;
     final result = await _productsRepository.getProducts(
       branchId: currentState.branchId,
@@ -147,6 +151,8 @@ class ProductsCubit extends Cubit<ProductsState> {
       keyword: _keyword,
       category: _selectedCategory,
     );
+
+    if (isClosed || revision != _requestRevision) return;
 
     switch (result) {
       case Success(:final data):
@@ -208,6 +214,15 @@ class ProductsCubit extends Cubit<ProductsState> {
       _selectedCategory = categoryId;
     }
     await loadFirstPage();
+  }
+
+  /// Invalidates pending work and removes data from a previous branch scope.
+  void clearBranchScope() {
+    ++_requestRevision;
+    _debounceTimer?.cancel();
+    _branchId = null;
+    _scopeCleared = true;
+    emit(const ProductsFailure(Validation(serverMessage: 'branch_required')));
   }
 
   /// Reloads products when the selected branch changes.

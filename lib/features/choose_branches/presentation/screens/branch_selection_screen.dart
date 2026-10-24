@@ -40,10 +40,7 @@ class BranchSelectionScreen extends StatelessWidget {
     );
 
     if (branchCubit != null) {
-      return BlocProvider.value(
-        value: branchCubit!,
-        child: view,
-      );
+      return BlocProvider.value(value: branchCubit!, child: view);
     }
 
     return view;
@@ -51,10 +48,7 @@ class BranchSelectionScreen extends StatelessWidget {
 }
 
 class _BranchSelectionView extends StatefulWidget {
-  const _BranchSelectionView({
-    this.onBranchConfirmed,
-    this.cartCubit,
-  });
+  const _BranchSelectionView({this.onBranchConfirmed, this.cartCubit});
 
   final VoidCallback? onBranchConfirmed;
   final CartCubit? cartCubit;
@@ -64,6 +58,7 @@ class _BranchSelectionView extends StatefulWidget {
 }
 
 class _BranchSelectionViewState extends State<_BranchSelectionView> {
+  bool _isSelecting = false;
   @override
   void initState() {
     super.initState();
@@ -74,16 +69,21 @@ class _BranchSelectionViewState extends State<_BranchSelectionView> {
   }
 
   Future<void> _handleBranchSelection(String targetBranchId) async {
-    final branchCubit = context.read<BranchCubit>();
-    final activeCartCubit = widget.cartCubit ?? context.read<CartCubit>();
-
-    if (activeCartCubit.hasConflictWithBranch(targetBranchId)) {
-      final shouldClear = await CartBranchConflictDialog.show(context);
-      if (!shouldClear) return;
-      await activeCartCubit.clearCart();
+    if (_isSelecting) return;
+    setState(() => _isSelecting = true);
+    try {
+      final branchCubit = context.read<BranchCubit>();
+      final activeCartCubit = widget.cartCubit ?? context.read<CartCubit>();
+      if (activeCartCubit.hasConflictWithBranch(targetBranchId)) {
+        final shouldClear = await CartBranchConflictDialog.show(context);
+        if (!shouldClear || !mounted) return;
+        await activeCartCubit.clearCart();
+        if (!mounted) return;
+      }
+      await branchCubit.selectBranch(targetBranchId);
+    } finally {
+      if (mounted) setState(() => _isSelecting = false);
     }
-
-    await branchCubit.selectBranch(targetBranchId);
   }
 
   void _onConfirm(BranchState state) {
@@ -108,22 +108,22 @@ class _BranchSelectionViewState extends State<_BranchSelectionView> {
         builder: (context, state) {
           return switch (state) {
             BranchInitial() || BranchLoading() => const SafeArea(
-                child: Padding(
-                  padding: EdgeInsets.only(top: AppSpacing.spaceLg),
-                  child: BranchLoadingView(),
-                ),
+              child: Padding(
+                padding: EdgeInsets.only(top: AppSpacing.spaceLg),
+                child: BranchLoadingView(),
               ),
+            ),
             BranchEmpty() => SafeArea(
-                child: BranchEmptyView(
-                  onRetry: () => context.read<BranchCubit>().fetchBranches(),
-                ),
+              child: BranchEmptyView(
+                onRetry: () => context.read<BranchCubit>().fetchBranches(),
               ),
+            ),
             BranchFailure(:final failure) => SafeArea(
-                child: BranchErrorView(
-                  failure: failure,
-                  onRetry: () => context.read<BranchCubit>().fetchBranches(),
-                ),
+              child: BranchErrorView(
+                failure: failure,
+                onRetry: () => context.read<BranchCubit>().fetchBranches(),
               ),
+            ),
             BranchLoaded(:final branches, :final selectedBranchId) =>
               SingleChildScrollView(
                 padding: const EdgeInsets.only(
@@ -134,12 +134,7 @@ class _BranchSelectionViewState extends State<_BranchSelectionView> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     // Intro section with location pills and headline
-                    BranchIntroSection(
-                      branchesCount: branches.length,
-                      onAutoLocatePressed: branches.isNotEmpty
-                          ? () => _handleBranchSelection(branches.first.id)
-                          : null,
-                    ),
+                    BranchIntroSection(branchesCount: branches.length),
 
                     AppSpacing.vSpaceLg,
 
@@ -175,7 +170,7 @@ class _BranchSelectionViewState extends State<_BranchSelectionView> {
         builder: (context, state) {
           if (state is BranchLoaded) {
             return BranchBottomBar(
-              selectedBranch: state.selectedBranch,
+              selectedBranch: _isSelecting ? null : state.selectedBranch,
               onConfirm: () => _onConfirm(state),
             );
           }

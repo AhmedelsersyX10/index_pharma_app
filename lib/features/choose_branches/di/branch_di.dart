@@ -18,9 +18,7 @@ void setupBranchDependencies([GetIt? sl]) {
 
   if (!locator.isRegistered<BranchRemoteDataSource>()) {
     locator.registerLazySingleton<BranchRemoteDataSource>(
-      () => BranchRemoteDataSourceImpl(
-        dio: locator<ApiClient>().dio,
-      ),
+      () => BranchRemoteDataSourceImpl(dio: locator<ApiClient>().dio),
     );
   }
 
@@ -33,11 +31,12 @@ void setupBranchDependencies([GetIt? sl]) {
   }
 
   if (!locator.isRegistered<BranchCubit>()) {
-    locator.registerFactory<BranchCubit>(
+    locator.registerLazySingleton<BranchCubit>(
       () => BranchCubit(
         branchRepository: locator<BranchRepository>(),
         storageService: locator<StorageService>(),
       ),
+      dispose: (cubit) => cubit.close(),
     );
   }
 }

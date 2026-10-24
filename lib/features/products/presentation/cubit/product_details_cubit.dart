@@ -10,15 +10,24 @@ class ProductDetailsCubit extends Cubit<ProductDetailsState> {
   ProductDetailsCubit({
     required ProductsRepository productsRepository,
     StorageService? storageService,
-  })  : _productsRepository = productsRepository,
-        _storageService = storageService,
-        super(const ProductDetailsInitial());
+  }) : _productsRepository = productsRepository,
+       _storageService = storageService,
+       super(const ProductDetailsInitial());
 
   final ProductsRepository _productsRepository;
   final StorageService? _storageService;
 
+  int _requestRevision = 0;
   String? _lastProductId;
   String? _lastBranchId;
+
+  void clearBranchScope() {
+    ++_requestRevision;
+    _lastBranchId = null;
+    emit(
+      const ProductDetailsFailure(Validation(serverMessage: 'branch_required')),
+    );
+  }
 
   /// Loads product details for [productId] and [branchId].
   ///
@@ -27,6 +36,7 @@ class ProductDetailsCubit extends Cubit<ProductDetailsState> {
     required String productId,
     String? branchId,
   }) async {
+    final revision = ++_requestRevision;
     final effectiveBranchId =
         branchId ?? _lastBranchId ?? _storageService?.selectedBranchId;
 
@@ -36,9 +46,7 @@ class ProductDetailsCubit extends Cubit<ProductDetailsState> {
     if (effectiveBranchId == null || effectiveBranchId.trim().isEmpty) {
       emit(
         const ProductDetailsFailure(
-          Validation(
-            serverMessage: 'branch_required',
-          ),
+          Validation(serverMessage: 'branch_required'),
         ),
       );
       return;
@@ -47,9 +55,7 @@ class ProductDetailsCubit extends Cubit<ProductDetailsState> {
     if (productId.trim().isEmpty) {
       emit(
         const ProductDetailsFailure(
-          Validation(
-            serverMessage: 'product_id_invalid',
-          ),
+          Validation(serverMessage: 'product_id_invalid'),
         ),
       );
       return;
@@ -61,6 +67,8 @@ class ProductDetailsCubit extends Cubit<ProductDetailsState> {
       productId: productId.trim(),
       branchId: effectiveBranchId.trim(),
     );
+
+    if (isClosed || revision != _requestRevision) return;
 
     switch (result) {
       case Success(:final data):

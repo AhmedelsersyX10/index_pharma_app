@@ -72,10 +72,10 @@ class FakeCartRepository implements CartRepository {
 
 class FakeBranchCubit extends BranchCubit {
   FakeBranchCubit(BranchLoaded initialState)
-      : super(
-          branchRepository: _DummyBranchRepository(),
-          storageService: _DummyStorageService(),
-        ) {
+    : super(
+        branchRepository: _DummyBranchRepository(),
+        storageService: _DummyStorageService(),
+      ) {
     emit(initialState);
   }
 }
@@ -97,8 +97,10 @@ void main() {
 
     final arFile = File('assets/translations/ar.json');
     final enFile = File('assets/translations/en.json');
-    _arTranslations = jsonDecode(await arFile.readAsString()) as Map<String, dynamic>;
-    _enTranslations = jsonDecode(await enFile.readAsString()) as Map<String, dynamic>;
+    _arTranslations =
+        jsonDecode(await arFile.readAsString()) as Map<String, dynamic>;
+    _enTranslations =
+        jsonDecode(await enFile.readAsString()) as Map<String, dynamic>;
 
     await EasyLocalization.ensureInitialized();
   });
@@ -136,7 +138,8 @@ void main() {
     BranchCubit? branchCubit,
     Locale locale = const Locale('ar'),
   }) {
-    final effectiveBranchCubit = branchCubit ??
+    final effectiveBranchCubit =
+        branchCubit ??
         FakeBranchCubit(
           const BranchLoaded(
             branches: [testBranch],
@@ -171,17 +174,21 @@ void main() {
   }
 
   group('CartScreen UI Tests', () {
-    testWidgets('renders CartEmptyView when cart is empty (Arabic RTL)', (tester) async {
+    testWidgets('renders CartEmptyView when cart is empty (Arabic RTL)', (
+      tester,
+    ) async {
       final fakeRepo = FakeCartRepository();
       final cubit = CartCubit(cartRepository: fakeRepo);
 
-      await tester.pumpWidget(createTestWidget(cartCubit: cubit, locale: const Locale('ar')));
+      await tester.pumpWidget(
+        createTestWidget(cartCubit: cubit, locale: const Locale('ar')),
+      );
       await tester.pumpAndSettle();
 
       expect(find.byType(CartHeader), findsOneWidget);
       expect(find.byType(CartEmptyView), findsOneWidget);
       expect(find.text('سلة التسوق فارغة'), findsOneWidget);
-      expect(find.text('تصفح الأدوية والروشتات'), findsOneWidget);
+      expect(find.text('تصفح المنتجات'), findsOneWidget);
       expect(find.byType(CartBottomBar), findsNothing);
     });
 
@@ -189,119 +196,150 @@ void main() {
       final fakeRepo = FakeCartRepository();
       final cubit = CartCubit(cartRepository: fakeRepo);
 
-      await tester.pumpWidget(createTestWidget(cartCubit: cubit, locale: const Locale('en')));
+      await tester.pumpWidget(
+        createTestWidget(cartCubit: cubit, locale: const Locale('en')),
+      );
       await tester.pumpAndSettle();
 
       expect(find.text('Your cart is empty'), findsOneWidget);
-      expect(find.text('Browse Medicines & Prescriptions'), findsOneWidget);
+      expect(find.text('Browse products'), findsOneWidget);
     });
 
-    testWidgets('renders items, summary, sticky checkout bar, and Rx reminder when cart has items', (tester) async {
-      final fakeRepo = FakeCartRepository();
-      final cubit = CartCubit(cartRepository: fakeRepo);
+    testWidgets(
+      'renders items, summary, sticky checkout bar, and Rx reminder when cart has items',
+      (tester) async {
+        final fakeRepo = FakeCartRepository();
+        final cubit = CartCubit(cartRepository: fakeRepo);
 
-      await cubit.addToCart(testProductRx, quantity: 1);
-      await cubit.addToCart(testProductOtc, quantity: 2);
+        await cubit.addToCart(testProductRx, quantity: 1);
+        await cubit.addToCart(testProductOtc, quantity: 2);
 
-      await tester.pumpWidget(createTestWidget(cartCubit: cubit, locale: const Locale('ar')));
-      await tester.pumpAndSettle();
+        await tester.pumpWidget(
+          createTestWidget(cartCubit: cubit, locale: const Locale('ar')),
+        );
+        await tester.pumpAndSettle();
 
-      // Header and Branch Context Strip
-      expect(find.byType(CartHeader), findsOneWidget);
-      expect(find.text('سلة المشتريات'), findsOneWidget);
-      expect(find.text('فرع عباس العقاد - مدينة نصر'), findsAtLeastNWidgets(1));
+        // Header and Branch Context Strip
+        expect(find.byType(CartHeader), findsOneWidget);
+        expect(find.text('سلة المشتريات'), findsOneWidget);
+        expect(
+          find.text('فرع عباس العقاد - مدينة نصر'),
+          findsAtLeastNWidgets(1),
+        );
 
-      // Rx Reminder card (since Augmentin is Rx)
-      expect(find.byType(CartRxReminderCard), findsOneWidget);
-      expect(find.text('تتضمن سلّتك دواءً يحتاج تأكيد الوصفة الطبية'), findsOneWidget);
-      expect(find.text('مطلوب'), findsOneWidget);
+        // Rx Reminder card (since Augmentin is Rx)
+        expect(find.byType(CartRxReminderCard), findsOneWidget);
+        expect(
+          find.text('تتضمن سلّتك دواءً يحتاج تأكيد الوصفة الطبية'),
+          findsOneWidget,
+        );
+        expect(find.text('مطلوب'), findsOneWidget);
 
-      // Cart Item Cards (2 items)
-      expect(find.byType(CartItemCard), findsNWidgets(2));
-      expect(find.text('أوجمنتين ١ جم أقراص'), findsOneWidget);
-      expect(find.text('بنادول إكسترا ٥٠٠ مجم'), findsOneWidget);
+        // Cart Item Cards (2 items)
+        expect(find.byType(CartItemCard), findsNWidgets(2));
+        expect(find.text('أوجمنتين ١ جم أقراص'), findsOneWidget);
+        expect(find.text('بنادول إكسترا ٥٠٠ مجم'), findsOneWidget);
 
-      // Order Summary Card
-      expect(find.byType(CartOrderSummaryCard), findsOneWidget);
-      expect(find.text('ملخص الفاتورة التقديرية'), findsOneWidget);
-      // 99.0 + (45.0 * 2) = 189.0
-      expect(find.text('189.00 ج.م'), findsOneWidget);
+        // Order Summary Card
+        expect(find.byType(CartOrderSummaryCard), findsOneWidget);
+        expect(find.text('ملخص الفاتورة التقديرية'), findsOneWidget);
+        // 99.0 + (45.0 * 2) = 189.0
+        expect(find.text('189.00 ج.م'), findsOneWidget);
 
-      // Sticky Checkout Bar
-      expect(find.byType(CartBottomBar), findsOneWidget);
-      expect(find.text('إتمام الطلب'), findsOneWidget);
-    });
+        // Sticky Checkout Bar
+        expect(find.byType(CartBottomBar), findsOneWidget);
+        expect(find.text('إتمام الطلب'), findsOneWidget);
+      },
+    );
 
-    testWidgets('quantity increment and decrement interaction clamps and updates state', (tester) async {
-      final fakeRepo = FakeCartRepository();
-      final cubit = CartCubit(cartRepository: fakeRepo);
+    testWidgets(
+      'quantity increment and decrement interaction clamps and updates state',
+      (tester) async {
+        final fakeRepo = FakeCartRepository();
+        final cubit = CartCubit(cartRepository: fakeRepo);
 
-      await cubit.addToCart(testProductOtc, quantity: 1); // stock is 10
+        await cubit.addToCart(testProductOtc, quantity: 1); // stock is 10
 
-      await tester.pumpWidget(createTestWidget(cartCubit: cubit, locale: const Locale('ar')));
-      await tester.pumpAndSettle();
+        await tester.pumpWidget(
+          createTestWidget(cartCubit: cubit, locale: const Locale('ar')),
+        );
+        await tester.pumpAndSettle();
 
-      expect(find.text('1'), findsAtLeastNWidgets(1));
+        expect(find.text('1'), findsAtLeastNWidgets(1));
 
-      // Tap '+' button
-      await tester.tap(find.byIcon(Icons.add).first);
-      await tester.pumpAndSettle();
+        // Tap '+' button
+        await tester.tap(find.byIcon(Icons.add).first);
+        await tester.pumpAndSettle();
 
-      expect(find.text('2'), findsAtLeastNWidgets(1));
+        expect(find.text('2'), findsAtLeastNWidgets(1));
 
-      // Tap '-' button
-      await tester.tap(find.byIcon(Icons.remove).first);
-      await tester.pumpAndSettle();
+        // Tap '-' button
+        await tester.tap(find.byIcon(Icons.remove).first);
+        await tester.pumpAndSettle();
 
-      expect(find.text('1'), findsAtLeastNWidgets(1));
-    });
+        expect(find.text('1'), findsAtLeastNWidgets(1));
+      },
+    );
 
-    testWidgets('deleting item shows confirmation dialog and removes item upon confirm', (tester) async {
-      final fakeRepo = FakeCartRepository();
-      final cubit = CartCubit(cartRepository: fakeRepo);
+    testWidgets(
+      'deleting item shows confirmation dialog and removes item upon confirm',
+      (tester) async {
+        final fakeRepo = FakeCartRepository();
+        final cubit = CartCubit(cartRepository: fakeRepo);
 
-      await cubit.addToCart(testProductOtc, quantity: 1);
+        await cubit.addToCart(testProductOtc, quantity: 1);
 
-      await tester.pumpWidget(createTestWidget(cartCubit: cubit, locale: const Locale('ar')));
-      await tester.pumpAndSettle();
+        await tester.pumpWidget(
+          createTestWidget(cartCubit: cubit, locale: const Locale('ar')),
+        );
+        await tester.pumpAndSettle();
 
-      expect(find.byType(CartItemCard), findsOneWidget);
+        expect(find.byType(CartItemCard), findsOneWidget);
 
-      // Tap delete button
-      await tester.tap(find.byIcon(Icons.delete_outline_rounded).first);
-      await tester.pumpAndSettle();
+        // Tap delete button
+        await tester.tap(find.byIcon(Icons.delete_outline_rounded).first);
+        await tester.pumpAndSettle();
 
-      // Verify confirmation dialog appeared
-      expect(find.text('حذف الدواء'), findsOneWidget);
-      expect(find.text('حذف'), findsOneWidget);
+        // Verify confirmation dialog appeared
+        expect(find.text('حذف الدواء'), findsOneWidget);
+        expect(find.text('حذف'), findsOneWidget);
 
-      // Confirm deletion
-      await tester.tap(find.text('حذف'));
-      await tester.pumpAndSettle();
+        // Confirm deletion
+        await tester.tap(find.text('حذف'));
+        await tester.pumpAndSettle();
 
-      // Cart is now empty
-      expect(find.byType(CartItemCard), findsNothing);
-      expect(find.byType(CartEmptyView), findsOneWidget);
-    });
+        // Cart is now empty
+        expect(find.byType(CartItemCard), findsNothing);
+        expect(find.byType(CartEmptyView), findsOneWidget);
+      },
+    );
 
-    testWidgets('stock alert banner is shown when quantity was capped and can be dismissed', (tester) async {
-      final fakeRepo = FakeCartRepository();
-      final cubit = CartCubit(cartRepository: fakeRepo);
+    testWidgets(
+      'stock alert banner is shown when quantity was capped and can be dismissed',
+      (tester) async {
+        final fakeRepo = FakeCartRepository();
+        final cubit = CartCubit(cartRepository: fakeRepo);
 
-      // Request 99 when stock is 5
-      await cubit.addToCart(testProductRx, quantity: 99);
+        // Request 99 when stock is 5
+        await cubit.addToCart(testProductRx, quantity: 99);
 
-      await tester.pumpWidget(createTestWidget(cartCubit: cubit, locale: const Locale('ar')));
-      await tester.pumpAndSettle();
+        await tester.pumpWidget(
+          createTestWidget(cartCubit: cubit, locale: const Locale('ar')),
+        );
+        await tester.pumpAndSettle();
 
-      expect(find.byType(CartStockAlertBanner), findsOneWidget);
-      expect(find.text('تم تعديل الكمية تلقائياً لتوفر المخزون'), findsOneWidget);
+        expect(find.byType(CartStockAlertBanner), findsOneWidget);
+        expect(
+          find.text('تم تعديل الكمية تلقائياً لتوفر المخزون'),
+          findsOneWidget,
+        );
 
-      // Tap "حسناً، فهمت" to dismiss
-      await tester.tap(find.text('حسناً، فهمت'));
-      await tester.pumpAndSettle();
+        // Tap "حسناً، فهمت" to dismiss
+        await tester.tap(find.text('حسناً، فهمت'));
+        await tester.pumpAndSettle();
 
-      expect(find.byType(CartStockAlertBanner), findsNothing);
-    });
+        expect(find.byType(CartStockAlertBanner), findsNothing);
+      },
+    );
   });
 }

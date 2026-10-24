@@ -52,16 +52,29 @@ import 'package:index_pharma/features/staff/presentation/screens/staff_shell_scr
 
 class AppRouter {
   AppRouter({
+    BranchCubit? branchCubit,
     AuthCubit? authCubit,
     StorageService? storageService,
     Listenable? refreshListenable,
     String? initialLocation,
-  }) : _authCubit = authCubit,
+  }) : _customerBranchCubit = branchCubit,
+       _authCubit = authCubit,
        _storageService = storageService,
        refreshListenable =
            refreshListenable ??
-           (authCubit != null ? GoRouterRefreshStream(authCubit.stream) : _AuthRefreshListenable()),
+           (authCubit != null
+               ? GoRouterRefreshStream(authCubit.stream)
+               : _AuthRefreshListenable()),
        _initialLocation = initialLocation;
+
+  BranchCubit? _customerBranchCubit;
+
+  // Keep the customer selection alive across routes; staff scope is separate.
+  BranchCubit get _activeBranchCubit {
+    final cubit = _customerBranchCubit ??= getIt<BranchCubit>();
+    cubit.ensureLoaded();
+    return cubit;
+  }
 
   final AuthCubit? _authCubit;
   final StorageService? _storageService;
@@ -97,7 +110,8 @@ class AppRouter {
   static const kBranchManagementView = '/admin/branches';
 
   /// Generates the product details path for a specific [productId].
-  static String productDetailsPath(String productId) => '/store/products/$productId';
+  static String productDetailsPath(String productId) =>
+      '/store/products/$productId';
 
   /// Generates the browse path with optional [categoryId] and [q] search term.
   static String browsePath({String? categoryId, String? q}) {
@@ -116,7 +130,8 @@ class AppRouter {
   static String orderDetailsPath(String orderId) => '/orders/$orderId';
 
   /// Generates the prescription details path for a specific [prescriptionId].
-  static String prescriptionDetailsPath(String prescriptionId) => '/prescription/$prescriptionId';
+  static String prescriptionDetailsPath(String prescriptionId) =>
+      '/prescription/$prescriptionId';
 
   AuthCubit? get _activeAuthCubit {
     if (_authCubit != null) return _authCubit;
@@ -150,12 +165,16 @@ class AppRouter {
     }
 
     final bool isStaffRoute =
-        pathOnly == kStaffDashboardView || pathOnly.startsWith('$kStaffDashboardView/');
+        pathOnly == kStaffDashboardView ||
+        pathOnly.startsWith('$kStaffDashboardView/');
     final bool isBranchManagementRoute =
-        pathOnly == kBranchManagementView || pathOnly.startsWith('$kBranchManagementView/');
+        pathOnly == kBranchManagementView ||
+        pathOnly.startsWith('$kBranchManagementView/');
 
     final isStaff =
-        role == UserRole.pharmacist || role == UserRole.admin || role == UserRole.superadmin;
+        role == UserRole.pharmacist ||
+        role == UserRole.admin ||
+        role == UserRole.superadmin;
 
     if (isStaff) {
       if (isBranchManagementRoute) {
@@ -185,14 +204,18 @@ class AppRouter {
     String? from,
   }) {
     final bool isStaffRoute =
-        location == kStaffDashboardView || location.startsWith('$kStaffDashboardView/');
+        location == kStaffDashboardView ||
+        location.startsWith('$kStaffDashboardView/');
     final bool isBranchManagementRoute =
-        location == kBranchManagementView || location.startsWith('$kBranchManagementView/');
-    final bool isAuthRoute = location == kLoginView || location == kRegisterView;
+        location == kBranchManagementView ||
+        location.startsWith('$kBranchManagementView/');
+    final bool isAuthRoute =
+        location == kLoginView || location == kRegisterView;
 
     // Superadmin branch-management protection:
     if (isBranchManagementRoute) {
-      if (authState is AuthAuthenticated && authState.user.role == UserRole.superadmin) {
+      if (authState is AuthAuthenticated &&
+          authState.user.role == UserRole.superadmin) {
         return null; // Allowed for superadmin
       }
       return kStoreView; // Unauthorized: redirect to store
@@ -202,7 +225,9 @@ class AppRouter {
     if (isStaffRoute) {
       if (authState is AuthAuthenticated) {
         final role = authState.user.role;
-        if (role == UserRole.pharmacist || role == UserRole.admin || role == UserRole.superadmin) {
+        if (role == UserRole.pharmacist ||
+            role == UserRole.admin ||
+            role == UserRole.superadmin) {
           return null; // Allowed for staff
         }
       }
@@ -212,7 +237,9 @@ class AppRouter {
     // Auth pages guard when already authenticated
     if (isAuthRoute && authState is AuthAuthenticated) {
       final role = authState.user.role;
-      if (role == UserRole.pharmacist || role == UserRole.admin || role == UserRole.superadmin) {
+      if (role == UserRole.pharmacist ||
+          role == UserRole.admin ||
+          role == UserRole.superadmin) {
         if (from != null) {
           final safeFrom = sanitizeReturnRoute(from, role);
           if (safeFrom != null) return safeFrom;
@@ -248,8 +275,10 @@ class AppRouter {
     routes: <RouteBase>[
       GoRoute(
         path: kSplashView,
-        builder: (context, state) =>
-            SplashView(authCubit: _activeAuthCubit, storageService: _activeStorageService),
+        builder: (context, state) => SplashView(
+          authCubit: _activeAuthCubit,
+          storageService: _activeStorageService,
+        ),
       ),
       GoRoute(
         path: kLanguageSelectionView,
@@ -260,7 +289,8 @@ class AppRouter {
       ),
       GoRoute(
         path: kOnboardingView,
-        builder: (context, state) => OnboardingView(storageService: _activeStorageService),
+        builder: (context, state) =>
+            OnboardingView(storageService: _activeStorageService),
       ),
       GoRoute(
         path: kLoginView,
@@ -271,7 +301,10 @@ class AppRouter {
             from: from,
             onNavigateToRegister: () {
               final uri = from != null && from.isNotEmpty
-                  ? Uri(path: kRegisterView, queryParameters: {'from': from}).toString()
+                  ? Uri(
+                      path: kRegisterView,
+                      queryParameters: {'from': from},
+                    ).toString()
                   : kRegisterView;
               context.go(uri);
             },
@@ -288,7 +321,10 @@ class AppRouter {
             from: from,
             onNavigateToLogin: () {
               final uri = from != null && from.isNotEmpty
-                  ? Uri(path: kLoginView, queryParameters: {'from': from}).toString()
+                  ? Uri(
+                      path: kLoginView,
+                      queryParameters: {'from': from},
+                    ).toString()
                   : kLoginView;
               context.go(uri);
             },
@@ -297,8 +333,8 @@ class AppRouter {
       ),
       GoRoute(
         path: kBranchSelectionView,
-        builder: (context, state) => BlocProvider<BranchCubit>(
-          create: (context) => getIt<BranchCubit>()..fetchBranches(),
+        builder: (context, state) => BlocProvider<BranchCubit>.value(
+          value: _activeBranchCubit,
           child: const BranchSelectionScreen(),
         ),
       ),
@@ -306,9 +342,7 @@ class AppRouter {
         path: kStoreView,
         builder: (context, state) => MultiBlocProvider(
           providers: [
-            BlocProvider<BranchCubit>(
-              create: (context) => getIt<BranchCubit>()..fetchBranches(),
-            ),
+            BlocProvider<BranchCubit>.value(value: _activeBranchCubit),
             BlocProvider<SettingsCubit>(
               create: (context) => getIt<SettingsCubit>()..fetchSettings(),
             ),
@@ -330,6 +364,7 @@ class AppRouter {
           return BlocProvider<ProductDetailsCubit>(
             create: (context) => getIt<ProductDetailsCubit>(),
             child: ProductDetailsScreen(
+              branchCubit: _activeBranchCubit,
               productId: productId,
               branchId: branchId,
             ),
@@ -346,18 +381,15 @@ class AppRouter {
             key: ValueKey(uriString),
             providers: [
               BlocProvider<ProductsCubit>(
-                create: (context) => getIt<ProductsCubit>()
-                  ..loadFirstPage(
-                    categoryId: categoryId,
-                    keyword: q,
-                  ),
+                create: (context) =>
+                    getIt<ProductsCubit>()
+                      ..setInitialFilters(categoryId: categoryId, keyword: q),
               ),
               BlocProvider<CategoriesCubit>(
-                create: (context) => getIt<CategoriesCubit>()..fetchCategories(),
+                create: (context) =>
+                    getIt<CategoriesCubit>()..fetchCategories(),
               ),
-              BlocProvider<BranchCubit>(
-                create: (context) => getIt<BranchCubit>()..fetchBranches(),
-              ),
+              BlocProvider<BranchCubit>.value(value: _activeBranchCubit),
             ],
             child: ProductsPage(
               key: ValueKey('ProductsPage_$uriString'),
@@ -462,21 +494,27 @@ class AppRouter {
       ),
       GoRoute(
         path: kAccountView,
-        builder: (context, state) =>
-            AccountScreen(authCubit: _activeAuthCubit, storageService: _activeStorageService),
+        builder: (context, state) => AccountScreen(
+          authCubit: _activeAuthCubit,
+          storageService: _activeStorageService,
+          branchCubit: _activeBranchCubit,
+        ),
       ),
       GoRoute(
         path: kEditProfileView,
         builder: (context, state) => AuthRequiredGuard(
           routePath: kEditProfileView,
           authCubit: _activeAuthCubit,
-          child: EditProfileScreen(authCubit: _activeAuthCubit),
+          child: EditProfileScreen(
+            authCubit: _activeAuthCubit,
+            branchCubit: _activeBranchCubit,
+          ),
         ),
       ),
       GoRoute(
         path: kCartView,
-        builder: (context, state) => BlocProvider<BranchCubit>(
-          create: (context) => getIt<BranchCubit>()..fetchBranches(),
+        builder: (context, state) => BlocProvider<BranchCubit>.value(
+          value: _activeBranchCubit,
           child: const CartScreen(),
         ),
       ),
@@ -520,7 +558,9 @@ class AppRouter {
             path: kStaffPrescriptionsView,
             builder: (context, state) {
               final authState = _activeAuthCubit?.state;
-              final user = authState is AuthAuthenticated ? authState.user : null;
+              final user = authState is AuthAuthenticated
+                  ? authState.user
+                  : null;
               final permService = PermissionService(user);
               if (!permService.can(AppPermissions.viewPrescriptions)) {
                 return const StaffAccessDeniedScreen();
@@ -550,7 +590,9 @@ class AppRouter {
 class _AuthRefreshListenable extends ChangeNotifier {
   _AuthRefreshListenable() {
     if (getIt.isRegistered<AuthCubit>()) {
-      _subscription = getIt<AuthCubit>().stream.listen((_) => notifyListeners());
+      _subscription = getIt<AuthCubit>().stream.listen(
+        (_) => notifyListeners(),
+      );
     }
   }
 

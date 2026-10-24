@@ -11,7 +11,10 @@ class LoginRequiredBottomSheet {
   const LoginRequiredBottomSheet._();
 
   /// Displays the [LoginRequiredPrompt] as a modal bottom sheet adhering to Stitch A4.
-  static Future<T?> show<T>(BuildContext context, {required String returnRoute}) {
+  static Future<T?> show<T>(
+    BuildContext context, {
+    required String returnRoute,
+  }) {
     return showModalBottomSheet<T>(
       context: context,
       isScrollControlled: true,
@@ -108,8 +111,6 @@ class LoginRequiredPrompt extends StatelessWidget {
           ],
           _TopHeaderArea(onDismiss: () => _handleDismiss(context)),
           const SizedBox(height: AppSpacing.spaceSm),
-          const _HealthcareContextBadge(),
-          const SizedBox(height: AppSpacing.spaceSm),
           Text(
             AppLocaleKeys.authLoginRequiredTitle.tr(),
             textAlign: TextAlign.center,
@@ -132,8 +133,6 @@ class LoginRequiredPrompt extends StatelessWidget {
             onRegister: () => _handleRegister(context),
             onContinueAsGuest: () => _handleDismiss(context),
           ),
-          const SizedBox(height: AppSpacing.spaceMd),
-          const _PrivacyAndSecurityPill(),
         ],
       ),
     );
@@ -256,7 +255,11 @@ class _ClinicalShieldBadge extends StatelessWidget {
               ],
             ),
             alignment: Alignment.center,
-            child: Icon(Icons.verified_user_rounded, color: colors.primaryBrand, size: 34),
+            child: Icon(
+              Icons.verified_user_rounded,
+              color: colors.primaryBrand,
+              size: 34,
+            ),
           ),
           Positioned(
             bottom: 0,
@@ -267,51 +270,26 @@ class _ClinicalShieldBadge extends StatelessWidget {
               decoration: BoxDecoration(
                 color: colors.canvasPure,
                 shape: BoxShape.circle,
-                boxShadow: const [
-                  BoxShadow(color: Color(0x1A0F172A), blurRadius: 4, offset: Offset(0, 1)),
-                ],
+                boxShadow: context.shadowsLevel1,
               ),
               alignment: Alignment.center,
               child: Container(
                 width: 18,
                 height: 18,
-                decoration: BoxDecoration(color: colors.primaryBrand, shape: BoxShape.circle),
+                decoration: BoxDecoration(
+                  color: colors.primaryBrand,
+                  shape: BoxShape.circle,
+                ),
                 alignment: Alignment.center,
-                child: Icon(Icons.lock_rounded, color: colors.onPrimary, size: 11),
+                child: Icon(
+                  Icons.lock_rounded,
+                  color: colors.onPrimary,
+                  size: 11,
+                ),
               ),
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-/// Regulatory accredited pharmacy platform pill badge.
-class _HealthcareContextBadge extends StatelessWidget {
-  const _HealthcareContextBadge();
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = context.colors;
-    return Center(
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 5),
-        decoration: BoxDecoration(
-          color: colors.brandMintSurface,
-          borderRadius: AppRadii.roundedFull,
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(Icons.shield_outlined, size: 14, color: colors.brandEmeraldDark),
-            const SizedBox(width: AppSpacing.space2xs),
-            Text(
-              AppLocaleKeys.authLoginRequiredBadge.tr(),
-              style: AppTypography.labelSm(color: colors.brandEmeraldDark),
-            ),
-          ],
-        ),
       ),
     );
   }
@@ -378,7 +356,10 @@ class _ValuePropItem extends StatelessWidget {
         Container(
           width: 32,
           height: 32,
-          decoration: BoxDecoration(color: colors.surfaceContainerLowest, shape: BoxShape.circle),
+          decoration: BoxDecoration(
+            color: colors.surfaceContainerLowest,
+            shape: BoxShape.circle,
+          ),
           alignment: Alignment.center,
           child: Icon(icon, color: colors.primaryBrand, size: 18),
         ),
@@ -434,7 +415,11 @@ class _ActionButtonsStack extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.person_add_outlined, size: 20, color: colors.onSecondaryFixed),
+              Icon(
+                Icons.person_add_outlined,
+                size: 20,
+                color: colors.onSecondaryFixed,
+              ),
               const SizedBox(width: AppSpacing.spaceSm),
               Text(
                 AppLocaleKeys.authLoginRequiredBtnRegister.tr(),
@@ -458,41 +443,6 @@ class _ActionButtonsStack extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-/// Medical data confidentiality and encryption reassurance pill.
-///
-/// NOTE: Free of any English acronyms in Arabic mode per project rules.
-class _PrivacyAndSecurityPill extends StatelessWidget {
-  const _PrivacyAndSecurityPill();
-
-  @override
-  Widget build(BuildContext context) {
-    final colors = context.colors;
-    return Center(
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-        decoration: BoxDecoration(
-          color: colors.surfaceContainerLow,
-          borderRadius: AppRadii.roundedFull,
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(Icons.lock_rounded, size: 13, color: colors.brandEmeraldDark),
-            const SizedBox(width: AppSpacing.space2xs),
-            Flexible(
-              child: Text(
-                AppLocaleKeys.authLoginRequiredPrivacyPill.tr(),
-                textAlign: TextAlign.center,
-                style: AppTypography.labelSm(color: colors.secondaryMuted),
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }

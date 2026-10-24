@@ -11,7 +11,11 @@ import 'package:index_pharma/core/theme/theme.dart';
 /// - Estimated total amount (strictly computed from selling prices, with no unverified fees).
 /// - Official Egyptian Drug Authority (EDA) pricing compliance notice.
 class CartOrderSummaryCard extends StatelessWidget {
-  const CartOrderSummaryCard({super.key, required this.subtotal, required this.totalUnitsCount});
+  const CartOrderSummaryCard({
+    super.key,
+    required this.subtotal,
+    required this.totalUnitsCount,
+  });
 
   final double subtotal;
   final int totalUnitsCount;
@@ -26,7 +30,10 @@ class CartOrderSummaryCard extends StatelessWidget {
         color: colors.surfaceContainerLowest,
         borderRadius: AppRadii.roundedXl,
         boxShadow: context.shadowsLevel1,
-        border: Border.all(color: colors.outlineVariant.withValues(alpha: 0.3), width: 0.5),
+        border: Border.all(
+          color: colors.outlineVariant.withValues(alpha: 0.3),
+          width: 0.5,
+        ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -41,7 +48,11 @@ class CartOrderSummaryCard extends StatelessWidget {
                   color: colors.onSurface,
                 ).copyWith(fontWeight: FontWeight.bold),
               ),
-              Icon(Icons.receipt_long_outlined, size: 20, color: colors.secondary),
+              Icon(
+                Icons.receipt_long_outlined,
+                size: 20,
+                color: colors.secondary,
+              ),
             ],
           ),
 
@@ -54,7 +65,9 @@ class CartOrderSummaryCard extends StatelessWidget {
               Text(
                 AppLocaleKeys.cartSubtotalLabel.tr(
                   args: [
-                    AppLocaleKeys.cartItemsCount.tr(args: [totalUnitsCount.toString()]),
+                    AppLocaleKeys.cartItemsCount.tr(
+                      args: [totalUnitsCount.toString()],
+                    ),
                   ],
                 ),
                 style: AppTypography.bodyMd(color: colors.onSurfaceVariant),
@@ -70,7 +83,11 @@ class CartOrderSummaryCard extends StatelessWidget {
 
           Padding(
             padding: const EdgeInsets.symmetric(vertical: AppSpacing.spaceSm),
-            child: Divider(color: colors.surfaceContainerLow, height: 1, thickness: 1),
+            child: Divider(
+              color: colors.surfaceContainerLow,
+              height: 1,
+              thickness: 1,
+            ),
           ),
 
           // Estimated Total Row
@@ -115,30 +132,6 @@ class CartOrderSummaryCard extends StatelessWidget {
                 ],
               ),
             ],
-          ),
-
-          const SizedBox(height: AppSpacing.spaceMd),
-
-          // EDA Pricing Compliance Notice
-          Container(
-            padding: const EdgeInsets.all(AppSpacing.spaceSm),
-            decoration: BoxDecoration(
-              color: colors.surfaceContainerLow,
-              borderRadius: AppRadii.roundedLg,
-            ),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Icon(Icons.verified_outlined, size: 18, color: colors.brandEmeraldDark),
-                const SizedBox(width: AppSpacing.spaceSm),
-                Expanded(
-                  child: Text(
-                    AppLocaleKeys.cartEdaCompliance.tr(),
-                    style: AppTypography.bodySm(color: colors.onSurfaceVariant),
-                  ),
-                ),
-              ],
-            ),
           ),
         ],
       ),

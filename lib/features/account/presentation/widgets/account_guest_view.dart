@@ -8,10 +8,7 @@ import 'package:index_pharma/core/utils/app_router.dart';
 
 /// Guest Mode presentation for Customer Account screen (Stitch D5).
 class AccountGuestView extends StatelessWidget {
-  const AccountGuestView({
-    super.key,
-    required this.storageService,
-  });
+  const AccountGuestView({super.key, required this.storageService});
 
   final StorageService storageService;
 
@@ -21,8 +18,9 @@ class AccountGuestView extends StatelessWidget {
       context.push('${AppRouter.kLanguageSelectionView}?from=account');
     } else {
       final currentCode = context.locale.languageCode;
-      final targetLocale =
-          currentCode == 'ar' ? const Locale('en') : const Locale('ar');
+      final targetLocale = currentCode == 'ar'
+          ? const Locale('en')
+          : const Locale('ar');
       await context.setLocale(targetLocale);
       await storageService.setLocale(targetLocale.languageCode);
     }
@@ -49,13 +47,7 @@ class AccountGuestView extends StatelessWidget {
               color: colors.borderSubtle.withValues(alpha: 0.6),
               width: 1,
             ),
-            boxShadow: const [
-              BoxShadow(
-                color: Color(0x080B1C30),
-                blurRadius: 8,
-                offset: Offset(0, 2),
-              ),
-            ],
+            boxShadow: context.shadowsLevel1,
           ),
           child: Column(
             children: [
@@ -75,17 +67,13 @@ class AccountGuestView extends StatelessWidget {
               const SizedBox(height: 14),
               Text(
                 AppLocaleKeys.accountGuestWelcomeTitle.tr(),
-                style: AppTypography.headlineMd(
-                  color: colors.onSurface,
-                ),
+                style: AppTypography.headlineMd(color: colors.onSurface),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 8),
               Text(
                 AppLocaleKeys.accountGuestWelcomeDesc.tr(),
-                style: AppTypography.bodyMd(
-                  color: colors.onSurfaceVariant,
-                ),
+                style: AppTypography.bodyMd(color: colors.onSurfaceVariant),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 20),
@@ -102,11 +90,11 @@ class AccountGuestView extends StatelessWidget {
                   icon: const Icon(Icons.login_rounded, size: 20),
                   label: Text(
                     AppLocaleKeys.accountGuestLoginBtn.tr(),
-                    style: AppTypography.labelLg(color: Colors.white),
+                    style: AppTypography.labelLg(color: colors.onPrimary),
                   ),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: colors.primary,
-                    foregroundColor: Colors.white,
+                    foregroundColor: colors.onPrimary,
                     elevation: 0,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
@@ -126,15 +114,10 @@ class AccountGuestView extends StatelessWidget {
                   icon: const Icon(Icons.person_add_outlined, size: 20),
                   label: Text(
                     AppLocaleKeys.accountGuestRegisterBtn.tr(),
-                    style: AppTypography.labelLg(
-                      color: colors.primary,
-                    ),
+                    style: AppTypography.labelLg(color: colors.primary),
                   ),
                   style: OutlinedButton.styleFrom(
-                    side: BorderSide(
-                      color: colors.primary,
-                      width: 1.5,
-                    ),
+                    side: BorderSide(color: colors.primary, width: 1.5),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -175,9 +158,7 @@ class AccountGuestView extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 4),
           child: Text(
             AppLocaleKeys.accountGuestSectionInfo.tr(),
-            style: AppTypography.labelMd(
-              color: colors.onSurfaceVariant,
-            ),
+            style: AppTypography.labelMd(color: colors.onSurfaceVariant),
           ),
         ),
         const SizedBox(height: 8),
@@ -189,13 +170,7 @@ class AccountGuestView extends StatelessWidget {
               color: colors.borderSubtle.withValues(alpha: 0.6),
               width: 1,
             ),
-            boxShadow: const [
-              BoxShadow(
-                color: Color(0x080B1C30),
-                blurRadius: 8,
-                offset: Offset(0, 2),
-              ),
-            ],
+            boxShadow: context.shadowsLevel1,
           ),
           child: Column(
             children: [
@@ -203,7 +178,9 @@ class AccountGuestView extends StatelessWidget {
               InkWell(
                 key: const ValueKey('guest_language_switch_tile'),
                 onTap: () => _openLanguageSelection(context),
-                borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
+                borderRadius: const BorderRadius.vertical(
+                  top: Radius.circular(16),
+                ),
                 child: Padding(
                   padding: const EdgeInsets.all(14),
                   child: Row(
@@ -322,71 +299,8 @@ class AccountGuestView extends StatelessWidget {
                   ],
                 ),
               ),
-              Divider(height: 1, color: colors.surfaceContainerLow),
-
-              // Licensing info
-              Padding(
-                padding: const EdgeInsets.all(14),
-                child: Row(
-                  children: [
-                    Container(
-                      width: 38,
-                      height: 38,
-                      decoration: BoxDecoration(
-                        color: colors.surfaceContainer,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Icon(
-                        Icons.gavel_rounded,
-                        color: colors.primary,
-                        size: 20,
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            AppLocaleKeys.accountLicensingTitle.tr(),
-                            style: AppTypography.titleMd(
-                              color: colors.onSurface,
-                            ),
-                          ),
-                          const SizedBox(height: 2),
-                          Text(
-                            AppLocaleKeys.accountLicensingDesc.tr(),
-                            style: AppTypography.bodySm(
-                              color: colors.onSurfaceVariant,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
             ],
           ),
-        ),
-
-        const SizedBox(height: 24),
-
-        // Support Footer
-        Text(
-          AppLocaleKeys.accountGuestSupportFooter.tr(),
-          style: AppTypography.bodySm(
-            color: colors.onSurfaceVariant,
-          ),
-          textAlign: TextAlign.center,
-        ),
-        const SizedBox(height: 4),
-        Text(
-          AppLocaleKeys.accountVersionFooter.tr(),
-          style: AppTypography.labelSm(
-            color: colors.outline,
-          ),
-          textAlign: TextAlign.center,
         ),
       ],
     );
@@ -417,13 +331,7 @@ class _BenefitCard extends StatelessWidget {
           color: colors.borderSubtle.withValues(alpha: 0.6),
           width: 1,
         ),
-        boxShadow: const [
-          BoxShadow(
-            color: Color(0x080B1C30),
-            blurRadius: 8,
-            offset: Offset(0, 2),
-          ),
-        ],
+        boxShadow: context.shadowsLevel1,
       ),
       child: Column(
         children: [

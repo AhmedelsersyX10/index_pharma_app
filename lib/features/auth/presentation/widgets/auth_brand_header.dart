@@ -56,27 +56,6 @@ class AuthBrandHeader extends StatelessWidget {
           style: AppTypography.bodyMd(color: colors.secondary),
           textAlign: TextAlign.center,
         ),
-        const SizedBox(height: AppSpacing.spaceMd),
-        // Clinical Trust Badge
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-          decoration: BoxDecoration(
-            color: colors.brandMintSurface,
-            borderRadius: AppRadii.roundedFull,
-            border: Border.all(color: colors.brandMintBorder, width: 1),
-          ),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(Icons.verified_rounded, size: 16, color: colors.brandEmeraldDark),
-              const SizedBox(width: AppSpacing.space2xs),
-              Text(
-                AppLocaleKeys.authClinicalBadge.tr(),
-                style: AppTypography.labelSm(color: colors.brandEmeraldDark),
-              ),
-            ],
-          ),
-        ),
         const SizedBox(height: AppSpacing.spaceLg),
       ],
     );

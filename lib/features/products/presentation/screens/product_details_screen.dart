@@ -6,7 +6,6 @@ import 'package:index_pharma/core/localization/app_locale_keys.dart';
 import 'package:index_pharma/core/storage/storage_service.dart';
 import 'package:index_pharma/core/theme/theme.dart';
 import 'package:index_pharma/core/utils/app_router.dart';
-import 'package:index_pharma/core/widgets/app_badges.dart';
 import 'package:index_pharma/core/widgets/app_error_view.dart';
 import 'package:index_pharma/features/choose_branches/presentation/cubit/branch_cubit.dart';
 import 'package:index_pharma/features/choose_branches/presentation/cubit/branch_state.dart';
@@ -61,22 +60,28 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   }
 
   void _loadDetails() {
-    String? effectiveBranchId = widget.branchId;
-    if (effectiveBranchId == null || effectiveBranchId.trim().isEmpty) {
-      if (widget.branchCubit != null) {
-        final branchState = widget.branchCubit!.state;
-        if (branchState is BranchLoaded) {
-          effectiveBranchId = branchState.selectedBranchId;
-        }
-      } else {
-        effectiveBranchId = context.read<StorageService>().selectedBranchId;
-      }
+    final branchCubit = widget.branchCubit;
+    if (branchCubit != null) {
+      branchCubit.ensureLoaded();
+      _loadForBranch(branchCubit.state);
+    } else {
+      _cubit.loadProductDetails(
+        productId: widget.productId,
+        branchId:
+            widget.branchId ?? context.read<StorageService>().selectedBranchId,
+      );
     }
+  }
 
-    _cubit.loadProductDetails(
-      productId: widget.productId,
-      branchId: effectiveBranchId,
-    );
+  void _loadForBranch(BranchState state) {
+    if (state is BranchLoaded && state.selectedBranch != null) {
+      _cubit.loadProductDetails(
+        productId: widget.productId,
+        branchId: state.selectedBranchId,
+      );
+    } else {
+      _cubit.clearBranchScope();
+    }
   }
 
   CartCubit _resolveCartCubit() {
@@ -96,54 +101,66 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
-    final scaffold = Scaffold(
+    Widget scaffold = Scaffold(
       backgroundColor: colors.background,
       appBar: ProductDetailsHeader(
         onCartTap: () => context.push(AppRouter.kCartView),
       ),
       body: BlocConsumer<ProductDetailsCubit, ProductDetailsState>(
-          listener: (context, state) {
-            if (state is ProductDetailsLoaded) {
-              final stock = state.product.stockQuantity;
-              if (_selectedQuantity > stock && stock > 0) {
-                setState(() => _selectedQuantity = stock);
-              }
+        listener: (context, state) {
+          if (state is ProductDetailsLoaded) {
+            final stock = state.product.stockQuantity;
+            if (_selectedQuantity > stock && stock > 0) {
+              setState(() => _selectedQuantity = stock);
             }
-          },
-          builder: (context, state) {
-            return switch (state) {
-              ProductDetailsInitial() || ProductDetailsLoading() =>
-                const ProductDetailsSkeleton(),
-              ProductDetailsFailure(:final message) => Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(AppSpacing.marginMobile),
-                    child: AppErrorView(
-                      title: AppLocaleKeys.productsErrorTitle.tr(),
-                      message: message,
-                      onRetry: _loadDetails,
-                    ),
-                  ),
+          }
+        },
+        builder: (context, state) {
+          return switch (state) {
+            ProductDetailsInitial() ||
+            ProductDetailsLoading() => const ProductDetailsSkeleton(),
+            ProductDetailsFailure(:final message) => Center(
+              child: Padding(
+                padding: const EdgeInsets.all(AppSpacing.marginMobile),
+                child: AppErrorView(
+                  title: AppLocaleKeys.productsErrorTitle.tr(),
+                  message: message,
+                  onRetry: _loadDetails,
                 ),
-              ProductDetailsLoaded(:final product) => _buildLoadedView(product, colors),
-            };
-          },
-        ),
-        bottomNavigationBar: BlocBuilder<ProductDetailsCubit, ProductDetailsState>(
-          builder: (context, state) {
-            if (state is! ProductDetailsLoaded) {
-              return const SizedBox.shrink();
-            }
-            final product = state.product;
-            final isAvailable = product.stockQuantity > 0;
-            return ProductDetailsBottomBar(
-              unitPrice: product.sellingPrice,
-              quantity: _selectedQuantity,
-              isAvailable: isAvailable,
-              onAddToCart: () => _handleAddToCart(product),
-            );
-          },
-        ),
+              ),
+            ),
+            ProductDetailsLoaded(:final product) => _buildLoadedView(
+              product,
+              colors,
+            ),
+          };
+        },
+      ),
+      bottomNavigationBar:
+          BlocBuilder<ProductDetailsCubit, ProductDetailsState>(
+            builder: (context, state) {
+              if (state is! ProductDetailsLoaded) {
+                return const SizedBox.shrink();
+              }
+              final product = state.product;
+              final isAvailable = product.stockQuantity > 0;
+              return ProductDetailsBottomBar(
+                unitPrice: product.sellingPrice,
+                quantity: _selectedQuantity,
+                isAvailable: isAvailable,
+                onAddToCart: () => _handleAddToCart(product),
+              );
+            },
+          ),
+    );
+
+    if (widget.branchCubit != null) {
+      scaffold = BlocListener<BranchCubit, BranchState>(
+        bloc: widget.branchCubit,
+        listener: (context, state) => _loadForBranch(state),
+        child: scaffold,
       );
+    }
 
     if (widget.cartCubit != null) {
       return MultiBlocProvider(
@@ -155,10 +172,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       );
     }
 
-    return BlocProvider.value(
-      value: _cubit,
-      child: scaffold,
-    );
+    return BlocProvider.value(value: _cubit, child: scaffold);
   }
 
   Widget _buildLoadedView(Product product, AppColorsExtension colors) {
@@ -177,21 +191,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          // Top Utility Ribbon: Certified Pharmacy Badge
-          Align(
-            alignment: AlignmentDirectional.centerStart,
-            child: AppBadge.tone(
-              label: AppLocaleKeys.productDetailsCertifiedPharmacyBadge.tr(),
-              tone: AppBadgeTone.trust,
-              icon: Icon(
-                Icons.verified_user_rounded,
-                size: 15,
-                color: colors.brandEmeraldDark,
-              ),
-            ),
-          ),
-          const SizedBox(height: AppSpacing.spaceSm),
-
           // 1. Showcase Card (Image, MOH Stamp, Expiry Date, Branch Stock)
           ProductDetailsShowcaseCard(product: product),
           const SizedBox(height: AppSpacing.spaceMd),
@@ -211,10 +210,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           const SizedBox(height: AppSpacing.spaceMd),
 
           // 4. Clinical Usage & Guidelines Panel
-          if (product.description != null && product.description!.trim().isNotEmpty) ...[
-            ProductDetailsDescriptionCard(
-              description: product.description!,
-            ),
+          if (product.description != null &&
+              product.description!.trim().isNotEmpty) ...[
+            ProductDetailsDescriptionCard(description: product.description!),
             const SizedBox(height: AppSpacing.spaceMd),
           ],
 

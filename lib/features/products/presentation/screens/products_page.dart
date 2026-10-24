@@ -60,7 +60,8 @@ class ProductsPage extends StatelessWidget {
       return MultiBlocProvider(
         providers: [
           if (productsCubit != null) BlocProvider.value(value: productsCubit!),
-          if (categoriesCubit != null) BlocProvider.value(value: categoriesCubit!),
+          if (categoriesCubit != null)
+            BlocProvider.value(value: categoriesCubit!),
           if (branchCubit != null) BlocProvider.value(value: branchCubit!),
           if (cartCubit != null) BlocProvider.value(value: cartCubit!),
           if (authCubit != null) BlocProvider.value(value: authCubit!),
@@ -82,7 +83,11 @@ class ProductsPage extends StatelessWidget {
 }
 
 class _BrowseView extends StatefulWidget {
-  const _BrowseView({this.initialCategoryId, this.initialKeyword, this.branchId});
+  const _BrowseView({
+    this.initialCategoryId,
+    this.initialKeyword,
+    this.branchId,
+  });
 
   final String? initialCategoryId;
   final String? initialKeyword;
@@ -126,20 +131,27 @@ class _BrowseViewState extends State<_BrowseView> {
               ? (branchCubit.state as BranchLoaded).selectedBranchId
               : null);
 
-      productsCubit.loadFirstPage(
-        branchId: currentBranchId,
+      productsCubit.setInitialFilters(
         categoryId: widget.initialCategoryId,
         keyword: widget.initialKeyword,
       );
+      if (currentBranchId != null) {
+        _lastLoadedBranchId = currentBranchId;
+        productsCubit.loadFirstPage(branchId: currentBranchId);
+      } else {
+        productsCubit.clearBranchScope();
+      }
     }
   }
 
   @override
   void didUpdateWidget(covariant _BrowseView oldWidget) {
     super.didUpdateWidget(oldWidget);
-    final categoryChanged = widget.initialCategoryId != oldWidget.initialCategoryId;
+    final categoryChanged =
+        widget.initialCategoryId != oldWidget.initialCategoryId;
     final keywordChanged = widget.initialKeyword != oldWidget.initialKeyword;
-    final branchChanged = widget.branchId != oldWidget.branchId && widget.branchId != null;
+    final branchChanged =
+        widget.branchId != oldWidget.branchId && widget.branchId != null;
 
     if (categoryChanged || keywordChanged || branchChanged) {
       if (branchChanged) {
@@ -207,7 +219,9 @@ class _BrowseViewState extends State<_BrowseView> {
       backgroundColor: colors.background,
       appBar: AppPageBar.noBack(
         title: AppLocaleKeys.navBrowse.tr(),
-        actions: [CartActionButton(onTap: () => context.push(AppRouter.kCartView))],
+        actions: [
+          CartActionButton(onTap: () => context.push(AppRouter.kCartView)),
+        ],
       ),
       body: SafeArea(
         top: false,
@@ -234,7 +248,9 @@ class _BrowseViewState extends State<_BrowseView> {
                       ProductSearchBar(
                         initialValue: widget.initialKeyword,
                         onChanged: (keyword) {
-                          context.read<ProductsCubit>().onKeywordChanged(keyword);
+                          context.read<ProductsCubit>().onKeywordChanged(
+                            keyword,
+                          );
                         },
                       ),
                       const SizedBox(height: AppSpacing.spaceSm),
@@ -256,16 +272,23 @@ class _BrowseViewState extends State<_BrowseView> {
 
               // Products Content Grid, Skeleton, Empty, or Error
               SliverPadding(
-                padding: const EdgeInsets.symmetric(horizontal: AppSpacing.marginMobile),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: AppSpacing.marginMobile,
+                ),
                 sliver: SliverToBoxAdapter(child: _buildBody(colors)),
               ),
 
-              const SliverToBoxAdapter(child: SizedBox(height: AppSpacing.space2xl)),
+              const SliverToBoxAdapter(
+                child: SizedBox(height: AppSpacing.space2xl),
+              ),
             ],
           ),
         ),
       ),
-      bottomNavigationBar: CustomerBottomNav(currentIndex: 1, onTap: _onBottomNavTapped),
+      bottomNavigationBar: CustomerBottomNav(
+        currentIndex: 1,
+        onTap: _onBottomNavTapped,
+      ),
     );
 
     view = BlocListener<BranchCubit, BranchState>(
@@ -274,7 +297,12 @@ class _BrowseViewState extends State<_BrowseView> {
             state.selectedBranchId != null &&
             state.selectedBranchId != _lastLoadedBranchId) {
           _lastLoadedBranchId = state.selectedBranchId;
-          context.read<ProductsCubit>().reloadForBranch(state.selectedBranchId!);
+          context.read<ProductsCubit>().reloadForBranch(
+            state.selectedBranchId!,
+          );
+        } else if (state is! BranchLoaded || state.selectedBranch == null) {
+          _lastLoadedBranchId = null;
+          context.read<ProductsCubit>().clearBranchScope();
         }
       },
       child: view,
@@ -372,7 +400,9 @@ class _BrowseViewState extends State<_BrowseView> {
                   borderRadius: AppRadii.roundedFull,
                 ),
                 child: Text(
-                  AppLocaleKeys.productsTotalCount.tr(args: [totalCount.toString()]),
+                  AppLocaleKeys.productsTotalCount.tr(
+                    args: [totalCount.toString()],
+                  ),
                   style: AppTypography.labelSm(
                     color: colors.onSurfaceVariant,
                   ).copyWith(fontWeight: FontWeight.w600),
@@ -396,13 +426,15 @@ class _BrowseViewState extends State<_BrowseView> {
       },
       builder: (context, state) {
         return switch (state) {
-          ProductsInitial() || ProductsLoading() => const ProductsLoadingSkeleton(),
+          ProductsInitial() ||
+          ProductsLoading() => const ProductsLoadingSkeleton(),
           ProductsLoaded() => ProductsGrid(
             products: state.products,
             isLoadingMore: state.isLoadingMore,
             loadingMoreError: state.loadingMoreError,
             onRetryMore: () => context.read<ProductsCubit>().loadMore(),
-            onProductTap: (product) => context.push(AppRouter.productDetailsPath(product.id)),
+            onProductTap: (product) =>
+                context.push(AppRouter.productDetailsPath(product.id)),
             onAddToCart: (product) {
               final cartCubit = context.read<CartCubit>();
               CartActionHelper.addProductToCart(
@@ -436,7 +468,11 @@ class _BrowseViewState extends State<_BrowseView> {
               shape: BoxShape.circle,
             ),
             child: Center(
-              child: Icon(Icons.inventory_2_outlined, size: 36, color: colors.primary),
+              child: Icon(
+                Icons.inventory_2_outlined,
+                size: 36,
+                color: colors.primary,
+              ),
             ),
           ),
           const SizedBox(height: AppSpacing.spaceMd),

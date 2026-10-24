@@ -27,8 +27,9 @@ class AccountPreferencesSection extends StatelessWidget {
       context.push('${AppRouter.kLanguageSelectionView}?from=account');
     } else {
       final currentCode = context.locale.languageCode;
-      final targetLocale =
-          currentCode == 'ar' ? const Locale('en') : const Locale('ar');
+      final targetLocale = currentCode == 'ar'
+          ? const Locale('en')
+          : const Locale('ar');
       await context.setLocale(targetLocale);
       await storageService.setLocale(targetLocale.languageCode);
     }
@@ -49,9 +50,7 @@ class AccountPreferencesSection extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 4),
           child: Text(
             AppLocaleKeys.accountSectionPreferences.tr(),
-            style: AppTypography.labelMd(
-              color: colors.onSurfaceVariant,
-            ),
+            style: AppTypography.labelMd(color: colors.onSurfaceVariant),
           ),
         ),
         const SizedBox(height: 8),
@@ -71,13 +70,7 @@ class AccountPreferencesSection extends StatelessWidget {
               color: colors.borderSubtle.withValues(alpha: 0.6),
               width: 1,
             ),
-            boxShadow: const [
-              BoxShadow(
-                color: Color(0x080B1C30),
-                blurRadius: 8,
-                offset: Offset(0, 2),
-              ),
-            ],
+            boxShadow: context.shadowsLevel1,
           ),
           child: Column(
             children: [
@@ -85,7 +78,9 @@ class AccountPreferencesSection extends StatelessWidget {
               InkWell(
                 key: const ValueKey('account_language_switch_tile'),
                 onTap: () => _openLanguageSelection(context),
-                borderRadius: const BorderRadius.vertical(top: Radius.circular(16)),
+                borderRadius: const BorderRadius.vertical(
+                  top: Radius.circular(16),
+                ),
                 child: Padding(
                   padding: const EdgeInsets.all(14),
                   child: Row(
@@ -160,115 +155,6 @@ class AccountPreferencesSection extends StatelessWidget {
                   ),
                 ),
               ),
-              Divider(height: 1, color: colors.surfaceContainerLow),
-
-              // Medical Privacy & EDA Compliance
-              Padding(
-                padding: const EdgeInsets.all(14),
-                child: Row(
-                  children: [
-                    Container(
-                      width: 38,
-                      height: 38,
-                      decoration: BoxDecoration(
-                        color: colors.surfaceContainer,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Icon(
-                        Icons.policy_outlined,
-                        color: colors.primary,
-                        size: 20,
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            AppLocaleKeys.accountPrivacyPolicyTitle.tr(),
-                            style: AppTypography.titleMd(
-                              color: colors.onSurface,
-                            ),
-                          ),
-                          const SizedBox(height: 2),
-                          Text(
-                            AppLocaleKeys.accountPrivacyPolicyDesc.tr(),
-                            style: AppTypography.bodySm(
-                              color: colors.onSurfaceVariant,
-                            ),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(width: 8),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 3,
-                      ),
-                      decoration: BoxDecoration(
-                        color: colors.surfaceContainerHigh,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Text(
-                        AppLocaleKeys.accountEdaBadge.tr(),
-                        style: AppTypography.labelSm(
-                          color: colors.onSurfaceVariant,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Divider(height: 1, color: colors.surfaceContainerLow),
-
-              // Pharmacy Licenses & MOH Record
-              Padding(
-                padding: const EdgeInsets.all(14),
-                child: Row(
-                  children: [
-                    Container(
-                      width: 38,
-                      height: 38,
-                      decoration: BoxDecoration(
-                        color: colors.surfaceContainer,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Icon(
-                        Icons.medical_services_outlined,
-                        color: colors.primary,
-                        size: 20,
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            AppLocaleKeys.accountLicensingTitle.tr(),
-                            style: AppTypography.titleMd(
-                              color: colors.onSurface,
-                            ),
-                          ),
-                          const SizedBox(height: 2),
-                          Text(
-                            AppLocaleKeys.accountLicensingDesc.tr(),
-                            style: AppTypography.bodySm(
-                              color: colors.onSurfaceVariant,
-                            ),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
             ],
           ),
         ),
@@ -278,10 +164,7 @@ class AccountPreferencesSection extends StatelessWidget {
 }
 
 class _ThemeSelectionCard extends StatelessWidget {
-  const _ThemeSelectionCard({
-    required this.storageService,
-    this.themeCubit,
-  });
+  const _ThemeSelectionCard({required this.storageService, this.themeCubit});
 
   final StorageService storageService;
   final ThemeCubit? themeCubit;
@@ -349,13 +232,7 @@ class _ThemeSelectionCard extends StatelessWidget {
           color: colors.borderSubtle.withValues(alpha: 0.6),
           width: 1,
         ),
-        boxShadow: const [
-          BoxShadow(
-            color: Color(0x080B1C30),
-            blurRadius: 8,
-            offset: Offset(0, 2),
-          ),
-        ],
+        boxShadow: context.shadowsLevel1,
       ),
       padding: const EdgeInsets.all(14),
       child: Column(
@@ -383,9 +260,7 @@ class _ThemeSelectionCard extends StatelessWidget {
                   children: [
                     Text(
                       AppLocaleKeys.accountThemeTitle.tr(),
-                      style: AppTypography.titleMd(
-                        color: colors.onSurface,
-                      ),
+                      style: AppTypography.titleMd(color: colors.onSurface),
                     ),
                     const SizedBox(height: 2),
                     Text(
@@ -481,11 +356,14 @@ class _ThemeOptionPill extends StatelessWidget {
             const SizedBox(height: 6),
             Text(
               title,
-              style: AppTypography.labelSm(
-                color: isSelected ? colors.brandEmeraldDark : colors.onSurfaceVariant,
-              ).copyWith(
-                fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
-              ),
+              style:
+                  AppTypography.labelSm(
+                    color: isSelected
+                        ? colors.brandEmeraldDark
+                        : colors.onSurfaceVariant,
+                  ).copyWith(
+                    fontWeight: isSelected ? FontWeight.bold : FontWeight.w500,
+                  ),
               textAlign: TextAlign.center,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
@@ -496,4 +374,3 @@ class _ThemeOptionPill extends StatelessWidget {
     );
   }
 }
-

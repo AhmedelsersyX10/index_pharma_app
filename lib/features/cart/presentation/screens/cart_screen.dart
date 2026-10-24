@@ -29,10 +29,7 @@ import '../widgets/cart_stock_alert_banner.dart';
 /// - Estimated invoice summary card (strictly based on server prices).
 /// - Sticky bottom checkout bar with navigation to `/checkout`.
 class CartScreen extends StatelessWidget {
-  const CartScreen({
-    super.key,
-    this.cartCubit,
-  });
+  const CartScreen({super.key, this.cartCubit});
 
   final CartCubit? cartCubit;
 
@@ -83,6 +80,12 @@ class _CartScreenContentState extends State<_CartScreenContent> {
 
   @override
   Widget build(BuildContext context) {
+    return BlocBuilder<BranchCubit, BranchState>(
+      builder: (context, state) => _buildCart(context),
+    );
+  }
+
+  Widget _buildCart(BuildContext context) {
     final colors = context.colors;
 
     return BlocBuilder<CartCubit, CartState>(
@@ -91,15 +94,13 @@ class _CartScreenContentState extends State<_CartScreenContent> {
 
         return switch (state) {
           CartEmpty(:final branchId) => Scaffold(
-              backgroundColor: colors.background,
-              appBar: CartHeader(
-                branchName: _resolveBranchName(context, branchId),
-                itemsCount: 0,
-              ),
-              body: const SafeArea(
-                child: CartEmptyView(),
-              ),
+            backgroundColor: colors.background,
+            appBar: CartHeader(
+              branchName: _resolveBranchName(context, branchId),
+              itemsCount: 0,
             ),
+            body: const SafeArea(child: CartEmptyView()),
+          ),
           CartHasItems(
             :final branchId,
             :final items,
@@ -150,7 +151,9 @@ class _CartScreenContentState extends State<_CartScreenContent> {
                     // Cart Items List
                     ...items.map((item) {
                       return Padding(
-                        padding: const EdgeInsets.only(bottom: AppSpacing.spaceSm),
+                        padding: const EdgeInsets.only(
+                          bottom: AppSpacing.spaceSm,
+                        ),
                         child: CartItemCard(
                           item: item,
                           onQuantityChanged: (newQty) {

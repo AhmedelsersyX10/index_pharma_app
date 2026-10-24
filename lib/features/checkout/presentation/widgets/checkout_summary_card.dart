@@ -86,10 +86,7 @@ class CheckoutSummaryCard extends StatelessWidget {
             children: [
               Text(
                 'checkout.subtotal_label'.tr(),
-                style: TextStyle(
-                  fontSize: 14,
-                  color: colors.secondaryMuted,
-                ),
+                style: TextStyle(fontSize: 14, color: colors.secondaryMuted),
               ),
               Text(
                 '$formattedAmount $currency',
@@ -154,34 +151,6 @@ class CheckoutSummaryCard extends StatelessWidget {
                 ],
               ),
             ],
-          ),
-          const SizedBox(height: AppSpacing.spaceMd),
-          Container(
-            padding: const EdgeInsets.all(AppSpacing.spaceSm),
-            decoration: BoxDecoration(
-              color: colors.surfaceContainerLow,
-              borderRadius: BorderRadius.circular(AppRadii.md),
-            ),
-            child: Row(
-              children: [
-                Icon(
-                  Icons.verified_user_rounded,
-                  color: colors.brandEmeraldDark,
-                  size: 18,
-                ),
-                const SizedBox(width: AppSpacing.spaceSm),
-                Expanded(
-                  child: Text(
-                    'checkout.eda_guarantee'.tr(),
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: colors.onSurface,
-                      height: 1.35,
-                    ),
-                  ),
-                ),
-              ],
-            ),
           ),
         ],
       ),

@@ -14,8 +14,13 @@ class OrderCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = context.colors;
-    final dateFormat = DateFormat('d MMMM yyyy, hh:mm a', context.locale.languageCode);
-    final itemsSummary = order.items.map((i) => i.productName).join('common.list_separator'.tr());
+    final dateFormat = DateFormat(
+      'd MMMM yyyy, hh:mm a',
+      context.locale.languageCode,
+    );
+    final itemsSummary = order.items
+        .map((i) => i.productName)
+        .join('common.list_separator'.tr());
 
     final itemsCountText = order.totalItemCount == 1
         ? 'orders.single_item_count'.tr()
@@ -44,7 +49,11 @@ class OrderCard extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        Icon(Icons.receipt_rounded, size: 18, color: colors.primary),
+                        Icon(
+                          Icons.receipt_rounded,
+                          size: 18,
+                          color: colors.primary,
+                        ),
                         const SizedBox(width: AppSpacing.spaceXs),
                         Text(
                           order.orderNumber,
@@ -72,8 +81,11 @@ class OrderCard extends StatelessWidget {
                     ),
                     const SizedBox(width: AppSpacing.spaceXs),
                     Text(
-                      '$dateFormat',
-                      style: TextStyle(fontSize: 12, color: colors.onSurfaceVariant),
+                      dateFormat.format(order.createdAt),
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: colors.onSurfaceVariant,
+                      ),
                     ),
                   ],
                 ),
@@ -105,11 +117,18 @@ class OrderCard extends StatelessWidget {
                       ],
                       Row(
                         children: [
-                          Icon(Icons.medication_rounded, size: 14, color: colors.primary),
+                          Icon(
+                            Icons.medication_rounded,
+                            size: 14,
+                            color: colors.primary,
+                          ),
                           const SizedBox(width: 4),
                           Text(
                             itemsCountText,
-                            style: TextStyle(fontSize: 11, color: colors.onSurfaceVariant),
+                            style: TextStyle(
+                              fontSize: 11,
+                              color: colors.onSurfaceVariant,
+                            ),
                           ),
                         ],
                       ),
@@ -128,7 +147,10 @@ class OrderCard extends StatelessWidget {
                       children: [
                         Text(
                           'orders.total_amount'.tr(),
-                          style: TextStyle(fontSize: 11, color: colors.onSurfaceVariant),
+                          style: TextStyle(
+                            fontSize: 11,
+                            color: colors.onSurfaceVariant,
+                          ),
                         ),
                         const SizedBox(height: 2),
                         Row(
@@ -170,10 +192,16 @@ class OrderCard extends StatelessWidget {
                         ),
                       ),
                       iconAlignment: IconAlignment.end,
-                      icon: const Icon(Icons.arrow_forward_ios_rounded, size: 13),
+                      icon: const Icon(
+                        Icons.arrow_forward_ios_rounded,
+                        size: 13,
+                      ),
                       label: Text(
                         'orders.view_details_btn'.tr(),
-                        style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                        style: const TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ],
