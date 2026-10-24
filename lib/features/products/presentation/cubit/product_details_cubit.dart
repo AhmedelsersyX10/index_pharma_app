@@ -18,49 +18,43 @@ class ProductDetailsCubit extends Cubit<ProductDetailsState> {
   final StorageService? _storageService;
 
   int _requestRevision = 0;
+  bool _scopeCleared = false;
   String? _lastProductId;
   String? _lastBranchId;
 
-  void clearBranchScope() {
+  void clearBranchScope({bool isLoading = false}) {
     ++_requestRevision;
     _lastBranchId = null;
+    _scopeCleared = true;
     emit(
-      const ProductDetailsFailure(Validation(serverMessage: 'branch_required')),
+      isLoading
+          ? const ProductDetailsLoading()
+          : const ProductDetailsFailure(Validation(serverMessage: 'branch_required')),
     );
   }
 
   /// Loads product details for [productId] and [branchId].
   ///
   /// If [branchId] is omitted, falls back to the persisted active branch from [StorageService].
-  Future<void> loadProductDetails({
-    required String productId,
-    String? branchId,
-  }) async {
+  Future<void> loadProductDetails({required String productId, String? branchId}) async {
     final revision = ++_requestRevision;
     final effectiveBranchId =
-        branchId ?? _lastBranchId ?? _storageService?.selectedBranchId;
+        branchId ?? (_scopeCleared ? null : (_lastBranchId ?? _storageService?.selectedBranchId));
 
     _lastProductId = productId;
     _lastBranchId = effectiveBranchId;
 
     if (effectiveBranchId == null || effectiveBranchId.trim().isEmpty) {
-      emit(
-        const ProductDetailsFailure(
-          Validation(serverMessage: 'branch_required'),
-        ),
-      );
+      emit(const ProductDetailsFailure(Validation(serverMessage: 'branch_required')));
       return;
     }
 
     if (productId.trim().isEmpty) {
-      emit(
-        const ProductDetailsFailure(
-          Validation(serverMessage: 'product_id_invalid'),
-        ),
-      );
+      emit(const ProductDetailsFailure(Validation(serverMessage: 'product_id_invalid')));
       return;
     }
 
+    _scopeCleared = false;
     emit(const ProductDetailsLoading());
 
     final result = await _productsRepository.getProductDetails(
@@ -81,10 +75,7 @@ class ProductDetailsCubit extends Cubit<ProductDetailsState> {
   /// Retries fetching product details using the last requested IDs.
   Future<void> retry() async {
     if (_lastProductId != null) {
-      await loadProductDetails(
-        productId: _lastProductId!,
-        branchId: _lastBranchId,
-      );
+      await loadProductDetails(productId: _lastProductId!, branchId: _lastBranchId);
     }
   }
 }

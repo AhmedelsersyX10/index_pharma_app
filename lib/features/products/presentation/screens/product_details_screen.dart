@@ -80,7 +80,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
         branchId: state.selectedBranchId,
       );
     } else {
-      _cubit.clearBranchScope();
+      _cubit.clearBranchScope(
+        isLoading: state is BranchInitial || state is BranchLoading,
+      );
     }
   }
 

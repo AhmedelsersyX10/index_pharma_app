@@ -139,7 +139,11 @@ class _BrowseViewState extends State<_BrowseView> {
         _lastLoadedBranchId = currentBranchId;
         productsCubit.loadFirstPage(branchId: currentBranchId);
       } else {
-        productsCubit.clearBranchScope();
+        productsCubit.clearBranchScope(
+          isLoading:
+              branchCubit.state is BranchInitial ||
+              branchCubit.state is BranchLoading,
+        );
       }
     }
   }
@@ -302,7 +306,9 @@ class _BrowseViewState extends State<_BrowseView> {
           );
         } else if (state is! BranchLoaded || state.selectedBranch == null) {
           _lastLoadedBranchId = null;
-          context.read<ProductsCubit>().clearBranchScope();
+          context.read<ProductsCubit>().clearBranchScope(
+            isLoading: state is BranchInitial || state is BranchLoading,
+          );
         }
       },
       child: view,

@@ -133,4 +133,24 @@ void main() {
       expect(cubit.state, isA<ProductDetailsFailure>());
     },
   );
+  test(
+    'details retry cannot fall back to a stored branch after scope invalidation',
+    () async {
+      final repository = PendingProducts();
+      final cubit = ProductDetailsCubit(
+        productsRepository: repository,
+        storageService: FakeTestStorageService(selectedBranchId: 'old'),
+      );
+      addTearDown(cubit.close);
+      final request = cubit.loadProductDetails(productId: 'p', branchId: 'old');
+      cubit.clearBranchScope(isLoading: true);
+      expect(cubit.state, isA<ProductDetailsLoading>());
+      repository.details[0].complete(const Success(oldProduct));
+      await request;
+      cubit.clearBranchScope();
+      await cubit.retry();
+      expect(cubit.state, isA<ProductDetailsFailure>());
+      expect(repository.details, hasLength(1));
+    },
+  );
 }

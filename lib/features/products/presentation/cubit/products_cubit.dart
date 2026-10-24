@@ -217,12 +217,16 @@ class ProductsCubit extends Cubit<ProductsState> {
   }
 
   /// Invalidates pending work and removes data from a previous branch scope.
-  void clearBranchScope() {
+  void clearBranchScope({bool isLoading = false}) {
     ++_requestRevision;
     _debounceTimer?.cancel();
     _branchId = null;
     _scopeCleared = true;
-    emit(const ProductsFailure(Validation(serverMessage: 'branch_required')));
+    emit(
+      isLoading
+          ? const ProductsLoading()
+          : const ProductsFailure(Validation(serverMessage: 'branch_required')),
+    );
   }
 
   /// Reloads products when the selected branch changes.

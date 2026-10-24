@@ -122,7 +122,9 @@ class _HomeViewState extends State<_HomeView> {
       }
     } else {
       _lastLoadedBranchId = null;
-      context.read<ProductsCubit>().clearBranchScope();
+      context.read<ProductsCubit>().clearBranchScope(
+        isLoading: branchState is BranchInitial || branchState is BranchLoading,
+      );
     }
   }
 
@@ -192,7 +194,9 @@ class _HomeViewState extends State<_HomeView> {
           );
         } else if (state is! BranchLoaded || state.selectedBranch == null) {
           _lastLoadedBranchId = null;
-          context.read<ProductsCubit>().clearBranchScope();
+          context.read<ProductsCubit>().clearBranchScope(
+            isLoading: state is BranchInitial || state is BranchLoading,
+          );
         }
       },
       child: Scaffold(
