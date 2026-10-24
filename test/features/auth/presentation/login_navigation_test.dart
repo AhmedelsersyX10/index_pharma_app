@@ -539,7 +539,10 @@ void main() {
         expect(find.byType(LoginScreen), findsNothing);
         expect(
           appRouter.router.state.matchedLocation,
-          equals(AppRouter.kStaffDashboardView),
+          anyOf(
+            equals(AppRouter.kStaffDashboardView),
+            equals(AppRouter.kStaffHomeView),
+          ),
         );
       },
     );

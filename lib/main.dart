@@ -8,6 +8,7 @@ import 'package:index_pharma/core/theme/theme.dart';
 import 'package:index_pharma/core/utils/app_router.dart';
 import 'package:index_pharma/features/auth/domain/services/permission_service.dart';
 import 'package:index_pharma/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:index_pharma/features/auth/presentation/cubit/auth_state.dart';
 import 'package:index_pharma/features/cart/presentation/cubit/cart_cubit.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
@@ -133,6 +134,19 @@ class IndexPharmaApp extends StatelessWidget {
       wrapped = MultiRepositoryProvider(
         providers: repoProviders,
         child: wrapped,
+      );
+    }
+
+    if (resolvedPermissionService == null && resolvedAuthCubit != null) {
+      wrapped = BlocBuilder<AuthCubit, AuthState>(
+        bloc: resolvedAuthCubit,
+        builder: (context, authState) {
+          final user = authState is AuthAuthenticated ? authState.user : null;
+          return RepositoryProvider<PermissionService>.value(
+            value: PermissionService(user),
+            child: wrapped,
+          );
+        },
       );
     }
 

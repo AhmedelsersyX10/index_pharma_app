@@ -13,6 +13,7 @@ import 'package:index_pharma/features/auth/domain/entities/user.dart';
 import 'package:index_pharma/features/auth/domain/repositories/auth_repository.dart';
 import 'package:index_pharma/features/auth/domain/services/permission_service.dart';
 import 'package:index_pharma/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:index_pharma/features/auth/presentation/cubit/auth_state.dart';
 import 'package:index_pharma/features/cart/domain/entities/cart_item.dart';
 import 'package:index_pharma/features/cart/domain/repositories/cart_repository.dart';
 import 'package:index_pharma/features/cart/presentation/cubit/cart_cubit.dart';
@@ -427,7 +428,9 @@ Widget buildAppWithProviders({
   final effectivePermission = permissionService ??
       (getIt.isRegistered<PermissionService>()
           ? getIt<PermissionService>()
-          : const PermissionService());
+          : (effectiveAuth.state is AuthAuthenticated
+              ? PermissionService((effectiveAuth.state as AuthAuthenticated).user)
+              : const PermissionService()));
 
   return EasyLocalization(
     key: UniqueKey(),

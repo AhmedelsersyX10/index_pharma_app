@@ -95,7 +95,7 @@ void main() {
       expect(routePaths, contains(AppRouter.kPrescriptionUploadView));
       expect(routePaths, contains(AppRouter.kEditProfileView));
       expect(routePaths, contains(AppRouter.kLanguageSelectionView));
-      expect(appRouter.router.configuration.routes.length, equals(22));
+      expect(appRouter.router.configuration.routes.length, equals(23));
     });
   });
 }

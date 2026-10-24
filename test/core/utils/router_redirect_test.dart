@@ -582,7 +582,7 @@ void main() {
 
       expect(
         appRouter.router.state.matchedLocation,
-        equals(AppRouter.kStaffDashboardView),
+        equals(AppRouter.kStaffHomeView),
       );
     });
 
@@ -794,7 +794,7 @@ void main() {
       expect(authRepo.restoreSessionCalls, equals(1));
       expect(
         appRouter.router.state.matchedLocation,
-        equals(AppRouter.kStaffDashboardView),
+        equals(AppRouter.kStaffHomeView),
       );
     });
 
@@ -827,6 +827,80 @@ void main() {
         appRouter.router.state.matchedLocation,
         equals(AppRouter.kStoreView),
       );
+    });
+  });
+
+  group('Task 4.01 Staff Shell Routes & Redirects', () {
+    test('guest accessing staff sub-routes redirects to store', () {
+      const guest = AuthGuest();
+      const staffSubRoutes = [
+        AppRouter.kStaffHomeView,
+        AppRouter.kStaffOrdersView,
+        AppRouter.kStaffPrescriptionsView,
+        AppRouter.kStaffProductsView,
+        AppRouter.kStaffMoreView,
+      ];
+
+      for (final route in staffSubRoutes) {
+        expect(
+          AppRouter.redirectGuard(authState: guest, location: route),
+          equals(AppRouter.kStoreView),
+        );
+      }
+    });
+
+    test('customer accessing staff sub-routes redirects to store', () {
+      final customer = AuthAuthenticated(_createUser(
+        id: 'c1',
+        email: 'customer@index.com',
+        role: UserRole.customer,
+      ));
+
+      const staffSubRoutes = [
+        AppRouter.kStaffHomeView,
+        AppRouter.kStaffOrdersView,
+        AppRouter.kStaffPrescriptionsView,
+        AppRouter.kStaffProductsView,
+        AppRouter.kStaffMoreView,
+      ];
+
+      for (final route in staffSubRoutes) {
+        expect(
+          AppRouter.redirectGuard(authState: customer, location: route),
+          equals(AppRouter.kStoreView),
+        );
+      }
+    });
+
+    test('pharmacist, admin, superadmin accessing staff sub-routes are allowed', () {
+      final staffRoles = [
+        UserRole.pharmacist,
+        UserRole.admin,
+        UserRole.superadmin,
+      ];
+
+      const staffSubRoutes = [
+        AppRouter.kStaffHomeView,
+        AppRouter.kStaffOrdersView,
+        AppRouter.kStaffPrescriptionsView,
+        AppRouter.kStaffProductsView,
+        AppRouter.kStaffMoreView,
+      ];
+
+      for (final role in staffRoles) {
+        final staffAuth = AuthAuthenticated(_createUser(
+          id: 'staff-1',
+          email: 'staff@index.com',
+          role: role,
+        ));
+
+        for (final route in staffSubRoutes) {
+          expect(
+            AppRouter.redirectGuard(authState: staffAuth, location: route),
+            isNull,
+          );
+        }
+      }
     });
   });
 }

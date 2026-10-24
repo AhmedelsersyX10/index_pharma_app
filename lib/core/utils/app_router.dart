@@ -41,6 +41,14 @@ import 'package:index_pharma/features/prescriptions/presentation/screens/my_pres
 import 'package:index_pharma/features/prescriptions/presentation/screens/prescription_details_screen.dart';
 import 'package:index_pharma/features/prescriptions/presentation/screens/prescription_submitted_screen.dart';
 import 'package:index_pharma/features/prescriptions/presentation/screens/upload_prescription_screen.dart';
+import 'package:index_pharma/features/auth/domain/services/permission_service.dart';
+import 'package:index_pharma/features/staff/presentation/screens/staff_access_denied_screen.dart';
+import 'package:index_pharma/features/staff/presentation/screens/staff_home_screen.dart';
+import 'package:index_pharma/features/staff/presentation/screens/staff_more_screen.dart';
+import 'package:index_pharma/features/staff/presentation/screens/staff_orders_placeholder_screen.dart';
+import 'package:index_pharma/features/staff/presentation/screens/staff_prescriptions_placeholder_screen.dart';
+import 'package:index_pharma/features/staff/presentation/screens/staff_products_placeholder_screen.dart';
+import 'package:index_pharma/features/staff/presentation/screens/staff_shell_screen.dart';
 
 class AppRouter {
   AppRouter({
@@ -81,6 +89,11 @@ class AppRouter {
   static const kLoginView = '/login';
   static const kRegisterView = '/register';
   static const kStaffDashboardView = '/staff';
+  static const kStaffHomeView = '/staff/home';
+  static const kStaffOrdersView = '/staff/orders';
+  static const kStaffPrescriptionsView = '/staff/prescriptions';
+  static const kStaffProductsView = '/staff/products';
+  static const kStaffMoreView = '/staff/more';
   static const kBranchManagementView = '/admin/branches';
 
   /// Generates the product details path for a specific [productId].
@@ -490,7 +503,40 @@ class AppRouter {
       ),
       GoRoute(
         path: kStaffDashboardView,
-        builder: (context, state) => const StaffDashboardPlaceholderScreen(),
+        redirect: (context, state) => kStaffHomeView,
+      ),
+      ShellRoute(
+        builder: (context, state, child) => StaffShellScreen(child: child),
+        routes: [
+          GoRoute(
+            path: kStaffHomeView,
+            builder: (context, state) => const StaffHomeScreen(),
+          ),
+          GoRoute(
+            path: kStaffOrdersView,
+            builder: (context, state) => const StaffOrdersPlaceholderScreen(),
+          ),
+          GoRoute(
+            path: kStaffPrescriptionsView,
+            builder: (context, state) {
+              final authState = _activeAuthCubit?.state;
+              final user = authState is AuthAuthenticated ? authState.user : null;
+              final permService = PermissionService(user);
+              if (!permService.can(AppPermissions.viewPrescriptions)) {
+                return const StaffAccessDeniedScreen();
+              }
+              return const StaffPrescriptionsPlaceholderScreen();
+            },
+          ),
+          GoRoute(
+            path: kStaffProductsView,
+            builder: (context, state) => const StaffProductsPlaceholderScreen(),
+          ),
+          GoRoute(
+            path: kStaffMoreView,
+            builder: (context, state) => const StaffMoreScreen(),
+          ),
+        ],
       ),
       GoRoute(
         path: kBranchManagementView,

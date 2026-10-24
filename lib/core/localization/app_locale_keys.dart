@@ -212,6 +212,7 @@ abstract class AppLocaleKeys {
   static const navPrescription = 'nav.prescription';
   static const navOrders = 'nav.orders';
   static const navAccount = 'nav.account';
+  static const navSell = 'nav.sell';
 
   // Placeholders
   static const placeholdersBrowseTitle = 'placeholders.browse_title';
@@ -469,4 +470,67 @@ abstract class AppLocaleKeys {
   static const checkoutErrorPhoneRequired = 'checkout.error_phone_required';
   static const checkoutErrorPhoneInvalid = 'checkout.error_phone_invalid';
   static const checkoutErrorSubmitFailed = 'checkout.error_submit_failed';
+
+  // Staff Shell & Common
+  static const staffShiftActive = 'staff.shift_active';
+  static const staffShiftInactive = 'staff.shift_inactive';
+  static const staffChangeBranch = 'staff.change_branch';
+  static const staffAllBranches = 'staff.all_branches';
+  static const staffRolePharmacist = 'staff.role_pharmacist';
+  static const staffRoleAdmin = 'staff.role_admin';
+  static const staffRoleSuperadmin = 'staff.role_superadmin';
+  static const staffRoleStaff = 'staff.role_staff';
+  static const staffStatusActive = 'staff.status_active';
+  static const staffStatusInactive = 'staff.status_inactive';
+  static const staffAccessDeniedTitle = 'staff.access_denied_title';
+  static const staffAccessDeniedDesc = 'staff.access_denied_desc';
+  static const staffActionAvailableSoon = 'staff.action_available_soon';
+
+  // Staff Placeholders
+  static const staffOrdersPlaceholderTitle = 'staff.orders_placeholder_title';
+  static const staffPrescriptionsPlaceholderTitle = 'staff.prescriptions_placeholder_title';
+  static const staffProductsPlaceholderTitle = 'staff.products_placeholder_title';
+
+  // Staff Home (E1)
+  static const staffHomeTitle = 'staff.home.title';
+  static const staffHomeSubtitle = 'staff.home.subtitle';
+  static const staffHomeShiftInactive = 'staff.home.shift_inactive';
+  static const staffHomeShiftInactiveSub = 'staff.home.shift_inactive_sub';
+  static const staffHomePosCta = 'staff.home.pos_cta';
+  static const staffHomePosSub = 'staff.home.pos_sub';
+  static const staffHomeOnlineOrdersCta = 'staff.home.online_orders_cta';
+  static const staffHomeOnlineOrdersSub = 'staff.home.online_orders_sub';
+  static const staffHomePrescriptionsCta = 'staff.home.prescriptions_cta';
+  static const staffHomePrescriptionsSub = 'staff.home.prescriptions_sub';
+  static const staffHomeTodayOverview = 'staff.home.today_overview';
+  static const staffHomeMetricSales = 'staff.home.metric_sales';
+  static const staffHomeMetricOrders = 'staff.home.metric_orders';
+  static const staffHomeMetricPendingRx = 'staff.home.metric_pending_rx';
+  static const staffHomeCurrency = 'staff.home.currency';
+  static const staffHomeEdaLicenseBadge = 'staff.home.eda_license_badge';
+
+  // Staff More (G11)
+  static const staffMoreTitle = 'staff.more.title';
+  static const staffMoreSectionOperations = 'staff.more.section_operations';
+  static const staffMoreShiftHistory = 'staff.more.shift_history';
+  static const staffMoreShiftHistorySub = 'staff.more.shift_history_sub';
+  static const staffMoreBarcodeAudit = 'staff.more.barcode_audit';
+  static const staffMoreBarcodeAuditSub = 'staff.more.barcode_audit_sub';
+  static const staffMoreSectionManagement = 'staff.more.section_management';
+  static const staffMoreReports = 'staff.more.reports';
+  static const staffMoreReportsSub = 'staff.more.reports_sub';
+  static const staffMoreBranches = 'staff.more.branches';
+  static const staffMoreBranchesSub = 'staff.more.branches_sub';
+  static const staffMoreStockAlerts = 'staff.more.stock_alerts';
+  static const staffMoreStockAlertsSub = 'staff.more.stock_alerts_sub';
+  static const staffMoreSectionPreferences = 'staff.more.section_preferences';
+  static const staffMoreLanguage = 'staff.more.language';
+  static const staffMoreLanguageSub = 'staff.more.language_sub';
+  static const staffMoreTheme = 'staff.more.theme';
+  static const staffMoreThemeSub = 'staff.more.theme_sub';
+  static const staffMoreCompliance = 'staff.more.compliance';
+  static const staffMoreComplianceSub = 'staff.more.compliance_sub';
+  static const staffMoreLogout = 'staff.more.logout';
+  static const staffMoreLogoutSub = 'staff.more.logout_sub';
+  static const staffMoreVersion = 'staff.more.version';
 }

@@ -31,6 +31,11 @@ void main() {
       expect(AppRouter.kLoginView, equals('/login'));
       expect(AppRouter.kRegisterView, equals('/register'));
       expect(AppRouter.kStaffDashboardView, equals('/staff'));
+      expect(AppRouter.kStaffHomeView, equals('/staff/home'));
+      expect(AppRouter.kStaffOrdersView, equals('/staff/orders'));
+      expect(AppRouter.kStaffPrescriptionsView, equals('/staff/prescriptions'));
+      expect(AppRouter.kStaffProductsView, equals('/staff/products'));
+      expect(AppRouter.kStaffMoreView, equals('/staff/more'));
       expect(AppRouter.kBranchManagementView, equals('/admin/branches'));
       expect(AppRouter.kLanguageSelectionView, equals('/language'));
     });
@@ -39,7 +44,7 @@ void main() {
       final appRouter = AppRouter();
       final routes = appRouter.router.configuration.routes;
 
-      expect(routes.length, equals(22));
+      expect(routes.length, equals(23));
       final routePaths = routes.whereType<GoRoute>().map((r) => r.path).toList();
       expect(routePaths, contains('/'));
       expect(routePaths, contains(AppRouter.kLanguageSelectionView));
@@ -63,6 +68,16 @@ void main() {
       expect(routePaths, contains(AppRouter.kRegisterView));
       expect(routePaths, contains(AppRouter.kStaffDashboardView));
       expect(routePaths, contains(AppRouter.kBranchManagementView));
+
+      final shellRoutes = routes.whereType<ShellRoute>().toList();
+      expect(shellRoutes.length, equals(1));
+      final shellPaths =
+          shellRoutes.first.routes.whereType<GoRoute>().map((r) => r.path).toList();
+      expect(shellPaths, contains(AppRouter.kStaffHomeView));
+      expect(shellPaths, contains(AppRouter.kStaffOrdersView));
+      expect(shellPaths, contains(AppRouter.kStaffPrescriptionsView));
+      expect(shellPaths, contains(AppRouter.kStaffProductsView));
+      expect(shellPaths, contains(AppRouter.kStaffMoreView));
     });
 
     test('accepts optional refreshListenable without error and listens to it', () {
